@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
+import gsap from 'gsap';
 import { useHasFinePointer } from '../../lib/useHasFinePointer';
 import HeroPolaroid from './HeroPolaroid';
 import styles from './Hero.module.css';
@@ -29,6 +30,16 @@ const itemVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
 };
 
+// The whole card scales up slightly while fading out, on a wrapper OUTSIDE
+// the motion.div below — never touching `opacity`/`scale` on .card itself,
+// since those are already owned by cardVariants' own entrance animation and
+// fighting the two over the same property is what caused the card to
+// visibly stall on an earlier attempt. Driven by GSAP (not a CSS
+// transition) so the easing matches the calm, non-bouncy feel the
+// Featured Work crossfade in HomePage.tsx uses.
+const EXIT_DURATION = 0.5;
+const EXIT_SCALE = 1.08;
+
 /* Fluid across the whole 393->1440+ range (see Hero.module.css) instead of the
    old separate mobile/desktop components. Interaction still branches on real
    pointer capability, exactly as the two old components did: a mouse hovering
@@ -44,6 +55,19 @@ export default function Hero({
 }) {
   const hasFinePointer = useHasFinePointer();
   const [photoVisible, setPhotoVisible] = useState(false);
+  const exitRef = useRef<HTMLDivElement>(null);
+
+  function handleExplore() {
+    if (exitRef.current) {
+      gsap.to(exitRef.current, {
+        scale: EXIT_SCALE,
+        opacity: 0,
+        duration: EXIT_DURATION,
+        ease: 'power2.out',
+      });
+    }
+    onExplore();
+  }
 
   function handleHighlightClick() {
     if (hasFinePointer) {
@@ -54,49 +78,51 @@ export default function Hero({
   }
 
   return (
-    <motion.div className={styles.card} variants={cardVariants} initial="hidden" animate="visible">
-      <div className={styles.heroContent}>
-        <motion.p className={styles.title} variants={itemVariants}>
-          <span className={styles.titleItalic}>Sehaz</span>
-          <span className={styles.titleBold}>Nagpal</span>
-        </motion.p>
+    <div ref={exitRef}>
+      <motion.div className={styles.card} variants={cardVariants} initial="hidden" animate="visible">
+        <div className={styles.heroContent}>
+          <motion.p className={styles.title} variants={itemVariants}>
+            <span className={styles.titleItalic}>Sehaz</span>
+            <span className={styles.titleBold}>Nagpal</span>
+          </motion.p>
 
-        <motion.p className={styles.paragraph} variants={itemVariants}>
-          Since I was a kid, I have always been intrigued by the question:{' '}
-          <span className={styles.question}>
-            <span className={styles.openQuote}>&lsquo;</span>Why do people do what they do?&rsquo;
-          </span>{' '}
-          This question stayed along me as I got through an economics degree, a dissertation, and,
-          now, as I design.{' '}
-          <span
-            className={styles.highlight}
-            role="button"
-            tabIndex={0}
-            aria-label="Open about"
-            onMouseEnter={hasFinePointer ? () => setPhotoVisible(true) : undefined}
-            onMouseLeave={hasFinePointer ? () => setPhotoVisible(false) : undefined}
-            onClick={handleHighlightClick}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                handleHighlightClick();
-              }
-            }}
-          >
-            I am Sehaz
-          </span>
-          , a UI-UX designer.
-        </motion.p>
+          <motion.p className={styles.paragraph} variants={itemVariants}>
+            Since I was a kid, I have always been intrigued by the question:{' '}
+            <span className={styles.question}>
+              <span className={styles.openQuote}>&lsquo;</span>Why do people do what they do?&rsquo;
+            </span>{' '}
+            This question stayed along me as I got through an economics degree, a dissertation, and,
+            now, as I design.{' '}
+            <span
+              className={styles.highlight}
+              role="button"
+              tabIndex={0}
+              aria-label="Open about"
+              onMouseEnter={hasFinePointer ? () => setPhotoVisible(true) : undefined}
+              onMouseLeave={hasFinePointer ? () => setPhotoVisible(false) : undefined}
+              onClick={handleHighlightClick}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  handleHighlightClick();
+                }
+              }}
+            >
+              I am Sehaz
+            </span>
+            , a UI-UX designer.
+          </motion.p>
 
-        <motion.button className={styles.button} onClick={onExplore} variants={itemVariants}>
-          <span className={styles.buttonLabel}>Explore Work</span>
-          <span className={styles.sweep} aria-hidden="true">
-            <span className={styles.sweepLabel}>Explore Work</span>
-          </span>
-        </motion.button>
+          <motion.button className={styles.button} onClick={handleExplore} variants={itemVariants}>
+            <span className={styles.buttonLabel}>Explore Work</span>
+            <span className={styles.sweep} aria-hidden="true">
+              <span className={styles.sweepLabel}>Explore Work</span>
+            </span>
+          </motion.button>
 
-        <AnimatePresence>{photoVisible && <HeroPolaroid />}</AnimatePresence>
-      </div>
-    </motion.div>
+          <AnimatePresence>{photoVisible && <HeroPolaroid />}</AnimatePresence>
+        </div>
+      </motion.div>
+    </div>
   );
 }

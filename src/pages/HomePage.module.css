@@ -1,3 +1,18 @@
 .cardCenter {
   display: flex;
 }
+
+/* Fixed, full-viewport — CaseStudiesIndexPage inside it (rendered in
+   previewMode, exactly one viewport tall, no Footer/stickySpacer — see that
+   component) is fully mounted, laid out, and ready from the moment the hero
+   appears, well before any click. Sits at opacity 0 at rest (see
+   HomePage.tsx's inline style + handleExplore) rather than being clipped or
+   display:none'd, so there's no layout shift when it crossfades in — Stage's
+   grid behind it shows through normally until then. z-index sits below Hero
+   (its own inline z-index in HomePage.tsx) and the loader (50); below
+   AboutPanel's modal (1000) too. */
+.revealWrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+}

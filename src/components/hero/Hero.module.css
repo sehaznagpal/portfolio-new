@@ -21,9 +21,6 @@
   overflow: hidden;
 }
 
-/* Fades out on its own (see Hero.tsx) independently of .card itself, which
-   stays put — only this inner content needs to disappear quickly once
-   Explore Work is clicked. */
 .heroContent {
   display: flex;
   flex-direction: column;

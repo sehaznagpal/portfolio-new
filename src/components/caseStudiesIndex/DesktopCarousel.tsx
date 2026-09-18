@@ -36,6 +36,15 @@ function getSlot(index: number, activeIndex: number): Slot {
   return delta === 1 ? 'right' : 'left';
 }
 
+// Split in two deliberately: `transform` props go on .slot (the element
+// actually positioned in 3D space — rotateY/z/scale), `visual` props go on a
+// separate, never-transformed inner wrapper (see .slotVisual in the JSX
+// below). Safari is known to flatten a preserve-3d context wherever a
+// `filter` sits on the same element as a 3D transform (or on an element
+// inside that 3D hierarchy) — it forces that element into its own flattened
+// compositing layer, which reads as the whole ring going flat. Keeping
+// `filter`/`opacity` off .slot entirely and on a plain 2D child instead
+// avoids ever creating that conflict in the first place.
 function computeSlotProps(slot: Slot, cardWidth: number) {
   // .slot is anchored via left:50%/top:50%, so every card also needs this
   // -50%/-50% self-offset to actually center on that point rather than
@@ -43,7 +52,10 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
   const centering = { xPercent: -50, yPercent: -50 };
 
   if (slot === 'center') {
-    return { ...centering, x: 0, z: 0, rotationY: 0, scale: 1, opacity: 1, filter: 'none', zIndex: 3 };
+    return {
+      transform: { ...centering, x: 0, z: 0, rotationY: 0, scale: 1, zIndex: 3 },
+      visual: { opacity: 1, filter: 'none' },
+    };
   }
 
   // Everything below is expressed relative to the card's own current width,
@@ -78,14 +90,15 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
   const appliedScale = SIDE_SCALE_RATIO / measuredCombinedShrink;
 
   return {
-    ...centering,
-    x: sign * rawXOffset,
-    z: -depth,
-    rotationY: -sign * TILT_ANGLE,
-    scale: appliedScale,
-    opacity: 0.5,
-    filter: 'blur(3px)',
-    zIndex: 1,
+    transform: {
+      ...centering,
+      x: sign * rawXOffset,
+      z: -depth,
+      rotationY: -sign * TILT_ANGLE,
+      scale: appliedScale,
+      zIndex: 1,
+    },
+    visual: { opacity: 0.5, filter: 'blur(3px)' },
   };
 }
 
@@ -97,6 +110,7 @@ export default function DesktopCarousel({
   const navigate = useNavigate();
   const perspectiveElRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const visualRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(DEFAULT_ACTIVE_INDEX);
 
   const isAnimatingRef = useRef(false);
@@ -124,20 +138,22 @@ export default function DesktopCarousel({
     let completed = 0;
     CASE_STUDIES.forEach((_, i) => {
       const el = cardRefs.current[i];
-      if (!el) return;
-      const props = computeSlotProps(getSlot(i, activeIndex), cardWidth);
+      const visualEl = visualRefs.current[i];
+      if (!el || !visualEl) return;
+      const { transform, visual } = computeSlotProps(getSlot(i, activeIndex), cardWidth);
 
       // force3D forces GSAP to always promote these to a hardware-accelerated
       // 3D transform layer — without it, Safari has been seen to fall back
       // to flattening the whole ring to 2D (cards sit in a flat row, no
       // tilt/depth) on some renders, while Chromium is unaffected either way.
       if (!animate) {
-        gsap.set(el, { ...props, force3D: true });
+        gsap.set(el, { ...transform, force3D: true });
+        gsap.set(visualEl, visual);
         return;
       }
 
       gsap.to(el, {
-        ...props,
+        ...transform,
         force3D: true,
         duration: ANIMATION_DURATION,
         ease: 'power3.out',
@@ -146,6 +162,7 @@ export default function DesktopCarousel({
           if (completed === CASE_STUDIES.length) isAnimatingRef.current = false;
         },
       });
+      gsap.to(visualEl, { ...visual, duration: ANIMATION_DURATION, ease: 'power3.out' });
     });
   }
 
@@ -266,7 +283,17 @@ export default function DesktopCarousel({
               className={styles.slot}
               onClick={() => handleCardClick(i)}
             >
-              <FeaturedCard study={study} active={i === activeIndex} plain />
+              {/* Opacity/blur live here, one level below the 3D-transformed
+                  .slot itself — see computeSlotProps' own comment for why
+                  this split exists. */}
+              <div
+                ref={(el) => {
+                  visualRefs.current[i] = el;
+                }}
+                className={styles.slotVisual}
+              >
+                <FeaturedCard study={study} active={i === activeIndex} plain />
+              </div>
             </div>
           ))}
         </div>

@@ -65,4 +65,16 @@
   width: clamp(402px, calc(402px + (100vw - 1280px) * (44.492 / 160)), 446.492px);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Deliberately NOT part of the 3D hierarchy above (no transform, no
+   preserve-3d) — opacity/blur are driven here instead of on .slot itself so
+   a `filter` is never on the same element as (or a preserve-3d descendant
+   of) a 3D-transformed one. See computeSlotProps' comment for the Safari bug
+   this sidesteps. */
+.slotVisual {
+  width: 100%;
 }

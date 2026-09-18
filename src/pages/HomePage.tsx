@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import gsap from 'gsap';
 import Stage from '../components/viewport/Stage';
 import HomeChrome from '../components/viewport/HomeChrome';
 import Loader from '../components/loader/Loader';
@@ -15,27 +16,55 @@ import styles from './HomePage.module.css';
    immediately. Unchanged from the pre-auto-layout build. */
 const REVEAL_PAUSE_MS = 400;
 
+// Explore Work -> case studies index: a calm scale+crossfade, not a circular
+// reveal or any kind of flip/morph. CaseStudiesIndexPage is already mounted
+// underneath at all times once past the loader (previewMode, exactly one
+// viewport tall — see that component), sitting at opacity 0 so it's
+// invisible but fully laid out — no layout shift when it fades in. Hero
+// handles its own scale-up+fade-out independently (see Hero.tsx); this file
+// only owns the index's fade-in, started on a slight delay after Hero's own
+// exit begins so the two don't read as one hard simultaneous swap.
+const REVEAL_STAGGER_MS = 80;
+const REVEAL_FADE_DURATION = 0.55;
+const REVEAL_FADE_EASE = 'sine.inOut';
+// Small gap after the crossfade finishes before the nav/heading polish
+// plays, and again before we hand off to the real (unwrapped, scrollable)
+// index page — see CaseStudiesIndexPage's own revealPolishAt prop.
+const POLISH_DELAY_MS = 60;
+const POLISH_DURATION_MS = 200;
+
 function HomeContent() {
-  const { view, finishLoading, finishExpand, goHome } = useViewState();
+  const { view, finishLoading, explore, finishExpand, goHome } = useViewState();
   const [cameFromLoader] = useState(view === 'loading');
   const [backgroundVisible, setBackgroundVisible] = useState(!cameFromLoader);
   const [heroReady, setHeroReady] = useState(!cameFromLoader);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const revealElRef = useRef<HTMLDivElement>(null);
+  const [revealPolishAt, setRevealPolishAt] = useState<number | null>(null);
 
   function handleLoaderExitComplete() {
     setBackgroundVisible(true);
     setTimeout(() => setHeroReady(true), REVEAL_PAUSE_MS);
   }
 
-  // Explore Work -> case studies index: an instant switch, no transition
-  // animation. See Hero.tsx / DesktopCarousel.tsx for why: past attempts at a
-  // flip/morph and a circular clip-path reveal both introduced more problems
-  // (broken content, and — for the reveal — an opaque layer that hid Stage's
-  // grid at rest and a Hero card that never actually faded) than they were
-  // worth, and this is the version confirmed working, including the
-  // coverflow's 3D rendering in Safari.
   function handleExplore() {
-    finishExpand();
+    explore();
+    const el = revealElRef.current;
+    if (!el) {
+      finishExpand();
+      return;
+    }
+
+    gsap.to(el, {
+      opacity: 1,
+      duration: REVEAL_FADE_DURATION,
+      ease: REVEAL_FADE_EASE,
+      delay: REVEAL_STAGGER_MS / 1000,
+      onComplete: () => {
+        setRevealPolishAt(Date.now());
+        setTimeout(() => finishExpand(), POLISH_DELAY_MS + POLISH_DURATION_MS);
+      },
+    });
   }
 
   // The fixed/no-scroll single-viewport treatment only applies to the
@@ -68,7 +97,23 @@ function HomeContent() {
         )}
       </AnimatePresence>
 
-      {view === 'hero' && heroReady && (
+      {/* Always mounted (once past the loader) so it's fully laid out and
+          ready well before any click could happen — sits at opacity 0 (not
+          display/visibility, so no layout shift once it fades in) until
+          Explore Work crossfades it in (see handleExplore). pointerEvents
+          stays off since this preview instance is never meant to be
+          interacted with directly. */}
+      {view !== 'loading' && (
+        <div
+          ref={revealElRef}
+          className={styles.revealWrapper}
+          style={{ opacity: 0, pointerEvents: 'none' }}
+        >
+          <CaseStudiesIndexPage onGoHome={goHome} revealPolishAt={revealPolishAt} previewMode />
+        </div>
+      )}
+
+      {(view === 'hero' || view === 'expanding') && heroReady && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
