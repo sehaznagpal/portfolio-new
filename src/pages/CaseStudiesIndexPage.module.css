@@ -140,3 +140,35 @@
 .exploreButton:hover {
   border-color: var(--accent-green);
 }
+
+/* Desktop-only refinements against the Figma desktop reference (coverflow
+   breakpoint — matches useIsDesktopCarousel's own 768px switch, so these
+   never touch the mobile layout above). */
+@media (min-width: 768px) {
+  /* Deliberately less than HomeChrome's own 64px top padding (see
+     HomeChrome.module.css) — the case studies page reads calmer starting
+     tighter to the viewport edge than the hero screen does. The real
+     separation from the nav comes from .mainContent's own `gap` below, not
+     from this. */
+  .mainContent {
+    gap: 72px;
+    padding-top: clamp(32px, calc(32px + (100vw - 768px) * (8 / 512)), 40px);
+    padding-bottom: clamp(72px, calc(72px + (100vw - 768px) * (24 / 512)), 96px);
+  }
+
+  /* .hero's flex-1 would otherwise swallow the gap above (it fills all
+     space after nav and top-aligns its own children), so the 72px lives on
+     the parent's `gap` instead of trying to add it here. */
+  .hero {
+    justify-content: flex-start;
+  }
+
+  /* 64px at 1280 (the Figma value, down from the 96px the old single-curve
+     formula reached there) held flat from 768 up to 1280 — since the
+     calc() term is negative (and so clamped up to the 64px floor) for any
+     width below 1280 — then growing again past 1280, at the same ratio
+     DesktopCarousel's own card width uses (402 -> 446.492), up to 1440+. */
+  .heading {
+    font-size: clamp(64px, calc(64px + (100vw - 1280px) * (8 / 160)), 72px);
+  }
+}

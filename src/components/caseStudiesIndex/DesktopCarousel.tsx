@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { CASE_STUDIES, DEFAULT_ACTIVE_INDEX } from '../../data/caseStudies';
+import CursorTooltip from '../chrome/CursorTooltip';
 import FeaturedCard from './cards/FeaturedCard';
 import styles from './DesktopCarousel.module.css';
 
@@ -28,6 +29,21 @@ const ANIMATION_DURATION = 0.6;
 const WHEEL_THRESHOLD = 20;
 const WHEEL_COOLDOWN_MS = 450;
 
+// The cursor pill's "which zone" boundaries, as a fraction of .perspective's
+// own width — roughly matches the visual edges between the center card and
+// the two side ones (measured off the actual rendered layout at 1280: the
+// center card's edges sit at ~31%/~69%). Deliberately NOT hit-tested off the
+// individual (rotated, receded) card elements themselves: a rotateY + negative
+// translateZ card sits in its own 3D-projected quad that doesn't line up with
+// its own 2D getBoundingClientRect the way a flat element's does, and this
+// environment's hit-testing for that quad was seen to disagree with where it
+// actually paints — so instead this tracks mouse position on the flat,
+// never-transformed .perspective container and derives the zone from plain
+// horizontal position, which is exactly as reliable as .edgeZone's own
+// click-to-step buttons (flat siblings of the 3D ring, for the same reason).
+const HOVER_ZONE_LEFT = 0.35;
+const HOVER_ZONE_RIGHT = 0.65;
+
 type Slot = 'left' | 'center' | 'right';
 
 function getSlot(index: number, activeIndex: number): Slot {
@@ -43,8 +59,11 @@ function getSlot(index: number, activeIndex: number): Slot {
 // `filter` sits on the same element as a 3D transform (or on an element
 // inside that 3D hierarchy) — it forces that element into its own flattened
 // compositing layer, which reads as the whole ring going flat. Keeping
-// `filter`/`opacity` off .slot entirely and on a plain 2D child instead
-// avoids ever creating that conflict in the first place.
+// `opacity` off .slot entirely and on a plain 2D child instead avoids ever
+// creating that conflict in the first place — moot for opacity alone, but
+// kept this way since the inactive card's dimming still lives here even
+// after dropping the blur (see FeaturedCard.module.css's noise texture,
+// which took blur's place as the inactive-card treatment instead).
 function computeSlotProps(slot: Slot, cardWidth: number) {
   // .slot is anchored via left:50%/top:50%, so every card also needs this
   // -50%/-50% self-offset to actually center on that point rather than
@@ -54,7 +73,7 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
   if (slot === 'center') {
     return {
       transform: { ...centering, x: 0, z: 0, rotationY: 0, scale: 1, zIndex: 3 },
-      visual: { opacity: 1, filter: 'none' },
+      visual: { opacity: 1 },
     };
   }
 
@@ -98,7 +117,9 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
       scale: appliedScale,
       zIndex: 1,
     },
-    visual: { opacity: 0.5, filter: 'blur(3px)' },
+    // Lighter + grainy, not blurred (see FeaturedCard.module.css's own
+    // .inactive.plain::after) — 0.3 matches the Figma desktop reference.
+    visual: { opacity: 0.3 },
   };
 }
 
@@ -112,6 +133,7 @@ export default function DesktopCarousel({
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const visualRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(DEFAULT_ACTIVE_INDEX);
+  const [hoverPillText, setHoverPillText] = useState<'scroll' | 'click'>('click');
 
   const isAnimatingRef = useRef(false);
   const isFirstLayoutRef = useRef(true);
@@ -248,6 +270,15 @@ export default function DesktopCarousel({
     navigate(CASE_STUDIES[index].href);
   }
 
+  // See HOVER_ZONE_LEFT/RIGHT's own comment for why this reads the flat
+  // .perspective container's geometry rather than the individual cards'.
+  function handleHoverMove(event: React.MouseEvent) {
+    const rect = perspectiveElRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0) return;
+    const fraction = (event.clientX - rect.left) / rect.width;
+    setHoverPillText(fraction < HOVER_ZONE_LEFT || fraction > HOVER_ZONE_RIGHT ? 'scroll' : 'click');
+  }
+
   return (
     <div
       ref={perspectiveElRef}
@@ -272,32 +303,38 @@ export default function DesktopCarousel({
         onClick={() => stepCarousel(1)}
       />
 
-      <div className={styles.stage}>
-        <div className={styles.ring}>
-          {CASE_STUDIES.map((study, i) => (
-            <div
-              key={study.id}
-              ref={(el) => {
-                cardRefs.current[i] = el;
-              }}
-              className={styles.slot}
-              onClick={() => handleCardClick(i)}
-            >
-              {/* Opacity/blur live here, one level below the 3D-transformed
-                  .slot itself — see computeSlotProps' own comment for why
-                  this split exists. */}
+      <CursorTooltip
+        text={hoverPillText}
+        onHoverMove={handleHoverMove}
+        className={styles.tooltipWrapper}
+      >
+        <div className={styles.stage}>
+          <div className={styles.ring}>
+            {CASE_STUDIES.map((study, i) => (
               <div
+                key={study.id}
                 ref={(el) => {
-                  visualRefs.current[i] = el;
+                  cardRefs.current[i] = el;
                 }}
-                className={styles.slotVisual}
+                className={styles.slot}
+                onClick={() => handleCardClick(i)}
               >
-                <FeaturedCard study={study} active={i === activeIndex} plain />
+                {/* Opacity lives here, one level below the 3D-transformed
+                    .slot itself — see computeSlotProps' own comment for why
+                    this split exists. */}
+                <div
+                  ref={(el) => {
+                    visualRefs.current[i] = el;
+                  }}
+                  className={styles.slotVisual}
+                >
+                  <FeaturedCard study={study} active={i === activeIndex} plain />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </CursorTooltip>
     </div>
   );
 }

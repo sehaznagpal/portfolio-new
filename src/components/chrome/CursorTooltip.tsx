@@ -16,12 +16,18 @@ interface CursorTooltipProps {
   text: string;
   children: ReactNode;
   className?: string;
+  /* Fires alongside the pill's own position tracking, given the raw mouse
+     event — for a caller that needs to derive something else (e.g. which
+     zone of a larger area the cursor is over, to pick `text` dynamically)
+     from the same movement, without it having to attach its own separate
+     listener. */
+  onHoverMove?: (event: React.MouseEvent) => void;
 }
 
 // Small pill that trails the cursor (eased, not 1:1) while hovering its
 // children, mounted via portal so it can't be clipped by an ancestor's
 // overflow. Reusable across any hoverable trigger.
-export default function CursorTooltip({ text, children, className }: CursorTooltipProps) {
+export default function CursorTooltip({ text, children, className, onHoverMove }: CursorTooltipProps) {
   // Touch devices synthesize mouse events on tap, which would otherwise pop
   // the pill in at the tap point and leave it stuck there — a viewport-width
   // check wouldn't catch a touch tablet/laptop using the desktop layout, so
@@ -60,6 +66,7 @@ export default function CursorTooltip({ text, children, className }: CursorToolt
   }, [visible]);
 
   function handleMouseMove(event: React.MouseEvent) {
+    onHoverMove?.(event);
     if (!hasFinePointer) return;
     target.current = { x: event.clientX + OFFSET_X, y: event.clientY + OFFSET_Y };
   }

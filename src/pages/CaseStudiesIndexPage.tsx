@@ -75,9 +75,15 @@ export default function CaseStudiesIndexPage({
           <MobileCarousel onActiveChange={setActiveIndex} />
         )}
 
-        <button type="button" className={styles.exploreButton} onClick={() => navigate(activeStudy.href)}>
-          Explore Case Study
-        </button>
+        {/* Desktop drops this entirely per the Figma reference — the
+            carousel's own click-the-active-card interaction (see its cursor
+            pill) is the only way to open a case study there. Mobile keeps
+            it, since its carousel has no equivalent click-to-open card. */}
+        {!isDesktopCarousel && (
+          <button type="button" className={styles.exploreButton} onClick={() => navigate(activeStudy.href)}>
+            Explore Case Study
+          </button>
+        )}
       </div>
     </div>
   );

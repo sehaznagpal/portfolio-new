@@ -53,6 +53,14 @@
   transform-style: preserve-3d;
 }
 
+/* CursorTooltip's wrapper span sits directly above .stage (see
+   DesktopCarousel.tsx) — display:contents keeps it from generating its own
+   box, so it can't introduce any layout/stacking side effect of its own
+   between .perspective and .stage. */
+.tooltipWrapper {
+  display: contents;
+}
+
 /* Every card shares this one slot width — the active card's own fluid width
    (402px at 1280 -> 446.492px at 1440, the exact Figma numbers) — with every
    other size (the side cards) coming entirely from the transform

@@ -1,10 +1,30 @@
 .card {
+  position: relative;
   container-type: inline-size;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
   flex-shrink: 0;
+}
+
+/* Desktop coverflow's inactive-card treatment (dimmed + grain, no blur — see
+   DesktopCarousel.tsx's own comment on why blur was dropped) layers a noise
+   texture over the whole card so the dimming reads as a deliberate material
+   rather than a flat opacity fade. Opacity itself stays driven by GSAP on
+   the ancestor .slotVisual wrapper (see DesktopCarousel.tsx); this only ever
+   adds the grain, gated on the same real `.inactive` state so it's never
+   present on the active card or on mobile (:not(.plain) owns dimming there
+   instead, and never gets this rule). */
+.inactive.plain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  pointer-events: none;
 }
 
 /* Mobile (MobileCarousel) toggles these two classes directly and relies on
