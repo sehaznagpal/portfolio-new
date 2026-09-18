@@ -1,0 +1,175 @@
+/* Sized entirely relative to the card that hosts it (.card in
+   FeaturedCard.module.css sets container-type: inline-size), so this scales
+   automatically whether it's rendered as the small side card or the big
+   active one — no separate "active size" CSS needed here. */
+.clip {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 364.169 / 279.77;
+  background: var(--case-study-black);
+  overflow: hidden;
+}
+
+.phonePair {
+  position: absolute;
+  inset: 0;
+}
+
+.phone {
+  container-type: inline-size;
+  position: absolute;
+  width: 69.23%;
+  aspect-ratio: 264.063 / 538.494;
+  transform-origin: center center;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backPhone {
+  left: 43.2%;
+  top: 89%;
+  transform: translate(-50%, -50%) rotate(-1.71deg);
+  z-index: 1;
+}
+
+.phonePair.hovered .backPhone {
+  transform: translate(-50%, -50%) rotate(-6.71deg);
+}
+
+.frontPhone {
+  left: 59.51%;
+  top: 122.24%;
+  transform: translate(-50%, -50%) rotate(-1.71deg);
+  z-index: 2;
+}
+
+.phonePair.hovered .frontPhone {
+  transform: translate(-50%, -50%) rotate(4.29deg);
+}
+
+.phoneScreen {
+  position: absolute;
+  left: 4.85%;
+  top: 2.15%;
+  width: 90.3%;
+  height: 95.89%;
+  border-radius: 10.5cqw;
+  overflow: hidden;
+  background: var(--fraud-screen-default);
+}
+
+.ctaScreen {
+  transition: background 280ms ease-out;
+}
+
+.phonePair.hovered .ctaScreen {
+  background: var(--fraud-cta-hover-green);
+}
+
+.phoneBezel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.phoneBezel img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.alertBanner {
+  position: absolute;
+  left: 8.925%;
+  top: 10.46%;
+  width: 82.15%;
+  display: flex;
+  align-items: center;
+  gap: 2.5cqw;
+  background: var(--fraud-alert-bg);
+  border-radius: 0.9cqw;
+  padding: 0.9cqw;
+}
+
+.alertIcon {
+  flex-shrink: 0;
+  width: 8.5cqw;
+  height: 8.5cqw;
+  color: #ff8c00;
+}
+
+.alertText {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 3.1cqw;
+  line-height: 1.15;
+  color: var(--fraud-alert-text);
+}
+
+.alertTextBold {
+  font-weight: 700;
+}
+
+.ctaButtons {
+  position: absolute;
+  left: 6.1%;
+  top: 13%;
+  width: 87.8%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.7cqw;
+}
+
+.cancelButton {
+  padding: 2.2cqw;
+  border-radius: 13.5cqw;
+  background: var(--fraud-cancel-bg);
+  text-align: center;
+  transition: box-shadow 280ms ease-out;
+}
+
+.phonePair.hovered .cancelButton {
+  box-shadow: 0 0 16px 2px rgba(207, 11, 11, 0.55);
+}
+
+.cancelButtonLabel {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 3.1cqw;
+  color: #f5f5f5;
+}
+
+.continueButton {
+  padding: 2.2cqw;
+  border-radius: 13.5cqw;
+  background: #f5f5f5;
+  border: 0.45cqw solid var(--fraud-continue-border);
+  text-align: center;
+}
+
+.continueButtonLabel {
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 3.1cqw;
+  color: var(--fraud-continue-text);
+}
+
+.speechBubble {
+  position: absolute;
+  left: 1.5%;
+  top: 42%;
+  z-index: 3;
+  background: var(--dissertation-navy);
+  border-radius: 999px;
+  padding: 2.2cqw 3.2cqw;
+}
+
+.speechBubbleLabel {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  font-size: 6.5cqw;
+  line-height: 0.8;
+  letter-spacing: -0.08em;
+  color: var(--text-cream);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}

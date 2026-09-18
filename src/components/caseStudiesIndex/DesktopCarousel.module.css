@@ -1,0 +1,68 @@
+/* perspective itself is set inline from DesktopCarousel.tsx's PERSPECTIVE
+   constant (kept in JS since the compensated-scale math there needs the
+   exact same number). Focusable (arrow keys step the carousel) and
+   responds to a trackpad swipe (wheel deltaX) — outline only shows for
+   keyboard focus. No click-and-drag: navigating this carousel is always a
+   deliberate gesture (swipe, edge click, or arrow key), never a press-hold. */
+.perspective {
+  position: relative;
+  width: 100%;
+  height: clamp(460px, 38vw, 540px);
+  outline: none;
+  touch-action: pan-y;
+}
+
+.perspective:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 4px;
+}
+
+/* Invisible click targets for stepping the carousel — sit behind the cards
+   (see the JSX comment) so only genuinely empty margin space triggers them. */
+.edgeZone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.edgeZoneLeft {
+  left: 0;
+}
+
+.edgeZoneRight {
+  right: 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+/* Every card shares this one slot width — the active card's own fluid width
+   (402px at 1280 -> 446.492px at 1440, the exact Figma numbers) — with every
+   other size (the side cards) coming entirely from the transform
+   DesktopCarousel.tsx applies, matching how the Figma-derived sizing ratios
+   are cqw-relative to whatever the card's actual rendered width is. */
+.slot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(402px, calc(402px + (100vw - 1280px) * (44.492 / 160)), 446.492px);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}

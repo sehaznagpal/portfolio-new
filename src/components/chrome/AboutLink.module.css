@@ -1,0 +1,41 @@
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  border: none;
+  background: var(--bg-canvas);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Fast, eased fill sweeping in from the left on hover — a scaleX transform
+   (not a flat color swap), matching PlaygroundLink's .fill exactly (same
+   transform-origin, duration, and easing) so the two paired corner links
+   share one hover language. */
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-green);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.link:hover .fill {
+  transform: scaleX(1);
+}
+
+.label {
+  position: relative;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--chrome-bg);
+  font-feature-settings: 'salt' 1;
+}

@@ -1,0 +1,376 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+/* Left-anchored drawer over part of the screen (the rest of the hero stays
+   fully visible and undimmed, per Figma) — .overlay exists only to catch
+   outside clicks and close the panel. 60vw matches the new Figma frames
+   exactly (768/1280 = 60%, 864/1440 = 60%), so the clamp caps just guard the
+   extremes. */
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(420px, 60vw, 864px);
+  height: 100dvh;
+  background: var(--chrome-bg);
+  box-shadow: 30px 0 80px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  box-sizing: border-box;
+  transform: translateX(-100%);
+  opacity: 0;
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 220ms ease-out;
+}
+
+.panelVisible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .panel {
+    width: 100%;
+    height: 100dvh;
+    transform: translateY(100%);
+    box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.35);
+  }
+
+  .panelVisible {
+    transform: translateY(0);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: clamp(16px, 3vh, 32px);
+  right: clamp(16px, 3vw, 32px);
+  z-index: 5;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid var(--text-cream);
+  background: var(--chrome-bg);
+  color: var(--text-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+  font-feature-settings: 'salt' 1;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.closeButton:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+/* Vertical padding only — horizontal padding lives on .heading/.body/
+   .contactRow individually (see below) so the ticker can bleed edge-to-edge
+   across the panel's full width without fighting a shared inset. Vertical
+   padding is vh-heavy on purpose: on a short viewport this shrinks the
+   frame around the content instead of letting the content get clipped
+   (.scroll never scrolls). */
+.scroll {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(40px, 7vh, 88px);
+  /* More room at the bottom than the top — roughly the same breathing room
+     the corner "about"/"playground" links get from the viewport edge. */
+  padding-bottom: clamp(56px, 10vh, 100px);
+}
+
+.hpad {
+  padding-left: clamp(24px, 6vw, 60px);
+  padding-right: clamp(24px, 6vw, 60px);
+  box-sizing: border-box;
+}
+
+.heading {
+  flex-shrink: 0;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  column-gap: clamp(6px, 1vw, 12px);
+  /* Fluid 72px (393, unchanged) -> 80px (1280), flat beyond, additionally
+     capped by viewport height so a short-but-wide window shrinks it too. */
+  font-size: min(clamp(72px, calc(72px + (100vw - 393px) * (8 / 887)), 80px), 16vh);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.headingItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  letter-spacing: -0.08em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+  text-align: left;
+}
+
+.headingBold {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  letter-spacing: -0.04em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+/* ---------- Ticker ---------- */
+
+/* No horizontal padding here on purpose — this is the one row that bleeds
+   the full panel width edge-to-edge, matching the Figma reference. */
+.tickerViewport {
+  flex-shrink: 0;
+  margin-top: clamp(4px, 1.2vh, 14px);
+  width: 100%;
+  height: min(clamp(24px, min(4.4vw, 4.6vh), 42px), 5.5vh);
+  overflow: hidden;
+  background: var(--accent-green);
+  display: flex;
+  align-items: center;
+}
+
+.tickerTrack {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  /* Slow, steady drift — roughly double the previous speed's duration. */
+  animation: ticker 90s linear infinite;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.tickerCopy {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  /* Fluid 28px (393) -> 32px (1280), flat beyond. */
+  font-size: min(clamp(28px, calc(28px + (100vw - 393px) * (4 / 887)), 32px), 4vh);
+  line-height: 0.8;
+  color: var(--chrome-bg);
+  font-feature-settings: 'salt' 1;
+}
+
+/* ---------- Body copy ---------- */
+
+.body {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(10px, 2.2vh, 26px);
+  text-align: left;
+}
+
+/* Fluid 16px (393) -> 20px (1280), flat beyond, capped by viewport height so
+   short-but-wide windows shrink too — Figma's body/bullets/contact copy
+   plateaus at 20px past the desktop frame. */
+.paragraph {
+  margin: 0;
+  text-align: justify;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: min(clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px), 2.6vh);
+  line-height: 1.2;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.bullets {
+  margin: clamp(10px, 2vh, 22px) 0 0;
+  padding-left: 1.3em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  text-align: left;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: min(clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px), 2.6vh);
+  line-height: 1.2;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+/* ---------- Footer + photo ----------
+
+   Pushed to the bottom of .scroll's flex column via margin-top: auto (not a
+   fixed gap), same trick .heading/.body use to frame the panel — and kept as
+   its own left-aligned column (not sharing a row with the photo), because
+   the photo is a big, independently bleeding decorative circle, not a piece
+   of the text layout. It's positioned absolutely against .scroll itself
+   (see .photo) so the two can occupy the same vertical band without ever
+   colliding: the text column stays capped by .hpad's own inset, the photo
+   bleeds off the opposite (right) edge. */
+.contactRow {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(4px, 0.8vh, 8px);
+  text-align: left;
+}
+
+/* The contact line/links sit at the same corner the photo bleeds into on a
+   narrow panel (by design, same as the pre-auto-layout source — there isn't
+   room for both side-by-side once the photo is this big), so both get a
+   soft drop shadow purely for legibility against whatever part of the photo
+   ends up behind them. */
+.contactLine {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: min(clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px), 2.6vh);
+  line-height: 1.2;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.contactLinks {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.contactLink {
+  position: relative;
+  display: inline-block;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: min(clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px), 2.6vh);
+  line-height: 1.2;
+  color: var(--accent-green);
+  text-decoration: none;
+  font-feature-settings: 'salt' 1;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.contactLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contactLink:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Photo ----------
+
+   Big, bleeding off the panel's right edge by design (clipped there by
+   .scroll's overflow: hidden) at every screen size — restored from the
+   pre-auto-layout source rather than the new Figma frame's inline-in-the-
+   footer-row treatment, which doesn't leave enough room for the contact
+   links on a narrow panel. Sized off both width and height (min(58%, 55vh))
+   so it shrinks on a short viewport exactly like the type above does,
+   instead of overflowing past the visible panel. Bottom-anchored — on a
+   short viewport this can visually overlap the .body text's own bounding
+   box, but the two never actually collide: the text column is capped by
+   .hpad's left inset while this bleeds off the opposite (right) edge. */
+.photo {
+  position: absolute;
+  z-index: 1;
+  right: clamp(-140px, -18%, -60px);
+  bottom: 0;
+  width: clamp(220px, min(64%, 55vh), 560px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Mobile: same big, cut-off-at-the-right-edge look as desktop, but back in
+   normal flow instead of absolutely positioned — an absolute offset had to
+   guess how tall the body copy above it would end up (font size shrinks
+   fluidly, so that height isn't fixed), and either overlapped it or left a
+   huge dead gap depending on viewport height. Normal flow makes "always
+   below the body" structural instead of a guess: this is the next sibling
+   after .body in the DOM (see AboutPanel.tsx), so it can never render above
+   it. margin-top: auto on the photo (not on .contactRow) pushes the
+   photo+footer pair down together as one group, packing the header/ticker/
+   body block at the top and keeping the footer close under the photo with
+   real, but not excessive, bottom margin. */
+@media (max-width: 767px) {
+  .scroll {
+    padding-bottom: clamp(24px, 5vh, 48px);
+  }
+
+  .photo {
+    position: static;
+    align-self: flex-end;
+    margin-top: auto;
+    /* Small bleed past the panel's right edge, clipped by .scroll's
+       overflow: hidden — the same "cut at the side" treatment as desktop,
+       just a shallower cut since there's no free vertical room to offset it
+       into like the absolute version had. */
+    margin-right: clamp(-40px, -8vw, -16px);
+    right: auto;
+    bottom: auto;
+    /* The vh term (missing here previously) is what makes this shrink on a
+       short viewport along with the type above — without it, a short window
+       let this stay large enough to push the contact row past .scroll's own
+       bottom edge, clipped there by overflow: hidden. */
+    width: clamp(100px, min(62vw, 25vh), 320px);
+  }
+
+  .contactRow {
+    margin-top: clamp(12px, 2.5vh, 20px);
+    align-items: center;
+    text-align: center;
+  }
+
+  .contactLinks {
+    justify-content: center;
+  }
+}
+
+/* Tall mobile screens (most phones in portrait) get a much bigger photo —
+   the shared mobile clamp above has to stay small enough to survive a short
+   window (a phone in landscape, a squat popup), which left it looking
+   undersized on the common tall case. min-height gates this independently
+   of max-width, and only touches .photo's own size — nothing here changes
+   desktop. Still capped by a vh term, not just vw, so it can't grow into
+   the body text above even on an unusually narrow-but-tall viewport. */
+@media (max-width: 767px) and (min-height: 700px) {
+  .photo {
+    width: clamp(200px, min(74vw, 32vh), 380px);
+  }
+}

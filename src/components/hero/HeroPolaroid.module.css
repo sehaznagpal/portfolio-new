@@ -1,0 +1,22 @@
+/* Position/width as % of the hero card's own rendered box (native %, resolves
+   against .card in Hero.module.css, which is position: relative). `left` is
+   the anchor point Framer Motion's x:'-50%' centers around (see
+   HeroPolaroid.tsx). Percentages are carried over unchanged from the
+   pre-auto-layout build; the card's aspect ratio now shifts fluidly between a
+   near-square mobile box and a wide desktop one instead of one fixed ratio,
+   so the vertical anchor drifts slightly at in-between sizes — a known,
+   minor approximation, most visible sizes (desktop hover is the primary use)
+   match exactly. */
+.wrapper {
+  position: absolute;
+  left: 73.1663%;
+  top: 1.0684%;
+  width: 36.7247%;
+  pointer-events: none;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}

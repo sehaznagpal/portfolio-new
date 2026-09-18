@@ -1,0 +1,98 @@
+/* Variable font axes confirmed via fontTools inspection of the actual TTFs — see named-instance
+   weight values below; do not assume round 400/700 values, several of these fonts use
+   non-standard instance weights (e.g. Author's "Regular" instance is wght 375, not 400). */
+
+@font-face {
+  font-family: 'Gambetta Variable';
+  src: url('/fonts/Gambetta-Variable.ttf') format('truetype-variations');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gambetta Variable';
+  src: url('/fonts/Gambetta-VariableItalic.ttf') format('truetype-variations');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque Variable';
+  src: url('/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('truetype-variations');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Author Variable';
+  src: url('/fonts/Author-Variable.ttf') format('truetype-variations');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Author Variable';
+  src: url('/fonts/Author-VariableItalic.ttf') format('truetype-variations');
+  font-weight: 200 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Named-instance weights, confirmed via fontTools (not assumed round numbers) */
+  --gambetta-light: 300;
+  --gambetta-regular: 400;
+  --gambetta-medium: 500;
+
+  --bricolage-extralight: 200;
+  --bricolage-light: 300;
+  --bricolage-regular: 400;
+  --bricolage-medium: 500;
+  --bricolage-bold: 700;
+
+  --author-regular: 375;
+  --author-medium: 495;
+  --author-semibold: 596;
+
+  /* Estimated named-instance weights for the MoolRoop card-grid rebuild — not fontTools-confirmed
+     like the values above, just interpolated against each font's declared weight range. Verify
+     precisely if these ever look visibly off against the Figma reference. */
+  --gambetta-bold: 700;
+  --bricolage-extrabold: 800;
+  --author-light: 300;
+}
+
+.font-gambetta-italic {
+  font-family: 'Gambetta Variable', serif;
+  font-style: italic;
+  font-feature-settings: 'salt' 1;
+}
+
+.font-gambetta-upright {
+  font-family: 'Gambetta Variable', serif;
+  font-style: normal;
+  font-feature-settings: 'salt' 1;
+}
+
+.font-bricolage {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-style: normal;
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-feature-settings: 'salt' 1;
+}
+
+.font-author {
+  font-family: 'Author Variable', sans-serif;
+  font-style: normal;
+  font-feature-settings: 'salt' 1;
+}
+
+.font-author-italic {
+  font-family: 'Author Variable', sans-serif;
+  font-style: italic;
+  font-feature-settings: 'salt' 1;
+}

@@ -1,0 +1,36 @@
+:root {
+  /* Canvas / background */
+  --bg-canvas: #e3dccc;
+  --text-cream: #e3dccc;
+  --grid-line: rgba(18, 18, 18, 0.2);
+  --grid-line-spacing: 40px;
+
+  /* Card shell — brand-grey corrected to Figma's current token (#1f1f1f), was #282828 */
+  --card-fill: #1f1f1f;
+  --card-border: #7b7b7b;
+  --card-border-width: 4px;
+  --card-radius: 16px;
+
+  /* Chrome (loader bg, corner links) */
+  --chrome-bg: #121212;
+
+  /* Accent */
+  --accent-green: #a4cf4a;
+
+  /* Case Studies Index — page + card tokens (from Figma) */
+  --case-study-grey: #1f1f1f;
+  --case-study-white: #fefefe;
+  --case-study-light-grey: #7b7b7b;
+  --case-study-black: #121212;
+
+  --dr-cuterus-purple: #76359c;
+  --moolroop-yellow: #d9ce6a;
+  --dissertation-navy: #062d6e;
+  --fraud-cta-hover-green: #25873a;
+  --fraud-alert-bg: #fff090;
+  --fraud-alert-text: #7b6a24;
+  --fraud-cancel-bg: #cf0b0b;
+  --fraud-continue-border: #0b57cf;
+  --fraud-continue-text: #0b57cf;
+  --fraud-screen-default: #f5f5f5;
+}

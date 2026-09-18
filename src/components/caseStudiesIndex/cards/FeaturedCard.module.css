@@ -1,0 +1,177 @@
+.card {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* Mobile (MobileCarousel) toggles these two classes directly and relies on
+   the CSS transition below for the dim/blur crossfade between snapped
+   slides. Desktop (DesktopCarousel) instead drives opacity/filter/scale
+   itself every frame from the continuous rotation angle — see the `plain`
+   prop below — so applying this same transition there would fight that
+   per-frame update. */
+.inactive:not(.plain) {
+  opacity: 0.5;
+  filter: blur(2px);
+  pointer-events: none;
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.active:not(.plain) {
+  opacity: 1;
+  filter: none;
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.active {
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  /* Was `.card`'s own `gap` — but `.card` sets container-type on itself, so a
+     property on `.card` can't reference that same container (only its
+     descendants can) and this silently fell back to resolving against the
+     viewport instead, rendering ~3x too large. Living here on a child fixes
+     the scoping and lands on Figma's actual ~8px (at the 402px reference
+     card width). */
+  margin-bottom: 1.99cqw;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: 4.976cqw;
+  line-height: 0.8;
+  color: var(--case-study-white);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.headerIndex {
+  margin: 0;
+}
+
+.headerTag {
+  margin: 0;
+  text-align: right;
+}
+
+.active .headerTag {
+  color: var(--accent-green);
+}
+
+.box {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--case-study-black);
+  border: 0.389cqw solid var(--case-study-light-grey);
+  border-radius: 2.333cqw;
+  overflow: hidden;
+}
+
+/* ---------- Title (shared type ramp — 13.93cqw is constant across every
+   card and every breakpoint, confirmed against the Figma numbers) ---------- */
+.title {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-size: 13.93cqw;
+  line-height: 0.8;
+  white-space: pre;
+}
+
+.titleItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  letter-spacing: -0.08em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.titleBold {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  letter-spacing: -0.04em;
+  color: var(--text-cream);
+  margin-left: 0.5cqw;
+  font-feature-settings: 'salt' 1;
+}
+
+/* ---------- Dr Cuterus box ---------- */
+.boxDrCuterus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2.333cqw;
+  padding: 5.443cqw 2.333cqw 0;
+}
+
+.boxDrCuterus .title {
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.purpleBand {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.778cqw;
+  background: var(--dr-cuterus-purple);
+  text-align: center;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  font-size: 5.97cqw;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+/* ---------- Fraud box ---------- */
+.boxFraud {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2.333cqw;
+  padding: 3.888cqw 4.666cqw 0;
+}
+
+.boxFraud .title {
+  text-align: right;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* ---------- Moolroop box (visual + title overlap, per Figma) ---------- */
+.boxMoolroop {
+  padding: 5.443cqw 3.888cqw 3.888cqw 4.666cqw;
+}
+
+.moolroopVisualWrap {
+  width: 100%;
+}
+
+.boxMoolroop .title {
+  position: absolute;
+  top: 5.443cqw;
+  right: 3.888cqw;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.boxMoolroop .titleBold {
+  margin-left: 0;
+}

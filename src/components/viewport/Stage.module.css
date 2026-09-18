@@ -1,0 +1,31 @@
+.outer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--chrome-bg);
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-canvas);
+  background-image:
+    repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px var(--grid-line-spacing)),
+    repeating-linear-gradient(to bottom, var(--grid-line) 0 1px, transparent 1px var(--grid-line-spacing));
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.gridVisible {
+  opacity: 1;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}

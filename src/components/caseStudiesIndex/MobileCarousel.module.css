@@ -1,0 +1,23 @@
+.track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 calc(50% - 134.2px);
+  box-sizing: border-box;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex-shrink: 0;
+  width: min(268.367px, 68vw);
+  scroll-snap-align: center;
+}

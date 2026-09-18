@@ -1,0 +1,27 @@
+/* Fixed to the viewport and rendered via portal so it can follow the
+   cursor anywhere on screen without being clipped by an ancestor's
+   overflow or fighting a parent's stacking context. Position is driven
+   imperatively (see CursorTooltip.tsx) via transform, not top/left, so
+   the per-frame lerp update never triggers layout. */
+.pill {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 999px;
+  background: #282828;
+  border: 1px solid #7b7b7b;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 16px;
+  line-height: 1;
+  color: #e3dccc;
+  text-align: center;
+  font-feature-settings: 'salt' 1;
+}

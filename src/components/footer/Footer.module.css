@@ -1,0 +1,118 @@
+/* Sticky-bottom, matching the old portfolio's case study pages exactly: this
+   pins the footer flush to the viewport bottom from scroll position zero —
+   completely stationary the whole time, hidden only because mainContent (see
+   CaseStudiesIndexPage.module.css) sits on top of it with a higher z-index.
+   Nothing about the footer itself ever moves; the reveal is entirely
+   mainContent's own bottom edge rising to uncover it, like a curtain lifting
+   off an already-set stage, rather than the footer sliding into place. */
+.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, calc(28px + (100vw - 393px) * (20 / 887)), 48px);
+  padding: clamp(24px, calc(24px + (100vw - 393px) * (24 / 887)), 48px)
+    clamp(24px, calc(24px + (100vw - 393px) * (40 / 887)), 64px)
+    clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
+  background: var(--case-study-black);
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, calc(20px + (100vw - 393px) * (0 / 887)), 20px);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .top {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.name {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  font-size: clamp(64px, calc(64px + (100vw - 393px) * (20 / 887)), 84px);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.nameItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  letter-spacing: -0.08em;
+  color: var(--case-study-light-grey);
+  font-feature-settings: 'salt' 1;
+}
+
+.nameBold {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  letter-spacing: -0.04em;
+  color: var(--case-study-light-grey);
+  font-feature-settings: 'salt' 1;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .buttons {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+}
+
+.linkGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.linkGroupLabel {
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.link {
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  color: var(--accent-green);
+  text-decoration: none;
+  font-feature-settings: 'salt' 1;
+  transition: opacity 150ms ease-out;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.copyright {
+  margin: 0;
+  text-align: center;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: 16px;
+  color: var(--case-study-light-grey);
+  font-feature-settings: 'salt' 1;
+}

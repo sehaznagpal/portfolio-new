@@ -1,0 +1,142 @@
+.page {
+  background: var(--case-study-black);
+}
+
+/* Reveal technique matched exactly to the old portfolio's case study pages
+   (verified live: there, Footer's own sticky-bottom clamps it fully visible,
+   flush with the viewport bottom, from scroll position ZERO — its rect never
+   changes for the entire scroll range. It stays hidden purely because
+   mainContent sits on top of it with a higher z-index; the reveal is
+   entirely mainContent's own bottom edge rising to uncover it, a curtain
+   lifting off an already-set stage, never the footer sliding into place).
+   Our mainContent has no natural extra height of its own (it's a single
+   pinned interactive section, not a long article), so stickySpacer stands
+   in for that "extra height": mainContent (sticky, exactly 100dvh) stays
+   pinned inside it for exactly one buffer's worth of scroll, then releases
+   and scrolls away in normal flow — by which point Footer's own sticky clamp
+   has *just* run out of room too, so the two meet with no gap and no
+   overlap. */
+.stickySpacer {
+  position: relative;
+  height: calc(100dvh + clamp(220px, calc(220px + (100vw - 393px) * (60 / 1047)), 280px));
+}
+
+.mainContent {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--case-study-grey);
+  padding: clamp(48px, calc(48px + (100vw - 393px) * (16 / 887)), 64px)
+    clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px)
+    clamp(48px, calc(48px + (100vw - 393px) * (24 / 887)), 72px);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.brand {
+  margin: 0;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  letter-spacing: -0.04em;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.brandItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+}
+
+.playground {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  letter-spacing: -0.04em;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+/* Top-anchored, matching the Figma frames exactly — heading, carousel, and
+   button sit close together right under the nav, with empty space reserved
+   below the button rather than the whole block floating centered in the
+   remaining space (which read as a large, mismatched gap under the nav). */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 2vw, 24px);
+  width: 100%;
+  flex: 1;
+  justify-content: flex-start;
+  min-height: 0;
+}
+
+.heading {
+  margin: 0;
+  text-align: center;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(48px, calc(48px + (100vw - 393px) * (36 / 887)), 96px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.headingItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  letter-spacing: -0.06em;
+  color: var(--accent-green);
+}
+
+.exploreButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: var(--case-study-black);
+  border: 1px solid var(--case-study-light-grey);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+  transition: border-color 150ms ease-out;
+}
+
+.exploreButton:hover {
+  border-color: var(--accent-green);
+}

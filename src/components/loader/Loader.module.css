@@ -1,0 +1,22 @@
+.loader {
+  position: absolute;
+  inset: 0;
+  background: var(--chrome-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fluid 20px (393) -> 24px (1280), then flat — matches the Figma loader
+   frames exactly at both breakpoints, replacing the old hard 32px-mobile /
+   24px-desktop split with one continuous curve. */
+.text {
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-feature-settings: 'salt' 1;
+  font-size: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
+  color: var(--accent-green);
+  white-space: nowrap;
+  min-height: 1em;
+}

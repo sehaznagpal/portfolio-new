@@ -1,0 +1,167 @@
+/* Fluid flex-column box matching the new Figma auto-layout structure exactly
+   (mobile/1280/1440 all use the same flex-col, gap, centered pattern — unlike
+   the pre-auto-layout file, there's no separate absolute-position desktop
+   layout vs. flex-column mobile layout to reconcile).
+
+   Every size below is a clamp() interpolated linearly between the 393px and
+   1280px Figma frames, then held flat (or, for properties that keep growing
+   a little past 1280 in the 1440 frame — title size, gap, padding — capped at
+   the 1440 value instead) so there's one continuous curve from phone to
+   desktop with no hard breakpoint jump, per the brief. */
+.card {
+  position: relative;
+  box-sizing: border-box;
+  width: clamp(336px, calc(336px + (100vw - 393px) * (470 / 887)), 862px);
+  max-width: 94vw;
+  padding: clamp(36px, calc(36px + (100vw - 393px) * (16 / 887)), 64px)
+    clamp(32px, calc(32px + (100vw - 393px) * (88 / 887)), 132px);
+  background: var(--card-fill);
+  border: var(--card-border-width) solid var(--card-border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+
+/* Fades out on its own (see Hero.tsx) independently of .card itself, which
+   stays put — only this inner content needs to disappear quickly once
+   Explore Work is clicked. */
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, calc(20px + (100vw - 393px) * (8 / 887)), 32px);
+}
+
+.title {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.15em;
+  font-size: clamp(48px, calc(48px + (100vw - 393px) * (32 / 887)), 80px);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.titleItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  letter-spacing: -0.08em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.titleBold {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  letter-spacing: -0.04em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.paragraph {
+  /* The flex gap between title/paragraph/button is technically equal, but
+     the title's huge display type reads as needing tighter breathing room
+     under it than the smaller paragraph does under itself — pulling it up
+     slightly here (rather than reducing the shared gap, which would also
+     shrink the paragraph-to-button spacing) is what actually balances the
+     three visually. */
+  margin: -0.5em 0 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-style: normal;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  line-height: 1.1;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.question {
+  font-weight: var(--author-semibold);
+  font-style: italic;
+}
+
+.openQuote {
+  margin-right: -0.08em;
+}
+
+.highlight {
+  background: var(--accent-green);
+  color: var(--chrome-bg);
+  padding: 0 2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px clamp(12px, calc(12px + (100vw - 393px) * (4 / 887)), 16px);
+  background: var(--chrome-bg);
+  border: 1px solid var(--text-cream);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 150ms ease-out, border-color 150ms ease-out;
+}
+
+.buttonLabel {
+  position: relative;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+  transition: color 150ms ease-out;
+}
+
+/* Hidden by default — only a hover-capable pointer gets the green sweep
+   reveal; without this, the .sweep/.sweepLabel text would fall into normal
+   document flow (and visibly duplicate "Explore Work") on touch devices
+   where the media query below never applies. */
+.sweep {
+  display: none;
+}
+
+@media (hover: hover) {
+  .sweep {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent-green);
+    border-radius: 4px;
+    clip-path: circle(0% at 100% 100%);
+    transition: clip-path 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .sweepLabel {
+    font-family: 'Bricolage Grotesque Variable', sans-serif;
+    font-weight: var(--bricolage-medium);
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    font-size: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent-green);
+    white-space: nowrap;
+    font-feature-settings: 'salt' 1;
+  }
+
+  .button:hover {
+    border-color: var(--accent-green);
+  }
+
+  .button:hover .sweep {
+    clip-path: circle(150% at 100% 100%);
+  }
+}
