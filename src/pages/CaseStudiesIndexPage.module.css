@@ -31,6 +31,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  /* 140px, matching the Figma mobile frame exactly — nav stays pinned to its
+     own top padding while the heading+cards group gets real breathing room
+     below it, instead of crowding right underneath (overridden back down to
+     72px at the desktop breakpoint below). */
+  gap: 140px;
   background: var(--case-study-grey);
   padding: clamp(48px, calc(48px + (100vw - 393px) * (16 / 887)), 64px)
     clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px)
@@ -66,11 +71,38 @@
   font-style: italic;
 }
 
+/* Same green-fill-sweeps-in-from-the-left hover as PlaygroundLink.tsx (the
+   home page's own corner link) — reproduced here rather than reused
+   directly since that component neither navigates nor fits this nav's dark
+   background/light-text resting state, but the interaction must match
+   exactly for site-wide consistency. */
 .playground {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.playgroundFill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-green);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.playground:hover .playgroundFill {
+  transform: scaleX(1);
+}
+
+.playgroundLabel {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  text-decoration: none;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-light);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
@@ -78,6 +110,11 @@
   letter-spacing: -0.04em;
   color: var(--case-study-white);
   font-feature-settings: 'salt' 1;
+  transition: color 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.playground:hover .playgroundLabel {
+  color: var(--case-study-black);
 }
 
 /* Top-anchored, matching the Figma frames exactly — heading, carousel, and
@@ -88,7 +125,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(16px, 2vw, 24px);
+  /* Space between the "Featured Work" heading and the carousel below it —
+     one continuous fluid scale from 393 to 1440 (64px -> 96px) rather than a
+     mobile-fixed value that then jumps down at the desktop breakpoint, so it
+     stays proportionate to the heading's own growing size at every width. */
+  gap: clamp(64px, calc(64px + (100vw - 393px) * (32 / 1047)), 96px);
   width: 100%;
   flex: 1;
   justify-content: flex-start;
@@ -116,31 +157,6 @@
   color: var(--accent-green);
 }
 
-.exploreButton {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  background: var(--case-study-black);
-  border: 1px solid var(--case-study-light-grey);
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: 'Bricolage Grotesque Variable', sans-serif;
-  font-weight: var(--bricolage-medium);
-  font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
-  line-height: 0.8;
-  letter-spacing: -0.04em;
-  color: var(--case-study-white);
-  font-feature-settings: 'salt' 1;
-  transition: border-color 150ms ease-out;
-}
-
-.exploreButton:hover {
-  border-color: var(--accent-green);
-}
-
 /* Desktop-only refinements against the Figma desktop reference (coverflow
    breakpoint — matches useIsDesktopCarousel's own 768px switch, so these
    never touch the mobile layout above). */
@@ -158,7 +174,9 @@
 
   /* .hero's flex-1 would otherwise swallow the gap above (it fills all
      space after nav and top-aligns its own children), so the 72px lives on
-     the parent's `gap` instead of trying to add it here. */
+     the parent's `gap` instead of trying to add it here. .hero's own gap
+     (heading -> carousel) is a single fluid formula that already spans this
+     breakpoint, so nothing to override here. */
   .hero {
     justify-content: flex-start;
   }

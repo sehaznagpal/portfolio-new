@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useIsDesktopCarousel } from '../lib/useIsDesktopCarousel';
-import { CASE_STUDIES, DEFAULT_ACTIVE_INDEX } from '../data/caseStudies';
+import { DEFAULT_ACTIVE_INDEX } from '../data/caseStudies';
 import DesktopCarousel from '../components/caseStudiesIndex/DesktopCarousel';
 import MobileCarousel from '../components/caseStudiesIndex/MobileCarousel';
 import Footer from '../components/footer/Footer';
+import CursorTooltip from '../components/chrome/CursorTooltip';
 import styles from './CaseStudiesIndexPage.module.css';
 
 export default function CaseStudiesIndexPage({
@@ -32,10 +32,8 @@ export default function CaseStudiesIndexPage({
      nothing overflowing it. */
   previewMode?: boolean;
 }) {
-  const navigate = useNavigate();
   const isDesktopCarousel = useIsDesktopCarousel();
-  const [activeIndex, setActiveIndex] = useState(DEFAULT_ACTIVE_INDEX);
-  const activeStudy = CASE_STUDIES[activeIndex];
+  const [, setActiveIndex] = useState(DEFAULT_ACTIVE_INDEX);
   const navRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLParagraphElement>(null);
 
@@ -58,10 +56,15 @@ export default function CaseStudiesIndexPage({
         <button type="button" className={styles.brand} onClick={onGoHome}>
           <span className={styles.brandItalic}>Sehaz</span> Nagpal
         </button>
-        <a className={styles.playground} href="/experiment-zone">
-          playground
-          <ArrowUpRight className={styles.playgroundArrow} size={14} strokeWidth={2} />
-        </a>
+        <CursorTooltip text="more designs and projects">
+          <a className={styles.playground} href="/experiment-zone">
+            <span className={styles.playgroundFill} aria-hidden="true" />
+            <span className={styles.playgroundLabel}>
+              playground
+              <ArrowUpRight className={styles.playgroundArrow} size={14} strokeWidth={2} />
+            </span>
+          </a>
+        </CursorTooltip>
       </nav>
 
       <div className={styles.hero} id="featured-work">
@@ -73,16 +76,6 @@ export default function CaseStudiesIndexPage({
           <DesktopCarousel onActiveChange={setActiveIndex} />
         ) : (
           <MobileCarousel onActiveChange={setActiveIndex} />
-        )}
-
-        {/* Desktop drops this entirely per the Figma reference — the
-            carousel's own click-the-active-card interaction (see its cursor
-            pill) is the only way to open a case study there. Mobile keeps
-            it, since its carousel has no equivalent click-to-open card. */}
-        {!isDesktopCarousel && (
-          <button type="button" className={styles.exploreButton} onClick={() => navigate(activeStudy.href)}>
-            Explore Case Study
-          </button>
         )}
       </div>
     </div>

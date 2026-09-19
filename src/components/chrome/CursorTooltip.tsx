@@ -16,6 +16,10 @@ interface CursorTooltipProps {
   text: string;
   children: ReactNode;
   className?: string;
+  /* 'light' (default): cream fill, dark text — matches the case-study index
+     page's own dark background. 'dark': black fill, light text — for the
+     light/cream hero background (about + playground corner links there). */
+  variant?: 'light' | 'dark';
   /* Fires alongside the pill's own position tracking, given the raw mouse
      event — for a caller that needs to derive something else (e.g. which
      zone of a larger area the cursor is over, to pick `text` dynamically)
@@ -27,7 +31,7 @@ interface CursorTooltipProps {
 // Small pill that trails the cursor (eased, not 1:1) while hovering its
 // children, mounted via portal so it can't be clipped by an ancestor's
 // overflow. Reusable across any hoverable trigger.
-export default function CursorTooltip({ text, children, className, onHoverMove }: CursorTooltipProps) {
+export default function CursorTooltip({ text, children, className, variant = 'light', onHoverMove }: CursorTooltipProps) {
   // Touch devices synthesize mouse events on tap, which would otherwise pop
   // the pill in at the tap point and leave it stuck there — a viewport-width
   // check wouldn't catch a touch tablet/laptop using the desktop layout, so
@@ -39,6 +43,18 @@ export default function CursorTooltip({ text, children, className, onHoverMove }
   const target = useRef({ x: 0, y: 0 });
   const rafId = useRef<number | null>(null);
 
+  // Keeps the pill's own box fully inside the viewport — near an edge, the
+  // raw cursor-plus-offset target would otherwise push it (or its trailing
+  // lag) partway off-screen. Reads the pill's actual rendered size each
+  // call since that varies with `text`.
+  function clampToViewport(x: number, y: number) {
+    const el = pillRef.current;
+    if (!el) return { x, y };
+    const maxX = Math.max(window.innerWidth - el.offsetWidth, 0);
+    const maxY = Math.max(window.innerHeight - el.offsetHeight, 0);
+    return { x: Math.min(Math.max(x, 0), maxX), y: Math.min(Math.max(y, 0), maxY) };
+  }
+
   useEffect(() => {
     if (!visible) return;
 
@@ -46,7 +62,8 @@ export default function CursorTooltip({ text, children, className, onHoverMove }
       pos.current.x += (target.current.x - pos.current.x) * LERP_FACTOR;
       pos.current.y += (target.current.y - pos.current.y) * LERP_FACTOR;
       if (pillRef.current) {
-        pillRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px)`;
+        const clamped = clampToViewport(pos.current.x, pos.current.y);
+        pillRef.current.style.transform = `translate(${clamped.x}px, ${clamped.y}px)`;
       }
       rafId.current = requestAnimationFrame(tick);
     }
@@ -61,7 +78,8 @@ export default function CursorTooltip({ text, children, className, onHoverMove }
   // doesn't flash in at (0, 0) before the first tick above ever runs.
   useLayoutEffect(() => {
     if (visible && pillRef.current) {
-      pillRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px)`;
+      const clamped = clampToViewport(pos.current.x, pos.current.y);
+      pillRef.current.style.transform = `translate(${clamped.x}px, ${clamped.y}px)`;
     }
   }, [visible]);
 
@@ -95,7 +113,11 @@ export default function CursorTooltip({ text, children, className, onHoverMove }
       {hasFinePointer &&
         visible &&
         createPortal(
-          <div className={styles.pill} ref={pillRef} role="tooltip">
+          <div
+            className={`${styles.pill} ${variant === 'dark' ? styles.pillDark : ''}`}
+            ref={pillRef}
+            role="tooltip"
+          >
             {text}
           </div>,
           document.body,

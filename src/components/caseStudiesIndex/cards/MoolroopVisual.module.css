@@ -63,39 +63,45 @@
   pointer-events: none;
 }
 
+/* Sits low on the phone screen per the Figma reference, but sized to hug its
+   own content (four detail lines) rather than stretched to a fixed height —
+   absolutely positioned against .screen instead of sitting in normal flow,
+   inset from the screen's edges with its own rounded corners. */
 .verifiedPanel {
-  position: relative;
+  position: absolute;
   z-index: 1;
-  width: max-content;
-  max-width: 88%;
-  background: rgba(18, 18, 18, 0.9);
+  left: 6%;
+  right: 6%;
+  bottom: 6%;
+  width: auto;
+  background: rgba(18, 18, 18, 0.92);
   backdrop-filter: blur(4px);
-  border-radius: 2cqw;
-  padding: 3.4cqw 3.9cqw;
+  border-radius: 3cqw;
+  padding: 4cqw 5cqw;
   box-sizing: border-box;
 }
 
 .verifiedHeader {
-  margin: 0 0 1.5cqw;
+  margin: 0 0 2.2cqw;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
   font-style: normal;
-  font-size: 4cqw;
+  font-size: 6.5cqw;
   color: var(--accent-green);
 }
 
 .verifiedDivider {
   border: none;
   border-top: 1px solid rgba(227, 220, 204, 0.4);
-  margin: 0 0 1.5cqw;
+  margin: 0 0 2.2cqw;
 }
 
 .verifiedLine {
-  margin: 0 0 1cqw;
+  margin: 0 0 1.5cqw;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
   font-style: normal;
-  font-size: 3cqw;
+  font-size: 4.8cqw;
   line-height: 1.35;
   color: var(--text-cream);
 }
@@ -106,6 +112,7 @@
 
 .vs {
   position: absolute;
+  z-index: 2;
   left: 45.63%;
   top: 45.47%;
   width: 18.14%;
@@ -125,12 +132,25 @@
   font-feature-settings: 'salt' 1;
 }
 
+/* The source PNG used to carry a lot of transparent canvas around the
+   circle (up to ~50px of a 347px-wide image) at an aspect ratio (347:264)
+   that didn't match the box below — object-fit: contain was letterboxing
+   the image inside that mismatched box, leaving the *visible* stamp well
+   short of the box's own edges no matter how the box was positioned (why
+   "bottom-align the box with the phone" kept reading as not aligned). The
+   asset is now cropped tight to its own content (with a few px of
+   breathing room), so this box's ratio matches it 1:1 and the box's edges
+   ARE the visible circle's edges. Left-anchored flush against .phone's own
+   right edge (0% + 48% width) so it expands rightward without covering the
+   phone photo, and its bottom sits just past .phone's bottom (0% + 96.1%)
+   for a clear, deliberate alignment rather than a near-miss. */
 .stamp {
   position: absolute;
-  left: 54.4%;
-  top: 53.03%;
-  width: 45.5%;
-  height: 46.85%;
+  z-index: 1;
+  left: 48%;
+  top: 55%;
+  width: 49%;
+  height: 41.9%;
   transition: opacity 300ms ease-out;
 }
 

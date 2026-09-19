@@ -64,6 +64,12 @@ export default function MoolroopVisual({ interactive }: { interactive: boolean }
                 <p className={styles.verifiedLine}>
                   <span className={styles.verifiedLabel}>Region:</span> Ladakh, J&amp;K
                 </p>
+                <p className={styles.verifiedLine}>
+                  <span className={styles.verifiedLabel}>Registered:</span> Changthangi Pashm Wool
+                </p>
+                <p className={styles.verifiedLine}>
+                  <span className={styles.verifiedLabel}>Artisan Cluster:</span> Leh Handicrafts Co-op
+                </p>
               </motion.div>
             )}
           </AnimatePresence>

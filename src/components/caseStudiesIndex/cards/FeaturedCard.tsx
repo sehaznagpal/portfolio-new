@@ -60,9 +60,13 @@ export default function FeaturedCard({
             <MoolroopVisual interactive={active} />
           </div>
           <p className={styles.title}>
-            <span className={styles.titleItalic}>The</span>
-            <br aria-hidden />
-            <span className={styles.titleItalic}>Moolroop</span>
+            {/* One flex item spanning both lines (relying on .title's own
+                white-space: pre to render the \n) rather than a sibling
+                <br> — .boxMoolroop .title is flex-direction: column, where a
+                <br> becomes its own empty flex item instead of a soft break,
+                which was opening an unintended gap between "The" and
+                "Moolroop". */}
+            <span className={styles.titleItalic}>{'The\nMoolroop'}</span>
             <span className={styles.titleBold}>App</span>
           </p>
         </div>

@@ -1,8 +1,14 @@
+/* Full-bleed on purpose, breaking out of .mainContent's own side padding
+   (the standard `100vw` breakout trick) — per the Figma mobile frame, the
+   inactive neighbour cards need to peek in from the actual viewport edges,
+   which isn't enough room if this track stayed capped to the padded content
+   width like the nav/heading above it. */
 .track {
   display: flex;
   align-items: center;
-  gap: 32px;
-  width: 100%;
+  gap: 20px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   overflow-x: auto;
   overflow-y: visible;
   scroll-snap-type: x mandatory;

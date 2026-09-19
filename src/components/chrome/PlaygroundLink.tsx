@@ -11,7 +11,7 @@ import styles from './PlaygroundLink.module.css';
    section hasn't been built out in this codebase. */
 export default function PlaygroundLink() {
   return (
-    <CursorTooltip text="more designs and projects">
+    <CursorTooltip text="more designs and projects" variant="dark">
       <button type="button" className={styles.link}>
         <span className={styles.fill} aria-hidden="true" />
         <span className={styles.label}>
