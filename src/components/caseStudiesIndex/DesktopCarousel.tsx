@@ -26,8 +26,17 @@ const ANIMATION_DURATION = 0.6;
 // advances the carousel, one card per gesture. Hovering does nothing, and
 // there's no click-and-drag: a swipe is a plain two-finger trackpad gesture,
 // not a press-and-hold.
-const WHEEL_THRESHOLD = 20;
+// Low on purpose: a trackpad swipe ramps up from near-zero deltaX over its
+// first few wheel events, so a high threshold meant the gesture had to
+// build up momentum before anything happened — reading as a laggy delay
+// before the carousel "caught up". This reacts to the first real movement
+// instead, while still filtering out stray 1-2px jitter.
+const WHEEL_THRESHOLD = 6;
 const WHEEL_COOLDOWN_MS = 450;
+
+// Auto-advance, reset on every step (manual or automatic) so it never fires
+// right on the heels of something the user just did.
+const AUTO_ADVANCE_MS = 8000;
 
 // The cursor pill's "which zone" boundaries, as a fraction of .perspective's
 // own width — roughly matches the visual edges between the center card and
@@ -138,6 +147,7 @@ export default function DesktopCarousel({
   const isAnimatingRef = useRef(false);
   const isFirstLayoutRef = useRef(true);
   const wheelLockedRef = useRef(false);
+  const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function currentCardWidth() {
     return cardRefs.current[0]?.offsetWidth || BASE_CARD_WIDTH;
@@ -194,10 +204,20 @@ export default function DesktopCarousel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex]);
 
+  // Fires on mount (with DEFAULT_ACTIVE_INDEX) and on every subsequent step —
+  // calling onActiveChange (the parent's setState) from *inside* the
+  // setActiveIndex updater below used to do this instead, but an updater
+  // function must stay pure: React can invoke it more than once (it does,
+  // under StrictMode, to check exactly this), and each extra invocation was
+  // firing the parent update again as a side effect, which surfaced as
+  // "Cannot update a component while rendering a different component" and,
+  // in practice, corrupted the render cycle enough to make the auto-advance
+  // timer below fire erratically. An effect keyed on activeIndex is the
+  // correct place for this side effect.
   useEffect(() => {
-    onActiveChange(DEFAULT_ACTIVE_INDEX);
+    onActiveChange(activeIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activeIndex]);
 
   // Re-subscribed on every activeIndex change so handleResize's closure
   // never goes stale — a resize firing right after a step must re-lay-out
@@ -213,16 +233,32 @@ export default function DesktopCarousel({
   }, [activeIndex]);
 
   // delta is the index change directly: +1 steps to the *next* card (array
-  // order: 1 -> 2 -> 3 -> 1), -1 to the *previous*.
+  // order: 1 -> 2 -> 3 -> 1), -1 to the *previous*. Pure updater — see the
+  // onActiveChange effect above for why the parent notification doesn't
+  // live here.
   function stepCarousel(delta: 1 | -1) {
     if (isAnimatingRef.current) return;
     isAnimatingRef.current = true;
-    setActiveIndex((prev) => {
-      const next = (prev + delta + CASE_STUDIES.length) % CASE_STUDIES.length;
-      onActiveChange(next);
-      return next;
-    });
+    setActiveIndex((prev) => (prev + delta + CASE_STUDIES.length) % CASE_STUDIES.length);
+    scheduleAutoAdvance();
   }
+
+  // Recursive setTimeout rather than setInterval — every step (manual or
+  // this timer firing itself) reschedules the next one from scratch, so a
+  // burst of manual swipes can never leave a stale interval queued up to
+  // fire moments later on top of one the user just triggered.
+  function scheduleAutoAdvance() {
+    if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
+    autoAdvanceTimerRef.current = setTimeout(() => stepCarousel(1), AUTO_ADVANCE_MS);
+  }
+
+  useEffect(() => {
+    scheduleAutoAdvance();
+    return () => {
+      if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Trackpad horizontal swipe (deltaX) or a shift-modified wheel. A single
   // gesture fires many wheel events, so a short cooldown turns it into one
@@ -238,8 +274,15 @@ export default function DesktopCarousel({
     function handleWheel(event: WheelEvent) {
       const horizontal =
         Math.abs(event.deltaX) >= Math.abs(event.deltaY) ? event.deltaX : event.shiftKey ? event.deltaY : 0;
-      if (Math.abs(horizontal) < WHEEL_THRESHOLD) return;
+      if (horizontal === 0) return;
+      // Swallow every horizontal-dominant wheel event right away, not just
+      // the ones big enough to step — otherwise the gesture's own first few
+      // (sub-threshold) events fall through to the browser and can trigger
+      // its swipe-to-navigate (back/forward) before this handler ever gets
+      // a chance to preventDefault. This element owns left/right movement
+      // outright while the pointer is over it.
       event.preventDefault();
+      if (Math.abs(horizontal) < WHEEL_THRESHOLD) return;
       if (wheelLockedRef.current) return;
       wheelLockedRef.current = true;
       // A rightward swipe (positive delta) advances to the next card,

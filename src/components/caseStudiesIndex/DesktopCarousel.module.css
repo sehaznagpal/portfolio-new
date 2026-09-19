@@ -10,6 +10,11 @@
   height: clamp(460px, 38vw, 540px);
   outline: none;
   touch-action: pan-y;
+  /* Stops a horizontal swipe here from ever chaining into the browser's own
+     swipe-to-navigate (back/forward) gesture or bubbling to scroll an
+     ancestor — this element is the sole owner of left/right movement while
+     the pointer is over it. */
+  overscroll-behavior-x: contain;
 }
 
 .perspective:focus-visible {
