@@ -3,6 +3,7 @@ import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import gsap from 'gsap';
 import { useHasFinePointer } from '../../lib/useHasFinePointer';
 import HeroPolaroid from './HeroPolaroid';
+import HeroName from './HeroName';
 import styles from './Hero.module.css';
 
 /* The card itself expands in (scale + fade) once the surrounding chrome has
@@ -81,9 +82,8 @@ export default function Hero({
     <div ref={exitRef}>
       <motion.div className={styles.card} variants={cardVariants} initial="hidden" animate="visible">
         <div className={styles.heroContent}>
-          <motion.p className={styles.title} variants={itemVariants}>
-            <span className={styles.titleItalic}>Sehaz</span>
-            <span className={styles.titleBold}>Nagpal</span>
+          <motion.p className={styles.title} variants={itemVariants} aria-label="Sehaz Nagpal">
+            <HeroName />
           </motion.p>
 
           <motion.p className={styles.paragraph} variants={itemVariants}>

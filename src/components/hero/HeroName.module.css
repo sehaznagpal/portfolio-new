@@ -1,0 +1,27 @@
+/* Structural only — every timing/easing/scale value lives in HeroName.tsx's
+   own CONFIG object and is applied inline, so this file has nothing to keep
+   in sync with it. */
+
+.letter {
+  /* Sized entirely by .layerOriginal below (the only child left in normal
+     flow) — .layerAlt is position: absolute and never contributes to this
+     box's size, which is what keeps the swap from ever shifting layout. */
+  position: relative;
+  display: inline-block;
+}
+
+.layer {
+  display: inline-block;
+}
+
+.layerAlt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Decorative overlay only — the wrapper .letter owns pointer handling, and
+     this must never itself become the pointerenter/pointerleave target. */
+  pointer-events: none;
+  transform-origin: center;
+}
