@@ -11,6 +11,15 @@ body,
   padding: 0;
   height: 100%;
   width: 100%;
+  /* Belt-and-suspenders alongside DesktopCarousel's own wheel-event
+     preventDefault (see its own comment): Chrome's swipe-to-navigate
+     back/forward gesture is ultimately controlled by this property on the
+     document itself, not by an individual non-scrolling element further
+     down the tree — the carousel's own `contain` only stops scroll
+     *chaining* to an ancestor, which doesn't apply to it in the first place
+     since it isn't itself a scroll container. Site never uses a horizontal
+     swipe for browser navigation, so this is safe everywhere. */
+  overscroll-behavior-x: none;
 }
 
 body {
