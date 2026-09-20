@@ -1,0 +1,6 @@
+/* Shared by all three individual case-study pages — matches
+   CaseStudiesIndexPage's own .page, so an elastic-overscroll bounce past
+   the hero/placeholder never flashes the cream body background. */
+.page {
+  background: var(--case-study-grey);
+}

@@ -1,0 +1,29 @@
+.poster {
+  width: 100%;
+  height: 100%;
+  background: var(--moolroop-poster-maroon);
+}
+
+.poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mobileImg {
+  display: block;
+}
+
+.desktopImg {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobileImg {
+    display: none;
+  }
+
+  .desktopImg {
+    display: block;
+  }
+}

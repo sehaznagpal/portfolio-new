@@ -1,0 +1,231 @@
+/* Shared shell for all three case-study hero sections — nav, a poster slot
+   (content supplied per case study), title, and the Role/Duration + tag
+   summary row. Every case study's hero uses this exact structure and
+   typography; only the poster's own content differs (see FraudPoster /
+   DrCuterusPoster / MoolroopPoster). One full viewport tall, matching the
+   Figma frames (each is exactly one screen) and the rest of the site's
+   "hero as its own screen" convention (Hero.tsx, CaseStudiesIndexPage). */
+.hero {
+  box-sizing: border-box;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--case-study-grey);
+  /* 24px below 768px, 32px at/above — a flat two-value switch (not a fluid
+     clamp) since that's exactly what both Figma frames specify, with no
+     third data point to interpolate a curve from. */
+  gap: 24px;
+  padding: clamp(48px, calc(48px + (100vw - 393px) * (16 / 887)), 64px)
+    clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    gap: 32px;
+  }
+
+  /* Poster before title at desktop — the opposite order from mobile. */
+  .poster {
+    order: 2;
+  }
+
+  .title {
+    order: 3;
+  }
+}
+
+.nav {
+  order: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.brand {
+  margin: 0;
+  text-decoration: none;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  letter-spacing: -0.04em;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.brandItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+}
+
+/* Identical green-fill-sweep hover to CaseStudiesIndexPage's own playground
+   link (see that file's own comment) — reproduced rather than shared as a
+   component since it's two different anchor targets with the same look. */
+.playground {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.playgroundFill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-green);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.playground:hover .playgroundFill {
+  transform: scaleX(1);
+}
+
+.playgroundLabel {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  letter-spacing: -0.04em;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+  transition: color 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.playground:hover .playgroundLabel {
+  color: var(--case-study-black);
+}
+
+/* The case-study-specific visual (poster) — fills whatever vertical space
+   the fixed-height nav/title/summary siblings leave behind, exactly like
+   the Figma frames' own flex: 1 poster. Below the title in source order
+   (matching the mobile Figma frames) — order: 3 here is redundant with that
+   at the base size, but stated explicitly since the desktop override below
+   only makes sense next to it. */
+.poster {
+  position: relative;
+  order: 3;
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.title {
+  margin: 0;
+  order: 2;
+  width: 100%;
+  text-align: center;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  font-size: clamp(40px, calc(40px + (100vw - 393px) * (24 / 887)), 64px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.summary {
+  order: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.point {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 0.8;
+  white-space: nowrap;
+}
+
+.pointLabel {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  letter-spacing: -0.04em;
+  color: var(--case-study-light-grey);
+}
+
+.pointValue {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-style: normal;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  color: var(--case-study-white);
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.7px solid var(--case-study-white);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-style: normal;
+  font-size: 16px;
+  line-height: 0.8;
+  color: var(--case-study-white);
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .summary {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .points {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .tags {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .pill {
+    border-width: 1px;
+    padding: 4px 12px;
+    font-weight: var(--author-regular);
+  }
+}
