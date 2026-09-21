@@ -16,15 +16,17 @@ import styles from './HomePage.module.css';
    immediately. Unchanged from the pre-auto-layout build. */
 const REVEAL_PAUSE_MS = 400;
 
-// Explore Work -> case studies index: a calm scale+crossfade, not a circular
-// reveal or any kind of flip/morph. CaseStudiesIndexPage is already mounted
-// underneath at all times once past the loader (previewMode, exactly one
-// viewport tall — see that component), sitting at opacity 0 so it's
-// invisible but fully laid out — no layout shift when it fades in. Hero
-// handles its own scale-up+fade-out independently (see Hero.tsx); this file
-// only owns the index's fade-in, started on a slight delay after Hero's own
-// exit begins so the two don't read as one hard simultaneous swap.
-const REVEAL_STAGGER_MS = 80;
+// Explore Work -> case studies index: a calm scale+fade-out of the WHOLE
+// hero chrome (about link, card, playground link together — see chromeRef
+// below), then only once that's fully gone does the index page crossfade
+// in underneath. Sequential, not overlapping: an earlier version started
+// the index fade-in on a slight delay while the chrome was still fading,
+// which left the about/playground corner links — never part of Hero's own
+// local exit animation — sitting fully opaque on top of the incoming page
+// for the whole transition. Owning the exit at this level (rather than
+// inside Hero.tsx) is what lets it cover the entire chrome as one unit.
+const CHROME_EXIT_DURATION = 0.5;
+const CHROME_EXIT_SCALE = 1.08;
 const REVEAL_FADE_DURATION = 0.55;
 const REVEAL_FADE_EASE = 'sine.inOut';
 // Small gap after the crossfade finishes before the nav/heading polish
@@ -40,6 +42,7 @@ function HomeContent() {
   const [heroReady, setHeroReady] = useState(!cameFromLoader);
   const [aboutOpen, setAboutOpen] = useState(false);
   const revealElRef = useRef<HTMLDivElement>(null);
+  const chromeExitRef = useRef<HTMLDivElement>(null);
   const [revealPolishAt, setRevealPolishAt] = useState<number | null>(null);
 
   function handleLoaderExitComplete() {
@@ -49,20 +52,32 @@ function HomeContent() {
 
   function handleExplore() {
     explore();
-    const el = revealElRef.current;
-    if (!el) {
+    const chromeEl = chromeExitRef.current;
+    const revealEl = revealElRef.current;
+    if (!chromeEl || !revealEl) {
       finishExpand();
       return;
     }
 
-    gsap.to(el, {
-      opacity: 1,
-      duration: REVEAL_FADE_DURATION,
-      ease: REVEAL_FADE_EASE,
-      delay: REVEAL_STAGGER_MS / 1000,
+    // Chrome (about + card + playground) fades out first, in full; only
+    // once that's finished does the index page start fading in — see the
+    // comment on the constants above for why this is sequential rather
+    // than staggered/overlapping.
+    gsap.to(chromeEl, {
+      scale: CHROME_EXIT_SCALE,
+      opacity: 0,
+      duration: CHROME_EXIT_DURATION,
+      ease: 'power2.out',
       onComplete: () => {
-        setRevealPolishAt(Date.now());
-        setTimeout(() => finishExpand(), POLISH_DELAY_MS + POLISH_DURATION_MS);
+        gsap.to(revealEl, {
+          opacity: 1,
+          duration: REVEAL_FADE_DURATION,
+          ease: REVEAL_FADE_EASE,
+          onComplete: () => {
+            setRevealPolishAt(Date.now());
+            setTimeout(() => finishExpand(), POLISH_DELAY_MS + POLISH_DURATION_MS);
+          },
+        });
       },
     });
   }
@@ -120,11 +135,22 @@ function HomeContent() {
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           style={{ position: 'absolute', inset: 0, zIndex: 65 }}
         >
-          <HomeChrome onOpenAbout={() => setAboutOpen(true)}>
-            <div className={styles.cardCenter}>
-              <Hero onOpenAbout={() => setAboutOpen(true)} onExplore={handleExplore} />
-            </div>
-          </HomeChrome>
+          {/* Plain (non-motion) wrapper so GSAP's exit scale/fade — see
+              handleExplore — can own this element's transform/opacity
+              outright, same as the framer-motion.div above it does for its
+              own entrance. Explicitly positioned+inset (not just a bare
+              div) so HomeChrome's own position:absolute;inset:0 frame
+              keeps resolving against a properly-sized box once GSAP puts a
+              transform on this element (a transform turns its own element
+              into the containing block for absolutely-positioned
+              descendants, which would otherwise collapse to 0x0). */}
+          <div ref={chromeExitRef} style={{ position: 'absolute', inset: 0 }}>
+            <HomeChrome onOpenAbout={() => setAboutOpen(true)}>
+              <div className={styles.cardCenter}>
+                <Hero onOpenAbout={() => setAboutOpen(true)} onExplore={handleExplore} />
+              </div>
+            </HomeChrome>
+          </div>
         </motion.div>
       )}
 
