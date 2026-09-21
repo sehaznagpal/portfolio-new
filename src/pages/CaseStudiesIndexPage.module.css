@@ -37,11 +37,12 @@
      top of `gap` instead of nothing, so it's gone rather than left as an
      unused landmine. */
   justify-content: flex-start;
-  /* 140px, matching the Figma mobile frame exactly — nav stays pinned to its
-     own top padding while the heading+cards group gets real breathing room
-     below it, instead of crowding right underneath (overridden back down to
-     72px at the desktop breakpoint below). */
-  gap: 140px;
+  /* 36px, matching the new vertical-stack mobile frame (node 1180:1519) —
+     heading now sits close under the nav rather than the old horizontal
+     strip's 140px of breathing room (overridden to 72px at the desktop
+     breakpoint below, which is untouched — the 3D carousel keeps its own
+     original spacing). */
+  gap: 36px;
   background: var(--case-study-grey);
   padding: clamp(48px, calc(48px + (100vw - 393px) * (16 / 887)), 64px)
     clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px)
@@ -131,14 +132,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Space between the "Featured Work" heading and the carousel below it —
-     a plain clamp(min, Nvw, max) rather than the equivalent-but-more-elaborate
-     calc((100vw - base) * ratio) form: fewer nested operations for engines to
-     agree on, and it's a pattern with a long, uneventful cross-browser track
-     record. 40px at/under 1000px width, scaling up to 48px by 1200px, flat
-     beyond — stays in the requested 40-48px band at every size instead of
-     the wider 64-96px this used to allow. */
-  gap: clamp(40px, 4vw, 48px);
+  /* 24px, matching the new vertical-stack mobile frame's heading->cards gap
+     exactly (overridden back to the old fluid 40-48px formula at the
+     desktop breakpoint below, which is untouched). */
+  gap: 24px;
   width: 100%;
   flex: 1;
   justify-content: flex-start;
@@ -147,6 +144,7 @@
 
 .heading {
   margin: 0;
+  flex-shrink: 0;
   text-align: center;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-regular);
@@ -183,11 +181,14 @@
 
   /* .hero's flex-1 would otherwise swallow the gap above (it fills all
      space after nav and top-aligns its own children), so the 72px lives on
-     the parent's `gap` instead of trying to add it here. .hero's own gap
-     (heading -> carousel) is a single fluid formula that already spans this
-     breakpoint, so nothing to override here. */
+     the parent's `gap` instead of trying to add it here. gap restores the
+     original fluid heading -> carousel formula (40px at/under 1000px width,
+     scaling to 48px by 1200px, flat beyond) that the mobile-only 24px above
+     would otherwise override at this breakpoint too — the 3D carousel's own
+     spacing stays exactly as it was. */
   .hero {
     justify-content: flex-start;
+    gap: clamp(40px, 4vw, 48px);
   }
 
   /* 64px at 1280 (the Figma value, down from the 96px the old single-curve

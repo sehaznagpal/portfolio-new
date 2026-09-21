@@ -1,21 +1,33 @@
-/* Full-bleed on purpose, breaking out of .mainContent's own side padding
-   (the standard `100vw` breakout trick) — per the Figma mobile frame, the
-   inactive neighbour cards need to peek in from the actual viewport edges,
-   which isn't enough room if this track stayed capped to the padded content
-   width like the nav/heading above it. */
+/* Vertical stack, inset within the page's own padding (not full-bleed —
+   unlike the old horizontal strip, the Figma frame shows these cards
+   sharing the same left/right margin as the nav and heading above them).
+   flex: 1 + min-height: 0 lets this fill whatever vertical space the nav
+   and heading (both fixed-size, non-scrolling) leave inside .hero, so the
+   card stack becomes its own bounded, independently-scrolling box — the
+   nav/heading above never move as this scrolls, since they're siblings
+   outside it entirely.
+   overscroll-behavior is deliberately left at its default (auto, i.e.
+   chaining allowed) rather than contain: .mainContent stays sticky-pinned
+   for CaseStudiesIndexPage.module.css's own stickySpacer buffer regardless
+   of what scrolls inside it, so a gesture that runs out of cards here and
+   chains up to the page's own scroll doesn't move anything extra — it just
+   keeps consuming that same buffer, which is exactly what already reveals
+   the Footer. Containing it here would instead trap that gesture, making
+   the Footer unreachable by continuing to scroll from inside the card
+   list on touch. */
 .track {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 20px;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  overflow-x: auto;
-  overflow-y: visible;
-  scroll-snap-type: x mandatory;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 0 calc(50% - 134.2px);
-  box-sizing: border-box;
 }
 
 .track::-webkit-scrollbar {

@@ -1,15 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CASE_STUDIES, DEFAULT_ACTIVE_INDEX } from '../../data/caseStudies';
+import { CASE_STUDIES } from '../../data/caseStudies';
 import FeaturedCard from './cards/FeaturedCard';
 import styles from './MobileCarousel.module.css';
 
-/* Mobile behaviour per the brief: no 3D rotation, just a native horizontal
-   scroll-snap strip — the browser's own momentum/snap handles the feel,
-   this only tracks which card has snapped nearest to center so it can be
-   marked active (sharp) and drive the tagline/button rendered by the parent
-   page. None of the desktop carousel's ring/perspective/blur-scale logic
-   applies here. */
+/* Mobile behaviour per the brief: a vertical, native scroll-snap stack (not
+   the old horizontal strip) — the browser's own momentum/snap handles the
+   feel, this only tracks which card has snapped nearest to the track's
+   vertical center so it can be marked active (sharp) and drive the
+   tagline/button rendered by the parent page. None of the desktop
+   carousel's ring/perspective/blur-scale logic applies here.
+
+   Starts at index 0 (not the shared DEFAULT_ACTIVE_INDEX, which is tuned
+   for the desktop coverflow's "featured middle card" framing) — a vertical
+   list naturally opens at its top, scrollTop 0, which is card 0 regardless
+   of which case study that happens to be. Matching that on first paint
+   (rather than force-scrolling to DEFAULT_ACTIVE_INDEX like the old
+   horizontal strip did) is both what the Figma frame shows and avoids an
+   unwanted jump on load. */
 export default function MobileCarousel({
   onActiveChange,
 }: {
@@ -18,13 +26,7 @@ export default function MobileCarousel({
   const navigate = useNavigate();
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(DEFAULT_ACTIVE_INDEX);
-
-  useEffect(() => {
-    const el = cardRefs.current[DEFAULT_ACTIVE_INDEX];
-    el?.scrollIntoView({ inline: 'center', block: 'nearest' });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // Fires on mount and on every subsequent snap — onActiveChange (the
   // parent's setState) used to be called from *inside* the setActiveIndex
@@ -41,12 +43,12 @@ export default function MobileCarousel({
   function handleScroll() {
     const track = trackRef.current;
     if (!track) return;
-    const trackCenter = track.scrollLeft + track.clientWidth / 2;
+    const trackCenter = track.scrollTop + track.clientHeight / 2;
     let closest = 0;
     let closestDelta = Infinity;
     cardRefs.current.forEach((el, i) => {
       if (!el) return;
-      const cardCenter = el.offsetLeft + el.clientWidth / 2;
+      const cardCenter = el.offsetTop + el.clientHeight / 2;
       const delta = Math.abs(cardCenter - trackCenter);
       if (delta < closestDelta) {
         closestDelta = delta;
@@ -61,7 +63,7 @@ export default function MobileCarousel({
       navigate(CASE_STUDIES[index].href);
       return;
     }
-    cardRefs.current[index]?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    cardRefs.current[index]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
 
   return (
