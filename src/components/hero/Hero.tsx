@@ -95,7 +95,9 @@ export default function Hero({
           </span>
         </motion.button>
 
-        <AnimatePresence>{photoVisible && <HeroPolaroid />}</AnimatePresence>
+        <AnimatePresence>
+          {photoVisible && <HeroPolaroid onClick={() => setPhotoVisible(false)} />}
+        </AnimatePresence>
       </div>
     </motion.div>
   );

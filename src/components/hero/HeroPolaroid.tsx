@@ -13,10 +13,11 @@ import styles from './HeroPolaroid.module.css';
    transform, not a CSS `transform`, because Framer Motion takes full ownership of the
    `transform` property on an animated element — a separate CSS transform on the same
    element gets silently overwritten. */
-export default function HeroPolaroid() {
+export default function HeroPolaroid({ onClick }: { onClick?: () => void }) {
   return (
     <motion.div
       className={styles.wrapper}
+      onClick={onClick}
       initial={{ opacity: 0, scale: 0.95, rotate: 0, x: '-50%' }}
       animate={{ opacity: 1, scale: 1, rotate: -2, x: '-50%' }}
       exit={{ opacity: 0, scale: 0.95, rotate: 0, x: '-50%' }}

@@ -12,6 +12,12 @@
   left: 73.1663%;
   top: 1.0684%;
   width: 36.7247%;
+  /* none on desktop so the mouse passes straight through to whatever's
+     underneath — this photo only ever shows there via hover on "I am
+     Sehaz", and if it captured the pointer itself it'd break that hover
+     the instant the cursor crossed onto it. Re-enabled for mobile below,
+     where the interaction is a tap (not hover) and the photo is now big
+     enough to sit on top of its own trigger text. */
   pointer-events: none;
 }
 
@@ -19,4 +25,26 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Mobile-only: the Figma mobile frame (node 1139:1906) sizes this photo at
+   ~55% of the card's own width (vs. desktop's ~37%) — a deliberately much
+   bigger, more dominant photo than the desktop hover peek. Left is still the
+   Framer x: -50% center anchor (see HeroPolaroid.tsx), converted from that
+   frame's edge-relative photo position (left 9.5px / width 179.167px of a
+   328px-wide card -> edge 2.9%, so center = 2.9 + 54.6/2). Desktop is
+   untouched — everything above this query is exactly as it was. */
+@media (max-width: 767px) {
+  .wrapper {
+    left: 30.2%;
+    top: 0%;
+    width: 54.6%;
+    /* Now big enough to cover its own "I am Sehaz" trigger text (which
+       stays untappable underneath it, per the desktop-inherited
+       pointer-events: none above), so tapping the photo itself is the
+       only way to dismiss it here — wired up via HeroPolaroid's onClick
+       prop (see Hero.tsx). */
+    pointer-events: auto;
+    cursor: pointer;
+  }
 }
