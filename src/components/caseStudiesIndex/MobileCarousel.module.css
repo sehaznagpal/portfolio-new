@@ -16,6 +16,13 @@
    the Footer unreachable by continuing to scroll from inside the card
    list on touch. */
 .track {
+  /* Without this, .slide's offsetTop (used by MobileCarousel's own
+     closest-to-center scroll math) resolves against the nearest POSITIONED
+     ancestor further up the tree (.mainContent, which is position: sticky)
+     instead of this scroll container itself — a large, constant offset
+     baked into every card's measured position that threw the active-card
+     detection off for the whole scroll range, not just at the edges. */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

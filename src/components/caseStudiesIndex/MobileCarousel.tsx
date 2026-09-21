@@ -40,6 +40,25 @@ export default function MobileCarousel({
   function handleScroll() {
     const track = trackRef.current;
     if (!track) return;
+
+    // At either scroll extreme, go straight to the boundary card rather
+    // than falling through to the distance check below: a card shorter
+    // than the track's own viewport (Moolroop's, notably) can never have
+    // its center coincide with the track's center — the center-to-center
+    // distance check alone would leave it permanently unreachable even at
+    // max scroll, since the track's own achievable center range falls
+    // short of that short card's center. A 1px tolerance absorbs sub-pixel
+    // scrollTop values that never land on an exact 0 or max.
+    const maxScrollTop = track.scrollHeight - track.clientHeight;
+    if (track.scrollTop <= 1) {
+      setActiveIndex(0);
+      return;
+    }
+    if (track.scrollTop >= maxScrollTop - 1) {
+      setActiveIndex(CASE_STUDIES.length - 1);
+      return;
+    }
+
     const trackCenter = track.scrollTop + track.clientHeight / 2;
     let closest = 0;
     let closestDelta = Infinity;
