@@ -2,12 +2,14 @@
    (content supplied per case study), title, and the Role/Duration + tag
    summary row. Every case study's hero uses this exact structure and
    typography; only the poster's own content differs (see FraudPoster /
-   DrCuterusPoster / MoolroopPoster). One full viewport tall, matching the
-   Figma frames (each is exactly one screen) and the rest of the site's
-   "hero as its own screen" convention (Hero.tsx, CaseStudiesIndexPage). */
+   DrCuterusPoster / MoolroopPoster). Exactly one full viewport tall (not
+   min-height — the poster's own flex: 1 below is what absorbs any slack so
+   nothing here ever needs the page to grow past 100dvh), matching the Figma
+   frames and the rest of the site's "hero as its own screen" convention
+   (Hero.tsx, CaseStudiesIndexPage). */
 .hero {
   box-sizing: border-box;
-  min-height: 100dvh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,6 +18,12 @@
      clamp) since that's exactly what both Figma frames specify, with no
      third data point to interpolate a curve from. */
   gap: 24px;
+  /* Horizontal + bottom padding is this hero's own (Figma-specified)
+     rhythm. Top padding is deliberately the SAME clamp — identical to
+     CaseStudiesIndexPage's own nav inset below 768px — but gets overridden
+     at the desktop breakpoint below to match that page's nav position
+     exactly rather than this page's own Figma frame, per the site-wide
+     "navbar never shifts page-to-page" rule. */
   padding: clamp(48px, calc(48px + (100vw - 393px) * (16 / 887)), 64px)
     clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
 }
@@ -23,6 +31,13 @@
 @media (min-width: 768px) {
   .hero {
     gap: 32px;
+    /* Matches CaseStudiesIndexPage.module.css's .mainContent padding-top
+       formula exactly (32px at 768px growing to 40px at 1280px+) — see the
+       comment on .hero above. Bottom padding is untouched, so the freed-up
+       top space (down from this hero's own 48-64px figure) flows straight
+       into the poster's flex: 1 area below, which is also what gives the
+       poster its slight height increase over the old Figma-only sizing. */
+    padding-top: clamp(32px, calc(32px + (100vw - 768px) * (8 / 512)), 40px);
   }
 
   /* Poster before title at desktop — the opposite order from mobile. */

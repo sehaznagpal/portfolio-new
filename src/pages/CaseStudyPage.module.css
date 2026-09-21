@@ -1,6 +1,18 @@
 /* Shared by all three individual case-study pages — matches
    CaseStudiesIndexPage's own .page, so an elastic-overscroll bounce past
-   the hero/placeholder never flashes the cream body background. */
+   the hero/placeholder never flashes the cream body background.
+   position + z-index matches that same page's .mainContent: sits in normal
+   flow (taller than one viewport on its own, hero + placeholder together),
+   but needs an explicit stacking context above Footer's own z-index: 0 so
+   it opaquely covers the footer — which is already sitting sticky-bottom
+   underneath it the entire time (see Footer.module.css) — until this
+   content's own bottom edge scrolls past the viewport bottom and uncovers
+   it. Same reveal mechanism as the index page, just driven by this
+   content's natural (already more than one viewport) height instead of an
+   artificial spacer, since unlike that page's single pinned section, this
+   one is ordinary flowing content. */
 .page {
+  position: relative;
+  z-index: 1;
   background: var(--case-study-grey);
 }

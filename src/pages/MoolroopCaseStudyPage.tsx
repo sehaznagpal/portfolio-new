@@ -1,6 +1,7 @@
 import CaseStudyHero from '../components/caseStudy/CaseStudyHero';
 import MoolroopPoster from '../components/caseStudy/MoolroopPoster';
 import CaseStudyPlaceholder from '../components/caseStudy/CaseStudyPlaceholder';
+import Footer from '../components/footer/Footer';
 import styles from './CaseStudyPage.module.css';
 
 /* Role/Duration/tags use the desktop Figma frame's values — see the same
@@ -8,16 +9,19 @@ import styles from './CaseStudyPage.module.css';
    case study's leftover text from being duplicated as a starting point. */
 export default function MoolroopCaseStudyPage() {
   return (
-    <div className={styles.page}>
-      <CaseStudyHero
-        title="Making authenticity as easy to verify as price"
-        role="Design & Prototype"
-        duration="1 month (2026)"
-        tags={['Buyer-side Mobile App', 'Figma Prototype']}
-      >
-        <MoolroopPoster />
-      </CaseStudyHero>
-      <CaseStudyPlaceholder />
-    </div>
+    <>
+      <div className={styles.page}>
+        <CaseStudyHero
+          title="Making authenticity as easy to verify as price"
+          role="Design & Prototype"
+          duration="1 month (2026)"
+          tags={['Buyer-side Mobile App', 'Figma Prototype']}
+        >
+          <MoolroopPoster />
+        </CaseStudyHero>
+        <CaseStudyPlaceholder />
+      </div>
+      <Footer />
+    </>
   );
 }

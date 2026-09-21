@@ -1,6 +1,7 @@
 import CaseStudyHero from '../components/caseStudy/CaseStudyHero';
 import DrCuterusPoster from '../components/caseStudy/DrCuterusPoster';
 import CaseStudyPlaceholder from '../components/caseStudy/CaseStudyPlaceholder';
+import Footer from '../components/footer/Footer';
 import styles from './CaseStudyPage.module.css';
 
 /* Role/Duration/tags here use the desktop Figma frame's values — the
@@ -10,16 +11,19 @@ import styles from './CaseStudyPage.module.css';
    values are used for both breakpoints as the evidently-correct data. */
 export default function DrCuterusCaseStudyPage() {
   return (
-    <div className={styles.page}>
-      <CaseStudyHero
-        title="Creating an identity which is unmistakably her"
-        role="Design Lead"
-        duration="4 months (2026)"
-        tags={['Client Project', 'Website Design', 'Design System']}
-      >
-        <DrCuterusPoster />
-      </CaseStudyHero>
-      <CaseStudyPlaceholder />
-    </div>
+    <>
+      <div className={styles.page}>
+        <CaseStudyHero
+          title="Creating an identity which is unmistakably her"
+          role="Design Lead"
+          duration="4 months (2026)"
+          tags={['Client Project', 'Website Design', 'Design System']}
+        >
+          <DrCuterusPoster />
+        </CaseStudyHero>
+        <CaseStudyPlaceholder />
+      </div>
+      <Footer />
+    </>
   );
 }

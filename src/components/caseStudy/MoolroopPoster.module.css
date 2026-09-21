@@ -4,8 +4,16 @@
   background: var(--moolroop-poster-maroon);
 }
 
+/* display intentionally left unset here — .mobileImg/.desktopImg own it
+   below. An element+class selector like "`.poster img`" outranks a
+   class-only one like "`.mobileImg`" regardless of source order, so a
+   `display` declared here would permanently beat their media-query
+   toggle and show both images stacked at once, no matter the viewport —
+   the outer .poster's overflow: hidden (CaseStudyHero.module.css) would
+   then just clip everything below the first (mobile) image's height,
+   stretching its smaller pattern to fill the whole desktop box instead of
+   showing the real desktop artwork underneath. */
 .poster img {
-  display: block;
   width: 100%;
   height: 100%;
 }
