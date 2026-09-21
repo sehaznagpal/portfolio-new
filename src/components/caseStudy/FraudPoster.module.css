@@ -26,10 +26,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Bottom-aligned so the person/sign stays fully in frame at every crop —
-     any cropping needed to fit the frame's aspect ratio comes off the top
-     (sky) instead, never off the bottom. */
-  object-position: center bottom;
+  /* Middle-aligned (matches the Figma crop, which splits the overflow
+     ~evenly top/bottom) so the full figure — sign, arms, and torso — stays
+     in frame; bottom-aligning was cropping the top of the photo away
+     entirely at the taller poster heights this now renders at. */
+  object-position: center;
 }
 
 @media (min-width: 768px) {

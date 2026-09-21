@@ -10,9 +10,8 @@ export interface CaseStudyDef {
 }
 
 /* Order and copy match the Figma "case studies index" frames exactly
-   (node 1168:56 / 1176:805 / 1180:1519) — Dr Cuterus first, Fraud (the
-   dissertation) as the default centered/active card, Moolroop last. This is
-   a different order from the old codebase's hero-flip tab order
+   (node 1168:56 / 1176:805 / 1180:1519) — Dr Cuterus first, Moolroop last.
+   This is a different order from the old codebase's hero-flip tab order
    (Moolroop, Dr Cuterus, Fraud), which this page replaces rather than
    reuses. */
 export const CASE_STUDIES: CaseStudyDef[] = [
@@ -42,4 +41,6 @@ export const CASE_STUDIES: CaseStudyDef[] = [
   },
 ];
 
-export const DEFAULT_ACTIVE_INDEX = 1;
+// Dr Cuterus (index 0) is the default centered/active card on both the
+// desktop coverflow and the mobile vertical stack.
+export const DEFAULT_ACTIVE_INDEX = 0;

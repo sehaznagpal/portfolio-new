@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CASE_STUDIES } from '../../data/caseStudies';
+import { CASE_STUDIES, DEFAULT_ACTIVE_INDEX } from '../../data/caseStudies';
 import FeaturedCard from './cards/FeaturedCard';
 import styles from './MobileCarousel.module.css';
 
@@ -11,13 +11,10 @@ import styles from './MobileCarousel.module.css';
    tagline/button rendered by the parent page. None of the desktop
    carousel's ring/perspective/blur-scale logic applies here.
 
-   Starts at index 0 (not the shared DEFAULT_ACTIVE_INDEX, which is tuned
-   for the desktop coverflow's "featured middle card" framing) — a vertical
-   list naturally opens at its top, scrollTop 0, which is card 0 regardless
-   of which case study that happens to be. Matching that on first paint
-   (rather than force-scrolling to DEFAULT_ACTIVE_INDEX like the old
-   horizontal strip did) is both what the Figma frame shows and avoids an
-   unwanted jump on load. */
+   DEFAULT_ACTIVE_INDEX (card 0, Dr Cuterus) also happens to be a vertical
+   list's natural top-of-scroll position, so no scroll-into-view on mount is
+   needed here the way the old horizontal strip needed one — the list just
+   opens already showing the default card centered/active. */
 export default function MobileCarousel({
   onActiveChange,
 }: {
@@ -26,7 +23,7 @@ export default function MobileCarousel({
   const navigate = useNavigate();
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(DEFAULT_ACTIVE_INDEX);
 
   // Fires on mount and on every subsequent snap — onActiveChange (the
   // parent's setState) used to be called from *inside* the setActiveIndex

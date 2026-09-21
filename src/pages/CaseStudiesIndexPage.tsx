@@ -17,8 +17,11 @@ export default function CaseStudiesIndexPage({
   onGoHome: () => void;
   /* Set by HomePage's scale+crossfade transition (see its own comments) the
      instant the Featured Work fade-in finishes — plays a small, purely
-     decorative fade/slide flourish on the nav + heading as a final "arrived"
-     beat. Everything else on this page (the carousel, the button) stays
+     decorative opacity settle on the nav + heading as a final "arrived"
+     beat. Opacity only, deliberately no y/position movement — an earlier
+     version slid these up from y: 12, which read as a bounce/landing jump
+     right as the page took over; a plain fade keeps this feeling seamless.
+     Everything else on this page (the carousel, the button) stays
      completely static throughout — the crossfade itself does all the
      "unveiling" work, nothing here animates in separately. Left unset for
      any other way of reaching this page (direct nav, browser back, etc.),
@@ -43,11 +46,7 @@ export default function CaseStudiesIndexPage({
       (el): el is HTMLElement => el !== null,
     );
     if (targets.length === 0) return;
-    gsap.fromTo(
-      targets,
-      { opacity: 0.85, y: 12 },
-      { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' },
-    );
+    gsap.fromTo(targets, { opacity: 0.85 }, { opacity: 1, duration: 0.25, ease: 'power2.out' });
   }, [revealPolishAt]);
 
   const mainContent = (
