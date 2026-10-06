@@ -39,12 +39,12 @@
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --sweep-duration: 320ms;
-  --section-duration: 700ms;
-  --section-ease: var(--ease-out-expo);
-  /* prefers-reduced-motion replacement for the section slide */
+  --section-duration: 800ms;
+  --section-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  /* Opacity dip used instead of the slide under reduced motion, and for
+     footer -> hero, which skips the index in between */
+  --section-dip-duration: 400ms;
   --section-fade-duration: 200ms;
-  /* Footer -> hero, which skips the index in between */
-  --section-jump-duration: 450ms;
   /* Hero "me" items emerging from behind the card */
   --pop-duration: 360ms;
   --pop-stagger: 35ms;

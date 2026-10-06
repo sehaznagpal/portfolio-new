@@ -33,15 +33,18 @@ const REVEAL_PAUSE_MS = 400;
 const LOADER_EXIT = { duration: 0.55, ease: [0.16, 1, 0.3, 1] } as const;
 
 /* "/" is three full-screen sections: hero, work index, footer. On desktop
-   they're stacked layers moved one gesture at a time (see useSectionNav and
-   HomePage.module.css); on touch they're plain native scroll-snap. */
+   hero and index share one track moved one gesture at a time, with the
+   footer still behind it (see useSectionNav and HomePage.module.css); on
+   touch they're plain native scroll-snap. */
 export default function HomePage() {
   const [loading, setLoading] = useState(() => !hasSeenLoader());
   const [backgroundVisible, setBackgroundVisible] = useState(!loading);
   const [heroReady, setHeroReady] = useState(!loading);
   const [aboutOpen, setAboutOpen] = useState(false);
   const revealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { section, jumped, goTo, gestureMode, layerRefs } = useSectionNav({ enabled: !loading && !aboutOpen });
+  const { section, from, goTo, gestureMode, layerRefs, trackRef } = useSectionNav({
+    enabled: !loading && !aboutOpen,
+  });
 
   useEffect(
     () => () => {
@@ -84,21 +87,24 @@ export default function HomePage() {
   return (
     <>
       <div
-        className={`${gestureMode ? styles.stack : styles.scroller} ${loading ? styles.locked : ''}`}
+        className={`${gestureMode ? styles.stage : styles.scroller} ${loading ? styles.locked : ''}`}
         data-section={section}
-        data-jumped={jumped || undefined}
+        data-from={from ?? undefined}
       >
-        <div {...layerProps('hero')}>
-          <HeroSection
-            nav={renderNav('light')}
-            backgroundVisible={backgroundVisible}
-            ready={heroReady}
-            onOpenAbout={openAbout}
-            onExplore={() => goTo('work')}
-          />
-        </div>
-        <div {...layerProps('work')}>
-          <WorkSection nav={renderNav('dark')} />
+        <div ref={trackRef} className={styles.track}>
+          <div {...layerProps('hero')}>
+            <HeroSection
+              nav={renderNav('light')}
+              backgroundVisible={backgroundVisible}
+              ready={heroReady}
+              onOpenAbout={openAbout}
+              onExplore={() => goTo('work')}
+            />
+          </div>
+          <div {...layerProps('work')}>
+            <WorkSection nav={renderNav('dark')} />
+          </div>
+          <div className={styles.footerSlot} aria-hidden="true" />
         </div>
         <div {...layerProps('footer')}>
           <Footer

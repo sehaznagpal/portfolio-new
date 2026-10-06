@@ -1,92 +1,52 @@
-.stack,
+.stage,
 .scroller {
   position: fixed;
   inset: 0;
 }
 
-/* ---- Desktop: stacked layers, one gesture per move ----
-   footer (bottom) < hero < work index (top). Only the index moves: it slides
-   up over the hero, and lifts off a stationary footer (the old sticky-footer
-   "curtain" reveal, driven by the gesture instead of scroll position). */
-.stack {
+.layer {
+  position: relative;
+}
+
+/* ---- Desktop: one track, moved by useSectionNav ----
+   The track holds hero, index and an empty slot for the footer. The footer
+   itself sits still behind the track, so moving to that slot lifts the
+   index off it like a curtain. */
+.stage {
   overflow: hidden;
+  background: var(--case-study-black);
 }
 
-.stack .layer {
-  position: absolute;
-  inset: 0;
-}
-
-.stack .layer[inert] {
+.stage .track {
+  position: relative;
+  z-index: 1;
   pointer-events: none;
 }
 
-.stack .footerLayer {
+.stage .heroLayer,
+.stage .workLayer {
+  height: 100vh;
+  pointer-events: auto;
+}
+
+.stage .footerSlot {
+  height: 100vh;
+}
+
+.stage .footerLayer {
+  position: absolute;
+  inset: 0;
   z-index: 0;
 }
 
-/* Hidden while the footer shows, so the index lifts off the footer and not
-   the hero. Coming back from the footer it stays hidden until the index has
-   fully covered the screen again (the delayed visibility switch). */
-.stack .heroLayer {
-  z-index: 1;
-  transition: visibility 0s linear var(--section-duration);
-}
-
-.stack[data-section='footer'] .heroLayer {
+/* Only uncovered while the footer is current or being left, so the opacity
+   dip between hero and index never shows it. */
+.stage:not([data-section='footer']):not([data-from='footer']) .footerLayer {
   visibility: hidden;
-  transition-delay: 0s;
 }
 
-.stack .workLayer {
-  z-index: 2;
-  transform: translateY(100%);
-  transition: transform var(--section-duration) var(--section-ease);
-  will-change: transform;
-}
-
-.stack[data-section='work'] .workLayer {
-  transform: translateY(0);
-}
-
-.stack[data-section='footer'] .workLayer {
-  transform: translateY(-100%);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stack .heroLayer {
-    transition-delay: var(--section-fade-duration);
-  }
-
-  .stack .workLayer,
-  .stack[data-section='work'] .workLayer,
-  .stack[data-section='footer'] .workLayer {
-    transform: none;
-    opacity: 0;
-    transition: opacity var(--section-fade-duration) ease;
-  }
-
-  .stack[data-section='work'] .workLayer {
-    opacity: 1;
-  }
-}
-
-/* Footer -> hero skips over the index: rather than sweeping the index across
-   the whole screen, the index snaps out of the way unseen and the hero fades
-   in over the footer. */
-.stack[data-jumped] .workLayer {
-  transition: none;
-}
-
-.stack[data-jumped][data-section='hero'] .heroLayer {
-  transition: none;
-  animation: layer-fade-in var(--section-jump-duration) var(--section-ease);
-}
-
-@keyframes layer-fade-in {
-  from {
-    opacity: 0;
-  }
+.stage .layer[inert] {
+  pointer-events: none;
 }
 
 /* ---- Touch / narrower screens: native scroll with snap, no hijacking ---- */
@@ -100,16 +60,22 @@
   overflow: hidden;
 }
 
+/* svh, not dvh, so the browser toolbar showing/hiding never resizes a
+   section mid-scroll and nudges the snap points. */
 .scroller .layer {
-  position: relative;
-  height: 100dvh;
+  height: 100svh;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* The stacked mobile footer can be taller than one screen. */
 .scroller .footerLayer {
   height: auto;
-  min-height: 100dvh;
+  min-height: 100svh;
+}
+
+.scroller .footerSlot {
+  display: none;
 }
 
 .loaderLayer {
