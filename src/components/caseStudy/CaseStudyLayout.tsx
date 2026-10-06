@@ -4,14 +4,23 @@ import SiteNav from '../nav/SiteNav';
 import ReadingProgress from '../article/ReadingProgress';
 import AboutPanel from '../about/AboutPanel';
 import Footer from '../footer/Footer';
+import type { FooterPhoto } from '../footer/PunchArea';
 import type { LinkSection } from '../../data/siteLinks';
 import styles from './CaseStudyLayout.module.css';
 
 /* Shell shared by every case study page: the site nav with a reading
-   progress bar, the page content, and the footer revealed underneath it.
-   Progress tracks `children` only; `after` (e.g. a closing link) sits
-   below it, outside the measured content. */
-export default function CaseStudyLayout({ children, after }: { children: ReactNode; after?: ReactNode }) {
+   progress bar, the page content, and the footer (with the case study's
+   own photo) revealed underneath it. Progress tracks `children` only;
+   `after` (e.g. a closing link) sits below it, outside the measured content. */
+export default function CaseStudyLayout({
+  children,
+  after,
+  footerPhoto,
+}: {
+  children: ReactNode;
+  after?: ReactNode;
+  footerPhoto: FooterPhoto;
+}) {
   const navigate = useNavigate();
   const [aboutOpen, setAboutOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -35,7 +44,7 @@ export default function CaseStudyLayout({ children, after }: { children: ReactNo
         </main>
         {after}
       </div>
-      <Footer />
+      <Footer photo={footerPhoto} />
       <AboutPanel
         open={aboutOpen}
         onClose={() => setAboutOpen(false)}

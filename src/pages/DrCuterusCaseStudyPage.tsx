@@ -2,6 +2,7 @@ import CaseStudyHero from '../components/caseStudy/CaseStudyHero';
 import DrCuterusPoster from '../components/caseStudy/DrCuterusPoster';
 import CaseStudyPlaceholder from '../components/caseStudy/CaseStudyPlaceholder';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
+import { FOOTER_PHOTOS } from '../data/footerPhotos';
 
 /* Role/Duration/tags here use the desktop Figma frame's values — the
    mobile frame carries the Fraud case study's own Role/Duration/tags text
@@ -10,7 +11,7 @@ import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
    values are used for both breakpoints as the evidently-correct data. */
 export default function DrCuterusCaseStudyPage() {
   return (
-    <CaseStudyLayout>
+    <CaseStudyLayout footerPhoto={FOOTER_PHOTOS.drCuterus}>
       <CaseStudyHero
         title="Creating an identity which is unmistakably her"
         role="Design Lead"

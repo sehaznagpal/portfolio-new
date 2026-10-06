@@ -189,3 +189,13 @@
     font-size: calc(16 * var(--u));
   }
 }
+
+/* A page's own photo (FooterPhoto.align) at every size. Doubled class so it
+   outranks the Home photo's media-query focal points above. */
+.photo.photoCenter {
+  object-position: center center;
+}
+
+.photo.photoBottom {
+  object-position: center bottom;
+}

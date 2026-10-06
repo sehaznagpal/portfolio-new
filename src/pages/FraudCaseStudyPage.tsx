@@ -8,6 +8,7 @@ import ExperimentSitemap from '../components/caseStudy/fraud/ExperimentSitemap';
 import ResultsGraphs from '../components/caseStudy/fraud/ResultsGraphs';
 import UserJourney from '../components/caseStudy/fraud/UserJourney';
 import { FRAUD_ARTICLE } from '../data/articles/fraud';
+import { FOOTER_PHOTOS } from '../data/footerPhotos';
 import styles from './FraudCaseStudyPage.module.css';
 
 /* Visual band ids used in FRAUD_ARTICLE. */
@@ -21,6 +22,7 @@ const VISUALS = {
 export default function FraudCaseStudyPage() {
   return (
     <CaseStudyLayout
+      footerPhoto={FOOTER_PHOTOS.fraud}
       after={
         <div className={styles.closing}>
           <ArticleButton link={FRAUD_ARTICLE.closingLink} />

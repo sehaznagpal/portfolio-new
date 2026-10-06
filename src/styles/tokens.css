@@ -77,7 +77,7 @@
      the same width as the nav (page minus --page-pad-x each side). */
   --article-gap: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
   --article-column-gap: 40px;
-  --article-body-size: 16px;
+  --article-body-size: clamp(18px, calc(18px + (100vw - 393px) * (2 / 887)), 20px);
   --article-body-leading: 1.45;
   --article-quote-size: clamp(22px, calc(22px + (100vw - 393px) * (6 / 887)), 28px);
   --article-section-title-size: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);

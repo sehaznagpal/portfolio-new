@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { useMediaQuery } from '../../lib/useMediaQuery';
 import SweepButton from '../chrome/SweepButton';
-import photo from '../../assets/images/footer/me.webp';
-import photoTight from '../../assets/images/footer/me-tight.webp';
+import homePhoto from '../../assets/images/footer/me.webp';
+import homePhotoTight from '../../assets/images/footer/me-tight.webp';
 import { PUNCH_SHAPES, PUNCH_SIZE, shapeCursor, shapeScale, shapeViewBox, type PunchShape } from './punchShapes';
 import styles from './PunchArea.module.css';
 
@@ -14,6 +14,16 @@ const PHOTO_HEIGHT = 1124;
 const PHOTO_TIGHT_WIDTH = 843;
 const PHOTO_TIGHT_HEIGHT = 562;
 const PHOTO_TIGHT_MEDIA = '(min-width: 1025px) and (max-height: 760px), (min-width: 1025px) and (min-aspect-ratio: 2/1)';
+
+/* A page's own footer photo, in place of Home's art-directed one. */
+export interface FooterPhoto {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  /* Which part of the photo stays in frame when it's cropped. */
+  align: 'center' | 'bottom';
+}
 
 // Gravity: fall time grows with the square root of the drop distance,
 // clamped so short drops still read as a fall.
@@ -122,8 +132,9 @@ function ChipView({ chip, reducedMotion }: { chip: Chip; reducedMotion: boolean 
 /* Right half of the footer: a black sheet over the photo that visitors
    punch holes in. Each punch drops a brand-colour chip of the same shape onto the
    photo. `keysActive` (when given) decides when ← / → change the shape;
-   otherwise that follows whether the footer is on screen. */
-export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
+   otherwise that follows whether the footer is on screen. Without `photo`
+   it shows Home's photo. */
+export default function PunchArea({ keysActive, photo }: { keysActive?: boolean; photo?: FooterPhoto }) {
   const canHover = useMediaQuery(HOVER_QUERY);
   const reducedMotion = useMediaQuery(REDUCED_MOTION_QUERY);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -273,23 +284,35 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
 
   return (
     <div ref={rootRef} className={styles.area}>
-      <picture>
-        <source
-          media={PHOTO_TIGHT_MEDIA}
-          srcSet={photoTight}
-          width={PHOTO_TIGHT_WIDTH}
-          height={PHOTO_TIGHT_HEIGHT}
-        />
+      {photo ? (
         <img
-          className={styles.photo}
-          src={photo}
-          alt="Sehaz Nagpal"
-          width={PHOTO_WIDTH}
-          height={PHOTO_HEIGHT}
+          className={`${styles.photo} ${photo.align === 'bottom' ? styles.photoBottom : styles.photoCenter}`}
+          src={photo.src}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
           loading="lazy"
           decoding="async"
         />
-      </picture>
+      ) : (
+        <picture>
+          <source
+            media={PHOTO_TIGHT_MEDIA}
+            srcSet={homePhotoTight}
+            width={PHOTO_TIGHT_WIDTH}
+            height={PHOTO_TIGHT_HEIGHT}
+          />
+          <img
+            className={styles.photo}
+            src={homePhoto}
+            alt="Sehaz Nagpal"
+            width={PHOTO_WIDTH}
+            height={PHOTO_HEIGHT}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      )}
 
       <canvas
         ref={canvasRef}

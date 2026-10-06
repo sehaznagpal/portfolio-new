@@ -2,13 +2,14 @@ import CaseStudyHero from '../components/caseStudy/CaseStudyHero';
 import MoolroopPoster from '../components/caseStudy/MoolroopPoster';
 import CaseStudyPlaceholder from '../components/caseStudy/CaseStudyPlaceholder';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
+import { FOOTER_PHOTOS } from '../data/footerPhotos';
 
 /* Role/Duration/tags use the desktop Figma frame's values — see the same
    note in DrCuterusCaseStudyPage.tsx: the mobile frame carries the Fraud
    case study's leftover text from being duplicated as a starting point. */
 export default function MoolroopCaseStudyPage() {
   return (
-    <CaseStudyLayout>
+    <CaseStudyLayout footerPhoto={FOOTER_PHOTOS.moolroop}>
       <CaseStudyHero
         title="Making authenticity as easy to verify as price"
         role="Design & Prototype"

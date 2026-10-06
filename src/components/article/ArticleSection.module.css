@@ -24,9 +24,12 @@
   font-feature-settings: 'salt' 1;
 }
 
-/* Tablet/mobile: one column, each quote above its group. */
+/* Tablet/mobile: one column, each quote above its group. minmax(0, 1fr)
+   so a wide table scrolls inside its own wrapper instead of widening the
+   page. */
 .group {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 

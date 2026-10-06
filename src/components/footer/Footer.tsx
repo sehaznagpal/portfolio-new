@@ -1,6 +1,6 @@
 import { SITE_LINK_GROUPS, type LinkSection } from '../../data/siteLinks';
 import SiteLink from '../chrome/SiteLink';
-import PunchArea from './PunchArea';
+import PunchArea, { type FooterPhoto } from './PunchArea';
 import styles from './Footer.module.css';
 
 interface FooterProps {
@@ -9,12 +9,14 @@ interface FooterProps {
   /* Home passes whether the footer is the current section; elsewhere the
      punch area works that out itself. */
   shapeKeysActive?: boolean;
+  /* The page's own photo; Home's when omitted. */
+  photo?: FooterPhoto;
 }
 
 /* Shared by Home (section 3) and every case study page. Sticky-bottom so on
    the case study pages it sits underneath the page content and is revealed
    as that content scrolls off it (see CaseStudyPage.module.css). */
-export default function Footer({ onSection, shapeKeysActive }: FooterProps) {
+export default function Footer({ onSection, shapeKeysActive, photo }: FooterProps) {
   return (
     <footer className={styles.footer}>
       <div className={styles.upper}>
@@ -36,7 +38,7 @@ export default function Footer({ onSection, shapeKeysActive }: FooterProps) {
       </div>
 
       <div className={styles.punch}>
-        <PunchArea keysActive={shapeKeysActive} />
+        <PunchArea keysActive={shapeKeysActive} photo={photo} />
       </div>
 
       <div className={styles.bottom}>
