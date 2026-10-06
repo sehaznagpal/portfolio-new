@@ -1,0 +1,305 @@
+/* Open/close motion is unchanged from the previous About: slide in from the
+   left with a short fade (up from the bottom on phones), now full-screen. */
+.panel {
+  /* Phone design px (Figma 1367:279 is 393 wide); tablets keep the phone
+     layout, centred and capped at a 480px-wide equivalent. */
+  --m: calc(min(100vw, 480px) / 393);
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--chrome-bg);
+  transform: translateX(-100%);
+  opacity: 0;
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 220ms ease-out;
+}
+
+.panelVisible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .panel {
+    transform: translateY(100%);
+  }
+
+  .panelVisible {
+    transform: translateY(0);
+  }
+}
+
+/* ---- Phone / tablet: one stacked column (Figma 1367:279) ---- */
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(24 * var(--m));
+  min-height: 100%;
+  padding: calc(36 * var(--m)) 0 calc(38 * var(--m));
+}
+
+.closeRow {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: min(100%, calc(393 * var(--m)));
+  padding: 0 calc(36 * var(--m));
+}
+
+.close {
+  border: 1px solid var(--text-cream);
+  background: var(--chrome-bg);
+  padding: calc(6.4 * var(--m)) calc(9.6 * var(--m));
+  color: var(--text-cream);
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(19.2 * var(--m));
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-feature-settings: 'salt' 1;
+  transition:
+    border-color var(--sweep-duration) var(--ease-out-expo),
+    color var(--sweep-duration) var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .close:hover {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+  }
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 4px;
+}
+
+/* Justified, but hyphenated and balanced so no line gets wide word gaps. */
+.intro {
+  margin: 0;
+  width: calc(297 * var(--m));
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: calc(16 * var(--m));
+  line-height: 0.9;
+  color: var(--text-cream);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}
+
+.ticker {
+  width: 110%;
+  font-size: calc(24 * var(--m));
+  transform: rotate(-2deg);
+}
+
+.polaroidSlot {
+  --p: calc(0.6025 * var(--m));
+}
+
+.experience {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--m));
+  width: calc(297 * var(--m));
+}
+
+.experienceHeading {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(20 * var(--m));
+  line-height: 0.9;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.experienceList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--m));
+}
+
+/* role / company on the left, year right-aligned in muted grey. */
+.experienceRow {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(20 * var(--m));
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: calc(16 * var(--m));
+  line-height: 0.9;
+  color: var(--case-study-white);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.year {
+  color: var(--case-study-light-grey);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(4 * var(--m));
+}
+
+.linkRow {
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--m));
+  white-space: nowrap;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-feature-settings: 'salt' 1;
+}
+
+.linkLabel {
+  font-size: calc(16 * var(--m));
+  color: var(--text-cream);
+}
+
+.link {
+  position: relative;
+  font-size: calc(12 * var(--m));
+  color: var(--accent-green);
+}
+
+/* Same underline sweep as the footer links. */
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 380ms var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 4px;
+}
+
+/* ---- Desktop: the Figma 1312:200 composition on a 1280 x 832 frame scaled
+   by the fit unit, centred in the screen, so it always fits with no
+   scrolling. Positions are Figma px x --fit-u. ---- */
+@media (min-width: 900px) {
+  .panel {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .layout {
+    position: relative;
+    display: block;
+    width: calc(1280 * var(--fit-u));
+    height: calc(832 * var(--fit-u));
+    min-height: 0;
+    padding: 0;
+  }
+
+  .closeRow {
+    position: absolute;
+    top: calc(64 * var(--fit-u));
+    right: calc(64 * var(--fit-u));
+    z-index: 3;
+    width: auto;
+    padding: 0;
+  }
+
+  .close {
+    padding: calc(8 * var(--fit-u)) calc(12 * var(--fit-u));
+    font-size: calc(24 * var(--fit-u));
+  }
+
+  .intro {
+    position: absolute;
+    left: calc(621 * var(--fit-u));
+    top: calc(215 * var(--fit-u));
+    width: calc(550 * var(--fit-u));
+    font-size: calc(20 * var(--fit-u));
+  }
+
+  /* Full screen width, tilted, behind the polaroid. */
+  .ticker {
+    position: absolute;
+    top: calc(343.4 * var(--fit-u));
+    left: 50%;
+    z-index: 1;
+    width: 130vw;
+    font-size: calc(32 * var(--fit-u));
+    transform: translate(-50%, -50%) rotate(-2deg);
+  }
+
+  .polaroidSlot {
+    --p: var(--fit-u);
+    position: absolute;
+    left: calc(51.79 * var(--fit-u));
+    top: calc(66 * var(--fit-u));
+    z-index: 2;
+  }
+
+  .experience {
+    position: absolute;
+    left: calc(621 * var(--fit-u));
+    top: calc(400 * var(--fit-u));
+    width: calc(550 * var(--fit-u));
+    gap: calc(12 * var(--fit-u));
+  }
+
+  .experienceHeading {
+    font-size: calc(24 * var(--fit-u));
+  }
+
+  .experienceList {
+    gap: calc(8 * var(--fit-u));
+  }
+
+  .experienceRow {
+    gap: calc(20 * var(--fit-u));
+    font-size: calc(20 * var(--fit-u));
+  }
+
+  .links {
+    position: absolute;
+    left: 50%;
+    bottom: calc(65 * var(--fit-u));
+    gap: 0;
+    transform: translateX(-50%);
+  }
+
+  .linkRow {
+    gap: calc(8 * var(--fit-u));
+  }
+
+  .linkLabel,
+  .link {
+    font-size: calc(20 * var(--fit-u));
+    line-height: normal;
+  }
+}

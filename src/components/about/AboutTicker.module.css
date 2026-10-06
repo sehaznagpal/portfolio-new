@@ -1,0 +1,36 @@
+/* Size, tilt and position come from the caller (AboutPanel.module.css). */
+.band {
+  --ticker-loop-duration: 40s;
+  overflow: hidden;
+  background: var(--accent-green);
+  color: var(--chrome-bg);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  line-height: 1;
+  text-transform: lowercase;
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: ticker-loop var(--ticker-loop-duration) linear infinite;
+}
+
+.half {
+  flex-shrink: 0;
+  white-space: pre;
+}
+
+@keyframes ticker-loop {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

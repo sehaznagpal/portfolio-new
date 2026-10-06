@@ -73,14 +73,20 @@
   }
 }
 
-/* Desktop fluid scale. --u is one Figma pixel (frames are 1280 x 832),
-   scaled by whichever of width or height is tighter so every Home section
+/* Fluid fit unit: one Figma pixel (desktop frames are 1280 x 832), scaled
+   by whichever of width or height is tighter so a full-screen composition
    keeps the Figma proportions and always fits the screen; growth stops at
-   1.6x on very large screens. --space additionally tightens vertical gaps
-   and padding on short screens. */
+   1.6x on very large screens. Defined at every width so layouts with their
+   own desktop breakpoint (About, from 900px) can use it too. */
+:root {
+  --fit-u: min(calc(100vw / 1280), calc(var(--section-h) / 832), 1.6px);
+}
+
+/* Home's desktop scale is the fit unit. --space additionally tightens
+   vertical gaps and padding on short screens. */
 @media (min-width: 1025px) {
   :root {
-    --u: min(calc(100vw / 1280), calc(var(--section-h) / 832), 1.6px);
+    --u: var(--fit-u);
     --space: 1;
     --page-pad-top: calc(64 * var(--u) * var(--space));
     --page-pad-x: calc(64 * var(--u));

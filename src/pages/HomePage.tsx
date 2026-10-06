@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Loader from '../components/loader/Loader';
-import AboutPanel from '../components/chrome/AboutPanel';
+import AboutPanel from '../components/about/AboutPanel';
 import SiteNav, { type NavTheme } from '../components/nav/SiteNav';
 import HeroSection from '../components/home/HeroSection';
 import WorkSection from '../components/home/WorkSection';
@@ -84,7 +84,7 @@ export default function HomePage() {
   return (
     <>
       <div
-        className={`${gestureMode ? styles.stage : styles.scroller} ${loading ? styles.locked : ''}`}
+        className={`${gestureMode ? styles.stage : styles.scroller} ${loading || aboutOpen ? styles.locked : ''}`}
         data-section={section}
         data-from={from ?? undefined}
       >
@@ -104,8 +104,7 @@ export default function HomePage() {
         </div>
         <div {...layerProps('footer')}>
           <Footer
-            onHome={() => goTo('hero')}
-            onWork={() => goTo('work')}
+            onSection={goTo}
             shapeKeysActive={section === 'footer'}
           />
         </div>
@@ -132,7 +131,7 @@ export default function HomePage() {
         )}
       </AnimatePresence>
 
-      <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
+      <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} onSection={goTo} />
     </>
   );
 }
