@@ -73,8 +73,8 @@
       var(--case-header-pad-bottom)
   );
 
-  /* Long-form case study articles (Figma 1261:208) */
-  --article-max-width: 1152px;
+  /* Long-form case study articles (Figma 1261:208). The text column spans
+     the same width as the nav (page minus --page-pad-x each side). */
   --article-gap: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
   --article-column-gap: 40px;
   --article-body-size: 16px;
@@ -85,11 +85,12 @@
   --article-hero-image-ratio: 4 / 3;
 
   /* Visual bands: a huge serif heading with the visual's box overlapping its
-     lower part. Heading size tracks the viewport so it never wraps. */
+     lower part. The box reaches 16px past the text column on each side
+     (Figma: 1184 vs 1152 at 1280); the heading scales with the viewport so
+     it keeps the same proportion to the box and never wraps. */
   --band-pad-y: 24px;
-  --band-pad-x: clamp(16px, calc(16px + (100vw - 393px) * (32 / 887)), 48px);
-  --band-box-max-width: 1184px;
-  --band-heading-size: min(132px, 9.6vw);
+  --band-pad-x: max(16px, calc(var(--page-pad-x) - 16px));
+  --band-heading-size: 9.6vw;
   --band-heading-overlap: 0.3em;
   --band-box-pad: clamp(16px, calc(16px + (100vw - 393px) * (24 / 887)), 40px);
   --band-tone-sky: rgba(178, 206, 255, 0.8);
