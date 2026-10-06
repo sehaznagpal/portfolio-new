@@ -1,24 +1,39 @@
-import CaseStudyHero from '../components/caseStudy/CaseStudyHero';
+import ArticleButton from '../components/article/ArticleButton';
+import ArticleHero from '../components/article/ArticleHero';
+import ArticleSection from '../components/article/ArticleSection';
+import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import FraudPoster from '../components/caseStudy/FraudPoster';
-import CaseStudyPlaceholder from '../components/caseStudy/CaseStudyPlaceholder';
-import Footer from '../components/footer/Footer';
-import styles from './CaseStudyPage.module.css';
+import ResearchStructure from '../components/caseStudy/fraud/ResearchStructure';
+import ExperimentSitemap from '../components/caseStudy/fraud/ExperimentSitemap';
+import ResultsGraphs from '../components/caseStudy/fraud/ResultsGraphs';
+import { FRAUD_ARTICLE } from '../data/articles/fraud';
+import styles from './FraudCaseStudyPage.module.css';
+
+/* Visual band ids used in FRAUD_ARTICLE. The user journey band has no
+   visual yet, so it renders as an empty placeholder box. */
+const VISUALS = {
+  'research-structure': <ResearchStructure />,
+  'experiment-sitemap': <ExperimentSitemap />,
+  results: <ResultsGraphs />,
+};
 
 export default function FraudCaseStudyPage() {
   return (
-    <>
-      <div className={styles.page}>
-        <CaseStudyHero
-          title="A security problem that isn't really about security"
-          role="Sole Researcher and author"
-          duration="1 year (2025-26)"
-          tags={['Choice Architecture', 'RCT Experiment', 'Payment Simulation']}
-        >
-          <FraudPoster />
-        </CaseStudyHero>
-        <CaseStudyPlaceholder />
-      </div>
-      <Footer />
-    </>
+    <CaseStudyLayout
+      after={
+        <div className={styles.closing}>
+          <ArticleButton link={FRAUD_ARTICLE.closingLink} />
+        </div>
+      }
+    >
+      <article className={styles.article}>
+        <div className={styles.hero}>
+          <ArticleHero article={FRAUD_ARTICLE} image={<FraudPoster />} />
+        </div>
+        {FRAUD_ARTICLE.sections.map((section) => (
+          <ArticleSection key={section.number} section={section} visuals={VISUALS} />
+        ))}
+      </article>
+    </CaseStudyLayout>
   );
 }

@@ -1,0 +1,46 @@
+/* Scrolls sideways on its own rather than pushing the page wider. */
+.wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  min-width: min(100%, 360px);
+  border-collapse: collapse;
+  font-family: 'Author Variable', sans-serif;
+  font-size: var(--article-body-size);
+  line-height: 1.2;
+  color: var(--case-study-white);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'salt' 1;
+}
+
+.table th,
+.table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--case-study-light-grey);
+  white-space: nowrap;
+}
+
+.table th:first-child {
+  padding-left: 0;
+}
+
+.table thead th {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  letter-spacing: -0.02em;
+  color: var(--case-study-light-grey);
+  text-align: right;
+}
+
+.table th[scope='row'] {
+  font-weight: var(--author-regular);
+  text-align: left;
+}
+
+.table td {
+  font-weight: var(--author-light);
+  text-align: right;
+}

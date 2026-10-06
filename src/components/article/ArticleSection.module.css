@@ -1,0 +1,91 @@
+/* Full width so visual bands can bleed edge to edge; text rows sit in the
+   centred article column. */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--article-gap);
+}
+
+.column {
+  width: min(100% - 2 * var(--page-pad-x), var(--article-max-width));
+  margin-inline: auto;
+}
+
+.title {
+  margin-block: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--article-section-title-size);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--case-study-white);
+  text-wrap: balance;
+  font-feature-settings: 'salt' 1;
+}
+
+/* Tablet/mobile: one column, each quote above its group. */
+.group {
+  display: grid;
+  gap: 16px;
+}
+
+/* Desktop: quote in the left third, body in the right two thirds. */
+@media (min-width: 1025px) {
+  .group {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: var(--article-column-gap);
+    align-items: start;
+  }
+
+  .body {
+    grid-column: 2;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: var(--article-body-size);
+  line-height: var(--article-body-leading);
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.paragraph,
+.list li {
+  hyphens: auto;
+  text-wrap: pretty;
+}
+
+/* Justified only where the column is wide enough not to open visible word
+   gaps. List items stay ragged: a bold lead-in on a short first line
+   stretches when justified. */
+@media (min-width: 641px) {
+  .paragraph {
+    text-align: justify;
+  }
+}
+
+.paragraph {
+  margin: 0;
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.list li::marker {
+  color: var(--color-brand);
+}
+
+.body strong {
+  font-weight: var(--author-semibold);
+}

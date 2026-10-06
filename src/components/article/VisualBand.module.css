@@ -1,0 +1,71 @@
+/* Same grid surface as the Home hero (Stage.module.css). */
+.band {
+  width: 100%;
+  padding: var(--band-pad-y) var(--band-pad-x);
+  overflow: hidden;
+  background-color: var(--bg-canvas);
+  background-image:
+    repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px var(--grid-line-spacing)),
+    repeating-linear-gradient(to bottom, var(--grid-line) 0 1px, transparent 1px var(--grid-line-spacing));
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, var(--band-box-max-width));
+  margin-inline: auto;
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition:
+    opacity var(--reveal-duration) var(--ease-out-expo),
+    transform var(--reveal-duration) var(--ease-out-expo);
+}
+
+.inner[data-revealed='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner {
+    transform: none;
+  }
+}
+
+/* Pulled under the box by part of its own size (the old Fraud hero's
+   heading-behind-box treatment). */
+.heading {
+  margin: 0 0 calc(-1 * var(--band-heading-overlap));
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-medium);
+  font-size: var(--band-heading-size);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--case-study-grey);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  padding: var(--band-box-pad);
+  border: 1px solid var(--case-study-grey);
+}
+
+.box[data-tone='sky'] {
+  background: var(--band-tone-sky);
+}
+
+.box[data-tone='dark'] {
+  background: var(--band-tone-dark);
+}
+
+.box[data-tone='brand'] {
+  background: var(--band-tone-brand);
+}
+
+.placeholder {
+  aspect-ratio: 16 / 9;
+}

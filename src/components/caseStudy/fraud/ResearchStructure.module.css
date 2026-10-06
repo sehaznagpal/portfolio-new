@@ -1,0 +1,189 @@
+/* Connectors are drawn with borders/pseudo-elements so the chart reflows
+   with its box at every width. Both branches stay side by side; the column
+   centres the split/merge bars run between are calc'd from the grid gap. */
+.chart {
+  --line: var(--dissertation-navy);
+  --line-w: 2px;
+  --stub: 20px;
+  --col-gap: clamp(12px, calc(12px + (100vw - 393px) * (28 / 887)), 40px);
+  --col-centre: calc(25% - var(--col-gap) / 4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 760px);
+  margin-inline: auto;
+  font-family: 'Author Variable', sans-serif;
+  font-size: clamp(13px, calc(13px + (100vw - 393px) * (3 / 887)), 16px);
+  line-height: 1.25;
+  color: var(--dissertation-navy);
+  font-feature-settings: 'salt' 1;
+}
+
+.node {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  text-align: center;
+  font-weight: var(--author-regular);
+}
+
+.anchor {
+  width: min(100%, 440px);
+  background: var(--dissertation-navy);
+  color: var(--case-study-white);
+}
+
+/* Vertical stem between an anchor and the branch bars. */
+.anchor:first-child::after,
+.anchor:last-child::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: var(--line-w);
+  height: var(--stub);
+  background: var(--line);
+  transform: translateX(-50%);
+}
+
+.anchor:first-child::after {
+  top: 100%;
+}
+
+.anchor:last-child::before {
+  bottom: 100%;
+}
+
+.anchor:first-child {
+  margin-bottom: var(--stub);
+}
+
+.anchor:last-child {
+  margin-top: var(--stub);
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.branches {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: var(--col-gap);
+  width: 100%;
+}
+
+/* Split bar on top, merge bar underneath, each spanning the two column
+   centres. */
+.branches::before,
+.branches::after {
+  content: '';
+  position: absolute;
+  left: var(--col-centre);
+  right: var(--col-centre);
+  height: var(--line-w);
+  background: var(--line);
+}
+
+.branches::before {
+  top: 0;
+}
+
+.branches::after {
+  bottom: 0;
+}
+
+.branch {
+  position: relative;
+  margin: 0;
+  padding: var(--stub) 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--stub);
+}
+
+/* One continuous line down each branch, from the split bar to the merge
+   bar, running behind its (opaque) steps. */
+.branch::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: var(--line-w);
+  background: var(--line);
+  transform: translateX(-50%);
+}
+
+.branch > .node {
+  z-index: 1;
+}
+
+.muted {
+  opacity: 0.55;
+}
+
+.muted .node {
+  border-style: dashed;
+  background: var(--dissertation-sky);
+}
+
+.highlightWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.highlightWrap > .branch {
+  flex: 1;
+}
+
+.highlight .node {
+  border-color: var(--case-study-grey);
+  background: var(--color-brand);
+  color: var(--case-study-grey);
+  font-weight: var(--author-semibold);
+}
+
+/* Tab-like label sitting on the highlighted branch's top-right corner. */
+.badge {
+  position: absolute;
+  top: calc(var(--stub) - 0.9em);
+  right: 6px;
+  z-index: 2;
+  margin: 0;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--case-study-grey);
+  color: var(--color-brand);
+  font-size: 0.75em;
+  font-weight: var(--author-medium);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.dimensions {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  font-size: 0.85em;
+  font-weight: var(--author-light);
+}
+
+.dimensions li {
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}

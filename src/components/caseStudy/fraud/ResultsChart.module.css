@@ -1,0 +1,189 @@
+/* Recessive axis and grid, thin bars with a rounded data end, one highlight
+   (CTA in brand yellow) against two neutrals. */
+.card {
+  --label-w: 6.5em;
+  --bar-h: 18px;
+  --bar-gap: 4px;
+  position: relative;
+  margin: 0;
+  padding: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  border: 1px solid var(--case-study-light-grey);
+  border-radius: var(--card-radius);
+  background: var(--case-study-grey);
+  overflow: hidden;
+  font-family: 'Author Variable', sans-serif;
+  font-size: clamp(13px, calc(13px + (100vw - 393px) * (2 / 887)), 15px);
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.title {
+  margin: 0 0 20px;
+  padding-right: 8.5em;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 1.15em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.plot {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.axis {
+  position: relative;
+  height: 1.2em;
+  margin-left: var(--label-w);
+  margin-right: 2em;
+  color: var(--case-study-light-grey);
+  font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bar-gap);
+}
+
+.groupLabel {
+  margin: 0 0 4px;
+  font-weight: var(--author-medium);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--label-w) minmax(0, 1fr);
+  align-items: center;
+}
+
+.rowLabel {
+  color: var(--text-cream);
+}
+
+/* The 0 to 100% scale. Right margin leaves room for the value label. */
+.track {
+  position: relative;
+  height: var(--bar-h);
+  margin-right: 2em;
+}
+
+.gridLine {
+  position: absolute;
+  top: calc(-1 * var(--bar-gap) / 2);
+  bottom: calc(-1 * var(--bar-gap) / 2);
+  width: 1px;
+  background: rgba(123, 123, 123, 0.35);
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.bar[data-tone='control'] {
+  background: var(--case-study-light-grey);
+}
+
+.bar[data-tone='warning'] {
+  background: var(--text-cream);
+}
+
+.bar[data-tone='cta'] {
+  background: var(--color-brand);
+}
+
+.value {
+  position: absolute;
+  top: 50%;
+  padding-left: 6px;
+  transform: translateY(-50%);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Covers the whole card so a tap anywhere toggles the overlay; its visible
+   pill sits in the top-right corner. */
+.toggle {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  border-radius: inherit;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -2px;
+}
+
+.toggleLabel {
+  padding: 4px 10px;
+  border: 1px solid var(--color-brand);
+  border-radius: 999px;
+  font-size: 0.85em;
+  line-height: 1;
+  color: var(--color-brand);
+}
+
+/* Above the toggle but click-through, so the same tap closes it again. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px;
+  text-align: center;
+  background: rgba(18, 18, 18, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--sweep-duration) var(--ease-out-expo);
+}
+
+.card[data-open='true'] .overlay {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .overlay {
+    opacity: 1;
+  }
+}
+
+.overlayHeading {
+  margin: 0;
+  font-weight: var(--author-medium);
+  font-size: 1.25em;
+  color: var(--color-brand);
+}
+
+.overlayText {
+  margin: 0;
+  max-width: 44ch;
+  font-weight: var(--author-regular);
+  font-size: 1.05em;
+  line-height: 1.4;
+  text-wrap: pretty;
+}

@@ -1,0 +1,15 @@
+.track {
+  width: 100%;
+  height: var(--progress-h);
+  background: var(--case-study-black);
+  overflow: hidden;
+}
+
+.bar {
+  width: 100%;
+  height: 100%;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}

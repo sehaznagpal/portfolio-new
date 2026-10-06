@@ -1,0 +1,253 @@
+/* Ported from the old repo's Experiment Flow view: same structure, current
+   tokens, and fluid instead of a fixed 560px canvas. Connectors are CSS
+   lines so the diagram reflows with its band box. */
+.flow {
+  --line: var(--case-study-light-grey);
+  --line-w: 2px;
+  --stub: 24px;
+  --gap: clamp(8px, calc(8px + (100vw - 393px) * (8 / 887)), 16px);
+  --loop-gutter: 40px;
+  --diamond-w: clamp(150px, calc(150px + (100vw - 393px) * (50 / 887)), 200px);
+  --diamond-h: calc(var(--diamond-w) * 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 640px);
+  margin-inline: auto;
+  padding-right: var(--loop-gutter);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: clamp(13px, calc(13px + (100vw - 393px) * (2 / 887)), 15px);
+  line-height: 1.25;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.node,
+.groupNode,
+.scenarioNode {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--case-study-grey);
+  text-align: center;
+}
+
+.note {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.9em;
+  color: var(--text-cream);
+  opacity: 0.8;
+}
+
+.nodeAccent {
+  border-color: var(--color-brand);
+}
+
+.nodeFinal {
+  border-color: var(--color-brand);
+  background: var(--color-brand);
+  color: var(--case-study-grey);
+  font-weight: var(--author-regular);
+}
+
+.nodeFinal .note {
+  color: inherit;
+}
+
+.connector {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--line-w);
+  height: 28px;
+  background: var(--line);
+}
+
+/* Arrowhead */
+.connector::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid var(--line);
+}
+
+/* Three groups: a split bar above and a merge bar below, each spanning the
+   outer column centres, with a stub into and out of every group. */
+.split {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+  width: 100%;
+  padding-block: var(--stub);
+}
+
+.split::before,
+.split::after {
+  content: '';
+  position: absolute;
+  left: calc(100% / 6 - var(--gap) / 3);
+  right: calc(100% / 6 - var(--gap) / 3);
+  height: var(--line-w);
+  background: var(--line);
+}
+
+.split::before {
+  top: 0;
+}
+
+.split::after {
+  bottom: 0;
+}
+
+.groupNode {
+  padding-inline: 8px;
+}
+
+.groupNode::before,
+.groupNode::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: var(--line-w);
+  height: var(--stub);
+  background: var(--line);
+  transform: translateX(-50%);
+}
+
+.groupNode::before {
+  bottom: 100%;
+}
+
+.groupNode::after {
+  top: 100%;
+}
+
+/* Same three tones as the results charts. */
+.groupControl {
+  border-color: var(--case-study-light-grey);
+}
+
+.groupWarning {
+  border-color: var(--text-cream);
+  background: var(--text-cream);
+  color: var(--case-study-grey);
+}
+
+.groupCta {
+  border-color: var(--color-brand);
+  background: var(--color-brand);
+  color: var(--case-study-grey);
+}
+
+.loopRegion {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.subgraph {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px;
+  border: 1px dashed var(--color-brand);
+  border-radius: 8px;
+  background: var(--case-study-black);
+}
+
+.subgraphLabel {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 0.93em;
+  color: var(--text-cream);
+  opacity: 0.7;
+}
+
+.scenarioRow {
+  display: grid;
+  gap: var(--gap);
+}
+
+@media (min-width: 641px) {
+  .scenarioRow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.scenarioNode {
+  padding-inline: 10px;
+  font-size: 0.93em;
+}
+
+.diamond {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--diamond-w);
+  height: var(--diamond-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-brand);
+  color: var(--case-study-grey);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.diamondText {
+  width: 62%;
+  font-size: 0.93em;
+  font-weight: var(--author-regular);
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* "No" loop: up the right-hand gutter from the diamond's right point back
+   to the scenario sequence. This box spans the region plus most of the
+   gutter and draws only its right edge; the stubs reach in from that edge,
+   so 100% in them is the region width plus the gutter (minus 8px). */
+.loopLine {
+  position: absolute;
+  top: 32px;
+  bottom: calc(var(--diamond-h) / 2);
+  left: 0;
+  right: calc(-1 * var(--loop-gutter) + 8px);
+  border-right: var(--line-w) solid var(--line);
+  pointer-events: none;
+}
+
+.loopLine::before,
+.loopLine::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  height: var(--line-w);
+  background: var(--line);
+}
+
+.loopLine::before {
+  top: 0;
+  width: calc(var(--loop-gutter) - 8px);
+}
+
+/* Gutter plus half the spare width beside the diamond. */
+.loopLine::after {
+  bottom: 0;
+  width: calc((100% + var(--loop-gutter) - 8px - var(--diamond-w)) / 2);
+}
+
+.branchLabel {
+  margin: 8px 0 0;
+  font-size: 0.87em;
+  text-align: center;
+  color: var(--text-cream);
+  opacity: 0.8;
+}

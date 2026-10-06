@@ -1,0 +1,16 @@
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--article-gap) * 1.5);
+  padding-top: var(--article-gap);
+}
+
+.hero {
+  padding-inline: var(--page-pad-x);
+}
+
+.closing {
+  display: flex;
+  justify-content: center;
+  padding: calc(var(--article-gap) * 2) var(--page-pad-x) calc(var(--article-gap) * 3);
+}

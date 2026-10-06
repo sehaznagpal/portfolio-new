@@ -1,0 +1,13 @@
+.button {
+  --chip-bg: var(--case-study-white);
+  padding: 4px 12px;
+  color: var(--case-study-grey);
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(18px, calc(18px + (100vw - 393px) * (6 / 887)), 24px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}

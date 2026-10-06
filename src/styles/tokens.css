@@ -61,6 +61,42 @@
   /* Page padding: fluid from 393 up to the Figma 1280 value, flat beyond */
   --page-pad-top: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
   --page-pad-x: clamp(24px, calc(24px + (100vw - 393px) * (40 / 887)), 64px);
+
+  /* Case study header: the shared nav plus the reading progress bar. Half
+     the page top padding so the sticky bar costs less reading height. */
+  --progress-h: 4px;
+  --progress-gap: 8px;
+  --case-header-pad-top: calc(var(--page-pad-top) / 2);
+  --case-header-pad-bottom: 12px;
+  --case-header-h: calc(
+    var(--case-header-pad-top) + var(--nav-height) + var(--progress-gap) + var(--progress-h) +
+      var(--case-header-pad-bottom)
+  );
+
+  /* Long-form case study articles (Figma 1261:208) */
+  --article-max-width: 1152px;
+  --article-gap: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
+  --article-column-gap: 40px;
+  --article-body-size: 16px;
+  --article-body-leading: 1.45;
+  --article-quote-size: clamp(22px, calc(22px + (100vw - 393px) * (6 / 887)), 28px);
+  --article-section-title-size: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
+  --article-hero-image-h: 480px;
+  --article-hero-image-ratio: 4 / 3;
+
+  /* Visual bands: a huge serif heading with the visual's box overlapping its
+     lower part. Heading size tracks the viewport so it never wraps. */
+  --band-pad-y: 24px;
+  --band-pad-x: clamp(16px, calc(16px + (100vw - 393px) * (32 / 887)), 48px);
+  --band-box-max-width: 1184px;
+  --band-heading-size: min(132px, 9.6vw);
+  --band-heading-overlap: 0.3em;
+  --band-box-pad: clamp(16px, calc(16px + (100vw - 393px) * (24 / 887)), 40px);
+  --band-tone-sky: rgba(178, 206, 255, 0.8);
+  --band-tone-dark: rgba(18, 18, 18, 0.8);
+  --band-tone-brand: rgba(217, 206, 106, 0.64);
+  --reveal-duration: 700ms;
+  --reveal-distance: 32px;
 }
 
 /* Full-screen section height. svh where supported so a browser toolbar

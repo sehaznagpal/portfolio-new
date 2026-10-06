@@ -1,0 +1,13 @@
+.quote {
+  margin: 0;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  font-size: var(--article-quote-size);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--case-study-white);
+  text-align: left;
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}
