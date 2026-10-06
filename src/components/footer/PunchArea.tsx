@@ -2,20 +2,29 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProp
 import { useMediaQuery } from '../../lib/useMediaQuery';
 import SweepButton from '../chrome/SweepButton';
 import photo from '../../assets/images/footer/me.webp';
-import { PUNCH_SHAPES, shapeCursor, shapeViewBox, type PunchShape } from './punchShapes';
+import { PUNCH_SHAPES, PUNCH_SIZE, shapeCursor, shapeScale, shapeViewBox, type PunchShape } from './punchShapes';
 import styles from './PunchArea.module.css';
 
 const PHOTO_WIDTH = 843;
 const PHOTO_HEIGHT = 1124;
 
 const MAX_CHIPS = 40;
-// Gravity: fall time grows with the square root of the drop distance.
-const FALL_MS_PER_REFERENCE = 650;
-const FALL_REFERENCE_PX = 400;
-// Ease-in so the chip accelerates as it falls.
-const FALL_EASE = 'cubic-bezier(0.55, 0, 1, 0.45)';
-const MAX_DRIFT_PX = 60;
-const MAX_TILT_DEG = 40;
+// Gravity: fall time grows with the square root of the drop distance,
+// clamped so short drops still read as a fall.
+const FALL_MS_PER_REFERENCE = 1050;
+const FALL_REFERENCE_PX = 500;
+const MIN_FALL_MS = 550;
+// Accelerates off the sheet, then eases into its resting place. No bounce.
+const FALL_EASE = 'cubic-bezier(0.42, 0, 0.72, 1)';
+const MAX_DRIFT_PX = 40;
+const MAX_TILT_DEG = 65;
+// Chips pile up from the bottom: the area is split into columns this wide,
+// and each landed chip raises the pile under it by PILE_STEP (less than a
+// full chip, so neighbours nestle into each other rather than stack flat).
+const PILE_COLUMN_PX = PUNCH_SIZE / 2;
+const PILE_STEP = PUNCH_SIZE * 0.7;
+// How far a chip can roll sideways off the pile to find a lower spot.
+const ROLL_RANGE_PX = PUNCH_SIZE * 2;
 // Reduced motion: chips just fade in where they land.
 const CHIP_FADE_MS = 200;
 // Keeps a fully-in-view check from flickering at the edge of the footer.
@@ -48,7 +57,9 @@ function cutHole(ctx: CanvasRenderingContext2D, { shape, x, y }: Punch) {
   if (!path) return;
   ctx.save();
   ctx.globalCompositeOperation = 'destination-out';
-  ctx.translate(x - shape.cx, y - shape.cy);
+  ctx.translate(x, y);
+  ctx.scale(shapeScale(shape), shapeScale(shape));
+  ctx.translate(-shape.cx, -shape.cy);
   ctx.fill(path);
   ctx.restore();
 }
@@ -63,7 +74,7 @@ function ChipView({ chip, reducedMotion }: { chip: Chip; reducedMotion: boolean 
     const animation = reducedMotion
       ? el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: CHIP_FADE_MS })
       : el.animate([{ transform: 'translate(0, 0) rotate(0deg)' }, { transform: landed }], {
-          duration: FALL_MS_PER_REFERENCE * Math.sqrt(Math.max(chip.dy, 1) / FALL_REFERENCE_PX),
+          duration: Math.max(MIN_FALL_MS, FALL_MS_PER_REFERENCE * Math.sqrt(Math.max(chip.dy, 0) / FALL_REFERENCE_PX)),
           easing: FALL_EASE,
         });
     return () => animation.cancel();
@@ -71,15 +82,14 @@ function ChipView({ chip, reducedMotion }: { chip: Chip; reducedMotion: boolean 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { size } = chip.shape;
   return (
     <svg
       ref={ref}
       className={styles.chip}
       viewBox={shapeViewBox(chip.shape)}
-      width={size}
-      height={size}
-      style={{ left: chip.x - size / 2, top: chip.y - size / 2, transform: landed }}
+      width={PUNCH_SIZE}
+      height={PUNCH_SIZE}
+      style={{ left: chip.x - PUNCH_SIZE / 2, top: chip.y - PUNCH_SIZE / 2, transform: landed }}
     >
       <path d={chip.shape.d} />
     </svg>
@@ -96,6 +106,8 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const punchesRef = useRef<Punch[]>([]);
+  // Pile height (px up from the bottom) per column, see PILE_COLUMN_PX.
+  const pileRef = useRef<number[]>([]);
   const nextChipIdRef = useRef(0);
   const [shapeIndex, setShapeIndex] = useState(0);
   const [chips, setChips] = useState<Chip[]>([]);
@@ -163,14 +175,37 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
     punchesRef.current.push(punch);
     cutHole(ctx, punch);
 
-    // Lands somewhere on the visible photo below the sheet, a little to
-    // either side of where it was punched.
-    const half = shape.size / 2;
-    const landX = Math.min(
-      Math.max(punch.x + randomBetween(-MAX_DRIFT_PX, MAX_DRIFT_PX), half),
-      area.clientWidth - half,
-    );
-    const landY = randomBetween(sheetRect.height + half, area.clientHeight - half);
+    // Drifts a little to either side, then lands on whatever has already
+    // piled up: bottom first, filling upward. Like sand, it rolls off a mound
+    // to the lowest spot nearby, so the pile spreads before it climbs. Once
+    // the pile reaches the sheet, chips settle just under it.
+    const half = PUNCH_SIZE / 2;
+    const clampX = (x: number) => Math.min(Math.max(x, half), area.clientWidth - half);
+    const columnsUnder = (x: number) => {
+      const columns: number[] = [];
+      for (let c = Math.floor((x - half) / PILE_COLUMN_PX); c <= Math.floor((x + half) / PILE_COLUMN_PX); c++) {
+        columns.push(c);
+      }
+      return columns;
+    };
+    const pileTopAt = (x: number) => Math.max(0, ...columnsUnder(x).map((c) => pileRef.current[c] ?? 0));
+
+    const dropX = clampX(punch.x + randomBetween(-MAX_DRIFT_PX, MAX_DRIFT_PX));
+    let landX = dropX;
+    let pileTop = pileTopAt(dropX);
+    for (let offset = PILE_COLUMN_PX; offset <= ROLL_RANGE_PX; offset += PILE_COLUMN_PX) {
+      for (const x of [clampX(dropX - offset), clampX(dropX + offset)]) {
+        const top = pileTopAt(x);
+        if (top < pileTop) {
+          pileTop = top;
+          landX = x;
+        }
+      }
+    }
+    columnsUnder(landX).forEach((c) => {
+      pileRef.current[c] = pileTop + PILE_STEP;
+    });
+    const landY = Math.max(area.clientHeight - pileTop - half, sheetRect.height + half);
     const chip: Chip = {
       ...punch,
       id: nextChipIdRef.current++,
@@ -183,6 +218,7 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
 
   function resetSheet() {
     punchesRef.current = [];
+    pileRef.current = [];
     paintSheet();
     if (chips.length > 0) setClearing(true);
   }

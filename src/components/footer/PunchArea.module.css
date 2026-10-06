@@ -49,10 +49,20 @@
   opacity: 0;
 }
 
+/* White outline keeps the green chips legible over the leafy photo. The
+   stroke is non-scaling so it's the same weight whichever shape is drawn. */
 .chip {
   position: absolute;
   overflow: visible;
   fill: var(--accent-green);
+  stroke: var(--case-study-white);
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+  filter: drop-shadow(var(--chip-shadow));
+}
+
+.chip path {
+  vector-effect: non-scaling-stroke;
 }
 
 .labels {

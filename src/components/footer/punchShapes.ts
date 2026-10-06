@@ -38,16 +38,27 @@ export const PUNCH_SHAPES: PunchShape[] = [
   },
 ];
 
+/* Every shape is drawn at the size of the smallest one (the flower), so the
+   cursor, hole and chip are the same size whichever shape is selected. */
+export const PUNCH_SIZE = Math.min(...PUNCH_SHAPES.map((shape) => shape.size));
+
+export function shapeScale(shape: PunchShape) {
+  return PUNCH_SIZE / shape.size;
+}
+
 export function shapeViewBox({ cx, cy, size }: PunchShape) {
   return `${cx - size / 2} ${cy - size / 2} ${size} ${size}`;
 }
 
 const CURSOR_STROKE = '#fefefe';
+const CURSOR_STROKE_PX = 1.5;
 const CURSOR_FALLBACK = 'crosshair';
 
 /* White outline of the shape as a CSS cursor value, hotspot at its centre. */
 export function shapeCursor(shape: PunchShape) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${shape.size}" height="${shape.size}" viewBox="${shapeViewBox(shape)}"><path d="${shape.d}" fill="none" stroke="${CURSOR_STROKE}" stroke-width="1.5"/></svg>`;
-  const hotspot = Math.round(shape.size / 2);
+  // Stroke is in the shape's own units, so undo the scale-down to keep it 1.5px on screen.
+  const strokeWidth = CURSOR_STROKE_PX / shapeScale(shape);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${PUNCH_SIZE}" height="${PUNCH_SIZE}" viewBox="${shapeViewBox(shape)}"><path d="${shape.d}" fill="none" stroke="${CURSOR_STROKE}" stroke-width="${strokeWidth}"/></svg>`;
+  const hotspot = Math.round(PUNCH_SIZE / 2);
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}") ${hotspot} ${hotspot}, ${CURSOR_FALLBACK}`;
 }
