@@ -8,7 +8,6 @@ import styles from './PunchArea.module.css';
 const PHOTO_WIDTH = 843;
 const PHOTO_HEIGHT = 1124;
 
-const MAX_CHIPS = 40;
 // Gravity: fall time grows with the square root of the drop distance,
 // clamped so short drops still read as a fall.
 const FALL_MS_PER_REFERENCE = 1050;
@@ -213,7 +212,7 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
       dy: landY - punch.y,
       rotate: randomBetween(-MAX_TILT_DEG, MAX_TILT_DEG),
     };
-    setChips((current) => [...current, chip].slice(-MAX_CHIPS));
+    setChips((current) => [...current, chip]);
   }
 
   function resetSheet() {
