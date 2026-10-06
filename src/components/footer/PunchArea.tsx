@@ -28,6 +28,8 @@ const ROLL_RANGE_PX = PUNCH_SIZE * 2;
 const CHIP_FADE_MS = 200;
 // Keeps a fully-in-view check from flickering at the edge of the footer.
 const IN_VIEW_THRESHOLD = 0.5;
+// The sheet is painted in the same colour token as the footer around it.
+const SHEET_COLOR_TOKEN = '--case-study-black';
 
 const HOVER_QUERY = '(hover: hover) and (pointer: fine)';
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
@@ -134,11 +136,13 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
     if (!canvas || !ctx) return;
     const { width, height } = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
+    // Whole device pixels, rounded up, so the fill never stops short of the
+    // canvas's own (often fractional) edge.
+    canvas.width = Math.ceil(width * dpr);
+    canvas.height = Math.ceil(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.fillStyle = getComputedStyle(canvas).color;
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = getComputedStyle(canvas).getPropertyValue(SHEET_COLOR_TOKEN).trim();
+    ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
     punchesRef.current.forEach((punch) => cutHole(ctx, punch, width, height));
   }, []);
 
@@ -186,6 +190,12 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
     // bleeds slightly past the area's edges, so the two differ by a pixel).
     const sheetRect = canvas.getBoundingClientRect();
     const areaRect = area.getBoundingClientRect();
+    // A click can land before the ResizeObserver has re-measured after a
+    // resize; re-measure first so the hole goes exactly under the cursor.
+    const dpr = window.devicePixelRatio || 1;
+    if (canvas.width !== Math.ceil(sheetRect.width * dpr) || canvas.height !== Math.ceil(sheetRect.height * dpr)) {
+      paintSheet();
+    }
     const punch: Punch = {
       shape,
       fx: (event.clientX - sheetRect.left) / sheetRect.width,

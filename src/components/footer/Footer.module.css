@@ -163,8 +163,21 @@
     padding: 0;
   }
 
+  /* The right panel tucks 8px under the left one, and the left side has
+     its own full-height opaque layer above it, so no seam can show between
+     the two at any width (and clicks there never reach the punch strip). */
+  .footer::before {
+    content: '';
+    grid-column: 1;
+    grid-row: 1 / -1;
+    z-index: 1;
+    background: var(--case-study-black);
+  }
+
   .upper,
   .bottom {
+    position: relative;
+    z-index: 2;
     align-items: flex-start;
     padding: 0 var(--page-pad-x);
   }
@@ -181,7 +194,11 @@
   }
 
   .punch {
+    --seam-overlap: 8px;
+    position: relative;
+    z-index: 0;
     height: 100%;
+    margin-left: calc(-1 * var(--seam-overlap));
   }
 
   .name {

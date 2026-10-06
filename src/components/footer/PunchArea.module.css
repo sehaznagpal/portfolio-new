@@ -20,7 +20,7 @@
   object-position: center top;
 }
 
-/* The sheet itself. `color` is the paint colour the canvas reads. It bleeds
+/* The sheet itself, painted by PunchArea.tsx in --case-study-black. It bleeds
    a pixel past the area's top, left and right edges (the area clips it):
    the area usually starts on a fractional pixel, and an exactly-sized sheet
    would leave a hairline of the photo showing along its edge. */
@@ -32,7 +32,6 @@
   display: block;
   width: calc(100% + 2 * var(--sheet-bleed));
   height: calc(var(--strip-h) + var(--sheet-bleed));
-  color: var(--case-study-black);
   touch-action: manipulation;
 }
 
@@ -144,10 +143,21 @@
 }
 
 @media (min-width: 1025px) {
+  /* The strip takes a smaller share of short screens (about 26% at 650px
+     tall) and reaches the Figma 270/832 share from 832px up, so the photo
+     keeps room for its subject below it. Same black as the footer behind,
+     so no light edge can show at fractional widths. */
   .area {
-    --strip-h: calc(100% * 270 / 832);
+    --strip-h: clamp(140px, calc((var(--section-h) - 340px) * 0.55), calc(270 * var(--u)));
     height: 100%;
     border: none;
+    background: var(--case-study-black);
+  }
+
+  /* Focal point on head and shoulders (about 30-60% down the photo), kept
+     just under the strip at every desktop size; the trees above go first. */
+  .photo {
+    object-position: 65% 10%;
   }
 
   .labels {
