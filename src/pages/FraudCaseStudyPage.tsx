@@ -6,14 +6,15 @@ import FraudPoster from '../components/caseStudy/FraudPoster';
 import ResearchStructure from '../components/caseStudy/fraud/ResearchStructure';
 import ExperimentSitemap from '../components/caseStudy/fraud/ExperimentSitemap';
 import ResultsGraphs from '../components/caseStudy/fraud/ResultsGraphs';
+import UserJourney from '../components/caseStudy/fraud/UserJourney';
 import { FRAUD_ARTICLE } from '../data/articles/fraud';
 import styles from './FraudCaseStudyPage.module.css';
 
-/* Visual band ids used in FRAUD_ARTICLE. The user journey band has no
-   visual yet, so it renders as an empty placeholder box. */
+/* Visual band ids used in FRAUD_ARTICLE. */
 const VISUALS = {
   'research-structure': <ResearchStructure />,
   'experiment-sitemap': <ExperimentSitemap />,
+  'user-journey': <UserJourney />,
   results: <ResultsGraphs />,
 };
 

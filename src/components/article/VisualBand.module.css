@@ -65,7 +65,3 @@
 .box[data-tone='brand'] {
   background: var(--band-tone-brand);
 }
-
-.placeholder {
-  aspect-ratio: 16 / 9;
-}

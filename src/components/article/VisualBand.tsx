@@ -4,8 +4,8 @@ import type { VisualTone } from './types';
 import styles from './VisualBand.module.css';
 
 /* Full-bleed band on the Home grid: a very large serif heading with the
-   visual's box overlapping its lower part. Without children the box is an
-   empty placeholder. Fades and rises in once on entering the viewport. */
+   visual's box overlapping its lower part. Fades and rises in once on
+   entering the viewport. */
 export default function VisualBand({
   heading,
   tone,
@@ -13,7 +13,7 @@ export default function VisualBand({
 }: {
   heading: string;
   tone: VisualTone;
-  children?: ReactNode;
+  children: ReactNode;
 }) {
   const [ref, revealed] = useRevealOnce<HTMLDivElement>();
 
@@ -21,7 +21,7 @@ export default function VisualBand({
     <div className={styles.band}>
       <div ref={ref} className={styles.inner} data-revealed={revealed}>
         <h3 className={styles.heading}>{heading}</h3>
-        <div className={`${styles.box} ${children ? '' : styles.placeholder}`} data-tone={tone}>
+        <div className={styles.box} data-tone={tone}>
           {children}
         </div>
       </div>

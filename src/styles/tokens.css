@@ -97,6 +97,22 @@
   --band-tone-brand: rgba(217, 206, 106, 0.64);
   --reveal-duration: 700ms;
   --reveal-distance: 32px;
+
+  /* Card flips (fraud user journey): a long, soft ease-out with no overshoot */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --flip-duration: 600ms;
+  --flip-stagger: 80ms;
+  --flip-fade-duration: 200ms;
+  --flip-perspective: 1400px;
+
+  /* Fraud user journey (Figma 1276:1851) */
+  --journey-strip-bg: rgba(6, 45, 110, 0.8);
+  --journey-gap: clamp(12px, calc(12px + (100vw - 393px) * (8 / 887)), 20px);
+  /* Vertical space the band needs besides the screens themselves (toggle,
+     strip padding, labels, caption, sticky header), so a desktop row of
+     five always fits the viewport height. */
+  --journey-chrome-h: 260px;
+  --journey-mobile-screen-w: min(62vw, 240px);
 }
 
 /* Full-screen section height. svh where supported so a browser toolbar
