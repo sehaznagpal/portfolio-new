@@ -132,11 +132,7 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
   };
 }
 
-export default function DesktopCarousel({
-  onActiveChange,
-}: {
-  onActiveChange: (index: number) => void;
-}) {
+export default function DesktopCarousel() {
   const navigate = useNavigate();
   const perspectiveElRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -204,21 +200,6 @@ export default function DesktopCarousel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex]);
 
-  // Fires on mount (with DEFAULT_ACTIVE_INDEX) and on every subsequent step —
-  // calling onActiveChange (the parent's setState) from *inside* the
-  // setActiveIndex updater below used to do this instead, but an updater
-  // function must stay pure: React can invoke it more than once (it does,
-  // under StrictMode, to check exactly this), and each extra invocation was
-  // firing the parent update again as a side effect, which surfaced as
-  // "Cannot update a component while rendering a different component" and,
-  // in practice, corrupted the render cycle enough to make the auto-advance
-  // timer below fire erratically. An effect keyed on activeIndex is the
-  // correct place for this side effect.
-  useEffect(() => {
-    onActiveChange(activeIndex);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
-
   // Re-subscribed on every activeIndex change so handleResize's closure
   // never goes stale — a resize firing right after a step must re-lay-out
   // against the *current* activeIndex, not whatever it was on mount, or it
@@ -233,9 +214,8 @@ export default function DesktopCarousel({
   }, [activeIndex]);
 
   // delta is the index change directly: +1 steps to the *next* card (array
-  // order: 1 -> 2 -> 3 -> 1), -1 to the *previous*. Pure updater — see the
-  // onActiveChange effect above for why the parent notification doesn't
-  // live here.
+  // order: 1 -> 2 -> 3 -> 1), -1 to the *previous*. The updater must stay
+  // pure: React can invoke it more than once under StrictMode.
   function stepCarousel(delta: 1 | -1) {
     if (isAnimatingRef.current) return;
     isAnimatingRef.current = true;

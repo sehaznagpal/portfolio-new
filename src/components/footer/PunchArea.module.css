@@ -1,0 +1,151 @@
+/* Mobile values from Figma 1345:1772 (454px area, 139px sheet); desktop
+   values from 1328:599 (full height, sheet 270/832 of it). */
+.area {
+  --strip-h: 139px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 454px;
+  box-sizing: border-box;
+  border: 1px solid var(--case-study-white);
+  background: var(--case-study-white);
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* The sheet itself. `color` is the paint colour the canvas reads. */
+.sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: var(--strip-h);
+  color: var(--case-study-black);
+  touch-action: manipulation;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sheet {
+    cursor: var(--punch-cursor);
+  }
+}
+
+.chips {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity var(--section-fade-duration) ease;
+}
+
+.clearing {
+  opacity: 0;
+}
+
+.chip {
+  position: absolute;
+  overflow: visible;
+  fill: var(--accent-green);
+}
+
+.labels {
+  position: absolute;
+  top: calc(var(--strip-h) - 29px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 12px;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.controls {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.newSheet,
+.switcher {
+  border: 1px solid var(--chrome-bg);
+  border-radius: 999px;
+  background: var(--case-study-white);
+}
+
+.newSheet {
+  --chip-bg: var(--case-study-white);
+  padding: 2px 8px;
+  color: var(--case-study-grey);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 16px;
+  line-height: normal;
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.switcher {
+  display: flex;
+  gap: 2px;
+  padding: 2px 6px;
+}
+
+.shapeButton {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+}
+
+.shapeButton svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--chrome-bg);
+  stroke-width: 2;
+}
+
+.shapeButton[aria-pressed='true'] svg {
+  fill: var(--accent-green);
+}
+
+.shapeButton:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1025px) {
+  .area {
+    --strip-h: calc(100% * 270 / 832);
+    height: 100%;
+    border: none;
+  }
+
+  .labels {
+    top: calc(var(--strip-h) - 22px);
+    left: 10px;
+    transform: none;
+    gap: 32px;
+    font-size: 16px;
+  }
+
+  .controls {
+    right: 64px;
+    bottom: 64px;
+  }
+}

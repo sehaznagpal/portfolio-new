@@ -7,7 +7,7 @@ export default function CaseStudyPlaceholder() {
   return (
     <div className={styles.placeholder}>
       <p className={styles.text}>The rest of this case study is still being written up.</p>
-      <Link className={styles.link} to="/#featured-work">
+      <Link className={styles.link} to="/#work">
         &larr; back to featured work
       </Link>
     </div>

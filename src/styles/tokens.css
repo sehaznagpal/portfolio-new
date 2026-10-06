@@ -35,4 +35,21 @@
   --fraud-continue-border: #0b57cf;
   --fraud-continue-text: #0b57cf;
   --fraud-screen-default: #f5f5f5;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --sweep-duration: 320ms;
+  --section-duration: 700ms;
+  --section-ease: var(--ease-out-expo);
+  /* prefers-reduced-motion replacement for the section slide */
+  --section-fade-duration: 200ms;
+  /* Footer -> hero, which skips the index in between */
+  --section-jump-duration: 450ms;
+  /* Hero "me" items emerging from behind the card */
+  --pop-duration: 360ms;
+  --pop-stagger: 35ms;
+
+  /* Page padding: fluid from 393 up to the Figma 1280 value, flat beyond */
+  --page-pad-top: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
+  --page-pad-x: clamp(24px, calc(24px + (100vw - 393px) * (40 / 887)), 64px);
 }

@@ -1,0 +1,64 @@
+/* Sizes hit the Figma desktop values (24px wordmark, 20px links, 28px gap)
+   at 1280 and scale down fluidly toward 393. */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.light {
+  --chip-bg: var(--bg-canvas);
+  color: var(--chrome-bg);
+}
+
+.dark {
+  --chip-bg: var(--case-study-grey);
+  color: var(--case-study-white);
+}
+
+.brand {
+  background: var(--chip-bg);
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 4px;
+}
+
+.brandItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-regular);
+  font-style: italic;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, calc(12px + (100vw - 393px) * (16 / 887)), 28px);
+}
+
+.link {
+  gap: 8px;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.arrow {
+  flex-shrink: 0;
+}

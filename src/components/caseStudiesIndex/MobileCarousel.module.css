@@ -2,24 +2,18 @@
    unlike the old horizontal strip, the Figma frame shows these cards
    sharing the same left/right margin as the nav and heading above them).
    flex: 1 + min-height: 0 lets this fill whatever vertical space the nav
-   and heading (both fixed-size, non-scrolling) leave inside .hero, so the
-   card stack becomes its own bounded, independently-scrolling box — the
+   and heading (both fixed-size, non-scrolling) leave inside WorkSection, so
+   the card stack becomes its own bounded, independently-scrolling box — the
    nav/heading above never move as this scrolls, since they're siblings
    outside it entirely.
    overscroll-behavior is deliberately left at its default (auto, i.e.
-   chaining allowed) rather than contain: .mainContent stays sticky-pinned
-   for CaseStudiesIndexPage.module.css's own stickySpacer buffer regardless
-   of what scrolls inside it, so a gesture that runs out of cards here and
-   chains up to the page's own scroll doesn't move anything extra — it just
-   keeps consuming that same buffer, which is exactly what already reveals
-   the Footer. Containing it here would instead trap that gesture, making
-   the Footer unreachable by continuing to scroll from inside the card
-   list on touch. */
+   chaining allowed) rather than contain: a gesture that runs out of cards
+   here chains up to Home's own snap scroller and moves on to the next
+   section. Containing it would trap that gesture inside the card list. */
 .track {
   /* Without this, .slide's offsetTop (used by MobileCarousel's own
      closest-to-center scroll math) resolves against the nearest POSITIONED
-     ancestor further up the tree (.mainContent, which is position: sticky)
-     instead of this scroll container itself — a large, constant offset
+     ancestor further up the tree (the Home section layer) instead of this scroll container itself — a large, constant offset
      baked into every card's measured position that threw the active-card
      detection off for the whole scroll range, not just at the edges. */
   position: relative;

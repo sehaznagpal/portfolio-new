@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { AnimatePresence, motion, type Variants } from 'framer-motion';
-import { useHasFinePointer } from '../../lib/useHasFinePointer';
-import HeroPolaroid from './HeroPolaroid';
+import { motion, type Variants } from 'framer-motion';
+import { useMediaQuery } from '../../lib/useMediaQuery';
+import HeroItems from './HeroItems';
 import HeroName from './HeroName';
 import styles from './Hero.module.css';
 
 /* The card itself expands in (scale + fade) once the surrounding chrome has
-   faded in (see HomePage.tsx's own opacity transition), then its content
+   faded in (see HeroSection.tsx's own opacity transition), then its content
    settles in just after with a short stagger — a two-stage "card arrives,
    then its content arrives" entrance rather than everything popping in
-   flatly at once. Runs once on mount only; nothing about the hover/click
-   interactions below is affected. */
+   flatly at once. Applied to the root so the items tucked behind the card
+   scale in with it. Runs once on mount only. */
 const cardVariants: Variants = {
   hidden: { opacity: 0, scale: 0.75 },
   visible: {
@@ -30,74 +30,56 @@ const itemVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
 };
 
-/* Fluid across the whole 393->1440+ range (see Hero.module.css) instead of the
-   old separate mobile/desktop components. Interaction still branches on real
-   pointer capability, exactly as the two old components did: a mouse hovering
-   "I am Sehaz" peeks the photo and a click opens About; a touch tap (no hover)
-   just toggles the photo peek on its own, with About reachable via the
-   top-left "about" link instead. */
-export default function Hero({
-  onOpenAbout,
-  onExplore,
-}: {
-  onOpenAbout: () => void;
-  onExplore: () => void;
-}) {
-  const hasFinePointer = useHasFinePointer();
-  const [photoVisible, setPhotoVisible] = useState(false);
+const HOVER_QUERY = '(hover: hover) and (pointer: fine)';
 
-  function handleHighlightClick() {
-    if (hasFinePointer) {
-      onOpenAbout();
-    } else {
-      setPhotoVisible((v) => !v);
-    }
-  }
+/* Fluid across the whole 393->1440+ range (see Hero.module.css). "I am Sehaz"
+   opens About on click/tap everywhere; on hover-capable devices, hovering (or
+   focusing) it also brings the "me" items out from behind the card. */
+export default function Hero({ onOpenAbout }: { onOpenAbout: () => void }) {
+  const canHover = useMediaQuery(HOVER_QUERY);
+  const [itemsOut, setItemsOut] = useState(false);
+  const showItems = canHover ? () => setItemsOut(true) : undefined;
+  const hideItems = canHover ? () => setItemsOut(false) : undefined;
 
   return (
-    <motion.div className={styles.card} variants={cardVariants} initial="hidden" animate="visible">
-      <div className={styles.heroContent}>
-        <motion.p className={styles.title} variants={itemVariants} aria-label="Sehaz Nagpal">
-          <HeroName />
-        </motion.p>
+    <motion.div className={styles.root} variants={cardVariants} initial="hidden" animate="visible">
+      {canHover && <HeroItems out={itemsOut} />}
 
-        <motion.p className={styles.paragraph} variants={itemVariants}>
-          Since I was a kid, I have always been intrigued by the question:{' '}
-          <span className={styles.question}>
-            <span className={styles.openQuote}>&lsquo;</span>Why do people do what they do?&rsquo;
-          </span>{' '}
-          This question stayed along me as I got through an economics degree, a dissertation, and,
-          now, as I design.{' '}
-          <span
-            className={styles.highlight}
-            role="button"
-            tabIndex={0}
-            aria-label="Open about"
-            onMouseEnter={hasFinePointer ? () => setPhotoVisible(true) : undefined}
-            onMouseLeave={hasFinePointer ? () => setPhotoVisible(false) : undefined}
-            onClick={handleHighlightClick}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                handleHighlightClick();
-              }
-            }}
-          >
-            I am Sehaz
-          </span>
-          , a UI-UX designer.
-        </motion.p>
+      <div className={styles.card}>
+        <div className={styles.heroContent}>
+          <motion.p className={styles.title} variants={itemVariants} aria-label="Sehaz Nagpal">
+            <HeroName />
+          </motion.p>
 
-        <motion.button className={styles.button} onClick={onExplore} variants={itemVariants}>
-          <span className={styles.buttonLabel}>Explore Work</span>
-          <span className={styles.sweep} aria-hidden="true">
-            <span className={styles.sweepLabel}>Explore Work</span>
-          </span>
-        </motion.button>
-
-        <AnimatePresence>
-          {photoVisible && <HeroPolaroid onClick={() => setPhotoVisible(false)} />}
-        </AnimatePresence>
+          <motion.p className={styles.paragraph} variants={itemVariants}>
+            Since I was a kid, I have always been intrigued by the question:{' '}
+            <span className={styles.question}>
+              <span className={styles.openQuote}>&lsquo;</span>Why do people do what they do?&rsquo;
+            </span>{' '}
+            This question stayed along me as I got through an economics degree, a dissertation, and,
+            now, as I design.{' '}
+            <span
+              className={styles.highlight}
+              role="button"
+              tabIndex={0}
+              aria-label="Open about"
+              onMouseEnter={showItems}
+              onMouseLeave={hideItems}
+              onFocus={showItems}
+              onBlur={hideItems}
+              onClick={onOpenAbout}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  onOpenAbout();
+                }
+              }}
+            >
+              I am Sehaz
+            </span>
+            , a product designer.
+          </motion.p>
+        </div>
       </div>
     </motion.div>
   );

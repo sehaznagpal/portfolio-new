@@ -29,11 +29,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Applied only while the fixed-viewport home experience is mounted. */
-body.no-scroll {
-  overflow: hidden;
-}
-
 button {
   font: inherit;
   color: inherit;

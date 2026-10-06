@@ -2,19 +2,12 @@ import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import styles from './AboutPanel.module.css';
 import aboutPhoto from '../../assets/images/chrome/about-photo.png';
+import { CV_URL, GMAIL_COMPOSE_URL, LINKEDIN_URL } from '../../data/contact';
 
 /* Matches .panel's transform transition duration in AboutPanel.module.css —
    keeps this in sync any time that duration changes so the close animation
    finishes before the component unmounts. */
 const EXIT_MS = 300;
-
-const CV_FILE_ID = '1Z8gec-K0UeJ7NIbiG6K-sQZn48nakXn0';
-const CV_URL = `https://drive.google.com/uc?export=download&id=${CV_FILE_ID}`;
-const LINKEDIN_URL = 'https://www.linkedin.com/in/sehaznagpal';
-const MAIL_SUBJECT = 'Re-directed from your portfolio';
-const MAIL_BODY =
-  "Hi Sehaz,\n\nI came across your portfolio and wanted to reach out, we'd love to connect.\n\nBest,\n";
-const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=sehaznagpal@gmail.com&su=${encodeURIComponent(MAIL_SUBJECT)}&body=${encodeURIComponent(MAIL_BODY)}`;
 
 /* Lowercase per the new Figma reference (was title-case "Sehaz Nagpal ·
    Product Designer" before the auto-layout correction). */

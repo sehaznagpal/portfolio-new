@@ -1,0 +1,62 @@
+.section {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  background: var(--case-study-grey);
+  padding: var(--page-pad-top) var(--page-pad-x)
+    clamp(48px, calc(48px + (100vw - 393px) * (24 / 887)), 72px);
+}
+
+/* flex: 1 + min-height: 0 lets the mobile card stack fill what's left
+   under the heading and scroll inside its own bounded box. */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.heading {
+  margin: 0;
+  flex-shrink: 0;
+  text-align: center;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(48px, calc(48px + (100vw - 393px) * (36 / 887)), 96px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--text-cream);
+  font-feature-settings: 'salt' 1;
+}
+
+.headingItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  letter-spacing: -0.06em;
+  color: var(--accent-green);
+}
+
+/* Coverflow breakpoint, matching useIsDesktopCarousel's 768px switch. */
+@media (min-width: 768px) {
+  .section {
+    gap: 72px;
+    padding-bottom: clamp(72px, calc(72px + (100vw - 768px) * (24 / 512)), 96px);
+  }
+
+  .content {
+    gap: clamp(40px, 4vw, 48px);
+  }
+
+  /* 64px flat up to 1280 (Figma), then growing with the card width to 1440+. */
+  .heading {
+    font-size: clamp(64px, calc(64px + (100vw - 1280px) * (8 / 160)), 72px);
+  }
+}

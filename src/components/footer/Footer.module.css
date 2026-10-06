@@ -1,45 +1,57 @@
-/* Sticky-bottom, matching the old portfolio's case study pages exactly: this
-   pins the footer flush to the viewport bottom from scroll position zero —
-   completely stationary the whole time, hidden only because mainContent (see
-   CaseStudiesIndexPage.module.css) sits on top of it with a higher z-index.
-   Nothing about the footer itself ever moves; the reveal is entirely
-   mainContent's own bottom edge rising to uncover it, like a curtain lifting
-   off an already-set stage, rather than the footer sliding into place. */
+/* Sticky-bottom: on the case study pages the footer sits stationary under
+   the page content (z-index below it, see CaseStudyPage.module.css) and is
+   revealed as that content scrolls up off it.
+
+   Mobile (Figma 1345:1772): one centred column, name + links, punch area,
+   then tagline + copyright. Desktop (1328:599): the same three blocks in a
+   grid, text on the left and the punch area filling the right. */
 .footer {
   position: sticky;
   bottom: 0;
   z-index: 0;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(28px, calc(28px + (100vw - 393px) * (20 / 887)), 48px);
-  padding: clamp(24px, calc(24px + (100vw - 393px) * (24 / 887)), 48px)
-    clamp(24px, calc(24px + (100vw - 393px) * (40 / 887)), 64px)
-    clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
+  box-sizing: border-box;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-areas:
+    'upper'
+    'punch'
+    'bottom';
+  align-content: center;
+  justify-items: center;
+  gap: 24px;
+  padding: 36px 0 38px;
   background: var(--case-study-black);
 }
 
-.top {
+.upper {
+  grid-area: upper;
   display: flex;
   flex-direction: column;
-  gap: clamp(20px, calc(20px + (100vw - 393px) * (0 / 887)), 20px);
+  align-items: center;
+  gap: 28px;
+}
+
+.punch {
+  grid-area: punch;
   width: 100%;
 }
 
-@media (min-width: 768px) {
-  .top {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-  }
+.bottom {
+  grid-area: bottom;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .name {
   margin: 0;
   display: flex;
-  align-items: baseline;
-  gap: 0.15em;
-  font-size: clamp(64px, calc(64px + (100vw - 393px) * (20 / 887)), 84px);
-  line-height: 1;
+  flex-direction: column;
+  align-items: center;
+  font-size: 72px;
+  line-height: 0.8;
+  color: var(--text-cream);
   white-space: nowrap;
 }
 
@@ -48,7 +60,6 @@
   font-weight: var(--gambetta-light);
   font-style: italic;
   letter-spacing: -0.08em;
-  color: var(--case-study-light-grey);
   font-feature-settings: 'salt' 1;
 }
 
@@ -57,55 +68,45 @@
   font-weight: var(--bricolage-medium);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
   letter-spacing: -0.04em;
-  color: var(--case-study-light-grey);
   font-feature-settings: 'salt' 1;
 }
 
-.buttons {
+.columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+
+.column {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-@media (min-width: 768px) {
-  .buttons {
-    flex-direction: row;
-    align-items: center;
-    gap: 32px;
-  }
-}
-
-.linkGroup {
-  display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
 }
 
-.linkGroupLabel {
+.columnLabel,
+.link,
+.copyright {
+  margin: 0;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
-  font-style: normal;
-  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
-  color: var(--text-cream);
+  line-height: normal;
+  white-space: nowrap;
   font-feature-settings: 'salt' 1;
+}
+
+.columnLabel {
+  font-size: 20px;
+  color: var(--text-cream);
 }
 
 .link {
   position: relative;
-  display: inline-block;
-  font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-regular);
-  font-style: normal;
-  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  font-size: 16px;
   color: var(--accent-green);
-  text-decoration: none;
-  font-feature-settings: 'salt' 1;
 }
 
-/* Underline fills in from the left on hover, matching AboutPanel's own
-   .contactLink treatment exactly (see AboutPanel.module.css) rather than a
-   plain opacity fade. */
+/* Underline sweeps in from the left, same as the About panel's links. */
 .link::after {
   content: '';
   position: absolute;
@@ -116,20 +117,101 @@
   background: currentColor;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 380ms var(--ease-out-expo);
 }
 
-.link:hover::after {
-  transform: scaleX(1);
+@media (hover: hover) and (pointer: fine) {
+  .link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 4px;
+}
+
+.tagline {
+  margin: 0;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--case-study-white);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
 }
 
 .copyright {
-  margin: 0;
-  text-align: center;
-  font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-regular);
-  font-style: normal;
-  font-size: 16px;
+  font-size: 12px;
   color: var(--case-study-light-grey);
-  font-feature-settings: 'salt' 1;
+}
+
+@media (min-width: 1025px) {
+  .footer {
+    height: 100dvh;
+    grid-template-columns: minmax(0, 1fr) calc(100% * 763 / 1280);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'upper punch'
+      'bottom punch';
+    align-content: stretch;
+    justify-items: stretch;
+    gap: 0;
+    padding: 0;
+  }
+
+  .upper,
+  .bottom {
+    align-items: flex-start;
+    padding: 0 var(--page-pad-x);
+  }
+
+  .upper {
+    gap: 48px;
+    padding-top: var(--page-pad-top);
+  }
+
+  .bottom {
+    align-self: end;
+    gap: 20px;
+    padding-bottom: var(--page-pad-top);
+  }
+
+  .punch {
+    height: 100%;
+  }
+
+  .name {
+    align-items: flex-start;
+    font-size: 120px;
+  }
+
+  .columns {
+    align-items: flex-end;
+    gap: 64px;
+  }
+
+  .column {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .columnLabel {
+    font-size: 24px;
+  }
+
+  .link {
+    font-size: 20px;
+  }
+
+  .tagline {
+    font-size: 28px;
+  }
+
+  .copyright {
+    font-size: 16px;
+  }
 }

@@ -1,0 +1,57 @@
+/* Sits behind the card (.card is z-index 1 in Hero.module.css). Every
+   position/size is in Figma px at the 840px card, scaled by --u so the
+   layout follows the card at any width. */
+.items {
+  --u: calc(100cqw / 840);
+  --rest-scale: 0.9;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.item {
+  position: absolute;
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  transform: translate(calc(var(--rest-x) * var(--u)), calc(var(--rest-y) * var(--u)))
+    scale(var(--rest-scale)) rotate(var(--rotate));
+  transition: transform var(--pop-duration) var(--ease-out-expo);
+  /* Tucking back in runs the emerge order in reverse. */
+  transition-delay: calc((var(--count) - 1 - var(--order)) * var(--pop-stagger));
+}
+
+.item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.topLeft {
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+}
+
+.bottomRight {
+  right: calc(var(--x) * var(--u));
+  bottom: calc(var(--y) * var(--u));
+}
+
+.out .item {
+  transform: translate(0, 0) scale(1) rotate(var(--rotate));
+  transition-delay: calc(var(--order) * var(--pop-stagger));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .out .item {
+    transform: rotate(var(--rotate));
+    opacity: 0;
+    transition: opacity var(--section-fade-duration) ease;
+    transition-delay: 0s;
+  }
+
+  .out .item {
+    opacity: 1;
+  }
+}
