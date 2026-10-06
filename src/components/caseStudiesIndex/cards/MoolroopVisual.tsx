@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import bezelImg from '../../../assets/images/moolroop/phone-bezel.png';
 import screenImg from '../../../assets/images/moolroop/product-screen.jpg';
-import stampImg from '../../../assets/images/moolroop/original-stamp.png';
+import stampSvg from '../../../assets/images/moolroop/stamp.svg';
 import styles from './MoolroopVisual.module.css';
 
 type Phase = 'idle' | 'scanning' | 'verified';
@@ -82,7 +82,12 @@ export default function MoolroopVisual({ interactive }: { interactive: boolean }
       <p className={styles.vs}>Vs</p>
 
       <div className={`${styles.stamp} ${phase === 'verified' ? styles.stampDimmed : ''}`}>
-        <img src={stampImg} alt="Original stamp" />
+        <span
+          className={styles.stampMark}
+          style={{ '--stamp-mask': `url("${stampSvg}")` } as CSSProperties}
+          role="img"
+          aria-label="Original stamp"
+        />
       </div>
     </div>
   );

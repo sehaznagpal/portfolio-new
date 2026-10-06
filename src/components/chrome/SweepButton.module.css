@@ -7,14 +7,14 @@
 }
 
 .button:focus-visible {
-  outline: 2px solid var(--accent-green);
+  outline: 2px solid var(--color-brand);
   outline-offset: 4px;
 }
 
 .fill {
   position: absolute;
   inset: 0;
-  background: var(--accent-green);
+  background: var(--color-brand);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--sweep-duration) var(--ease-out-expo);

@@ -46,7 +46,7 @@
   font-weight: var(--gambetta-light);
   font-style: italic;
   letter-spacing: -0.06em;
-  color: var(--accent-green);
+  color: var(--color-brand);
 }
 
 /* Coverflow breakpoint, matching useIsDesktopCarousel's 768px switch. */

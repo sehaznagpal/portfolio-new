@@ -68,7 +68,7 @@
   font-style: italic;
 }
 
-/* Identical green-fill-sweep hover to CaseStudiesIndexPage's own playground
+/* Identical brand-colour fill-sweep hover to CaseStudiesIndexPage's own playground
    link (see that file's own comment) — reproduced rather than shared as a
    component since it's two different anchor targets with the same look. */
 .playground {
@@ -82,7 +82,7 @@
 .playgroundFill {
   position: absolute;
   inset: 0;
-  background: var(--accent-green);
+  background: var(--color-brand);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);

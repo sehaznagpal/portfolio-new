@@ -120,7 +120,7 @@ function ChipView({ chip, reducedMotion }: { chip: Chip; reducedMotion: boolean 
 }
 
 /* Right half of the footer: a black sheet over the photo that visitors
-   punch holes in. Each punch drops a green chip of the same shape onto the
+   punch holes in. Each punch drops a brand-colour chip of the same shape onto the
    photo. `keysActive` (when given) decides when ← / → change the shape;
    otherwise that follows whether the footer is on screen. */
 export default function PunchArea({ keysActive }: { keysActive?: boolean }) {

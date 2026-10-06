@@ -16,7 +16,7 @@
   font-style: normal;
   font-feature-settings: 'salt' 1;
   font-size: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
-  color: var(--accent-green);
+  color: var(--color-brand);
   white-space: nowrap;
   min-height: 1em;
 }

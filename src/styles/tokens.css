@@ -14,8 +14,8 @@
   /* Chrome (loader bg, corner links) */
   --chrome-bg: #121212;
 
-  /* Accent */
-  --accent-green: #a4cf4a;
+  /* Brand colour. Only ever use it through this token. */
+  --color-brand: #d9ce6a;
 
   /* Case Studies Index — page + card tokens (from Figma) */
   --case-study-grey: #1f1f1f;
@@ -24,7 +24,9 @@
   --case-study-black: #121212;
 
   --dr-cuterus-purple: #76359c;
-  --moolroop-yellow: #d9ce6a;
+  /* The MoolRoop app's own "verified" green (its card's Vs badge, scan line
+     and verified label), not the portfolio brand. */
+  --moolroop-green: #a4cf4a;
   --dissertation-navy: #062d6e;
   --dissertation-sky: #b2ceff;
   --moolroop-poster-maroon: #bf393c;

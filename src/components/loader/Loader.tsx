@@ -8,7 +8,7 @@ interface Phase {
 }
 
 /* Sequence per brief: "..." -> "(hey.)" -> "..." -> "(welcome to my portfolio.)".
-   Both messages render in accent-green per Figma. Total run time tuned to land
+   Both messages render in the brand colour. Total run time tuned to land
    ~3.3s, within the spec's 2.5-3.5s window including the final hold. Timing is
    unchanged from the pre-auto-layout build — only the type size is now fluid
    (see Loader.module.css) instead of a hard mobile/desktop split. */

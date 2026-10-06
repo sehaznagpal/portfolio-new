@@ -2,7 +2,7 @@
 .band {
   --ticker-loop-duration: 40s;
   overflow: hidden;
-  background: var(--accent-green);
+  background: var(--color-brand);
   color: var(--chrome-bg);
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);

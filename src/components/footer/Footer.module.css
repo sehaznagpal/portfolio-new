@@ -103,7 +103,7 @@
 .link {
   position: relative;
   font-size: 16px;
-  color: var(--accent-green);
+  color: var(--color-brand);
 }
 
 /* Underline sweeps in from the left, same as the About panel's links. */
@@ -127,7 +127,7 @@
 }
 
 .link:focus-visible {
-  outline: 2px solid var(--accent-green);
+  outline: 2px solid var(--color-brand);
   outline-offset: 4px;
 }
 

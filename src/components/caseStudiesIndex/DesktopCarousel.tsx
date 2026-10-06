@@ -13,12 +13,16 @@ import styles from './DesktopCarousel.module.css';
    just steps the active index by exactly one — GSAP tweens the 3 cards from
    their current layout to their new one, so every frame in between is an
    interpolation between two good states instead of a simulated rotation. */
-const BASE_CARD_WIDTH = 402; // Figma reference width (active card, 1280)
-const SIDE_SCALE_RATIO = 0.629; // 253.101/402, measured off the Figma frames
-const X_OFFSET_RATIO = 0.861; // places the side card exactly 24px (Figma) from the center card, at the reference width — empirically tuned to net out the perspective/tilt projection's own small residual effect on position
+const BASE_CARD_WIDTH = 442; // Figma reference width (active card, 1280, frame 1188:186)
+const SIDE_SCALE_RATIO = 0.5726; // 253.101/442.051, measured off the Figma frame
+const X_OFFSET_RATIO = 0.828; // places the side card exactly 24px (Figma) from the center card, at the reference width — empirically tuned to net out the perspective/tilt projection's own small residual effect on position
 const TILT_ANGLE = 28; // degrees the side cards angle away, coverflow-style
 const PERSPECTIVE = 1400;
 const DEPTH = 80; // how far back the side cards sit, at the reference width
+
+// Side cards recede a little further than the earlier 0.3 so the larger
+// active card leads.
+const INACTIVE_CARD_OPACITY = 0.22;
 
 const ANIMATION_DURATION = 0.6;
 
@@ -110,11 +114,11 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
   // rendered bounding-box width doesn't match a hand-derived cos(angle) x
   // magnification estimate (verified: that formula was off by ~12%).
   // Measured directly instead, at this exact TILT_ANGLE/DEPTH/PERSPECTIVE
-  // combination: scale(1) here renders a bounding box 0.9413x the card's own
-  // width; dividing that out below lands the resting width exactly on the
+  // combination: scale(1) here renders a bounding box 0.9527x the card's own
+  // width (re-measured for the 442px active card); dividing that out below lands the resting width exactly on the
   // Figma ratio. Re-measure this constant if TILT_ANGLE/DEPTH/PERSPECTIVE
   // above ever change.
-  const measuredCombinedShrink = 0.9413;
+  const measuredCombinedShrink = 0.9527;
   const appliedScale = SIDE_SCALE_RATIO / measuredCombinedShrink;
 
   return {
@@ -127,8 +131,8 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
       zIndex: 1,
     },
     // Lighter + grainy, not blurred (see FeaturedCard.module.css's own
-    // .inactive.plain::after) — 0.3 matches the Figma desktop reference.
-    visual: { opacity: 0.3 },
+    // .inactive.plain::after): a filter on the 3D cards flattens them in Safari.
+    visual: { opacity: INACTIVE_CARD_OPACITY },
   };
 }
 

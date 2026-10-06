@@ -18,7 +18,7 @@
 }
 
 .perspective:focus-visible {
-  outline: 2px solid var(--accent-green);
+  outline: 2px solid var(--color-brand);
   outline-offset: 4px;
 }
 
@@ -97,7 +97,7 @@
   }
 
   .slot {
-    width: min(calc(402 * var(--u)), calc(100cqh / var(--card-height-ratio)));
+    width: min(calc(442 * var(--u)), calc(100cqh / var(--card-height-ratio)));
   }
 }
 

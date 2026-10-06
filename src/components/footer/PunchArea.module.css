@@ -52,12 +52,12 @@
   opacity: 0;
 }
 
-/* White outline keeps the green chips legible over the leafy photo. The
+/* White outline keeps the brand-colour chips legible over the leafy photo. The
    stroke is non-scaling so it's the same weight whichever shape is drawn. */
 .chip {
   position: absolute;
   overflow: visible;
-  fill: var(--accent-green);
+  fill: var(--color-brand);
   stroke: var(--case-study-white);
   stroke-width: 1.5px;
   stroke-linejoin: round;
@@ -134,11 +134,11 @@
 }
 
 .shapeButton[aria-pressed='true'] svg {
-  fill: var(--accent-green);
+  fill: var(--color-brand);
 }
 
 .shapeButton:focus-visible {
-  outline: 2px solid var(--accent-green);
+  outline: 2px solid var(--color-brand);
   outline-offset: 2px;
 }
 

@@ -70,13 +70,13 @@
 
 @media (hover: hover) and (pointer: fine) {
   .close:hover {
-    border-color: var(--accent-green);
-    color: var(--accent-green);
+    border-color: var(--color-brand);
+    color: var(--color-brand);
   }
 }
 
 .close:focus-visible {
-  outline: 2px solid var(--accent-green);
+  outline: 2px solid var(--color-brand);
   outline-offset: 4px;
 }
 
@@ -176,7 +176,7 @@
 .link {
   position: relative;
   font-size: calc(12 * var(--m));
-  color: var(--accent-green);
+  color: var(--color-brand);
 }
 
 /* Same underline sweep as the footer links. */
@@ -200,7 +200,7 @@
 }
 
 .link:focus-visible {
-  outline: 2px solid var(--accent-green);
+  outline: 2px solid var(--color-brand);
   outline-offset: 4px;
 }
 

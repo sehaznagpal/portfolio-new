@@ -92,7 +92,7 @@
 }
 
 .highlight {
-  background: var(--accent-green);
+  background: var(--color-brand);
   color: var(--chrome-bg);
   padding: 0 2px;
   cursor: pointer;
