@@ -2,6 +2,8 @@
    desktop fit unit, or the phone scale). The group's own box is the Figma
    "paloroid with text" group bounds. */
 .polaroid {
+  /* Fine tiled noise shared by the frame and the glass. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
   --caption-units: 24;
   position: relative;
   width: calc(535.3 * var(--p));
@@ -30,7 +32,6 @@
 
 /* Cream frame (thicker at the bottom) with a subtle paper grain. */
 .frame {
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
   position: relative;
   width: 100%;
   height: 100%;
@@ -65,14 +66,31 @@
   font-feature-settings: 'salt' 1;
 }
 
+/* A sheet of glass lying on the photo (Figma 1370:231): no blur, so the
+   photo stays sharp. The Figma 20% black tint, a fine grain, a thin light
+   edge and a soft shadow make it read as its own layer. */
 .glass {
   --glass-tint: rgba(18, 18, 18, 0.2);
-  --glass-blur: 1.5px;
+  --glass-edge: rgba(254, 254, 254, 0.22);
+  --glass-shadow: 0 calc(4 * var(--p)) calc(18 * var(--p)) rgba(18, 18, 18, 0.28);
+  --glass-grain-opacity: 0.35;
+  position: relative;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
+  border: 1px solid var(--glass-edge);
   background: var(--glass-tint);
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+}
+
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  background-size: calc(120 * var(--p)) calc(120 * var(--p));
+  opacity: var(--glass-grain-opacity);
+  mix-blend-mode: screen;
 }
 
 .clip {

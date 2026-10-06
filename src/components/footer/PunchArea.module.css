@@ -143,12 +143,12 @@
 }
 
 @media (min-width: 1025px) {
-  /* The strip takes a smaller share of short screens (about 26% at 650px
-     tall) and reaches the Figma 270/832 share from 832px up, so the photo
+  /* The strip takes a smaller share of short screens (about 19% at 600px
+     tall, 23% at 650px) and reaches the Figma 270/832 share from 832px up, so the photo
      keeps room for its subject below it. Same black as the footer behind,
      so no light edge can show at fractional widths. */
   .area {
-    --strip-h: clamp(140px, calc((var(--section-h) - 340px) * 0.55), calc(270 * var(--u)));
+    --strip-h: clamp(110px, calc((var(--section-h) - 450px) * 0.75), calc(270 * var(--u)));
     height: 100%;
     border: none;
     background: var(--case-study-black);
@@ -159,7 +159,18 @@
   .photo {
     object-position: 65% 10%;
   }
+}
 
+/* Tight head-and-shoulders crop (PHOTO_TIGHT_MEDIA in PunchArea.tsx): the
+   head sits about 30% down the crop, just under the strip, in the
+   upper-middle of the visible photo. */
+@media (min-width: 1025px) and (max-height: 760px), (min-width: 1025px) and (min-aspect-ratio: 2/1) {
+  .photo {
+    object-position: 55% 30%;
+  }
+}
+
+@media (min-width: 1025px) {
   .labels {
     top: calc(var(--strip-h) - 22 * var(--u));
     left: calc(10 * var(--u));

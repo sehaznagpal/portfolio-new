@@ -2,11 +2,18 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProp
 import { useMediaQuery } from '../../lib/useMediaQuery';
 import SweepButton from '../chrome/SweepButton';
 import photo from '../../assets/images/footer/me.webp';
+import photoTight from '../../assets/images/footer/me-tight.webp';
 import { PUNCH_SHAPES, PUNCH_SIZE, shapeCursor, shapeScale, shapeViewBox, type PunchShape } from './punchShapes';
 import styles from './PunchArea.module.css';
 
 const PHOTO_WIDTH = 843;
 const PHOTO_HEIGHT = 1124;
+// Head-and-shoulders 3:2 crop of the same photo, for short or very wide
+// desktop screens where the full portrait would push the subject to the
+// edges. Must match the tight-crop media query in PunchArea.module.css.
+const PHOTO_TIGHT_WIDTH = 843;
+const PHOTO_TIGHT_HEIGHT = 562;
+const PHOTO_TIGHT_MEDIA = '(min-width: 1025px) and (max-height: 760px), (min-width: 1025px) and (min-aspect-ratio: 2/1)';
 
 // Gravity: fall time grows with the square root of the drop distance,
 // clamped so short drops still read as a fall.
@@ -266,15 +273,23 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
 
   return (
     <div ref={rootRef} className={styles.area}>
-      <img
-        className={styles.photo}
-        src={photo}
-        alt="Sehaz Nagpal"
-        width={PHOTO_WIDTH}
-        height={PHOTO_HEIGHT}
-        loading="lazy"
-        decoding="async"
-      />
+      <picture>
+        <source
+          media={PHOTO_TIGHT_MEDIA}
+          srcSet={photoTight}
+          width={PHOTO_TIGHT_WIDTH}
+          height={PHOTO_TIGHT_HEIGHT}
+        />
+        <img
+          className={styles.photo}
+          src={photo}
+          alt="Sehaz Nagpal"
+          width={PHOTO_WIDTH}
+          height={PHOTO_HEIGHT}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
 
       <canvas
         ref={canvasRef}
