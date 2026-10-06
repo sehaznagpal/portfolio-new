@@ -52,6 +52,10 @@
   /* Footer punch chips */
   --chip-shadow: 0 4px 6px rgba(18, 18, 18, 0.25);
 
+  /* Fixed Home nav: height of its row (the wordmark's line), reserved by a
+     spacer at the top of each section */
+  --nav-height: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
+
   /* Page padding: fluid from 393 up to the Figma 1280 value, flat beyond */
   --page-pad-top: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
   --page-pad-x: clamp(24px, calc(24px + (100vw - 393px) * (40 / 887)), 64px);

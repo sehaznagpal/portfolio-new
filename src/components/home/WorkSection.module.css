@@ -10,6 +10,11 @@
     clamp(48px, calc(48px + (100vw - 393px) * (24 / 887)), 72px);
 }
 
+.navSpace {
+  flex-shrink: 0;
+  height: var(--nav-height);
+}
+
 /* flex: 1 + min-height: 0 lets the mobile card stack fill what's left
    under the heading and scroll inside its own bounded box. */
 .content {

@@ -5,21 +5,34 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  flex-shrink: 0;
+  height: var(--nav-height);
+  color: var(--nav-text);
+  transition:
+    color var(--section-duration) var(--section-ease),
+    opacity var(--section-duration) var(--section-ease);
 }
 
-.light {
+/* Theme colours. Changing data-nav-theme animates text and chip colours
+   over the same duration and easing as the section move. */
+.nav[data-nav-theme='light'] {
   --chip-bg: var(--bg-canvas);
-  color: var(--chrome-bg);
+  --nav-text: var(--chrome-bg);
 }
 
-.dark {
+.nav[data-nav-theme='dark'],
+.nav[data-nav-theme='hidden'] {
   --chip-bg: var(--case-study-grey);
-  color: var(--case-study-white);
+  --nav-text: var(--case-study-white);
+}
+
+.nav[data-nav-theme='hidden'] {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .brand {
   background: var(--chip-bg);
+  transition: background-color var(--section-duration) var(--section-ease);
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-light);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
@@ -49,6 +62,7 @@
 
 .link {
   gap: 8px;
+  transition: background-color var(--section-duration) var(--section-ease);
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-light);
   font-variation-settings: 'opsz' 14, 'wdth' 100;

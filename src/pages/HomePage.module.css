@@ -78,6 +78,20 @@
   display: none;
 }
 
+.navLayer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: var(--page-pad-top) var(--page-pad-x) 0;
+  pointer-events: none;
+}
+
+.navLayer > * {
+  pointer-events: auto;
+}
+
 .loaderLayer {
   position: fixed;
   inset: 0;

@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import Stage from '../viewport/Stage';
@@ -9,13 +8,11 @@ import styles from './HeroSection.module.css';
 const CONTENT_FADE = { duration: 0.55, ease: [0.16, 1, 0.3, 1] } as const;
 
 export default function HeroSection({
-  nav,
   backgroundVisible,
   ready,
   onOpenAbout,
   onExplore,
 }: {
-  nav: ReactNode;
   /* False only while the loader is still on screen: the grid fades in once it clears. */
   backgroundVisible: boolean;
   /* Mounts the content (and plays the card entrance) after the post-loader pause. */
@@ -32,7 +29,8 @@ export default function HeroSection({
           animate={{ opacity: 1 }}
           transition={CONTENT_FADE}
         >
-          {nav}
+          {/* Holds the fixed nav's place (see HomePage). */}
+          <div className={styles.navSpace} aria-hidden="true" />
           <div className={styles.cardArea}>
             <Hero onOpenAbout={onOpenAbout} />
           </div>

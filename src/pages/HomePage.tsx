@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Loader from '../components/loader/Loader';
 import AboutPanel from '../components/chrome/AboutPanel';
-import SiteNav, { type NavSurface } from '../components/nav/SiteNav';
+import SiteNav, { type NavTheme } from '../components/nav/SiteNav';
 import HeroSection from '../components/home/HeroSection';
 import WorkSection from '../components/home/WorkSection';
 import Footer from '../components/footer/Footer';
@@ -31,6 +31,14 @@ function markLoaderSeen(): void {
    don't read as one abrupt cut. */
 const REVEAL_PAUSE_MS = 400;
 const LOADER_EXIT = { duration: 0.55, ease: [0.16, 1, 0.3, 1] } as const;
+// The nav fades in with the hero content after the loader (see HeroSection).
+const NAV_FADE = { duration: 0.55, ease: [0.16, 1, 0.3, 1] } as const;
+
+const NAV_THEME: Record<SectionId, NavTheme> = {
+  hero: 'light',
+  work: 'dark',
+  footer: 'hidden',
+};
 
 /* "/" is three full-screen sections: hero, work index, footer. On desktop
    hero and index share one track moved one gesture at a time, with the
@@ -65,17 +73,6 @@ export default function HomePage() {
 
   const openAbout = () => setAboutOpen(true);
 
-  function renderNav(surface: NavSurface) {
-    return (
-      <SiteNav
-        surface={surface}
-        onHome={() => goTo('hero')}
-        onAbout={openAbout}
-        onWork={() => goTo('work')}
-      />
-    );
-  }
-
   function layerProps(id: SectionId) {
     return {
       ref: layerRefs[id],
@@ -94,7 +91,6 @@ export default function HomePage() {
         <div ref={trackRef} className={styles.track}>
           <div {...layerProps('hero')}>
             <HeroSection
-              nav={renderNav('light')}
               backgroundVisible={backgroundVisible}
               ready={heroReady}
               onOpenAbout={openAbout}
@@ -102,7 +98,7 @@ export default function HomePage() {
             />
           </div>
           <div {...layerProps('work')}>
-            <WorkSection nav={renderNav('dark')} />
+            <WorkSection />
           </div>
           <div className={styles.footerSlot} aria-hidden="true" />
         </div>
@@ -114,6 +110,19 @@ export default function HomePage() {
           />
         </div>
       </div>
+
+      {/* One nav for every section, fixed above them; only the sections move.
+          Its theme follows the current section, which switches as a move starts. */}
+      {heroReady && (
+        <motion.div className={styles.navLayer} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={NAV_FADE}>
+          <SiteNav
+            theme={NAV_THEME[section]}
+            onHome={() => goTo('hero')}
+            onAbout={openAbout}
+            onWork={() => goTo('work')}
+          />
+        </motion.div>
+      )}
 
       <AnimatePresence onExitComplete={handleLoaderExitComplete}>
         {loading && (
