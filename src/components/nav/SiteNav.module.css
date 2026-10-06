@@ -76,3 +76,25 @@
 .arrow {
   flex-shrink: 0;
 }
+
+/* Desktop: Figma 1280 values (24px wordmark, 20px links, 28px gap) scaled
+   by --u, matching the space each section reserves for the nav. */
+@media (min-width: 1025px) {
+  .brand {
+    font-size: calc(24 * var(--u));
+  }
+
+  .links {
+    gap: calc(28 * var(--u));
+  }
+
+  .link {
+    gap: calc(8 * var(--u));
+    font-size: calc(20 * var(--u));
+  }
+
+  .arrow {
+    width: calc(14 * var(--u));
+    height: calc(14 * var(--u));
+  }
+}

@@ -151,7 +151,7 @@
 
 @media (min-width: 1025px) {
   .footer {
-    height: 100dvh;
+    height: var(--section-h);
     grid-template-columns: minmax(0, 1fr) calc(100% * 763 / 1280);
     grid-template-rows: auto 1fr;
     grid-template-areas:
@@ -170,13 +170,13 @@
   }
 
   .upper {
-    gap: 48px;
+    gap: calc(48 * var(--u) * var(--space));
     padding-top: var(--page-pad-top);
   }
 
   .bottom {
     align-self: end;
-    gap: 20px;
+    gap: calc(20 * var(--u) * var(--space));
     padding-bottom: var(--page-pad-top);
   }
 
@@ -186,32 +186,32 @@
 
   .name {
     align-items: flex-start;
-    font-size: 120px;
+    font-size: calc(120 * var(--u));
   }
 
   .columns {
     align-items: flex-end;
-    gap: 64px;
+    gap: calc(64 * var(--u));
   }
 
   .column {
     align-items: flex-start;
-    gap: 8px;
+    gap: calc(8 * var(--u));
   }
 
   .columnLabel {
-    font-size: 24px;
+    font-size: calc(24 * var(--u));
   }
 
   .link {
-    font-size: 20px;
+    font-size: calc(20 * var(--u));
   }
 
   .tagline {
-    font-size: 28px;
+    font-size: calc(28 * var(--u));
   }
 
   .copyright {
-    font-size: 16px;
+    font-size: calc(16 * var(--u));
   }
 }

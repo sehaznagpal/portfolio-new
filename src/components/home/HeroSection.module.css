@@ -41,6 +41,18 @@
   transition: color var(--sweep-duration) var(--ease-out-expo);
 }
 
+@media (min-width: 1025px) {
+  .cue {
+    gap: calc(8 * var(--u));
+    font-size: calc(16 * var(--u));
+  }
+
+  .cue svg {
+    width: calc(12 * var(--u));
+    height: calc(12 * var(--u));
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .cue:hover .cueText {
     color: inherit;

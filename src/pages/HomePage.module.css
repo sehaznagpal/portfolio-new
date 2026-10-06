@@ -12,8 +12,11 @@
    The track holds hero, index and an empty slot for the footer. The footer
    itself sits still behind the track, so moving to that slot lifts the
    index off it like a curtain. */
+/* clip, not hidden: a hidden box can still be scrolled (by a leftover
+   scroll position from touch mode, focus or an anchor), which would shift
+   every section off its track position. A clipped box can't scroll at all. */
 .stage {
-  overflow: hidden;
+  overflow: clip;
   background: var(--case-study-black);
 }
 
@@ -23,20 +26,34 @@
   pointer-events: none;
 }
 
+/* Each section clips its own content and is opaque, so nothing from one
+   section can ever show inside another (the footer slot stays transparent:
+   that's where the still footer behind the track shows through). */
 .stage .heroLayer,
 .stage .workLayer {
-  height: 100vh;
+  height: var(--section-h);
+  overflow: clip;
   pointer-events: auto;
 }
 
+.stage .heroLayer {
+  background: var(--chrome-bg);
+}
+
+.stage .workLayer {
+  background: var(--case-study-grey);
+}
+
 .stage .footerSlot {
-  height: 100vh;
+  height: var(--section-h);
 }
 
 .stage .footerLayer {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: clip;
+  background: var(--case-study-black);
 }
 
 /* Only uncovered while the footer is current or being left, so the opacity

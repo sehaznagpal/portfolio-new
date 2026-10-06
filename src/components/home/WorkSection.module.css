@@ -65,3 +65,21 @@
     font-size: clamp(64px, calc(64px + (100vw - 1280px) * (8 / 160)), 72px);
   }
 }
+
+/* Desktop: Figma 1280 frame values scaled by --u, with vertical spacing
+   tightened by --space on short screens (see tokens.css). The carousel
+   takes whatever height is left (see DesktopCarousel.module.css). */
+@media (min-width: 1025px) {
+  .section {
+    gap: calc(72 * var(--u) * var(--space));
+    padding-bottom: calc(96 * var(--u) * var(--space));
+  }
+
+  .content {
+    gap: calc(40 * var(--u) * var(--space));
+  }
+
+  .heading {
+    font-size: calc(64 * var(--u));
+  }
+}

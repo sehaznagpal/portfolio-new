@@ -60,3 +60,42 @@
   --page-pad-top: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
   --page-pad-x: clamp(24px, calc(24px + (100vw - 393px) * (40 / 887)), 64px);
 }
+
+/* Full-screen section height. svh where supported so a browser toolbar
+   never changes it; the Home track moves by exactly this unit. */
+:root {
+  --section-h: 100vh;
+}
+
+@supports (height: 100svh) {
+  :root {
+    --section-h: 100svh;
+  }
+}
+
+/* Desktop fluid scale. --u is one Figma pixel (frames are 1280 x 832),
+   scaled by whichever of width or height is tighter so every Home section
+   keeps the Figma proportions and always fits the screen; growth stops at
+   1.6x on very large screens. --space additionally tightens vertical gaps
+   and padding on short screens. */
+@media (min-width: 1025px) {
+  :root {
+    --u: min(calc(100vw / 1280), calc(var(--section-h) / 832), 1.6px);
+    --space: 1;
+    --page-pad-top: calc(64 * var(--u) * var(--space));
+    --page-pad-x: calc(64 * var(--u));
+    --nav-height: calc(24 * var(--u));
+  }
+}
+
+@media (min-width: 1025px) and (max-height: 800px) {
+  :root {
+    --space: 0.85;
+  }
+}
+
+@media (min-width: 1025px) and (max-height: 680px) {
+  :root {
+    --space: 0.7;
+  }
+}

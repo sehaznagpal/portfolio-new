@@ -99,25 +99,30 @@
   white-space: nowrap;
 }
 
-/* Laptop/desktop: the Figma 1280 hero card (node 1321:196) exactly. */
+/* Laptop/desktop: the Figma 1280 hero card (node 1321:196), scaled by the
+   fluid unit --u (see tokens.css) so it fits any desktop width and height. */
 @media (min-width: 1025px) {
   .root {
-    width: 840px;
+    width: calc(840 * var(--u));
+    max-width: none;
   }
 
   .card {
-    padding: 52px 120px;
+    padding: calc(52 * var(--u)) calc(120 * var(--u));
+    border-width: calc(4 * var(--u));
+    border-radius: calc(16 * var(--u));
   }
 
   .heroContent {
-    gap: 24px;
+    gap: calc(24 * var(--u));
   }
 
   .title {
-    font-size: 84px;
+    font-size: calc(84 * var(--u));
   }
 
   .paragraph {
     margin-top: 0;
+    font-size: calc(24 * var(--u));
   }
 }

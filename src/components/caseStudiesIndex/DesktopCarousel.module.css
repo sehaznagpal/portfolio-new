@@ -83,6 +83,24 @@
   will-change: transform;
 }
 
+/* Desktop: the carousel fills the height the index section leaves for it,
+   and the card is the Figma width scaled by --u unless that would be too
+   tall for the space, in which case it shrinks to fit (keeping its own
+   proportions). Side cards are sized from the centre card in JS. */
+@media (min-width: 1025px) {
+  .perspective {
+    --card-height-ratio: 1.045; /* tallest card's height / width */
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    container-type: size;
+  }
+
+  .slot {
+    width: min(calc(402 * var(--u)), calc(100cqh / var(--card-height-ratio)));
+  }
+}
+
 /* Deliberately NOT part of the 3D hierarchy above (no transform, no
    preserve-3d) — opacity/blur are driven here instead of on .slot itself so
    a `filter` is never on the same element as (or a preserve-3d descendant

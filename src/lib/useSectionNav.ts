@@ -40,8 +40,12 @@ function sectionForHash(hash: string): SectionId {
   return hash === WORK_HASH ? 'work' : 'hero';
 }
 
+// Same unit as the sections' own height (--section-h in tokens.css), so the
+// track always moves exactly one section with no sub-pixel gap or overlap.
+const SECTION_UNIT = typeof CSS !== 'undefined' && CSS.supports('height', '100svh') ? 'svh' : 'vh';
+
 function trackOffset(section: SectionId) {
-  return `translateY(${-SECTIONS.indexOf(section) * 100}vh)`;
+  return `translate3d(0, ${-SECTIONS.indexOf(section) * 100}${SECTION_UNIT}, 0)`;
 }
 
 function readToken(token: string) {

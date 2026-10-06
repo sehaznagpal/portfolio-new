@@ -147,15 +147,20 @@
   }
 
   .labels {
-    top: calc(var(--strip-h) - 22px);
-    left: 10px;
+    top: calc(var(--strip-h) - 22 * var(--u));
+    left: calc(10 * var(--u));
     transform: none;
-    gap: 32px;
-    font-size: 16px;
+    gap: calc(32 * var(--u));
+    font-size: calc(16 * var(--u));
   }
 
   .controls {
-    right: 64px;
-    bottom: 64px;
+    right: calc(64 * var(--u));
+    bottom: calc(64 * var(--u));
+  }
+
+  .newSheet {
+    padding: calc(2 * var(--u)) calc(8 * var(--u));
+    font-size: calc(16 * var(--u));
   }
 }
