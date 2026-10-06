@@ -182,14 +182,20 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
     const ctx = canvas?.getContext('2d');
     if (!canvas || !area || !ctx || clearing) return;
 
-    // The sheet spans the area's full width from its top edge, so a point
-    // on the sheet is the same point in the area.
+    // The hole is placed on the sheet; the chip lives in the area (the sheet
+    // bleeds slightly past the area's edges, so the two differ by a pixel).
     const sheetRect = canvas.getBoundingClientRect();
-    const punchX = event.clientX - sheetRect.left;
-    const punchY = event.clientY - sheetRect.top;
-    const punch: Punch = { shape, fx: punchX / sheetRect.width, fy: punchY / sheetRect.height };
+    const areaRect = area.getBoundingClientRect();
+    const punch: Punch = {
+      shape,
+      fx: (event.clientX - sheetRect.left) / sheetRect.width,
+      fy: (event.clientY - sheetRect.top) / sheetRect.height,
+    };
     punchesRef.current.push(punch);
     cutHole(ctx, punch, sheetRect.width, sheetRect.height);
+    const punchX = event.clientX - areaRect.left;
+    const punchY = event.clientY - areaRect.top;
+    const sheetBottom = sheetRect.bottom - areaRect.top;
 
     // Drifts a little to either side, then lands on whatever has already
     // piled up: bottom first, filling upward. Like sand, it rolls off a mound
@@ -229,7 +235,7 @@ export default function PunchArea({ keysActive }: { keysActive?: boolean }) {
         }
       }
     }
-    const landY = Math.max(areaHeight - pileTop - half, sheetRect.height + half);
+    const landY = Math.max(areaHeight - pileTop - half, sheetBottom + half);
     const chip: Chip = {
       id: nextChipIdRef.current++,
       shape,

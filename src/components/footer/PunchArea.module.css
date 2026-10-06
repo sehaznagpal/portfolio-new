@@ -20,14 +20,18 @@
   object-position: center top;
 }
 
-/* The sheet itself. `color` is the paint colour the canvas reads. */
+/* The sheet itself. `color` is the paint colour the canvas reads. It bleeds
+   a pixel past the area's top, left and right edges (the area clips it):
+   the area usually starts on a fractional pixel, and an exactly-sized sheet
+   would leave a hairline of the photo showing along its edge. */
 .sheet {
+  --sheet-bleed: 1px;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: calc(-1 * var(--sheet-bleed));
+  left: calc(-1 * var(--sheet-bleed));
   display: block;
-  width: 100%;
-  height: var(--strip-h);
+  width: calc(100% + 2 * var(--sheet-bleed));
+  height: calc(var(--strip-h) + var(--sheet-bleed));
   color: var(--case-study-black);
   touch-action: manipulation;
 }
