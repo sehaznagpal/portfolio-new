@@ -53,6 +53,8 @@
 
   /* Footer punch chips */
   --chip-shadow: 0 4px 6px rgba(18, 18, 18, 0.25);
+  /* Film grain over the footer photos (separate from the playground's) */
+  --noise-photo-opacity: 0.1;
 
   /* Fixed Home nav: height of its row (the wordmark's line), reserved by a
      spacer at the top of each section */

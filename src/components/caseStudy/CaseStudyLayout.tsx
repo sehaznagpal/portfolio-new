@@ -4,7 +4,7 @@ import SiteNav from '../nav/SiteNav';
 import ReadingProgress from '../article/ReadingProgress';
 import AboutPanel from '../about/AboutPanel';
 import Footer from '../footer/Footer';
-import type { FooterPhoto } from '../footer/PunchArea';
+import type { FooterPhoto } from '../../data/footerPhotos';
 import type { LinkSection } from '../../data/siteLinks';
 import styles from './CaseStudyLayout.module.css';
 

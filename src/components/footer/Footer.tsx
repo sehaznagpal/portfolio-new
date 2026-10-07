@@ -1,6 +1,7 @@
 import { SITE_LINK_GROUPS, type LinkSection } from '../../data/siteLinks';
 import SiteLink from '../chrome/SiteLink';
-import PunchArea, { type FooterPhoto } from './PunchArea';
+import PunchArea from './PunchArea';
+import type { FooterPhoto } from '../../data/footerPhotos';
 import styles from './Footer.module.css';
 
 interface FooterProps {

@@ -16,7 +16,7 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: url('../../../assets/images/playground/grain.png') repeat;
+  background: url('../../../assets/images/grain.png') repeat;
   /* 128 texels in 64px: one texel per device pixel on 2x screens. Smooth
      sampling, so it averages rather than aliasing when scaled. */
   background-size: 64px 64px;
