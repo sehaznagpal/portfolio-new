@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { LETTER_TEXT } from '../../../data/playground';
 import { useSubscribePan } from '../canvasContext';
+import grain from './grain.module.css';
 import styles from './LetterItem.module.css';
 
 const VISIBLE_THRESHOLD = 0.35;
@@ -77,7 +78,7 @@ export default function LetterItem() {
   const typing = revealed && shown < LETTER_TEXT.length;
 
   return (
-    <div ref={ref} className={styles.letter}>
+    <div ref={ref} className={`${styles.letter} ${grain.grain}`}>
       <p className={styles.visuallyHidden}>{LETTER_TEXT}</p>
       <p className={styles.text} aria-hidden="true">
         {LETTER_TEXT.slice(0, shown)}

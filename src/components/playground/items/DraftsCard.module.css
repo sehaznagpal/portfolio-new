@@ -1,6 +1,13 @@
-.card {
+/* Figma units (1387:2939) */
+.wrap {
   position: relative;
   width: 100%;
+}
+
+/* Figma gives this card no noise; a faint grain keeps it in the family
+   while it still reads white. */
+.card {
+  --grain: 0.06;
   display: flex;
   flex-direction: column;
   gap: calc(20 * var(--cu));
@@ -10,32 +17,33 @@
   color: var(--pg-ink);
 }
 
+/* Hand-placed in Figma, so each sits a little differently off its corner */
 .corner {
   position: absolute;
-  width: calc(15 * var(--cu));
-  height: calc(15 * var(--cu));
+  width: calc(14.99 * var(--cu));
+  height: calc(14.99 * var(--cu));
   background: var(--pg-card-corner);
   border: 1px solid var(--pg-card-border);
 }
 
 .topLeft {
-  top: calc(-8 * var(--cu));
-  left: calc(-8 * var(--cu));
+  left: calc(-11.62 * var(--cu));
+  top: calc(-6 * var(--cu));
 }
 
 .topRight {
-  top: calc(-8 * var(--cu));
-  right: calc(-8 * var(--cu));
+  right: calc(-8.87 * var(--cu));
+  top: calc(-5.97 * var(--cu));
 }
 
 .bottomLeft {
-  bottom: calc(-8 * var(--cu));
-  left: calc(-8 * var(--cu));
+  left: calc(-10.1 * var(--cu));
+  bottom: calc(-6.97 * var(--cu));
 }
 
 .bottomRight {
-  bottom: calc(-8 * var(--cu));
-  right: calc(-8 * var(--cu));
+  right: calc(-10.38 * var(--cu));
+  bottom: calc(-7 * var(--cu));
 }
 
 .heading {
@@ -43,15 +51,15 @@
   text-align: center;
   font-size: calc(56 * var(--cu));
   font-weight: normal;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  line-height: 1;
+  letter-spacing: -0.017em;
   white-space: nowrap;
   font-feature-settings: 'salt' 1;
 }
 
 .headingItalic {
   font-family: 'Gambetta Variable', serif;
-  font-weight: var(--gambetta-medium);
+  font-weight: var(--gambetta-regular);
   font-style: italic;
 }
 
@@ -65,25 +73,20 @@
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
   font-size: calc(20 * var(--cu));
-  line-height: 0.98;
+  line-height: 1;
   text-align: justify;
   font-feature-settings: 'salt' 1;
 }
 
 .body p {
-  margin: 0 0 0.8em;
+  margin: 0;
 }
 
-.body p:last-child {
-  margin-bottom: 0;
-}
-
-/* em-based so it stays in proportion with the paragraph above it */
-.highlight {
+/* Figma's block highlight: a brand-colour bar a touch wider than the text */
+.body .highlight {
+  margin: 1em calc(-2.4 * var(--cu)) 0 calc(-1.62 * var(--cu));
+  padding: 0 calc(2.4 * var(--cu)) calc(2 * var(--cu)) calc(1.62 * var(--cu));
   background: var(--color-brand);
-  padding: 0.15em 0.35em;
-  margin: 0 -0.35em;
-  font-size: 1.06em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  font-weight: var(--author-medium);
+  text-align: left;
 }

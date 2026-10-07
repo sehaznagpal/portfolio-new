@@ -1,8 +1,10 @@
-import disc from '../../../assets/images/playground/disc.webp';
+import vinyl from '../../../assets/images/playground/vinyl.webp';
+import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
+import grain from './grain.module.css';
 import styles from './MotionDemoItem.module.css';
 
-/* Motion Graphic Demo: a record slides out from behind on hover. */
+/* Motion Graphic Demo: a vinyl rolls out from behind on hover. */
 export default function MotionDemoItem({ autoHover, onOpen }: { autoHover: boolean; onOpen: () => void }) {
   return (
     <button
@@ -13,8 +15,10 @@ export default function MotionDemoItem({ autoHover, onOpen }: { autoHover: boole
       aria-label="Motion Graphic Demo, watch video"
       onClick={onOpen}
     >
-      <img src={disc} alt="" width={585} height={571} loading="lazy" decoding="async" className={styles.disc} />
-      <span className={styles.box} aria-hidden="true">
+      <span className={`${styles.vinyl} ${grain.grain} ${grain.shaped}`} style={shapeMask(vinyl)}>
+        <img src={vinyl} alt="" width={589} height={572} loading="lazy" decoding="async" />
+      </span>
+      <span className={`${styles.box} ${grain.grain}`} aria-hidden="true">
         Motion
         <br />
         Graphic

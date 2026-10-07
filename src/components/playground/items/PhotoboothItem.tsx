@@ -1,9 +1,12 @@
-import photoboothPhoto from '../../../assets/images/playground/photobooth-photo.webp';
-import photoboothFlash from '../../../assets/images/playground/photobooth-flash.svg';
+import camera from '../../../assets/images/playground/camera.webp';
+import flashStar from '../../../assets/images/playground/flash-star.svg';
+import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
+import grain from './grain.module.css';
 import styles from './PhotoboothItem.module.css';
 
-/* The camera: pops with a flash burst on hover, opens the photobooth on click. */
+/* The camera: a gradient flash star with "photobooth" pops over it on
+   hover, and a click opens the photobooth. */
 export default function PhotoboothItem({ autoHover, onOpen }: { autoHover: boolean; onOpen: () => void }) {
   return (
     <button
@@ -14,19 +17,16 @@ export default function PhotoboothItem({ autoHover, onOpen }: { autoHover: boole
       aria-label="Photobooth, open camera"
       onClick={onOpen}
     >
-      <img
-        src={photoboothPhoto}
-        alt=""
-        width={405}
-        height={275}
-        loading="lazy"
-        decoding="async"
-        className={styles.photo}
-      />
-      <span className={styles.flashPulse} aria-hidden="true" />
-      <img src={photoboothFlash} alt="" width={225} height={225} loading="lazy" className={styles.flashStar} />
-      <span className={styles.flashLabel} aria-hidden="true">
-        photobooth
+      <span className={`${styles.camera} ${grain.grain} ${grain.shaped}`} style={shapeMask(camera)}>
+        <img src={camera} alt="" width={410} height={284} loading="lazy" decoding="async" />
+      </span>
+      <span className={styles.flash} aria-hidden="true">
+        <span className={styles.star}>
+          <span className={`${styles.starShape} ${grain.grain} ${grain.shaped}`} style={shapeMask(flashStar)}>
+            <img src={flashStar} alt="" width={263} height={184} loading="lazy" />
+          </span>
+        </span>
+        <span className={styles.label}>photobooth</span>
       </span>
     </button>
   );

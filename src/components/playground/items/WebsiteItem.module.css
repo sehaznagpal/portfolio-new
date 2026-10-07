@@ -1,8 +1,8 @@
+/* Figma units (1431:1234) */
 .root {
-  --k: calc(var(--cu) * 0.8625);
-  width: calc(302 * var(--k));
-  height: calc(302 * var(--k));
-  perspective: calc(900 * var(--k));
+  width: calc(260.48 * var(--cu));
+  height: calc(260.48 * var(--cu));
+  perspective: calc(780 * var(--cu));
 }
 
 .flip {
@@ -16,21 +16,30 @@
 .face {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   backface-visibility: hidden;
+  filter: drop-shadow(calc(1.68 * var(--cu)) calc(3.35 * var(--cu)) calc(6.7 * var(--cu)) rgba(0, 0, 0, 0.4));
 }
 
 .back {
   transform: rotateY(180deg);
 }
 
-.star {
-  position: absolute;
-  inset: 0;
+.shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
+  background: radial-gradient(50% 50% at 50% 50%, #f7567c 19.71%, #fbaabd 100%);
+}
+
+/* The hover frame's whiter edge, faded in over the resting gradient */
+.glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(50% 50% at 50% 50%, #f7567c 31%, #fefefe 100%);
+  opacity: 0;
+  transition: opacity 240ms ease-out;
 }
 
 .frontLabel,
@@ -64,10 +73,18 @@
   .root:hover .flip {
     animation: flipPause 1600ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
   }
+
+  .root:hover .glow {
+    opacity: 1;
+  }
 }
 
 .root:is(:focus-visible, [data-auto-hover]) .flip {
   animation: flipPause 1600ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .glow {
+  opacity: 1;
 }
 
 /* Quick flip in, a full second on the back so its copy is readable, quick flip back. */

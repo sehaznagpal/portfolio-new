@@ -9,11 +9,12 @@ import lettersTr from '../../../assets/images/playground/extras-letters-tr.svg';
 import lettersBl from '../../../assets/images/playground/extras-letters-bl.svg';
 import lettersBr from '../../../assets/images/playground/extras-letters-br.svg';
 import focus from './focus.module.css';
+import grain from './grain.module.css';
 import styles from './ExtrasItem.module.css';
 
 type Quadrant = 'none' | 'tl' | 'tr' | 'bl' | 'br';
 
-/* Each quadrant's lettering keeps its own exact Figma inset (see the CSS). */
+/* Each corner lean keeps its own exact Figma inset (see the CSS). */
 const LETTERS: Record<Quadrant, { src: string; className: string }> = {
   none: { src: lettersNone, className: styles.lettersNone },
   tl: { src: lettersTl, className: styles.lettersTl },
@@ -45,13 +46,14 @@ export default function ExtrasItem({ autoHover, onOpen }: { autoHover: boolean; 
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setQuadrant('none')}
     >
-      <span className={styles.background} />
-      <img src={extrasALetter} alt="" className={styles.cornerTl} />
-      <img src={extrasCornerTl} alt="" className={styles.iconTl} />
-      <img src={extrasALetter} alt="" className={styles.cornerBr} />
-      <img src={extrasCornerBr} alt="" className={styles.iconBr} />
-      <img src={extrasHeart} alt="" className={styles.heart} />
-      <img src={letters.src} alt="" className={`${styles.letters} ${letters.className}`} />
+      <span className={`${styles.card} ${grain.grain}`}>
+        <img src={extrasALetter} alt="" className={styles.cornerTl} />
+        <img src={extrasCornerTl} alt="" className={styles.iconTl} />
+        <img src={extrasALetter} alt="" className={styles.cornerBr} />
+        <img src={extrasCornerBr} alt="" className={styles.iconBr} />
+        <img src={extrasHeart} alt="" className={styles.heart} />
+        <img src={letters.src} alt="" className={letters.className} />
+      </span>
     </button>
   );
 }

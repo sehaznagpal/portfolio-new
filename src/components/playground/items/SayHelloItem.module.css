@@ -1,89 +1,90 @@
+/* Figma units (1415:933) */
 .root {
-  --k: calc(var(--cu) * 1.038);
   position: relative;
-  width: calc(332 * var(--k));
-  height: calc(230 * var(--k));
+  width: calc(344.6 * var(--cu));
+  height: calc(238.73 * var(--cu));
 }
 
+/* Rests behind the card; on hover rises to its hover-frame spot above it.
+   Sized to its copy and centred over the card. */
 .tag {
   position: absolute;
   left: 50%;
   top: 0;
   margin: 0;
-  padding: calc(10 * var(--k));
+  padding: calc(10.38 * var(--cu));
   background: var(--pg-ink);
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-regular);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: calc(28 * var(--k));
+  font-size: calc(29.06 * var(--cu));
   line-height: 0.8;
   color: var(--pg-paper);
   text-align: center;
   white-space: nowrap;
-  opacity: 0;
-  transform: translateX(-50%) translateY(calc(10 * var(--k))) rotate(3.18deg);
-  transition:
-    opacity 320ms ease,
-    transform 320ms var(--pg-ease-spring);
+  transform: translate(-50%, calc(103.8 * var(--cu))) rotate(3.18deg);
+  transition: transform 320ms var(--ease-out-expo);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .root:hover .tag {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) rotate(3.18deg);
+    transform: translateX(-50%) rotate(3.18deg);
   }
 }
 
 .root:is(:focus-within, [data-auto-hover]) .tag {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0) rotate(3.18deg);
+  transform: translateX(-50%) rotate(3.18deg);
 }
 
 .card {
   position: absolute;
   left: 0;
-  top: calc(71 * var(--k));
-  width: calc(332 * var(--k));
-  height: calc(159 * var(--k));
+  top: calc(73.69 * var(--cu));
+  width: 100%;
+  height: calc(165.03 * var(--cu));
   background: var(--color-brand);
-  border-radius: calc(16 * var(--k));
+  border-radius: calc(16 * var(--cu));
   overflow: hidden;
   color: var(--pg-ink);
 }
 
 .heading {
   position: absolute;
-  left: 50%;
-  top: calc(8 * var(--k));
+  left: calc(11.12 * var(--cu));
+  top: calc(25.75 * var(--cu));
+  width: calc(315 * var(--cu));
   margin: 0;
+  text-align: center;
   font-family: 'Gambetta Variable', serif;
   font-weight: var(--gambetta-medium);
   font-style: italic;
-  font-size: calc(94.6 * var(--k));
+  font-size: calc(98.21 * var(--cu));
   line-height: 1;
   letter-spacing: -0.08em;
   font-feature-settings: 'salt' 1;
-  transform: translateX(-50%) rotate(-5.27deg);
+  transform: rotate(-5.27deg);
+  transform-origin: top left;
   white-space: nowrap;
 }
 
 .name {
   position: absolute;
-  left: calc(24 * var(--k));
-  top: calc(127 * var(--k));
+  left: calc(17.34 * var(--cu));
+  top: calc(131.82 * var(--cu));
   margin: 0;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-light);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: calc(20 * var(--k));
+  font-size: calc(20.76 * var(--cu));
+  line-height: 1;
   letter-spacing: -0.06em;
 }
 
 .icon {
   position: absolute;
-  top: calc(117 * var(--k));
-  width: calc(30 * var(--k));
-  height: calc(30 * var(--k));
+  top: calc(121.44 * var(--cu));
+  width: calc(31.14 * var(--cu));
+  height: calc(31.14 * var(--cu));
   border-radius: 50%;
 }
 
@@ -98,13 +99,13 @@
 }
 
 .linkedin {
-  left: calc(219 * var(--k));
+  left: calc(227.31 * var(--cu));
 }
 
 .mail {
-  left: calc(252 * var(--k));
+  left: calc(261.56 * var(--cu));
 }
 
 .phone {
-  left: calc(285 * var(--k));
+  left: calc(295.82 * var(--cu));
 }

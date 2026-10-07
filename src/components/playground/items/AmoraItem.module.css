@@ -1,30 +1,20 @@
+/* Figma units (1415:902) */
 .root {
-  --k: calc(var(--cu) * 1.2733);
-  position: relative;
-  width: calc(150 * var(--k));
-  height: calc(195 * var(--k));
+  width: calc(190.91 * var(--cu));
+  height: calc(248.19 * var(--cu));
 }
 
-/* The shake lives on this inner wrapper so the link itself keeps a steady
-   hit area and focus ring. */
-.inner {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
+/* The shake lives on the stamp so the link keeps a steady hit area and focus ring */
 .stamp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  background: linear-gradient(to bottom, #b61417, #f7567c);
 }
 
 .label {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-medium);
@@ -34,16 +24,15 @@
   letter-spacing: -0.04em;
   color: var(--pg-paper);
   white-space: nowrap;
-  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .root:hover .inner {
+  .root:hover .stamp {
     animation: amoraShake 480ms ease-in-out;
   }
 }
 
-.root:is(:focus-visible, [data-auto-hover], [data-tapped]) .inner {
+.root:is(:focus-visible, [data-auto-hover], [data-tapped]) .stamp {
   animation: amoraShake 480ms ease-in-out;
 }
 

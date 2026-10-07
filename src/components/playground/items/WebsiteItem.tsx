@@ -1,10 +1,23 @@
+import type { ReactNode } from 'react';
 import { REWIRED_URL } from '../../../data/playground';
-import starCard from '../../../assets/images/playground/star-card.svg';
+import websiteShape from '../../../assets/images/playground/website-shape.svg';
+import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
+import grain from './grain.module.css';
 import styles from './WebsiteItem.module.css';
 
-/* re-wired website: flips to a second face on hover, holds, flips back. */
+/* re-wired website: its edges glow white on hover while it flips to a
+   second face, holds, and flips back. */
 export default function WebsiteItem({ autoHover }: { autoHover: boolean }) {
+  const face = (label: ReactNode, className = '') => (
+    <span className={`${styles.face} ${className}`}>
+      <span className={`${styles.shape} ${grain.grain} ${grain.shaped}`} style={shapeMask(websiteShape)}>
+        <span className={styles.glow} />
+        {label}
+      </span>
+    </span>
+  );
+
   return (
     <a
       className={`${styles.root} ${focus.focusable}`}
@@ -15,24 +28,23 @@ export default function WebsiteItem({ autoHover }: { autoHover: boolean }) {
       aria-label="re-wired, web design project for an agency"
     >
       <span className={styles.flip} aria-hidden="true">
-        <span className={styles.face}>
-          <img src={starCard} alt="" width={302} height={302} loading="lazy" className={styles.star} />
+        {face(
           <span className={styles.frontLabel}>
             re-wired
             <br />
             website
-          </span>
-        </span>
-        <span className={`${styles.face} ${styles.back}`}>
-          <img src={starCard} alt="" width={302} height={302} loading="lazy" className={styles.star} />
+          </span>,
+        )}
+        {face(
           <span className={styles.backLabel}>
             web design
             <br />
             project for an
             <br />
             agency
-          </span>
-        </span>
+          </span>,
+          styles.back,
+        )}
       </span>
     </a>
   );

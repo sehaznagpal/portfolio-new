@@ -1,96 +1,98 @@
+/* Figma units (1387:2972); artwork placed in % of the card */
 .root {
-  --k: calc(var(--cu) * 1.1248);
-  position: relative;
-  width: calc(258 * var(--k));
-  height: calc(326 * var(--k));
-  filter: var(--pg-item-shadow);
+  width: calc(290.19 * var(--cu));
+  height: calc(345.56 * var(--cu));
+  filter: drop-shadow(calc(2.25 * var(--cu)) calc(4.5 * var(--cu)) calc(9 * var(--cu)) rgba(0, 0, 0, 0.4));
 }
 
-.root img {
+.card {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--pg-ink);
+  border: calc(2.58 * var(--cu)) solid var(--pg-paper);
+  border-radius: calc(13.93 * var(--cu));
+  overflow: hidden;
+}
+
+.card img {
   position: absolute;
   max-width: none;
 }
 
-.background {
-  position: absolute;
-  inset: 0;
-  background: var(--pg-ink);
-  border: calc(2 * var(--k)) solid var(--pg-paper);
-  border-radius: calc(12 * var(--k));
-}
-
 .cornerTl,
 .cornerBr {
-  width: 13.94%;
-  height: 11.38%;
+  width: 13.96%;
+  height: 12.07%;
 }
 
 .cornerTl {
-  top: 4.92%;
-  left: 1.57%;
+  left: 1.97%;
+  top: 3.59%;
 }
 
 .cornerBr {
-  bottom: 4.63%;
-  right: 1.54%;
+  right: 1.83%;
+  bottom: 3.95%;
   transform: rotate(180deg);
 }
 
 .iconTl,
 .iconBr {
-  width: 10.8%;
-  height: 8.1%;
+  width: 10.78%;
+  height: 8.62%;
 }
 
 .iconTl {
-  top: 16.3%;
-  left: 3.5%;
+  left: 3.54%;
+  top: 14.25%;
 }
 
 .iconBr {
-  bottom: 16%;
-  right: 3.6%;
+  right: 3.56%;
+  bottom: 13.93%;
   transform: rotate(180deg);
 }
 
 .heart {
-  top: 22.9%;
-  left: 13.5%;
-  width: 72.1%;
-  height: 57.7%;
+  left: 13.55%;
+  top: 21.26%;
+  width: 72.15%;
+  height: 61.26%;
 }
 
+/* EXTRAS lettering: each corner-lean variant keeps its own Figma inset */
 .lettersNone {
-  top: 24.58%;
-  left: 17.12%;
-  width: 61.89%;
-  height: 48.32%;
+  left: 17.13%;
+  top: 23.05%;
+  width: 61.94%;
+  height: 51.27%;
 }
 
 .lettersTl {
-  top: 24.58%;
-  left: 16.18%;
-  width: 62.83%;
-  height: 48.32%;
+  left: 16.19%;
+  top: 23.05%;
+  width: 62.88%;
+  height: 51.27%;
 }
 
 .lettersTr {
-  top: 25.69%;
-  left: 17.12%;
-  width: 62.81%;
-  height: 47.21%;
+  left: 17.13%;
+  top: 24.23%;
+  width: 62.86%;
+  height: 50.09%;
 }
 
 .lettersBl {
-  top: 24.58%;
-  left: 18.26%;
-  width: 60.75%;
-  height: 48.35%;
+  left: 18.27%;
+  top: 23.05%;
+  width: 60.8%;
+  height: 51.3%;
 }
 
 .lettersBr {
-  top: 24.58%;
-  left: 17.12%;
-  width: 64%;
-  height: 48.32%;
+  left: 17.13%;
+  top: 23.05%;
+  width: 64.05%;
+  height: 51.27%;
 }

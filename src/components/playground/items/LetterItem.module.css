@@ -1,9 +1,12 @@
+/* Old paper: the site's light cream (--text-cream, which playground
+   themes never override), with Figma's lighter grain. Figma units (1415:897). */
 .letter {
-  width: calc(501 * var(--cu));
+  --grain: 0.12;
+  width: calc(501.09 * var(--cu));
   padding: calc(25.52 * var(--cu));
-  background: var(--pg-paper);
-  border-radius: calc(8.5 * var(--cu));
-  filter: var(--pg-item-shadow);
+  background: var(--text-cream);
+  border-radius: calc(8.51 * var(--cu));
+  box-shadow: calc(2.13 * var(--cu)) calc(4.25 * var(--cu)) calc(8.51 * var(--cu)) rgba(0, 0, 0, 0.4);
   transform: rotate(-1.76deg);
 }
 

@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: calc(2.12 * var(--cu)) calc(4.23 * var(--cu)) calc(8.46 * var(--cu)) rgba(0, 0, 0, 0.4);
   overflow: hidden;
 }
 

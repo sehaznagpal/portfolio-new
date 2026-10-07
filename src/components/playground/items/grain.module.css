@@ -1,0 +1,34 @@
+/* Figma's duotone NOISE effect, done with one shared tiled texture rather
+   than an SVG filter per element, so panning stays cheap. Each texel is
+   black or white; --grain sets how strongly it shows (Figma's noise colour
+   alpha). The layer sits above the element's content, photos included, and
+   follows its border radius or mask. */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: url('../../../assets/images/playground/grain.png') repeat;
+  /* 128 texels in 64px: one texel per device pixel on 2x screens. Smooth
+     sampling (not pixelated) so it averages instead of aliasing when
+     scaled, on 1x screens and in the zoomed-out map view. */
+  background-size: 64px 64px;
+  opacity: var(--grain, 0.25);
+  pointer-events: none;
+}
+
+/* Clips the element, and so its grain, to a shape given as --shape: url(...) */
+.shaped {
+  -webkit-mask-image: var(--shape);
+  mask-image: var(--shape);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
