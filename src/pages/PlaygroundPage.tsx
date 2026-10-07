@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { ThemeProvider } from '../components/playground/theme/ThemeContext';
 import PlaygroundCanvas from '../components/playground/PlaygroundCanvas';
 import { PageSweepOut } from '../components/chrome/PageSweep';
+import PlaygroundCursor from '../components/playground/cursor/PlaygroundCursor';
+import { useMediaQuery } from '../lib/useMediaQuery';
 
 // Fonts only the playground uses (letter, SiP Studio modal), so Home never loads them.
 const FONTS_HREF =
@@ -21,6 +23,8 @@ function usePlaygroundFonts() {
    the canvas pans instead. */
 export default function PlaygroundPage() {
   usePlaygroundFonts();
+  // Touch devices keep their native behaviour.
+  const hasMouse = useMediaQuery('(hover: hover) and (pointer: fine)');
 
   useEffect(() => {
     const { overflow } = document.body.style;
@@ -34,6 +38,7 @@ export default function PlaygroundPage() {
     <ThemeProvider>
       <PlaygroundCanvas />
       <PageSweepOut />
+      {hasMouse && <PlaygroundCursor />}
     </ThemeProvider>
   );
 }

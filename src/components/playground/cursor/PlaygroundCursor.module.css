@@ -1,0 +1,73 @@
+/* Playground-only cursor colours (the same on every theme) */
+.root {
+  --cursor-dot: #bf393c;
+  --cursor-trail: #dcb397;
+  --cursor-size: 20px;
+  --cursor-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: fixed;
+  inset: 0;
+  /* Above the modals (1000) and the page sweep (2000) */
+  z-index: 3000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+
+.root[data-visible] {
+  opacity: 1;
+}
+
+.trail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Positioned by translate3d from the pointer itself, so it never lags */
+.position {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.dot {
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  margin: calc(var(--cursor-size) / -2) 0 0 calc(var(--cursor-size) / -2);
+  border-radius: 50%;
+  background: var(--cursor-dot);
+  transition:
+    transform 220ms var(--cursor-ease),
+    opacity 120ms ease-out;
+}
+
+.root[data-hovering] .dot {
+  transform: scale(1.6);
+}
+
+/* Grabbing the canvas */
+.root[data-dragging] .dot {
+  transform: scale(0.8);
+}
+
+/* Over a text field the native text cursor takes over */
+.root[data-text] .dot,
+.root[data-text] .trail {
+  opacity: 0;
+}
+
+/* Hides the native cursor everywhere on the page, modals included, but only
+   while the playground cursor is mounted. !important so it also beats the
+   canvas's own state cursors (e.g. zoom-in in the map view). */
+@media (hover: hover) and (pointer: fine) {
+  :global(html[data-playground-cursor]),
+  :global(html[data-playground-cursor] *) {
+    cursor: none !important;
+  }
+
+  :global(html[data-playground-cursor]) :is(input, textarea, [contenteditable='true']) {
+    cursor: text !important;
+  }
+}

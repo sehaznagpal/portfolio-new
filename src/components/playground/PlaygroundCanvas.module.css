@@ -35,16 +35,6 @@
   -webkit-user-select: none;
 }
 
-@media (pointer: fine) {
-  .surface {
-    cursor: grab;
-  }
-}
-
-.surface[data-dragging] {
-  cursor: grabbing;
-}
-
 .surface[data-mode='map'] {
   cursor: zoom-in;
 }
