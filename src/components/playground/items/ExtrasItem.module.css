@@ -1,0 +1,96 @@
+.root {
+  --k: calc(var(--cu) * 1.1248);
+  position: relative;
+  width: calc(258 * var(--k));
+  height: calc(326 * var(--k));
+  filter: var(--pg-item-shadow);
+}
+
+.root img {
+  position: absolute;
+  max-width: none;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background: var(--pg-ink);
+  border: calc(2 * var(--k)) solid var(--pg-paper);
+  border-radius: calc(12 * var(--k));
+}
+
+.cornerTl,
+.cornerBr {
+  width: 13.94%;
+  height: 11.38%;
+}
+
+.cornerTl {
+  top: 4.92%;
+  left: 1.57%;
+}
+
+.cornerBr {
+  bottom: 4.63%;
+  right: 1.54%;
+  transform: rotate(180deg);
+}
+
+.iconTl,
+.iconBr {
+  width: 10.8%;
+  height: 8.1%;
+}
+
+.iconTl {
+  top: 16.3%;
+  left: 3.5%;
+}
+
+.iconBr {
+  bottom: 16%;
+  right: 3.6%;
+  transform: rotate(180deg);
+}
+
+.heart {
+  top: 22.9%;
+  left: 13.5%;
+  width: 72.1%;
+  height: 57.7%;
+}
+
+.lettersNone {
+  top: 24.58%;
+  left: 17.12%;
+  width: 61.89%;
+  height: 48.32%;
+}
+
+.lettersTl {
+  top: 24.58%;
+  left: 16.18%;
+  width: 62.83%;
+  height: 48.32%;
+}
+
+.lettersTr {
+  top: 25.69%;
+  left: 17.12%;
+  width: 62.81%;
+  height: 47.21%;
+}
+
+.lettersBl {
+  top: 24.58%;
+  left: 18.26%;
+  width: 60.75%;
+  height: 48.35%;
+}
+
+.lettersBr {
+  top: 24.58%;
+  left: 17.12%;
+  width: 64%;
+  height: 48.32%;
+}

@@ -1,0 +1,187 @@
+/* Old-repo sizes multiplied by --scale (the pill is ~17% smaller) */
+.pill {
+  --scale: var(--pg-chrome-scale);
+  position: absolute;
+  top: 36px;
+  right: 36px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(60px * var(--scale));
+  padding: calc(8px * var(--scale));
+  background: var(--color-brand);
+  border-radius: 4px;
+  box-shadow: var(--pg-chip-shadow);
+}
+
+.pillOpen {
+  width: calc(175px * var(--scale));
+}
+
+@media (max-width: 640px) {
+  .pill {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(4px * var(--scale));
+  width: 100%;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: calc(40px * var(--scale));
+  height: calc(40px * var(--scale));
+  border-radius: 50%;
+  border: 1px solid var(--pg-ink);
+  object-fit: cover;
+}
+
+.share {
+  flex-shrink: 0;
+  padding: calc(4px * var(--scale)) calc(6px * var(--scale));
+  background: var(--pg-paper);
+  border-radius: calc(8px * var(--scale));
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-feature-settings: 'salt' 1;
+  font-size: calc(28px * var(--scale));
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--pg-ink);
+  white-space: nowrap;
+  transition: background-color 150ms ease;
+}
+
+.share:hover {
+  background: #e8e8e8;
+}
+
+.themeToggle {
+  flex-shrink: 0;
+  width: calc(32px * var(--scale));
+  height: calc(32px * var(--scale));
+  display: flex;
+}
+
+.share:focus-visible,
+.themeToggle:focus-visible,
+.option:focus-visible {
+  outline: 2px solid var(--pg-ink);
+  outline-offset: 2px;
+}
+
+.dropdown,
+.manualCopy {
+  position: absolute;
+  top: calc(68px * var(--scale));
+  display: flex;
+  flex-direction: column;
+  background: var(--pg-paper);
+  border-radius: 8px;
+  box-shadow: var(--pg-chip-shadow);
+}
+
+.dropdown {
+  left: 0;
+  width: calc(175px * var(--scale));
+  padding: calc(8px * var(--scale));
+  align-items: flex-start;
+  gap: calc(6px * var(--scale));
+}
+
+.dropdownLabel {
+  margin: 0;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-regular);
+  font-style: italic;
+  font-feature-settings: 'salt' 1;
+  font-size: calc(16px * var(--scale));
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--pg-ink);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--pg-ink);
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(8px * var(--scale));
+  padding: calc(3px * var(--scale)) calc(2px * var(--scale));
+  border-radius: 4px;
+  transition: background-color 150ms ease;
+}
+
+.option:hover {
+  background: rgba(18, 18, 18, 0.06);
+}
+
+.optionLabel {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-feature-settings: 'salt' 1;
+  font-size: calc(14px * var(--scale));
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--pg-ink);
+  white-space: nowrap;
+}
+
+.swatch {
+  flex-shrink: 0;
+  width: calc(12px * var(--scale));
+  height: calc(12px * var(--scale));
+  border-radius: 50%;
+  border: 1px solid;
+}
+
+.swatchActive {
+  outline: 1.5px solid var(--pg-ink);
+  outline-offset: 1.5px;
+}
+
+.manualCopy {
+  right: 0;
+  width: 240px;
+  padding: 10px;
+  gap: 6px;
+}
+
+.manualCopyLabel {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 12px;
+  color: var(--pg-ink);
+  opacity: 0.7;
+}
+
+.manualCopyInput {
+  width: 100%;
+  border: 1px solid rgba(18, 18, 18, 0.25);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 12px;
+  color: var(--pg-ink);
+  background: #f5f5f5;
+}

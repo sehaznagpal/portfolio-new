@@ -1,0 +1,123 @@
+/* --k: one old-repo px, scaled so the item fills its Figma box */
+.root {
+  --k: calc(var(--cu) * 1.2009);
+  position: relative;
+  width: calc(325 * var(--k));
+  height: calc(244 * var(--k));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo {
+  width: calc(300 * var(--k));
+  height: auto;
+  transform: rotate(-6.84deg);
+}
+
+.flashPulse {
+  position: absolute;
+  inset: -10% -20%;
+  z-index: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 254, 254, 0.95) 0%, rgba(254, 254, 254, 0) 68%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.flashStar {
+  position: absolute;
+  z-index: 2;
+  top: 47%;
+  left: 59%;
+  width: calc(225 * var(--k));
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%) rotate(-26.06deg) scale(0.75);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 180ms ease-out,
+    transform 220ms var(--pg-ease-spring);
+}
+
+.flashLabel {
+  position: absolute;
+  z-index: 3;
+  top: 45%;
+  left: 59%;
+  transform: translate(-50%, -50%);
+  font-family: 'Gambetta Variable', serif;
+  font-style: italic;
+  font-weight: var(--gambetta-regular);
+  font-size: calc(30.55 * var(--cu));
+  letter-spacing: -0.06em;
+  color: var(--pg-paper);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root:hover .photo {
+    animation: photoPop 480ms var(--pg-ease-spring);
+  }
+
+  .root:hover .flashPulse {
+    animation: flashBurst 420ms ease-out;
+  }
+
+  .root:hover .flashStar {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-26.06deg) scale(1);
+  }
+
+  .root:hover .flashLabel {
+    opacity: 1;
+  }
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .photo {
+  animation: photoPop 480ms var(--pg-ease-spring);
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .flashPulse {
+  animation: flashBurst 420ms ease-out;
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .flashStar {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(-26.06deg) scale(1);
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .flashLabel {
+  opacity: 1;
+}
+
+@keyframes photoPop {
+  0% {
+    transform: rotate(-6.84deg) scale(1);
+  }
+  35% {
+    transform: rotate(-6.84deg) scale(0.94);
+  }
+  65% {
+    transform: rotate(-6.84deg) scale(1.07);
+  }
+  100% {
+    transform: rotate(-6.84deg) scale(1);
+  }
+}
+
+@keyframes flashBurst {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

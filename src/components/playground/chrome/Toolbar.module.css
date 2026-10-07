@@ -1,0 +1,90 @@
+.toolbar {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  z-index: 10;
+  width: 192px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: var(--chrome-bg);
+  border: 1px solid var(--pg-chrome-border);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+.slot {
+  position: relative;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  position: relative;
+  z-index: 2;
+  color: var(--text-cream);
+  transition: transform 200ms var(--pg-ease-standard);
+}
+
+.icon a {
+  display: flex;
+  border-radius: 50%;
+}
+
+.icon a:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+}
+
+.iconActive {
+  transform: translateY(-24px) scale(1.15);
+}
+
+.bubble {
+  position: absolute;
+  left: 50%;
+  top: -20px;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--chrome-bg);
+  border: 1px solid var(--pg-chrome-border);
+  transform: translateX(-50%);
+}
+
+.dot {
+  position: absolute;
+  left: 50%;
+  top: 35px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(227, 220, 204, 0.35);
+  transform: translateX(-50%);
+}
+
+.dotActive {
+  background: var(--text-cream);
+}
+
+.label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 25.5px);
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--chrome-bg);
+  border: 1px solid var(--pg-chrome-border);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 12px;
+  color: var(--text-cream);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+  pointer-events: none;
+  transform: translateX(-50%);
+}

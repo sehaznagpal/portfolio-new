@@ -114,6 +114,27 @@
      five always fits the viewport height. */
   --journey-chrome-h: 260px;
   --journey-mobile-screen-w: min(62vw, 240px);
+
+  /* Playground (/playground). Theme colours live in PlaygroundCanvas's
+     own module so they can never leak to other routes. */
+  --pg-ink: #121212;
+  --pg-paper: #fefefe;
+  --pg-card-border: #046b56;
+  --pg-card-corner: #c2f2e4;
+  --pg-chrome-border: #5a5a5a;
+  --pg-item-shadow: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.4));
+  --pg-chip-shadow: 1px 2px 1px rgba(0, 0, 0, 0.25);
+  --pg-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --pg-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Fixed corner chips render at 83% of the old repo's size */
+  --pg-chrome-scale: 0.83;
+  /* Grid-sweep page transition into the playground: the leaving page's
+     curtain slides down to cover, the playground's continues off the bottom */
+  --pg-sweep-in-duration: 462ms;
+  --pg-sweep-out-duration: 468ms;
+  --pg-zoom-duration: 400ms;
+  --pg-modal-duration: 260ms;
+  --pg-modal-fade-duration: 220ms;
 }
 
 /* Full-screen section height. svh where supported so a browser toolbar

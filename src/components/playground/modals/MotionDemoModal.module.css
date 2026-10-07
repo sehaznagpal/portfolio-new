@@ -1,0 +1,48 @@
+.frame {
+  width: min(880px, 92vw);
+  background: var(--pg-ink);
+  border-radius: 22px;
+}
+
+.close {
+  background: rgba(243, 241, 237, 0.15);
+  color: #f3f1ed;
+}
+
+.close:hover {
+  background: rgba(243, 241, 237, 0.28);
+}
+
+.video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.footer {
+  padding: 14px 20px;
+}
+
+.tag {
+  display: inline-block;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(243, 241, 237, 0.1);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 12px;
+  color: #f3f1ed;
+}
+
+@media (max-width: 640px) {
+  .frame {
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  .tag {
+    font-size: 11px;
+  }
+}

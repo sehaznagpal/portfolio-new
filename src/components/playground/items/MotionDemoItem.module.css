@@ -1,0 +1,46 @@
+.root {
+  --k: calc(var(--cu) * 1.118);
+  position: relative;
+  width: calc(237 * var(--k));
+  height: calc(222 * var(--k));
+}
+
+.disc {
+  position: absolute;
+  left: calc(7 * var(--k));
+  top: calc(2 * var(--k));
+  width: calc(226 * var(--k));
+  height: calc(220 * var(--k));
+  max-width: none;
+  object-fit: contain;
+  transition: transform 520ms var(--ease-out-expo);
+}
+
+.box {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pg-paper);
+  filter: var(--pg-item-shadow);
+  text-align: center;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(64.67 * var(--cu));
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--pg-ink);
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root:hover .disc {
+    transform: translateX(calc(120 * var(--k))) rotate(220deg);
+  }
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .disc {
+  transform: translateX(calc(120 * var(--k))) rotate(220deg);
+}

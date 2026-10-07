@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="250" height="332.631" viewBox="0 0 250 332.631" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<path id="curtain" d="M0 0H250V324C225.601 334.427 211.902 336.54 187.5 324C163.157 333.315 149.343 333.494 125 324C100.596 331.007 86.9031 332.203 62.5 324C38.0957 330.843 24.3983 332.549 0 324V0Z" fill="url(#pattern0_0_7)"/>
+<defs>
+<pattern id="pattern0_0_7" patternUnits="userSpaceOnUse" patternTransform="matrix(100 0 0 100 0 0)" preserveAspectRatio="none" viewBox="0 0 100 100" width="1" height="1">
+<g id="pattern0_0_7_inner">
+<g id="curtain_2">
+<rect width="100" height="100" fill="#D9BB7F"/>
+<rect id="stripes" width="10" height="100" fill="#FEFEFE" fill-opacity="0.4"/>
+<rect id="stripes_2" x="20" width="10" height="100" fill="#FEFEFE" fill-opacity="0.4"/>
+<rect id="stripes_3" x="40" width="10" height="100" fill="#FEFEFE" fill-opacity="0.4"/>
+<rect id="stripes_4" x="60" width="10" height="100" fill="#FEFEFE" fill-opacity="0.4"/>
+<rect id="stripes_5" x="80" width="10" height="100" fill="#FEFEFE" fill-opacity="0.4"/>
+</g>
+</g>
+</pattern></defs>
+</svg>

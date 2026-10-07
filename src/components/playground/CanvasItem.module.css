@@ -1,0 +1,10 @@
+.item {
+  position: absolute;
+  left: calc(var(--x) * var(--cu));
+  top: calc(var(--y) * var(--cu));
+  width: calc(var(--w) * var(--cu));
+  height: calc(var(--h) * var(--cu));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

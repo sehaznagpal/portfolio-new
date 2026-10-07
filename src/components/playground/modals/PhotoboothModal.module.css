@@ -1,0 +1,442 @@
+/* The booth is a fixed composition from Figma: 896 x 582.4 landscape, and a
+   separate 345 x 804 portrait layout below 700px. Like the canvas, every
+   position and size is in stage units (--s, one Figma px), derived from the
+   frame's rendered width via a container query unit, so it scales crisply
+   instead of being a fixed-size scene shrunk with scale(). */
+.frame {
+  --booth-gold: #d9bb7f;
+  --booth-gold-light: #ecd9a8;
+  --booth-plum: #1c0e1d;
+  --booth-text: #f5f5f5;
+  width: min(86vw, calc(86vh * 896 / 582.4), 1400px);
+  aspect-ratio: 896 / 582.4;
+  background: #726273;
+  container-type: inline-size;
+}
+
+.close {
+  background: rgba(254, 254, 254, 0.16);
+  color: var(--booth-text);
+}
+
+.close:hover {
+  background: rgba(254, 254, 254, 0.28);
+}
+
+/* Smaller close button on small frames so it clears the "a photobooth" label */
+@container (max-width: 780px) {
+  .close {
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.stage {
+  --s: calc(100cqw / 896);
+  position: absolute;
+  inset: 0;
+}
+
+.stage img {
+  max-width: none;
+}
+
+.ground {
+  position: absolute;
+  left: 0;
+  top: calc(487 * var(--s));
+  width: 100%;
+  height: calc(95.4 * var(--s));
+  background-image:
+    repeating-linear-gradient(to right, rgba(18, 18, 18, 0.35) 0 1px, transparent 1px calc(48 * var(--s))),
+    repeating-linear-gradient(to bottom, rgba(18, 18, 18, 0.35) 0 1px, transparent 1px calc(48 * var(--s)));
+}
+
+.label {
+  position: absolute;
+  top: calc(44 * var(--s));
+  right: calc(60 * var(--s));
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: calc(20 * var(--s));
+  color: var(--booth-text);
+  white-space: nowrap;
+}
+
+.sparkle1 {
+  position: absolute;
+  left: calc(869.775 * var(--s));
+  top: calc(36 * var(--s));
+  width: calc(21.376 * var(--s));
+  height: calc(21.376 * var(--s));
+  transform: rotate(12.11deg);
+}
+
+.sparkle2 {
+  position: absolute;
+  left: calc(855 * var(--s));
+  top: calc(51.818 * var(--s));
+  width: calc(17.963 * var(--s));
+  height: calc(17.963 * var(--s));
+  transform: rotate(-20.13deg);
+}
+
+/* The four frames are hand-placed in Figma, a px or two off a clean grid. */
+.photoFrame {
+  position: absolute;
+  top: calc(47 * var(--s));
+  height: calc(82 * var(--s));
+  background: var(--booth-plum);
+  border: calc(4 * var(--s)) solid var(--booth-gold);
+  overflow: hidden;
+}
+
+.photoFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.photoFrame0 {
+  left: calc(58 * var(--s));
+  width: calc(130 * var(--s));
+}
+
+.photoFrame1 {
+  left: calc(200 * var(--s));
+  width: calc(131 * var(--s));
+}
+
+.photoFrame2 {
+  left: calc(342 * var(--s));
+  width: calc(131 * var(--s));
+}
+
+.photoFrame3 {
+  left: calc(485 * var(--s));
+  width: calc(130 * var(--s));
+}
+
+/* 339 tall (not Figma's 350) so it ends flush with the floor's top edge */
+.boothTrim {
+  position: absolute;
+  left: calc(66 * var(--s));
+  top: calc(148 * var(--s));
+  width: calc(543 * var(--s));
+  height: calc(339 * var(--s));
+  border: 1px solid var(--pg-ink);
+}
+
+.cameraArea {
+  position: absolute;
+  left: calc(78 * var(--s));
+  top: calc(162.625 * var(--s));
+  width: calc(519 * var(--s));
+  height: calc(324.375 * var(--s));
+  background: var(--booth-plum);
+  overflow: hidden;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  background: var(--booth-plum);
+}
+
+.countdown {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-bold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(96 * var(--s));
+  letter-spacing: -0.04em;
+  color: var(--pg-paper);
+  text-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  background: var(--pg-paper);
+  opacity: 0;
+  pointer-events: none;
+  animation: flash 350ms ease-out forwards;
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Closed, the halves tile the camera exactly. Open, each stays at its outer
+   edge and gathers into a narrow strip, like a real curtain: the SVGs
+   stretch (preserveAspectRatio="none"), so narrowing the box bunches them. */
+.curtainLeft,
+.curtainRight {
+  position: absolute;
+  top: calc(162 * var(--s));
+  height: calc(335 * var(--s));
+  z-index: 5;
+  overflow: hidden;
+  transform-origin: left center;
+  transition: transform 380ms var(--ease-out-quint);
+}
+
+.curtainLeft {
+  left: calc(78 * var(--s));
+  width: calc(259 * var(--s));
+}
+
+/* A small stagger reads as two halves pulled by hand */
+.curtainRight {
+  left: calc(337 * var(--s));
+  width: calc(260 * var(--s));
+  transform-origin: right center;
+  transition-delay: 60ms;
+}
+
+.curtainLeft:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.curtainLeft img,
+.curtainRight img {
+  width: 100%;
+  height: 100%;
+}
+
+.curtainLeftOpen {
+  transform: scaleX(calc(42 / 259));
+}
+
+.curtainRightOpen {
+  transform: scaleX(calc(36 / 260));
+}
+
+.heading {
+  position: absolute;
+  left: calc(634 * var(--s));
+  top: calc(170 * var(--s));
+  width: calc(252 * var(--s));
+  text-align: center;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(72 * var(--s));
+  line-height: 0.76;
+  letter-spacing: -0.04em;
+  color: var(--booth-gold);
+}
+
+.heading p {
+  margin: 0;
+}
+
+.status {
+  position: absolute;
+  left: calc(643 * var(--s));
+  top: calc(291 * var(--s));
+  width: calc(234 * var(--s));
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: calc(20 * var(--s));
+  color: var(--booth-text);
+}
+
+.actions {
+  position: absolute;
+  left: calc(643 * var(--s));
+  top: calc(355 * var(--s));
+  width: calc(234 * var(--s));
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--s));
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: calc(8 * var(--s)) calc(12 * var(--s));
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: calc(20 * var(--s));
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color 150ms ease;
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible {
+  outline: 2px solid var(--pg-paper);
+  outline-offset: 2px;
+}
+
+.primaryButton {
+  background: var(--booth-gold);
+  color: var(--booth-plum);
+}
+
+.primaryButton:hover {
+  background: var(--booth-gold-light);
+}
+
+.secondaryButton {
+  color: var(--booth-text);
+  border: 1px solid var(--booth-text);
+}
+
+.secondaryButton:hover {
+  background: rgba(245, 245, 245, 0.12);
+}
+
+/* Portrait layout: text, strip and booth stacked top to bottom */
+@media (max-width: 700px) {
+  .frame {
+    width: min(calc(100vw - 48px), calc((100vh - 48px) * 345 / 804), 480px);
+    aspect-ratio: 345 / 804;
+  }
+
+  .stage {
+    --s: calc(100cqw / 345);
+  }
+
+  .ground {
+    top: calc(686 * var(--s));
+    height: calc(118 * var(--s));
+  }
+
+  .label {
+    top: calc(16.2 * var(--s));
+    right: calc(124 * var(--s));
+    font-size: calc(27.991 * var(--s));
+  }
+
+  .sparkle1 {
+    left: calc(243.14 * var(--s));
+    top: calc(5 * var(--s));
+    width: calc(29.916 * var(--s));
+    height: calc(29.916 * var(--s));
+  }
+
+  .sparkle2 {
+    left: calc(227.75 * var(--s));
+    top: calc(20.39 * var(--s));
+    width: calc(25.14 * var(--s));
+    height: calc(25.14 * var(--s));
+  }
+
+  .photoFrame {
+    top: calc(410 * var(--s));
+    height: calc(47.698 * var(--s));
+    border-width: calc(2.327 * var(--s));
+  }
+
+  .photoFrame0 {
+    left: calc(11 * var(--s));
+    width: calc(75.619 * var(--s));
+  }
+
+  .photoFrame1 {
+    left: calc(93.6 * var(--s));
+    width: calc(76.201 * var(--s));
+  }
+
+  .photoFrame2 {
+    left: calc(176.2 * var(--s));
+    width: calc(76.201 * var(--s));
+  }
+
+  .photoFrame3 {
+    left: calc(259.38 * var(--s));
+    width: calc(75.619 * var(--s));
+  }
+
+  .boothTrim {
+    left: calc(1 * var(--s));
+    top: calc(462 * var(--s));
+    width: calc(344 * var(--s));
+    height: calc(224 * var(--s));
+    border-color: #252225;
+  }
+
+  .cameraArea {
+    left: calc(11 * var(--s));
+    top: calc(472 * var(--s));
+    width: calc(324.094 * var(--s));
+    height: calc(202.558 * var(--s));
+  }
+
+  .curtainLeft,
+  .curtainRight {
+    top: calc(472.23 * var(--s));
+    height: calc(207.944 * var(--s));
+  }
+
+  .curtainLeft {
+    left: calc(11 * var(--s));
+    width: calc(161.735 * var(--s));
+  }
+
+  .curtainRight {
+    left: calc(172.73 * var(--s));
+    width: calc(162.359 * var(--s));
+  }
+
+  .curtainLeftOpen {
+    transform: scaleX(calc(26 / 161.735));
+  }
+
+  .curtainRightOpen {
+    transform: scaleX(calc(24 / 162.359));
+  }
+
+  .heading {
+    left: 50%;
+    top: calc(119 * var(--s));
+    width: auto;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    font-size: calc(79.87 * var(--s));
+  }
+
+  .status {
+    left: 50%;
+    top: calc(255.6 * var(--s));
+    width: auto;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    font-size: calc(22.186 * var(--s));
+  }
+
+  .actions {
+    left: 50%;
+    top: calc(296.79 * var(--s));
+    width: auto;
+    transform: translateX(-50%);
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    padding: calc(8.874 * var(--s)) calc(13.312 * var(--s));
+    font-size: calc(22.186 * var(--s));
+  }
+}

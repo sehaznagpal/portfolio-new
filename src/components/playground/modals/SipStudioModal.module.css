@@ -1,0 +1,374 @@
+/* SiP Studio's own brand palette */
+.frame {
+  --sip-ink: #2e2e2e;
+  --sip-cream: #f3f1ed;
+  width: min(920px, 100%);
+  height: min(86vh, 920px);
+  background: var(--sip-cream);
+  border-radius: 22px;
+}
+
+.close {
+  background: rgba(243, 241, 237, 0.85);
+  color: var(--sip-ink);
+}
+
+.close:hover {
+  background: var(--sip-cream);
+}
+
+.scroll {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sectionHeading {
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  color: var(--sip-ink);
+  margin: 0 0 20px;
+}
+
+/* Hero */
+
+.hero {
+  background: var(--sip-ink);
+  padding: 40px 44px 32px;
+}
+
+.heroLabel {
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--sip-cream);
+  margin: 0 0 28px;
+}
+
+.heroLogoRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.heroTitle {
+  font-family: 'Gambetta Variable', Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 46px;
+  letter-spacing: -0.01em;
+  color: var(--sip-cream);
+  margin: 0;
+}
+
+.heroSubtitle {
+  font-family: 'Source Code Pro', monospace;
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--sip-cream);
+  margin: 6px 0 0;
+}
+
+.heroSublogo {
+  height: 68px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.heroScrollHint {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 12px;
+  color: #f5f5f5;
+  opacity: 0.55;
+  text-align: right;
+  margin: 24px 0 0;
+}
+
+/* Intro */
+
+.intro {
+  background: var(--sip-cream);
+  padding: 40px 44px;
+}
+
+.introBody {
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.55;
+  text-align: justify;
+  color: var(--sip-ink);
+  margin: 0 0 28px;
+}
+
+.introPhotoRow {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.introPhoto {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 50% 45% 50% 45% / 45% 50% 45% 50%;
+}
+
+.introSticker {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  right: calc(50% - 170px);
+  bottom: -20px;
+}
+
+/* Typography */
+
+.typography {
+  background: #323232;
+  padding: 44px 44px 36px;
+}
+
+.typeCols {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.typeCol {
+  flex: 1;
+  max-width: 260px;
+  text-align: center;
+}
+
+.typeNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(243, 241, 237, 0.4);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 12px;
+  color: var(--sip-cream);
+  margin-bottom: 10px;
+}
+
+.typeName {
+  font-family: 'Gambetta Variable', Georgia, serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--sip-cream);
+  margin: 0 0 6px;
+}
+
+.typeCaption {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  color: var(--sip-cream);
+  opacity: 0.75;
+  margin: 0;
+}
+
+.typeBalance {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px;
+  text-align: center;
+  color: #d98e73;
+  margin: 0 0 28px;
+}
+
+.typeWordmark {
+  font-family: 'Gambetta Variable', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  text-align: center;
+  color: var(--sip-cream);
+  margin: 0;
+}
+
+/* Palette */
+
+.palette {
+  background: var(--sip-cream);
+  padding: 40px 44px;
+}
+
+.swatchRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.swatch {
+  width: 84px;
+  height: 96px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  color: var(--sip-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+}
+
+.swatchLight {
+  color: var(--sip-ink);
+}
+
+.swatchOutlined {
+  border-color: var(--sip-ink);
+}
+
+.paletteCaption {
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  text-align: center;
+  color: var(--sip-ink);
+  margin: 0;
+}
+
+/* Logo concept */
+
+.logoConcept {
+  background: var(--sip-ink);
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logoIcon {
+  width: 44px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: justify;
+  color: var(--sip-cream);
+  margin: 0;
+}
+
+/* Gallery */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--sip-ink);
+}
+
+.galleryCell {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.galleryCell > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallerySticker {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallerySticker img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stickerLabel {
+  position: relative;
+  font-family: 'Gambetta Variable', Georgia, serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--sip-cream);
+}
+
+/* Footer */
+
+.footerNote {
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  text-align: center;
+  color: var(--sip-ink);
+  background: var(--sip-cream);
+  padding: 24px 44px 40px;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .frame {
+    width: 100%;
+    height: 92vh;
+    border-radius: 16px;
+  }
+
+  .hero,
+  .intro,
+  .typography,
+  .palette,
+  .logoConcept {
+    padding: 28px 22px;
+  }
+
+  .heroLogoRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .heroTitle {
+    font-size: 34px;
+  }
+
+  .typeCols {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footerNote {
+    padding: 20px 22px 32px;
+  }
+}

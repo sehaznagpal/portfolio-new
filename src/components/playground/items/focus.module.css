@@ -1,0 +1,10 @@
+/* Keyboard focus ring shared by the clickable canvas items. */
+.focusable {
+  display: block;
+  cursor: pointer;
+}
+
+.focusable:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 6px;
+}

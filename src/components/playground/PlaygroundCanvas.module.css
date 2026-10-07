@@ -1,0 +1,82 @@
+.viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg-canvas);
+}
+
+/* Scoped theme overrides: data-theme only ever lives on this element. */
+.viewport[data-theme='pina-colada'] {
+  --bg-canvas: #f8ffd1;
+  --grid-line: #c2f2e4;
+}
+
+.viewport[data-theme='seaglass'] {
+  --bg-canvas: #ddecf1;
+  --grid-line: #aed9c6;
+}
+
+.viewport[data-theme='blush'] {
+  --bg-canvas: #c84f6b;
+  --grid-line: #d1798e;
+}
+
+.viewport[data-theme='wakanda'] {
+  --bg-canvas: #121212;
+  --grid-line: #1e1e1e;
+}
+
+.surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (pointer: fine) {
+  .surface {
+    cursor: grab;
+  }
+}
+
+.surface[data-dragging] {
+  cursor: grabbing;
+}
+
+.surface[data-mode='map'] {
+  cursor: zoom-in;
+}
+
+/* Both layers are the full canvas and get the same transform from
+   useCanvasViewport (translate, plus scale only in the zoomed-out map view). */
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--canvas-w) * var(--cu));
+  height: calc(var(--canvas-h) * var(--cu));
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.surface[data-zooming] .layer {
+  transition: transform var(--pg-zoom-duration) var(--pg-ease-standard);
+}
+
+.grid {
+  /* Old-repo grid density, in canvas units */
+  --grid-spacing: calc(20 * var(--cu));
+  background-color: var(--bg-canvas);
+  background-image:
+    repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px var(--grid-spacing)),
+    repeating-linear-gradient(to bottom, var(--grid-line) 0 1px, transparent 1px var(--grid-spacing));
+}
+
+/* Sparser grid on phones, as in the old repo */
+@media (max-width: 640px) {
+  .grid {
+    --grid-spacing: calc(40 * var(--cu));
+  }
+}

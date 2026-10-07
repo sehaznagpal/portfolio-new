@@ -1,9 +1,10 @@
 import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import type { LinkSection, SiteLinkDef } from '../../data/siteLinks';
+import PlaygroundLink from './PlaygroundLink';
 
 /* One link from SITE_LINK_GROUPS: a section move when `onSection` is given
-   (Home), otherwise a route, mail or new-tab link. */
+   (Home), the playground's sweep transition, or a route, mail or new-tab link. */
 export default function SiteLink({
   link,
   className,
@@ -19,6 +20,10 @@ export default function SiteLink({
         {link.label}
       </a>
     );
+  }
+
+  if (link.playground) {
+    return <PlaygroundLink className={className}>{link.label}</PlaygroundLink>;
   }
 
   const { section } = link;

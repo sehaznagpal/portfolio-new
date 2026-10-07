@@ -1,0 +1,89 @@
+.card {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--cu));
+  padding: calc(24 * var(--cu)) calc(60 * var(--cu));
+  background: var(--pg-paper);
+  border: 1px solid var(--pg-card-border);
+  color: var(--pg-ink);
+}
+
+.corner {
+  position: absolute;
+  width: calc(15 * var(--cu));
+  height: calc(15 * var(--cu));
+  background: var(--pg-card-corner);
+  border: 1px solid var(--pg-card-border);
+}
+
+.topLeft {
+  top: calc(-8 * var(--cu));
+  left: calc(-8 * var(--cu));
+}
+
+.topRight {
+  top: calc(-8 * var(--cu));
+  right: calc(-8 * var(--cu));
+}
+
+.bottomLeft {
+  bottom: calc(-8 * var(--cu));
+  left: calc(-8 * var(--cu));
+}
+
+.bottomRight {
+  bottom: calc(-8 * var(--cu));
+  right: calc(-8 * var(--cu));
+}
+
+.heading {
+  margin: 0;
+  text-align: center;
+  font-size: calc(56 * var(--cu));
+  font-weight: normal;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+.headingItalic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-medium);
+  font-style: italic;
+}
+
+.headingBold {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+}
+
+.body {
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: calc(20 * var(--cu));
+  line-height: 0.98;
+  text-align: justify;
+  font-feature-settings: 'salt' 1;
+}
+
+.body p {
+  margin: 0 0 0.8em;
+}
+
+.body p:last-child {
+  margin-bottom: 0;
+}
+
+/* em-based so it stays in proportion with the paragraph above it */
+.highlight {
+  background: var(--color-brand);
+  padding: 0.15em 0.35em;
+  margin: 0 -0.35em;
+  font-size: 1.06em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}

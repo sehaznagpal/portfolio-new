@@ -1,4 +1,5 @@
 import { CV_URL, LINKEDIN_URL, MAILTO_URL } from './contact';
+import { PLAYGROUND_PATH } from './playground';
 
 /* Home sections a link can move to in place (see useSectionNav). */
 export type LinkSection = 'hero' | 'work';
@@ -10,6 +11,8 @@ export interface SiteLinkDef {
   section?: LinkSection;
   // Opens in a new tab.
   external?: boolean;
+  // Enters with the playground's grid-sweep transition.
+  playground?: boolean;
 }
 
 export interface SiteLinkGroup {
@@ -23,7 +26,7 @@ export const SITE_LINK_GROUPS: SiteLinkGroup[] = [
     label: 'navigate',
     links: [
       { label: '(home)', href: '/', section: 'hero' },
-      { label: '(playground)', href: '/experiment-zone' },
+      { label: '(playground)', href: PLAYGROUND_PATH, playground: true },
       { label: '(selected work)', href: '/#work', section: 'work' },
     ],
   },

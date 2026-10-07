@@ -1,6 +1,8 @@
 import { ArrowUpRight } from 'lucide-react';
 import CursorTooltip from '../chrome/CursorTooltip';
 import SweepButton from '../chrome/SweepButton';
+import { PageSweepIn } from '../chrome/PageSweep';
+import { usePlaygroundTransition } from '../../lib/usePlaygroundTransition';
 import mePhoto from '../../assets/images/nav/me-polaroid.webp';
 import styles from './SiteNav.module.css';
 
@@ -11,8 +13,7 @@ export type NavTheme = 'light' | 'dark' | 'hidden';
 const ME_PHOTO = { src: mePhoto, width: 89, height: 83 };
 
 /* The one top nav on Home, fixed above the sections. Its colours follow the
-   current section through `theme` and change in step with the section move.
-   Playground is intentionally not wired to anything yet. */
+   current section through `theme` and change in step with the section move. */
 export default function SiteNav({
   theme,
   onHome,
@@ -24,6 +25,7 @@ export default function SiteNav({
   onAbout: () => void;
   onWork: () => void;
 }) {
+  const { transitioning, enterPlayground } = usePlaygroundTransition();
   // Tooltip pill contrasts with the surface the nav sits on.
   const tooltipVariant = theme === 'light' ? 'dark' : 'light';
 
@@ -47,12 +49,13 @@ export default function SiteNav({
           </SweepButton>
         </CursorTooltip>
         <CursorTooltip text="more designs and projects" variant={tooltipVariant}>
-          <SweepButton className={styles.link}>
+          <SweepButton className={styles.link} onClick={enterPlayground}>
             playground
             <ArrowUpRight className={styles.arrow} size={14} strokeWidth={1.75} aria-hidden="true" />
           </SweepButton>
         </CursorTooltip>
       </div>
+      {transitioning && <PageSweepIn />}
     </nav>
   );
 }

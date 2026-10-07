@@ -1,0 +1,80 @@
+.root {
+  --k: calc(var(--cu) * 1.1972);
+  position: relative;
+  width: calc(362 * var(--k));
+  height: calc(359 * var(--k));
+}
+
+.cloud,
+.badge {
+  position: absolute;
+  width: calc(275 * var(--k));
+  height: calc(268 * var(--k));
+  max-width: none;
+}
+
+.cloud {
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 320ms ease,
+    transform 320ms var(--pg-ease-spring);
+}
+
+.label {
+  position: absolute;
+  left: calc(52 * var(--k));
+  top: calc(68 * var(--k));
+  text-align: left;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(33.54 * var(--cu));
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--pg-ink);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(calc(6 * var(--k)));
+  transition:
+    opacity 320ms ease 40ms,
+    transform 320ms var(--pg-ease-spring) 40ms;
+}
+
+.badge {
+  left: calc(44 * var(--k));
+  top: calc(46 * var(--k));
+  transition: transform 380ms var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root:hover .cloud {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .root:hover .label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .root:hover .badge {
+    transform: translate(calc(43 * var(--k)), calc(45 * var(--k)));
+  }
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .cloud {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .badge {
+  transform: translate(calc(43 * var(--k)), calc(45 * var(--k)));
+}

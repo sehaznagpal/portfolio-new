@@ -1,0 +1,35 @@
+.pill {
+  --scale: var(--pg-chrome-scale);
+  position: absolute;
+  top: 36px;
+  left: 36px;
+  z-index: 10;
+  padding: calc(12px * var(--scale)) calc(8px * var(--scale));
+  background: var(--pg-paper);
+  border-radius: 4px;
+  box-shadow: var(--pg-chip-shadow);
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-regular);
+  font-size: calc(32px * var(--scale));
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-feature-settings: 'salt' 1;
+  color: var(--pg-ink);
+  transition: opacity 150ms ease;
+}
+
+.pill:hover {
+  opacity: 0.85;
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* Mobile drops the pill so Share can sit centred on its own */
+@media (max-width: 640px) {
+  .pill {
+    display: none;
+  }
+}

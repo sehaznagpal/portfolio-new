@@ -1,0 +1,52 @@
+.sweep {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+  background-color: var(--bg-canvas);
+  background-image:
+    repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px var(--grid-line-spacing)),
+    repeating-linear-gradient(to bottom, var(--grid-line) 0 1px, transparent 1px var(--grid-line-spacing));
+}
+
+.in {
+  transform: translateY(-100%);
+  animation: sweepIn var(--pg-sweep-in-duration) var(--ease-out-expo) forwards;
+}
+
+.out {
+  transition: transform var(--pg-sweep-out-duration) var(--ease-out-expo);
+}
+
+.gone {
+  transform: translateY(100%);
+}
+
+@keyframes sweepIn {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Reduced motion: the curtain fades in and out instead of sliding. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .in {
+    transform: none;
+    animation: fadeIn var(--section-fade-duration) ease-out;
+  }
+
+  .out {
+    transition: opacity var(--section-fade-duration) ease-out;
+  }
+
+  .gone {
+    transform: none;
+    opacity: 0;
+  }
+}
