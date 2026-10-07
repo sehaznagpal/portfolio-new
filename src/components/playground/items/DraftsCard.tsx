@@ -8,14 +8,14 @@ const CORNERS = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'] as const;
 export default function DraftsCard() {
   return (
     <div className={styles.wrap}>
-      <div className={`${styles.card} ${grain.grain}`}>
+      <div className={styles.card}>
         <h1 className={styles.heading}>
           <span className={styles.headingItalic}>More from my</span>{' '}
           <span className={styles.headingBold}>Drafts</span>
         </h1>
         <div className={styles.body}>
           <p>{DRAFTS_BODY}</p>
-          <p className={styles.highlight}>{DRAFTS_HIGHLIGHT}</p>
+          <p className={`${styles.highlight} ${grain.grain}`}>{DRAFTS_HIGHLIGHT}</p>
         </div>
       </div>
       {CORNERS.map((corner) => (

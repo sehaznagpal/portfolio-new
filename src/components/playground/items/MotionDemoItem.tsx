@@ -1,5 +1,4 @@
 import vinyl from '../../../assets/images/playground/vinyl.webp';
-import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
 import grain from './grain.module.css';
 import styles from './MotionDemoItem.module.css';
@@ -15,7 +14,7 @@ export default function MotionDemoItem({ autoHover, onOpen }: { autoHover: boole
       aria-label="Motion Graphic Demo, watch video"
       onClick={onOpen}
     >
-      <span className={`${styles.vinyl} ${grain.grain} ${grain.shaped}`} style={shapeMask(vinyl)}>
+      <span className={styles.vinyl}>
         <img src={vinyl} alt="" width={589} height={572} loading="lazy" decoding="async" />
       </span>
       <span className={`${styles.box} ${grain.grain}`} aria-hidden="true">

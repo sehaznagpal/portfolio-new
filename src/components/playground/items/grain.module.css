@@ -1,29 +1,32 @@
-/* Figma's duotone NOISE effect, done with one shared tiled texture rather
-   than an SVG filter per element, so panning stays cheap. Each texel is
-   black or white; --grain sets how strongly it shows (Figma's noise colour
-   alpha). The layer sits above the element's content, photos included, and
-   follows its border radius or mask. */
+/* Fine grain on an element's background fill only. The element's own
+   background is the fill; this layer sits just above it and below all of
+   its content (text, icons, artwork), so content always stays crisp. It is
+   one shared tiled texture rather than an SVG filter per element, so
+   panning stays cheap. --grain tunes the strength per fill. */
 .grain {
   position: relative;
   isolation: isolate;
 }
 
-.grain::after {
+/* z-index -1 inside the isolated element: painted after its background,
+   before any of its children. */
+.grain::before {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: -1;
   border-radius: inherit;
   background: url('../../../assets/images/playground/grain.png') repeat;
   /* 128 texels in 64px: one texel per device pixel on 2x screens. Smooth
-     sampling (not pixelated) so it averages instead of aliasing when
-     scaled, on 1x screens and in the zoomed-out map view. */
+     sampling, so it averages rather than aliasing when scaled. */
   background-size: 64px 64px;
-  opacity: var(--grain, 0.25);
+  mix-blend-mode: soft-light;
+  /* ~4/255 of brightness variation on mid-tone fills, matching the reference */
+  opacity: var(--grain, 0.12);
   pointer-events: none;
 }
 
-/* Clips the element, and so its grain, to a shape given as --shape: url(...) */
+/* Clips the element (fill, grain and content) to a shape given as --shape: url(...) */
 .shaped {
   -webkit-mask-image: var(--shape);
   mask-image: var(--shape);

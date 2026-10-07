@@ -1,7 +1,7 @@
 /* Old paper: the site's light cream (--text-cream, which playground
-   themes never override), with Figma's lighter grain. Figma units (1415:897). */
+   themes never override), with a fainter grain. Figma units (1415:897). */
 .letter {
-  --grain: 0.12;
+  --grain: 0.08;
   width: calc(501.09 * var(--cu));
   padding: calc(25.52 * var(--cu));
   background: var(--text-cream);

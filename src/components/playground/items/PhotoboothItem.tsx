@@ -17,7 +17,7 @@ export default function PhotoboothItem({ autoHover, onOpen }: { autoHover: boole
       aria-label="Photobooth, open camera"
       onClick={onOpen}
     >
-      <span className={`${styles.camera} ${grain.grain} ${grain.shaped}`} style={shapeMask(camera)}>
+      <span className={styles.camera}>
         <img src={camera} alt="" width={410} height={284} loading="lazy" decoding="async" />
       </span>
       <span className={styles.flash} aria-hidden="true">

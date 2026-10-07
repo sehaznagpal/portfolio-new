@@ -16,11 +16,8 @@
   transition: transform 380ms var(--ease-out-expo);
 }
 
-/* Figma's SiP noise is heavier dark grain on the white scallop and faint
-   light grain on the black one. Hidden at rest so no white edge shows
-   around the badge. */
+/* Hidden at rest so no white edge shows around the badge */
 .cloud {
-  --grain: 0.33;
   background: var(--pg-paper);
   opacity: 0;
   transition:
@@ -29,7 +26,7 @@
 }
 
 .badge {
-  --grain: 0.1;
+  background: var(--pg-ink);
 }
 
 .badge img {

@@ -33,10 +33,12 @@
   background: radial-gradient(50% 50% at 50% 50%, #f7567c 19.71%, #fbaabd 100%);
 }
 
-/* The hover frame's whiter edge, faded in over the resting gradient */
+/* The hover frame's whiter edge, faded in over the resting gradient but
+   still under the grain */
 .glow {
   position: absolute;
   inset: 0;
+  z-index: -2;
   background: radial-gradient(50% 50% at 50% 50%, #f7567c 31%, #fefefe 100%);
   opacity: 0;
   transition: opacity 240ms ease-out;

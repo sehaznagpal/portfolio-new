@@ -1,4 +1,4 @@
-import sipBadge from '../../../assets/images/playground/sip-badge.svg';
+import sipFlower from '../../../assets/images/playground/sip-flower.svg';
 import sipShape from '../../../assets/images/playground/sip-shape.svg';
 import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
@@ -26,7 +26,7 @@ export default function SipStudioItem({ autoHover, onOpen }: { autoHover: boolea
         </span>
       </span>
       <span className={`${styles.badge} ${grain.grain} ${grain.shaped}`} style={mask}>
-        <img src={sipBadge} alt="" width={329} height={321} loading="lazy" />
+        <img src={sipFlower} alt="" width={329} height={321} loading="lazy" />
       </span>
     </button>
   );

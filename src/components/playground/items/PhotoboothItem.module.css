@@ -41,10 +41,15 @@
 }
 
 .starShape {
-  --grain: 0.12;
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* The star artwork is the fill, so it sits beneath the grain */
+.starShape img {
+  position: relative;
+  z-index: -2;
 }
 
 .label {
