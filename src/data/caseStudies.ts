@@ -8,6 +8,8 @@ export interface CaseStudyDef {
   tag: string;
   titleItalic: string;
   titleBold: string;
+  // How other pages refer to it, e.g. "See MoolRoop →".
+  shortTitle: string;
   href: string;
 }
 
@@ -23,6 +25,7 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     tag: 'client project',
     titleItalic: 'Website for',
     titleBold: 'Dr Cuterus',
+    shortTitle: 'Dr Cuterus',
     href: LINKS.drCuterus,
   },
   {
@@ -31,6 +34,7 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     tag: 'dissertation research project',
     titleItalic: 'Designing Against',
     titleBold: 'Fraud',
+    shortTitle: 'Designing Against Fraud',
     href: LINKS.fraud,
   },
   {
@@ -39,6 +43,7 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     tag: 'self-identified problem',
     titleItalic: 'The Moolroop',
     titleBold: 'App',
+    shortTitle: 'MoolRoop',
     href: LINKS.moolroop,
   },
 ];

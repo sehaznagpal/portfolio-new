@@ -1,6 +1,6 @@
-import ArticleButton from '../components/article/ArticleButton';
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
+import CaseStudyEnd from '../components/caseStudy/CaseStudyEnd';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import FraudPoster from '../components/caseStudy/FraudPoster';
 import ResearchStructure from '../components/caseStudy/fraud/ResearchStructure';
@@ -23,11 +23,7 @@ export default function FraudCaseStudyPage() {
   return (
     <CaseStudyLayout
       footerPhoto={FOOTER_PHOTOS.fraud}
-      after={
-        <div className={styles.closing}>
-          <ArticleButton link={FRAUD_ARTICLE.closingLink} />
-        </div>
-      }
+      after={<CaseStudyEnd current="fraud" link={FRAUD_ARTICLE.closingLink} />}
     >
       <article className={styles.article}>
         <div className={styles.hero}>

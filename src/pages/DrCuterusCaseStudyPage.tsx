@@ -1,6 +1,6 @@
-import ArticleButton from '../components/article/ArticleButton';
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
+import CaseStudyEnd from '../components/caseStudy/CaseStudyEnd';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import DrCuterusPoster from '../components/caseStudy/DrCuterusPoster';
 import ImageSet from '../components/article/ImageSet';
@@ -21,11 +21,7 @@ export default function DrCuterusCaseStudyPage() {
   return (
     <CaseStudyLayout
       footerPhoto={FOOTER_PHOTOS.drCuterus}
-      after={
-        <div className={styles.closing}>
-          <ArticleButton link={DR_CUTERUS_ARTICLE.closingLink} />
-        </div>
-      }
+      after={<CaseStudyEnd current="dr-cuterus" link={DR_CUTERUS_ARTICLE.closingLink} />}
     >
       <article className={styles.article}>
         <div className={styles.hero}>
