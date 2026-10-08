@@ -217,8 +217,7 @@ export const DR_CUTERUS_IMAGE_SETS: Record<string, ImageSetData> = {
         width: 2000,
         height: 1136,
         alt: 'Dr Cuterus homepage on desktop: a polaroid mosaic of Dr Tanaya Narendra beside the headline "100% Science. 0% Sharam." with Book An Appointment and Work With Me buttons, above a yellow press ticker.',
-        caption:
-          'The homepage opens with her, not a headshot and a designation. A polaroid mosaic shows her in a saree, mid scuba dive, on a public health billboard, recording her podcast and in her white coat, before any button asks for a click.',
+        caption: 'A polaroid mosaic of her life comes before any button asks for a click.',
       },
     ],
   },

@@ -211,6 +211,7 @@
 }
 
 .caption {
+  width: 100%;
   margin: 0;
   font-family: 'Gambetta Variable', serif;
   font-weight: var(--gambetta-regular);
@@ -219,5 +220,6 @@
   line-height: 1.2;
   color: var(--case-study-grey);
   text-align: center;
+  text-wrap: balance;
   font-feature-settings: 'salt' 1;
 }
