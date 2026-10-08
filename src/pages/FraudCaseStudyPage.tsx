@@ -9,7 +9,7 @@ import ResultsGraphs from '../components/caseStudy/fraud/ResultsGraphs';
 import UserJourney from '../components/caseStudy/fraud/UserJourney';
 import { FRAUD_ARTICLE } from '../data/articles/fraud';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';
-import styles from './FraudCaseStudyPage.module.css';
+import styles from './ArticlePage.module.css';
 
 /* Visual band ids used in FRAUD_ARTICLE. */
 const VISUALS = {

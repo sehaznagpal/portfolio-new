@@ -1,0 +1,84 @@
+.set {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--article-gap);
+}
+
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Quiet caption that reads on every band tone (see VisualBand's --band-ink). */
+.caption {
+  max-width: 64ch;
+  margin-inline: auto;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: clamp(13px, calc(13px + (100vw - 393px) * (2 / 887)), 15px);
+  line-height: 1.4;
+  color: var(--band-ink-muted);
+  text-align: center;
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}
+
+/* Side by side at equal height: each figure's flex-grow is its image's
+   width / height, so widths follow aspect ratio and heights match. */
+.pair {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--article-gap);
+  width: 100%;
+}
+
+.pair > .figure {
+  flex: var(--ratio) 1 0;
+  min-width: 0;
+}
+
+/* Phones never grow past a readable screenshot size. */
+.pair:has(.framed) {
+  max-width: 720px;
+}
+
+@media (max-width: 640px) {
+  .pair {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pair > .figure {
+    flex: none;
+  }
+
+  .pair > .framed {
+    width: min(100%, 300px);
+  }
+}
+
+.framed .image {
+  border: 1px solid var(--band-ink-muted);
+  border-radius: 16px;
+}
+
+/* The image sits at its natural pixel width (its width attribute), never
+   stretched; its caption keeps the full row. */
+.small {
+  align-items: center;
+}
+
+.small .image {
+  width: auto;
+  max-width: 100%;
+}

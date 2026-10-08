@@ -46,7 +46,11 @@
   font-feature-settings: 'salt' 1;
 }
 
+/* --band-ink / --band-ink-muted: text colours that read on this tone, for
+   the visuals inside (e.g. image captions). */
 .box {
+  --band-ink: var(--case-study-grey);
+  --band-ink-muted: rgba(31, 31, 31, 0.72);
   position: relative;
   width: 100%;
   padding: var(--band-box-pad);
@@ -58,6 +62,8 @@
 }
 
 .box[data-tone='dark'] {
+  --band-ink: var(--case-study-white);
+  --band-ink-muted: var(--text-cream);
   background: var(--band-tone-dark);
 }
 

@@ -1,8 +1,9 @@
 /* Content schema for long-form case study articles. A case study is one data
    file of these shapes, rendered by the generic article components. */
 
-/* Plain text, or runs where some are bold (e.g. a list item's lead-in). */
-export type RichText = string | Array<string | { bold: string }>;
+/* Plain text, or runs where some are bold (e.g. a list item's lead-in) or
+   italic (e.g. a book title). */
+export type RichText = string | Array<string | { bold: string } | { italic: string }>;
 
 export type ContentBlock =
   | { type: 'paragraph'; text: RichText }
