@@ -1,4 +1,4 @@
-import captionStyles from './ImageSet.module.css';
+import VisualCaption from '../../article/VisualCaption';
 import styles from './SiteStructure.module.css';
 
 export interface SiteStructureData {
@@ -33,7 +33,7 @@ export default function SiteStructure({ pages, cut, caption }: SiteStructureData
         <p className={styles.cutLabel}>{cut.label}</p>
       </div>
 
-      <figcaption className={captionStyles.caption}>{caption}</figcaption>
+      <VisualCaption>{caption}</VisualCaption>
     </figure>
   );
 }

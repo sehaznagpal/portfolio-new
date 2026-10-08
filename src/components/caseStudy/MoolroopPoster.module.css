@@ -9,7 +9,7 @@
    class-only one like "`.mobileImg`" regardless of source order, so a
    `display` declared here would permanently beat their media-query
    toggle and show both images stacked at once, no matter the viewport —
-   the outer .poster's overflow: hidden (CaseStudyHero.module.css) would
+   the hero image frame's overflow: hidden (ArticleHero.module.css) would
    then just clip everything below the first (mobile) image's height,
    stretching its smaller pattern to fill the whole desktop box instead of
    showing the real desktop artwork underneath. */

@@ -1,0 +1,115 @@
+/* For the dark band tone. */
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--article-gap);
+  margin: 0;
+  color: var(--case-study-white);
+}
+
+.type {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--article-gap);
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .type {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.specimen {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  border: 1px solid var(--case-study-light-grey);
+  border-radius: var(--card-radius);
+}
+
+.role {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-cream);
+}
+
+.standin {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--case-study-light-grey);
+}
+
+.sample {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Stand-in specimens use the article's own serif. */
+.specimen[data-standin='true'] .sample {
+  font-family: 'Gambetta Variable', serif;
+  font-feature-settings: 'salt' 1;
+}
+
+.name {
+  font-size: clamp(36px, calc(36px + (100vw - 393px) * (20 / 887)), 56px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.glyphs {
+  font-size: clamp(14px, calc(14px + (100vw - 393px) * (4 / 887)), 18px);
+  line-height: 1.35;
+  color: var(--text-cream);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 640px) {
+  .swatches {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Outlined so the near-black swatch still shows on the dark band. */
+.swatch {
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 1;
+  padding: 12px;
+  border: 1px solid var(--case-study-light-grey);
+  border-radius: var(--card-radius);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-medium);
+  font-size: clamp(13px, calc(13px + (100vw - 393px) * (3 / 887)), 16px);
+  letter-spacing: 0.02em;
+  color: var(--case-study-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.swatch[data-light='true'] {
+  color: var(--case-study-black);
+}

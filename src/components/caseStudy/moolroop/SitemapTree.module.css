@@ -1,0 +1,64 @@
+/* For the dark band tone. Node font must match NODE_FONT in SitemapTree.tsx. */
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--article-gap);
+  margin: 0;
+}
+
+/* Centred when it fits, scrolls sideways when it doesn't. */
+.scroll {
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.canvas {
+  position: relative;
+  flex-shrink: 0;
+  margin-inline: auto;
+}
+
+.edges {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.edge {
+  fill: none;
+  stroke: var(--case-study-light-grey);
+  stroke-width: 1.5;
+}
+
+.edge[data-future='true'] {
+  stroke-dasharray: 4 4;
+}
+
+.node {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border: 1px solid var(--case-study-white);
+  border-radius: 3px;
+  background: var(--case-study-grey);
+  white-space: nowrap;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--case-study-white);
+  font-feature-settings: 'salt' 1;
+}
+
+.node[data-future='true'] {
+  border-style: dashed;
+  border-color: var(--case-study-light-grey);
+  background: transparent;
+  color: var(--case-study-light-grey);
+}

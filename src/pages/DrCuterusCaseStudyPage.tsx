@@ -3,7 +3,7 @@ import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import DrCuterusPoster from '../components/caseStudy/DrCuterusPoster';
-import ImageSet from '../components/caseStudy/drCuterus/ImageSet';
+import ImageSet from '../components/article/ImageSet';
 import SiteStructure from '../components/caseStudy/drCuterus/SiteStructure';
 import { DR_CUTERUS_ARTICLE, DR_CUTERUS_IMAGE_SETS, DR_CUTERUS_SITE_STRUCTURE } from '../data/articles/drCuterus';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';

@@ -1,0 +1,119 @@
+.band {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--article-gap);
+  margin: 0;
+}
+
+/* Desktop: everything in one row, each phone an equal share up to a cap so a
+   pair or trio doesn't blow up to full band width. */
+.row {
+  --screen-max: 240px;
+  --screen-gap: clamp(16px, calc(16px + (100vw - 393px) * (16 / 887)), 32px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--screen-gap);
+  width: 100%;
+}
+
+.row[data-count='2'] {
+  --screen-max: 280px;
+}
+
+.item {
+  flex: 0 1 var(--screen-max);
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Small tag above a layered screen. */
+.tag {
+  padding: 4px 10px;
+  border: 1px solid var(--band-ink);
+  border-radius: 999px;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-medium);
+  font-size: clamp(12px, calc(12px + (100vw - 393px) * (2 / 887)), 14px);
+  line-height: 1.1;
+  color: var(--band-ink);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+}
+
+/* Thin arrow between layered screens, level with their tags. */
+.arrow {
+  --arrow-len: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
+  position: relative;
+  flex: 0 0 var(--arrow-len);
+  height: 1px;
+  margin-top: 0.85em;
+  margin-inline: calc(-1 * var(--screen-gap) / 2);
+  background: var(--band-ink);
+}
+
+.arrow::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--band-ink);
+  border-right: 1px solid var(--band-ink);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* Mobile: rows of three or more scroll sideways, snapping to each phone. */
+@media (max-width: 640px) {
+  .row:not([data-count='2']) {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .row:not([data-count='2'])::-webkit-scrollbar {
+    display: none;
+  }
+
+  .row:not([data-count='2']) .item {
+    flex: 0 0 min(58vw, 220px);
+    scroll-snap-align: center;
+  }
+}
+
+/* A pair stacks when two phones side by side would be too small to read;
+   the layer arrow turns to point down. */
+@media (max-width: 479px) {
+  .row[data-count='2'] {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .row[data-count='2'] .item {
+    flex: none;
+    width: min(100%, 260px);
+  }
+
+  .arrow {
+    flex: none;
+    width: 1px;
+    height: var(--arrow-len);
+    margin: 0;
+  }
+
+  .arrow::after {
+    top: auto;
+    right: auto;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%) rotate(135deg);
+  }
+}

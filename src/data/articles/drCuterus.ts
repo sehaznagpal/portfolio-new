@@ -1,5 +1,5 @@
 import type { ArticleData } from '../../components/article/types';
-import type { ImageSetData } from '../../components/caseStudy/drCuterus/ImageSet';
+import type { ImageSetData } from '../../components/article/ImageSet';
 import type { SiteStructureData } from '../../components/caseStudy/drCuterus/SiteStructure';
 import homepageHero from '../../assets/images/dr-cuterus/article/homepage-hero.webp';
 import colours from '../../assets/images/dr-cuterus/article/colours.webp';

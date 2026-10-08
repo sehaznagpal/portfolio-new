@@ -42,6 +42,16 @@
   font-display: swap;
 }
 
+/* MoolRoop case study's type specimen only (Basic Latin subset). The
+   browser fetches it only when that specimen renders. */
+@font-face {
+  font-family: 'Open Sans Variable';
+  src: url('/fonts/OpenSans-Variable-Latin.woff2') format('woff2-variations');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Hero name hover-swap alternates only (see HeroName.tsx) — single static
    instances, not variable fonts, since each is only ever used at one exact
    weight/style. */

@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import VisualCaption from './VisualCaption';
 import styles from './ImageSet.module.css';
 
 export interface SetImage {
@@ -35,7 +36,7 @@ function Figure({ image, style }: { image: SetImage; style?: CSSProperties }) {
         loading="lazy"
         decoding="async"
       />
-      {image.caption && <figcaption className={styles.caption}>{image.caption}</figcaption>}
+      {image.caption && <VisualCaption>{image.caption}</VisualCaption>}
     </figure>
   );
 }

@@ -1,0 +1,32 @@
+/* Bezel PNG is 500x1016; the screen window inset matches MoolroopVisual's. */
+.phone {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 500 / 1016;
+}
+
+.screen {
+  position: absolute;
+  left: 4.85%;
+  top: 2.15%;
+  width: 90.3%;
+  height: 95.89%;
+  border-radius: 8cqw;
+  overflow: hidden;
+  background: var(--case-study-black);
+}
+
+.screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bezel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}

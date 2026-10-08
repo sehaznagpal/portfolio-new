@@ -1,0 +1,116 @@
+/* For the brand band tone: the "before" flow is quiet and dashed, the
+   "after" flow is dark with brand-colour text, the one thing that pops. */
+.figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--article-gap);
+  margin: 0;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(16px, calc(16px + (100vw - 393px) * (48 / 887)), 64px);
+  width: min(100%, 760px);
+}
+
+@media (max-width: 640px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.label {
+  margin: 0 0 16px;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 0.85em;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--band-ink);
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--step-arrow-h);
+}
+
+.step {
+  position: relative;
+  padding: 12px 16px;
+  border: 1px solid var(--band-ink);
+  text-align: center;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: clamp(14px, calc(14px + (100vw - 393px) * (2 / 887)), 16px);
+  line-height: 1.25;
+  color: var(--band-ink);
+  font-feature-settings: 'salt' 1;
+}
+
+/* Arrow from each step down to the next, filling the gap between them. */
+.step + .step::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 1px);
+  left: 50%;
+  width: 1px;
+  height: var(--step-arrow-h);
+  background: var(--band-ink);
+}
+
+.step + .step::after {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid var(--band-ink);
+  border-bottom: 1px solid var(--band-ink);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.column[data-variant='before'] {
+  opacity: 0.6;
+}
+
+.column[data-variant='before'] .step {
+  border-style: dashed;
+}
+
+.column[data-variant='after'] .step {
+  border-color: var(--case-study-grey);
+  background: var(--case-study-grey);
+  color: var(--color-brand);
+  font-weight: var(--author-semibold);
+}
+
+/* One by one on first view; both columns move in step. */
+.step {
+  opacity: 0;
+  transform: translateY(var(--step-reveal-distance));
+  transition:
+    opacity var(--reveal-duration) var(--ease-out-expo),
+    transform var(--reveal-duration) var(--ease-out-expo);
+  transition-delay: calc(var(--i) * var(--step-stagger));
+}
+
+.columns[data-revealed='true'] .step {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step {
+    transform: none;
+    transition-delay: 0s;
+  }
+}
