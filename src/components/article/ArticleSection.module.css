@@ -33,15 +33,18 @@
   gap: 16px;
 }
 
-/* Desktop: quote in the left third, body in the right two thirds. */
+/* Desktop, in a section with pull quotes: quote in the left third, body in
+   the right two thirds (a group without its own quote keeps that column
+   empty, so its body still lines up). A section without quotes stays one
+   full-width column. */
 @media (min-width: 1025px) {
-  .group {
+  .section[data-quotes='true'] .group {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     column-gap: var(--article-column-gap);
     align-items: start;
   }
 
-  .body {
+  .section[data-quotes='true'] .body {
     grid-column: 2;
   }
 }
