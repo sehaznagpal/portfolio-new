@@ -21,12 +21,12 @@ export interface ImageSetData {
   images: SetImage[];
 }
 
-function Figure({ image, style }: { image: SetImage; style?: CSSProperties }) {
+function Figure({ image }: { image: SetImage }) {
   const classes = [styles.figure, image.small && styles.small, image.framed && styles.framed]
     .filter(Boolean)
     .join(' ');
   return (
-    <figure className={classes} style={style}>
+    <figure className={classes} style={{ '--ratio': image.width / image.height } as CSSProperties}>
       <img
         className={styles.image}
         src={image.src}
@@ -42,9 +42,10 @@ function Figure({ image, style }: { image: SetImage; style?: CSSProperties }) {
 }
 
 /* One to three captioned images inside a visual band, uncropped at their
-   natural aspect ratio. 'pair' sets two side by side at equal height (each
-   one's share of the row follows its aspect ratio) and stacks them on
-   mobile; 'small' images sit centred on their own row below. */
+   natural aspect ratio and capped in width and height (tokens.css). 'pair'
+   sets two side by side at equal height (each one's share of the row
+   follows its aspect ratio) and stacks them on mobile; 'small' images sit
+   centred on their own row below. */
 export default function ImageSet({ layout, images }: ImageSetData) {
   const main = images.filter((image) => !image.small);
   const small = images.filter((image) => image.small);
@@ -52,9 +53,13 @@ export default function ImageSet({ layout, images }: ImageSetData) {
   return (
     <div className={styles.set} data-layout={layout}>
       {layout === 'pair' ? (
-        <div className={styles.pair}>
+        <div
+          className={styles.pair}
+          data-framed={main.some((image) => image.framed)}
+          style={{ '--ratio-sum': main.reduce((sum, image) => sum + image.width / image.height, 0) } as CSSProperties}
+        >
           {main.map((image) => (
-            <Figure key={image.src} image={image} style={{ '--ratio': image.width / image.height } as CSSProperties} />
+            <Figure key={image.src} image={image} />
           ))}
         </div>
       ) : (

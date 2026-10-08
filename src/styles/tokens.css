@@ -101,6 +101,24 @@
   --reveal-duration: 700ms;
   --reveal-distance: 32px;
 
+  /* Visuals inside bands (Dr Cuterus and MoolRoop): framed like a mat
+     inside the band box rather than filling it. --visual-inset adds to the
+     box's own padding (40px desktop, 16px mobile) for 64 / 20 in total.
+     --visual-chrome-h is what the band needs besides the visual (heading
+     overlap, paddings, caption, sticky header), so on desktop a band and
+     its whole visual fit one screen. */
+  --visual-inset: clamp(4px, calc(4px + (100vw - 393px) * (20 / 887)), 24px);
+  --visual-max-w: min(70%, 880px);
+  --visual-pair-max-w: 75%;
+  --visual-chrome-h: 330px;
+  --visual-max-h: min(
+    calc(var(--section-h) * 0.65),
+    calc(var(--section-h) - var(--case-header-h) - var(--visual-chrome-h))
+  );
+  --phone-max-h: min(520px, calc(var(--section-h) * 0.6));
+  --visual-radius: var(--card-radius);
+  --visual-shadow: 0 6px 24px rgba(18, 18, 18, 0.12);
+
   /* Card flips (fraud user journey): a long, soft ease-out with no overshoot */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --flip-duration: 600ms;
@@ -185,5 +203,28 @@
 @media (min-width: 1025px) and (max-height: 680px) {
   :root {
     --space: 0.7;
+  }
+}
+
+/* Laptops under 1280 wide get shorter phones; tablets and phones give the
+   visual more of the box, and phones take the full width. */
+@media (min-width: 1025px) and (max-width: 1279px) {
+  :root {
+    --phone-max-h: min(420px, calc(var(--section-h) * 0.6));
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --visual-max-w: min(85%, 880px);
+    --visual-pair-max-w: 85%;
+    --phone-max-h: calc(var(--section-h) * 0.6);
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --visual-max-w: 100%;
+    --visual-pair-max-w: 100%;
   }
 }

@@ -4,6 +4,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 500 / 1016;
+  filter: drop-shadow(var(--visual-shadow));
 }
 
 .screen {

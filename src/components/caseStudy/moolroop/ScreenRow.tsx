@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, type CSSProperties } from 'react';
 import VisualCaption from '../../article/VisualCaption';
 import PhoneScreen from './PhoneScreen';
 import styles from './ScreenRow.module.css';
@@ -24,7 +24,10 @@ export default function ScreenRow({ screens, caption }: ScreenRowData) {
   const layered = screens.some((screen) => screen.tag);
 
   return (
-    <figure className={styles.band}>
+    <figure
+      className={styles.band}
+      style={{ '--count': screens.length, '--arrows': layered ? screens.length - 1 : 0 } as CSSProperties}
+    >
       <div className={styles.row} data-count={screens.length}>
         {screens.map((screen, i) => (
           <Fragment key={screen.src}>

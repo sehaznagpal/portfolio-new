@@ -4,7 +4,9 @@
   flex-direction: column;
   align-items: center;
   gap: var(--article-gap);
-  margin: 0;
+  width: var(--visual-max-w);
+  margin: 0 auto;
+  padding: var(--visual-inset);
   color: var(--case-study-white);
 }
 

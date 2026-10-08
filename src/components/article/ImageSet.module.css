@@ -1,70 +1,88 @@
+/* Inset from the band box so the box frames the visuals like a mat. */
 .set {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--article-gap);
+  padding: var(--visual-inset);
 }
 
+/* Each figure is sized from its image's aspect ratio (--ratio, inline), so
+   it meets both the width and height caps without cropping and its caption
+   lines up with the image's edges. */
 .figure {
+  --max-h: var(--visual-max-h);
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
+  width: min(var(--visual-max-w), calc(var(--max-h) * var(--ratio)));
+}
+
+.framed {
+  --max-h: var(--phone-max-h);
 }
 
 .image {
   display: block;
   width: 100%;
   height: auto;
+  border: 1px solid var(--case-study-grey);
+  border-radius: var(--visual-radius);
+  box-shadow: var(--visual-shadow);
 }
 
 /* Side by side at equal height: each figure's flex-grow is its image's
-   width / height, so widths follow aspect ratio and heights match. */
+   width / height, so widths follow aspect ratio and heights match. The pair
+   is capped as a whole, and by height through the ratios' sum. */
 .pair {
+  --max-h: var(--visual-max-h);
+  --pair-gap: var(--article-gap);
   display: flex;
   align-items: flex-start;
-  gap: var(--article-gap);
-  width: 100%;
+  gap: var(--pair-gap);
+  width: min(var(--visual-pair-max-w), calc(var(--max-h) * var(--ratio-sum) + var(--pair-gap)));
+}
+
+.pair[data-framed='true'] {
+  --max-h: var(--phone-max-h);
 }
 
 .pair > .figure {
   flex: var(--ratio) 1 0;
+  width: auto;
   min-width: 0;
-}
-
-/* Phones never grow past a readable screenshot size. */
-.pair:has(.framed) {
-  max-width: 720px;
 }
 
 @media (max-width: 640px) {
   .pair {
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   .pair > .figure {
     flex: none;
-  }
-
-  .pair > .framed {
-    width: min(100%, 300px);
+    width: min(100%, calc(var(--max-h) * var(--ratio)));
   }
 }
 
-.framed .image {
-  border: 1px solid var(--band-ink-muted);
-  border-radius: 16px;
-}
-
-/* The image sits at its natural pixel width (its width attribute), never
-   stretched; its caption keeps the full row. */
+/* A UI detail shown at its natural pixel width (its width attribute),
+   never stretched or framed; its caption keeps the full row. */
 .small {
   align-items: center;
+  width: var(--visual-max-w);
+}
+
+/* Wider than the detail itself, so centred under it. */
+.small > figcaption {
+  text-align: center;
 }
 
 .small .image {
   width: auto;
   max-width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }

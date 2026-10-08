@@ -1,25 +1,32 @@
+/* As wide as its row of phones at full size (--count of them, plus the
+   layer arrows if any), up to the pair cap; centred in the band box with
+   the shared inset, so the band caption lines up with the phones. Each
+   phone is as tall as --phone-max-h allows (the bezel is 500x1016). */
 .band {
+  --screen-max: calc(var(--phone-max-h) * 500 / 1016);
+  --screen-gap: clamp(16px, calc(16px + (100vw - 393px) * (16 / 887)), 32px);
+  --arrow-len: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--article-gap);
-  margin: 0;
+  width: min(
+    var(--visual-pair-max-w),
+    calc(
+      var(--count) * var(--screen-max) + (var(--count) - 1) * var(--screen-gap) + var(--arrows) *
+        var(--arrow-len) + 2 * var(--visual-inset)
+    )
+  );
+  margin: 0 auto;
+  padding: var(--visual-inset);
 }
 
-/* Desktop: everything in one row, each phone an equal share up to a cap so a
-   pair or trio doesn't blow up to full band width. */
+/* Desktop: one row; the phones shrink together when the band is capped. */
 .row {
-  --screen-max: 240px;
-  --screen-gap: clamp(16px, calc(16px + (100vw - 393px) * (16 / 887)), 32px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: var(--screen-gap);
   width: 100%;
-}
-
-.row[data-count='2'] {
-  --screen-max: 280px;
 }
 
 .item {
@@ -48,7 +55,6 @@
 
 /* Thin arrow between layered screens, level with their tags. */
 .arrow {
-  --arrow-len: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
   position: relative;
   flex: 0 0 var(--arrow-len);
   height: 1px;
@@ -83,8 +89,12 @@
     display: none;
   }
 
+  .band {
+    width: 100%;
+  }
+
   .row:not([data-count='2']) .item {
-    flex: 0 0 min(58vw, 220px);
+    flex: 0 0 min(58vw, var(--screen-max));
     scroll-snap-align: center;
   }
 }
@@ -99,7 +109,7 @@
 
   .row[data-count='2'] .item {
     flex: none;
-    width: min(100%, 260px);
+    width: min(100%, var(--screen-max));
   }
 
   .arrow {

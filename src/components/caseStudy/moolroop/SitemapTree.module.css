@@ -1,10 +1,14 @@
 /* For the dark band tone. Node font must match NODE_FONT in SitemapTree.tsx. */
+/* Not capped like the other visuals: the tree needs about 1190px at its
+   node size, so it keeps the band's width (scrolling where narrower) and
+   only takes the shared inset. */
 .figure {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--article-gap);
   margin: 0;
+  padding: var(--visual-inset);
 }
 
 /* Centred when it fits, scrolls sideways when it doesn't. */
