@@ -28,9 +28,9 @@ function legacyCopy(text: string) {
   return copied;
 }
 
-/* Fixed top-right pill: avatar, Share (copies the page link) and the theme
-   switcher. Clicking the dots steps to the next theme with a spin; hovering
-   them opens the full list. */
+/* Fixed top-right pill: avatar, Share (the native share sheet, or copies
+   the page link) and the theme switcher. Clicking the dots steps to the next
+   theme with a spin; hovering them opens the full list. */
 export default function ShareMenu() {
   const { theme, setTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -89,6 +89,16 @@ export default function ShareMenu() {
 
   async function share() {
     const url = window.location.href;
+    // The device's own share sheet where there is one; copying otherwise.
+    if (navigator.share) {
+      try {
+        await navigator.share({ url });
+        return;
+      } catch (error) {
+        // Dismissing the sheet is a choice, not a failure.
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+      }
+    }
     let copied = false;
     try {
       await navigator.clipboard.writeText(url);

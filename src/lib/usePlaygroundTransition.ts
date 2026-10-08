@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PLAYGROUND_PATH } from '../data/playground';
+import { LINKS } from '../data/links';
 
 /* Route swap point of the sweep: by now the ease-out curtain (see
    PageSweepIn) covers the screen, so the swap itself is never seen. */
@@ -28,7 +28,7 @@ export function usePlaygroundTransition() {
     setTransitioning(true);
     const covered = new Promise((resolve) => setTimeout(resolve, SWEEP_COVER_MS));
     Promise.all([covered, loadPlaygroundPage()]).then(() => {
-      if (!cancelledRef.current) navigate(PLAYGROUND_PATH);
+      if (!cancelledRef.current) navigate(LINKS.playground);
     });
   }
 

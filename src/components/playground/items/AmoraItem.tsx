@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
-import { AMORA_URL } from '../../../data/playground';
+import { LINKS } from '../../../data/links';
 import { useHasFinePointer } from '../../../lib/useHasFinePointer';
 import amoraShape from '../../../assets/images/playground/amora-shape.svg';
 import { shapeMask } from './shapeMask';
@@ -26,14 +26,14 @@ export default function AmoraItem({ autoHover }: { autoHover: boolean }) {
     setTapped(true);
     timerRef.current = setTimeout(() => {
       setTapped(false);
-      window.open(AMORA_URL, '_blank', 'noopener,noreferrer');
+      window.open(LINKS.amora, '_blank', 'noopener,noreferrer');
     }, SHAKE_MS);
   }
 
   return (
     <a
       className={`${styles.root} ${focus.focusable}`}
-      href={AMORA_URL}
+      href={LINKS.amora}
       target="_blank"
       rel="noopener noreferrer"
       data-auto-hover={autoHover || undefined}

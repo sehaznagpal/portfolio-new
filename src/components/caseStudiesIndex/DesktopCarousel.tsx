@@ -289,6 +289,10 @@ export default function DesktopCarousel() {
     } else if (event.key === 'ArrowLeft') {
       event.preventDefault();
       stepCarousel(-1);
+    } else if (event.key === 'Enter' && event.target === event.currentTarget) {
+      // Enter opens the centred card, as a click on it does.
+      event.preventDefault();
+      navigate(CASE_STUDIES[activeIndex].href);
     }
   }
 

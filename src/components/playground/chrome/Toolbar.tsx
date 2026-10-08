@@ -1,8 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Download, Mail, Pencil, Star } from 'lucide-react';
-import { CV_URL, GMAIL_COMPOSE_URL } from '../../../data/contact';
-import { PLAYGROUND_PATH } from '../../../data/playground';
+import { LINKS } from '../../../data/links';
 import styles from './Toolbar.module.css';
 
 type ToolKey = 'home' | 'playground' | 'contact' | 'cv';
@@ -31,28 +30,28 @@ export default function Toolbar() {
       {slot(
         'home',
         'Home',
-        <Link aria-label="Home" to="/">
+        <Link aria-label="Home" to={LINKS.home}>
           <Star {...ICON} />
         </Link>,
       )}
       {slot(
         'playground',
         'Experiment Zone',
-        <Link aria-label="Experiment Zone" to={PLAYGROUND_PATH}>
+        <Link aria-label="Experiment Zone" to={LINKS.playground}>
           <Pencil {...ICON} />
         </Link>,
       )}
       {slot(
         'contact',
         'Contact',
-        <a aria-label="Contact" href={GMAIL_COMPOSE_URL} target="_blank" rel="noopener noreferrer">
+        <a aria-label="Contact" href={LINKS.mail}>
           <Mail {...ICON} />
         </a>,
       )}
       {slot(
         'cv',
         'Download my CV',
-        <a aria-label="Download my CV" href={CV_URL} download target="_blank" rel="noopener noreferrer">
+        <a aria-label="Download my CV" href={LINKS.cv} download>
           <Download {...ICON} />
         </a>,
       )}

@@ -1,4 +1,5 @@
 import type { ArticleData } from '../../components/article/types';
+import { LINKS } from '../links';
 import type { ImageSetData } from '../../components/article/ImageSet';
 import type { SiteStructureData } from '../../components/caseStudy/drCuterus/SiteStructure';
 import homepageHero from '../../assets/images/dr-cuterus/article/homepage-hero.webp';
@@ -15,8 +16,6 @@ import homeMobile from '../../assets/images/dr-cuterus/article/about-home-screen
 import footerMobile from '../../assets/images/dr-cuterus/article/outcome-phone-screen.webp';
 import liveLaptop from '../../assets/images/dr-cuterus/article/outcome-laptop-screen.webp';
 
-const LIVE_SITE_URL = 'https://drcuterus.com';
-
 /* Copy and order follow docs/case-studies/dr-cuterus-case-study.md exactly.
    This case study has no left-column pull quotes. */
 export const DR_CUTERUS_ARTICLE: ArticleData = {
@@ -25,7 +24,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
   role: 'Design Lead',
   duration: '4 months (2026)',
   tags: ['Client Project', 'Website Design', 'Design System'],
-  links: [{ label: 'Visit Live Site →', href: LIVE_SITE_URL }],
+  links: [{ label: 'Visit Live Site →', href: LINKS.drCuterusSite }],
   tldr: [
     {
       label: 'The brief:',
@@ -191,7 +190,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
       ],
     },
   ],
-  closingLink: { label: 'Visit drcuterus.com →', href: LIVE_SITE_URL },
+  closingLink: { label: 'Visit drcuterus.com →', href: LINKS.drCuterusSite },
 };
 
 export const DR_CUTERUS_SITE_STRUCTURE: SiteStructureData = {

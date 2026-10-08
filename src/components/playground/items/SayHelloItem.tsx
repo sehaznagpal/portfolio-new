@@ -1,14 +1,15 @@
-import { GMAIL_COMPOSE_URL, LINKEDIN_URL, WHATSAPP_URL } from '../../../data/contact';
+import { LINKS } from '../../../data/links';
 import linkedinIcon from '../../../assets/images/playground/linkedin-icon.svg';
 import mailIcon from '../../../assets/images/playground/mail-icon.svg';
 import phoneIcon from '../../../assets/images/playground/phone-icon.svg';
 import grain from './grain.module.css';
 import styles from './SayHelloItem.module.css';
 
+// `newTab` for web pages; mail opens the mail client in place.
 const CONTACT_LINKS = [
-  { href: LINKEDIN_URL, label: 'LinkedIn', icon: linkedinIcon, className: styles.linkedin },
-  { href: GMAIL_COMPOSE_URL, label: 'Email', icon: mailIcon, className: styles.mail },
-  { href: WHATSAPP_URL, label: 'WhatsApp', icon: phoneIcon, className: styles.phone },
+  { href: LINKS.linkedin, label: 'LinkedIn', icon: linkedinIcon, className: styles.linkedin, newTab: true },
+  { href: LINKS.mail, label: 'Email', icon: mailIcon, className: styles.mail, newTab: false },
+  { href: LINKS.whatsapp, label: 'WhatsApp', icon: phoneIcon, className: styles.phone, newTab: true },
 ];
 
 /* Contact card: a "looking forward" tag rises from behind it on hover. */
@@ -28,8 +29,7 @@ export default function SayHelloItem({ autoHover }: { autoHover: boolean }) {
             key={link.label}
             className={`${styles.icon} ${link.className}`}
             href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
+            {...(link.newTab && { target: '_blank', rel: 'noopener noreferrer' })}
             aria-label={link.label}
           >
             <img src={link.icon} alt="" width={31} height={31} />

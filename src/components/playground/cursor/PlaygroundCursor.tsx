@@ -1,11 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import { useReducedMotion } from 'framer-motion';
 import { drawTrail, type TrailPoint } from './drawTrail';
 import styles from './PlaygroundCursor.module.css';
 
-const DOT_RADIUS = 10;
-const TIP_RADIUS = 2.5;
+// The dot's diameter; also sets --cursor-size for the CSS. The trail starts
+// exactly as wide as the dot and tapers to a tip a quarter of its radius.
+const DOT_DIAMETER = 12;
+const DOT_RADIUS = DOT_DIAMETER / 2;
+const TIP_RATIO = 0.25;
+const TIP_RADIUS = DOT_RADIUS * TIP_RATIO;
 /* Each position stays in the trail this long, so the tail's length follows
    speed and it retracts into the dot within ~200ms of stopping. */
 const TRAIL_LIFETIME_MS = 160;
@@ -158,7 +162,12 @@ export default function PlaygroundCursor() {
   }, [reducedMotion]);
 
   return createPortal(
-    <div ref={rootRef} className={styles.root} aria-hidden="true">
+    <div
+      ref={rootRef}
+      className={styles.root}
+      style={{ '--cursor-size': `${DOT_DIAMETER}px` } as CSSProperties}
+      aria-hidden="true"
+    >
       {!reducedMotion && <canvas ref={canvasRef} className={styles.trail} />}
       <div ref={dotRef} className={styles.position}>
         <div ref={squishRef} className={styles.squish}>

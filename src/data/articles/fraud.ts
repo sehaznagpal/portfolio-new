@@ -1,8 +1,5 @@
 import type { ArticleData } from '../../components/article/types';
-
-const PROTOTYPE_URL = 'https://bit.ly/dissertation-experiment-prototype';
-const DISSERTATION_URL =
-  'https://drive.google.com/file/d/1T56QgmpiWvsrGIZ_S_NUWQY2uyhiHzYm/view?usp=share_link';
+import { LINKS } from '../links';
 
 /* Copy and order follow dissertation-case-study.md exactly. */
 export const FRAUD_ARTICLE: ArticleData = {
@@ -12,8 +9,8 @@ export const FRAUD_ARTICLE: ArticleData = {
   duration: '1 year (2025 to 26)',
   tags: ['Choice Architecture', 'RCT Experiment', 'Payment Simulation'],
   links: [
-    { label: 'Visit Experiment Prototype →', href: PROTOTYPE_URL },
-    { label: 'Read Dissertation →', href: DISSERTATION_URL },
+    { label: 'Visit Experiment Prototype →', href: LINKS.experimentPrototype },
+    { label: 'Read Dissertation →', href: LINKS.dissertation },
   ],
   tldr: [
     {
@@ -287,5 +284,5 @@ export const FRAUD_ARTICLE: ArticleData = {
       ],
     },
   ],
-  closingLink: { label: 'Read the full dissertation →', href: DISSERTATION_URL },
+  closingLink: { label: 'Read the full dissertation →', href: LINKS.dissertation },
 };

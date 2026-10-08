@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { REWIRED_URL } from '../../../data/playground';
+import { LINKS } from '../../../data/links';
 import websiteShape from '../../../assets/images/playground/website-shape.svg';
 import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
@@ -21,7 +21,7 @@ export default function WebsiteItem({ autoHover }: { autoHover: boolean }) {
   return (
     <a
       className={`${styles.root} ${focus.focusable}`}
-      href={REWIRED_URL}
+      href={LINKS.rewired}
       target="_blank"
       rel="noopener noreferrer"
       data-auto-hover={autoHover || undefined}

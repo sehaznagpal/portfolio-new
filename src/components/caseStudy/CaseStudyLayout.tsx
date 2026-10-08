@@ -5,6 +5,7 @@ import ReadingProgress from '../article/ReadingProgress';
 import AboutPanel from '../about/AboutPanel';
 import Footer from '../footer/Footer';
 import type { FooterPhoto } from '../../data/footerPhotos';
+import { LINKS } from '../../data/links';
 import type { LinkSection } from '../../data/siteLinks';
 import styles from './CaseStudyLayout.module.css';
 
@@ -25,7 +26,7 @@ export default function CaseStudyLayout({
   const [aboutOpen, setAboutOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const goToSection = (section: LinkSection) => navigate(section === 'work' ? '/#work' : '/');
+  const goToSection = (section: LinkSection) => navigate(section === 'work' ? LINKS.work : LINKS.home);
 
   return (
     <>

@@ -136,7 +136,13 @@ export default function AboutPanel({
             <div key={group.label} className={styles.linkRow}>
               <span className={styles.linkLabel}>{group.label}</span>
               {group.links.map((link) => (
-                <SiteLink key={link.label} link={link} className={styles.link} onSection={handleSection} />
+                <SiteLink
+                  key={link.label}
+                  link={link}
+                  className={styles.link}
+                  onSection={handleSection}
+                  onNavigate={onClose}
+                />
               ))}
             </div>
           ))}

@@ -3,16 +3,25 @@ import { Link } from 'react-router-dom';
 import type { LinkSection, SiteLinkDef } from '../../data/siteLinks';
 import PlaygroundLink from './PlaygroundLink';
 
+// Modified clicks (new tab etc.) behave like a normal link.
+function isPlainClick(event: MouseEvent) {
+  return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+}
+
 /* One link from SITE_LINK_GROUPS: a section move when `onSection` is given
-   (Home), the playground's sweep transition, or a route, mail or new-tab link. */
+   (Home), the playground's sweep transition, a route, a download, or a mail
+   or new-tab link. `onNavigate` runs before any in-app navigation (e.g. About
+   closing itself first). */
 export default function SiteLink({
   link,
   className,
   onSection,
+  onNavigate,
 }: {
   link: SiteLinkDef;
   className?: string;
   onSection?: (section: LinkSection) => void;
+  onNavigate?: () => void;
 }) {
   if (link.external) {
     return (
@@ -22,15 +31,26 @@ export default function SiteLink({
     );
   }
 
+  if (link.download) {
+    return (
+      <a className={className} href={link.href} download>
+        {link.label}
+      </a>
+    );
+  }
+
   if (link.playground) {
-    return <PlaygroundLink className={className}>{link.label}</PlaygroundLink>;
+    return (
+      <PlaygroundLink className={className} onNavigate={onNavigate}>
+        {link.label}
+      </PlaygroundLink>
+    );
   }
 
   const { section } = link;
   if (section && onSection) {
     function handleClick(event: MouseEvent<HTMLAnchorElement>) {
-      // Modified clicks (new tab etc.) behave like a normal link.
-      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (!isPlainClick(event)) return;
       event.preventDefault();
       onSection?.(section!);
     }
@@ -43,7 +63,7 @@ export default function SiteLink({
 
   if (link.href.startsWith('/')) {
     return (
-      <Link className={className} to={link.href}>
+      <Link className={className} to={link.href} onClick={(event) => isPlainClick(event) && onNavigate?.()}>
         {link.label}
       </Link>
     );

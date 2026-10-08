@@ -74,7 +74,13 @@ export default function MobileCarousel() {
             cardRefs.current[i] = el;
           }}
           className={styles.slide}
+          role="link"
+          tabIndex={0}
+          aria-label={`${study.titleItalic} ${study.titleBold}`}
           onClick={() => handleCardClick(i)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') navigate(study.href);
+          }}
         >
           <FeaturedCard study={study} active={i === activeIndex} />
         </div>

@@ -1,5 +1,4 @@
-import { CV_URL, LINKEDIN_URL, MAILTO_URL } from './contact';
-import { PLAYGROUND_PATH } from './playground';
+import { LINKS } from './links';
 
 /* Home sections a link can move to in place (see useSectionNav). */
 export type LinkSection = 'hero' | 'work';
@@ -11,6 +10,8 @@ export interface SiteLinkDef {
   section?: LinkSection;
   // Opens in a new tab.
   external?: boolean;
+  // Downloads the file in place, without leaving the page.
+  download?: boolean;
   // Enters with the playground's grid-sweep transition.
   playground?: boolean;
 }
@@ -25,17 +26,17 @@ export const SITE_LINK_GROUPS: SiteLinkGroup[] = [
   {
     label: 'navigate',
     links: [
-      { label: '(home)', href: '/', section: 'hero' },
-      { label: '(playground)', href: PLAYGROUND_PATH, playground: true },
-      { label: '(selected work)', href: '/#work', section: 'work' },
+      { label: '(home)', href: LINKS.home, section: 'hero' },
+      { label: '(playground)', href: LINKS.playground, playground: true },
+      { label: '(selected work)', href: LINKS.work, section: 'work' },
     ],
   },
   {
     label: 'let’s talk',
     links: [
-      { label: '(linkedin)', href: LINKEDIN_URL, external: true },
-      { label: '(mail)', href: MAILTO_URL },
-      { label: '(download cv)', href: CV_URL, external: true },
+      { label: '(linkedin)', href: LINKS.linkedin, external: true },
+      { label: '(mail)', href: LINKS.mail },
+      { label: '(download cv)', href: LINKS.cv, download: true },
     ],
   },
 ];

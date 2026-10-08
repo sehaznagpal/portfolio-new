@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import Loader from '../components/loader/Loader';
 import AboutPanel from '../components/about/AboutPanel';
 import SiteNav, { type NavTheme } from '../components/nav/SiteNav';
@@ -45,7 +46,11 @@ const NAV_THEME: Record<SectionId, NavTheme> = {
    footer still behind it (see useSectionNav and HomePage.module.css); on
    touch they're plain native scroll-snap. */
 export default function HomePage() {
-  const [loading, setLoading] = useState(() => !hasSeenLoader());
+  // The loader introduces the site on its first page load only. Arriving
+  // from another page in the app (a case study's "work", the playground)
+  // goes straight to the section asked for.
+  const arrivedInApp = useLocation().key !== 'default';
+  const [loading, setLoading] = useState(() => !arrivedInApp && !hasSeenLoader());
   const [backgroundVisible, setBackgroundVisible] = useState(!loading);
   const [heroReady, setHeroReady] = useState(!loading);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -54,12 +59,14 @@ export default function HomePage() {
     enabled: !loading && !aboutOpen,
   });
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    if (arrivedInApp) markLoaderSeen();
+    return () => {
       if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
-    },
-    [],
-  );
+    };
+    // Runs once: whether this visit started in-app is fixed at mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function finishLoading() {
     markLoaderSeen();

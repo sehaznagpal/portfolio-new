@@ -1,3 +1,5 @@
+import { LINKS } from './links';
+
 export type CaseStudyId = 'dr-cuterus' | 'fraud' | 'moolroop';
 
 export interface CaseStudyDef {
@@ -21,7 +23,7 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     tag: 'client project',
     titleItalic: 'Website for',
     titleBold: 'Dr Cuterus',
-    href: '/case-study/dr-cuterus',
+    href: LINKS.drCuterus,
   },
   {
     id: 'fraud',
@@ -29,7 +31,7 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     tag: 'dissertation research project',
     titleItalic: 'Designing Against',
     titleBold: 'Fraud',
-    href: '/case-study/designing-against-fraud',
+    href: LINKS.fraud,
   },
   {
     id: 'moolroop',
@@ -37,7 +39,7 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     tag: 'self-identified problem',
     titleItalic: 'The Moolroop',
     titleBold: 'App',
-    href: '/case-study/moolroop',
+    href: LINKS.moolroop,
   },
 ];
 

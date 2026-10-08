@@ -1,4 +1,5 @@
 import type { ArticleData } from '../../components/article/types';
+import { LINKS } from '../links';
 import type { ImageSetData } from '../../components/article/ImageSet';
 import type { ComparisonData } from '../../components/caseStudy/moolroop/ComparisonTable';
 import type { StepFlowData } from '../../components/caseStudy/moolroop/StepFlow';
@@ -22,7 +23,7 @@ import menu from '../../assets/images/moolroop/article/menu.webp';
 import wishlist from '../../assets/images/moolroop/article/wishlist.webp';
 import bag from '../../assets/images/moolroop/article/bag.webp';
 
-const PROTOTYPE_LINK = { label: 'Try the Prototype →', href: 'https://bit.ly/moolroop-casestudy-prototype-sehaz' };
+const PROTOTYPE_LINK = { label: 'Try the Prototype →', href: LINKS.moolroopPrototype };
 
 /* Copy and order follow docs/case-studies/moolroop-case-study.md exactly. */
 export const MOOLROOP_ARTICLE: ArticleData = {

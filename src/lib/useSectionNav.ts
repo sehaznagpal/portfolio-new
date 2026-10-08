@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { NavigationType, useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import { useMediaQuery } from './useMediaQuery';
+import { LINKS } from '../data/links';
 
 export const SECTIONS = ['hero', 'work', 'footer'] as const;
 export type SectionId = (typeof SECTIONS)[number];
 
-const WORK_HASH = '#work';
+// The hash part of LINKS.work.
+const WORK_HASH = LINKS.work.slice(LINKS.work.indexOf('#'));
 
 // Gesture-driven sections only on a laptop/desktop with a real mouse or
 // trackpad. Touch devices and narrower screens keep native scroll + snap.
@@ -103,7 +105,7 @@ export function useSectionNav({ enabled }: { enabled: boolean }) {
   const syncHash = useCallback(
     (next: SectionId) => {
       const hash = next === 'hero' ? '' : WORK_HASH;
-      if (hash !== window.location.hash) navigate({ pathname: '/', hash }, { replace: true });
+      if (hash !== window.location.hash) navigate({ pathname: LINKS.home, hash }, { replace: true });
     },
     [navigate],
   );
