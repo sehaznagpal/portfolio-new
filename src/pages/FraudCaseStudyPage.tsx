@@ -1,5 +1,6 @@
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
+import { articleIndex } from '../components/article/articleIndex';
 import CaseStudyEnd from '../components/caseStudy/CaseStudyEnd';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import FraudPoster from '../components/caseStudy/FraudPoster';
@@ -22,6 +23,7 @@ const VISUALS = {
 export default function FraudCaseStudyPage() {
   return (
     <CaseStudyLayout
+      index={articleIndex(FRAUD_ARTICLE)}
       footerPhoto={FOOTER_PHOTOS.fraud}
       after={<CaseStudyEnd current="fraud" link={FRAUD_ARTICLE.closingLink} />}
     >

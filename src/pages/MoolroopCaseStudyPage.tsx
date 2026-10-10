@@ -1,5 +1,6 @@
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
+import { articleIndex } from '../components/article/articleIndex';
 import ImageSet from '../components/article/ImageSet';
 import CaseStudyEnd from '../components/caseStudy/CaseStudyEnd';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
@@ -36,6 +37,7 @@ const VISUALS = {
 export default function MoolroopCaseStudyPage() {
   return (
     <CaseStudyLayout
+      index={articleIndex(MOOLROOP_ARTICLE)}
       footerPhoto={FOOTER_PHOTOS.moolroop}
       after={<CaseStudyEnd current="moolroop" link={MOOLROOP_ARTICLE.closingLink} />}
     >

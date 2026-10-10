@@ -51,6 +51,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     {
       number: '01',
       title: 'The proof exists. Nobody uses it.',
+      shortLabel: 'The proof',
       blocks: [
         {
           type: 'group',
@@ -72,6 +73,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     {
       number: '02',
       title: 'Understanding the existing experience',
+      shortLabel: 'Existing experience',
       blocks: [
         {
           type: 'group',
@@ -97,6 +99,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     {
       number: '03',
       title: 'Turning six steps into one tap',
+      shortLabel: 'One tap',
       blocks: [
         {
           type: 'group',
@@ -151,6 +154,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     {
       number: '04',
       title: 'Structure before screens',
+      shortLabel: 'Structure',
       blocks: [
         {
           type: 'group',
@@ -185,6 +189,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     {
       number: '05',
       title: 'Designing the journey',
+      shortLabel: 'The journey',
       blocks: [
         {
           type: 'group',
@@ -234,6 +239,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     {
       number: '06',
       title: 'Visual language',
+      shortLabel: 'Visual language',
       blocks: [
         {
           type: 'group',
@@ -251,6 +257,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     {
       number: '07',
       title: "What this does, and doesn't, solve",
+      shortLabel: 'What it solves',
       blocks: [
         {
           type: 'group',

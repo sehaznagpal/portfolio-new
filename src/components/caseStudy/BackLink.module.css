@@ -1,0 +1,34 @@
+/* Solid page-colour fill so it stays readable over the visual bands. */
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--case-back-h);
+  padding: 0 14px;
+  border: 1px solid var(--case-study-white);
+  border-radius: 999px;
+  background: var(--case-study-grey);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
+  line-height: 1;
+  color: var(--case-study-white);
+  white-space: nowrap;
+  font-feature-settings: 'salt' 1;
+  transition:
+    background-color var(--sweep-duration) var(--ease-out-expo),
+    color var(--sweep-duration) var(--ease-out-expo);
+}
+
+.back:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .back:hover {
+    background: var(--case-study-white);
+    color: var(--case-study-grey);
+  }
+}

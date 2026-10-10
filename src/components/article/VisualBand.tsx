@@ -18,7 +18,7 @@ export default function VisualBand({
   const [ref, revealed] = useRevealOnce<HTMLDivElement>();
 
   return (
-    <div className={styles.band}>
+    <div className={styles.band} data-visual-band>
       <div ref={ref} className={styles.inner} data-revealed={revealed}>
         <h3 className={styles.heading}>{heading}</h3>
         <div className={styles.box} data-tone={tone}>

@@ -1,5 +1,6 @@
 /* Full width so visual bands can bleed edge to edge; text rows sit in the
-   centred article column. */
+   centred article column. The index beside the article scrolls a section's
+   heading to just under the sticky header. */
 .section {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,7 @@
 }
 
 .column {
-  width: calc(100% - 2 * var(--page-pad-x));
+  width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
   margin-inline: auto;
 }
 
@@ -22,6 +23,7 @@
   color: var(--case-study-white);
   text-wrap: balance;
   font-feature-settings: 'salt' 1;
+  scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
 }
 
 /* Tablet/mobile: one column, each quote above its group. minmax(0, 1fr)
@@ -33,13 +35,13 @@
   gap: 16px;
 }
 
-/* Desktop, in a section with pull quotes: quote in the left third, body in
-   the right two thirds (a group without its own quote keeps that column
-   empty, so its body still lines up). A section without quotes stays one
-   full-width column. */
+/* Desktop, in a section with pull quotes: quote and body side by side at
+   equal widths (a group without its own quote keeps that column empty, so
+   its body still lines up). A section without quotes stays one full-width
+   column. */
 @media (min-width: 1025px) {
   .section[data-quotes='true'] .group {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: var(--article-column-gap);
     align-items: start;
   }

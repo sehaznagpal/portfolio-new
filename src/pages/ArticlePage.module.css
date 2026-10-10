@@ -7,5 +7,6 @@
 }
 
 .hero {
-  padding-inline: var(--page-pad-x);
+  width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
+  margin-inline: auto;
 }

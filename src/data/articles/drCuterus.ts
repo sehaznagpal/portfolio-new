@@ -43,6 +43,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
     {
       number: '01',
       title: 'The brief',
+      shortLabel: 'The brief',
       blocks: [
         {
           type: 'group',
@@ -67,6 +68,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
     {
       number: '02',
       title: 'Structure before screens',
+      shortLabel: 'Structure',
       blocks: [
         {
           type: 'group',
@@ -91,6 +93,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
     {
       number: '03',
       title: 'A system that sounds like her',
+      shortLabel: 'The system',
       blocks: [
         {
           type: 'group',
@@ -121,6 +124,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
     {
       number: '04',
       title: 'Pages that act like her, not like a clinic',
+      shortLabel: 'The pages',
       blocks: [
         {
           type: 'group',
@@ -156,6 +160,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
     {
       number: '05',
       title: 'Built for the phone first',
+      shortLabel: 'Phone first',
       blocks: [
         {
           type: 'group',
@@ -172,6 +177,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
     {
       number: '06',
       title: 'The outcome',
+      shortLabel: 'Outcome',
       blocks: [
         {
           type: 'group',

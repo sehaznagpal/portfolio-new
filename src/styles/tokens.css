@@ -64,15 +64,36 @@
   --page-pad-top: clamp(32px, calc(32px + (100vw - 393px) * (32 / 887)), 64px);
   --page-pad-x: clamp(24px, calc(24px + (100vw - 393px) * (40 / 887)), 64px);
 
-  /* Case study header: the shared nav plus the reading progress bar. Half
-     the page top padding so the sticky bar costs less reading height. */
+  /* Case study header: a sticky strip holding the reading progress bar, plus
+     the back pill above it on tablet/mobile (--case-back-row, below). Half
+     the page top padding so it costs little reading height. */
   --progress-h: 4px;
   --progress-gap: 8px;
   --case-header-pad-top: calc(var(--page-pad-top) / 2);
   --case-header-pad-bottom: 12px;
+  --case-back-h: 32px;
+  --case-back-row: 0px;
   --case-header-h: calc(
-    var(--case-header-pad-top) + var(--nav-height) + var(--progress-gap) + var(--progress-h) +
-      var(--case-header-pad-bottom)
+    var(--case-header-pad-top) + var(--case-back-row) + var(--progress-h) + var(--case-header-pad-bottom)
+  );
+
+  /* Case study reading column: centred with broad margins, the left one
+     holding the back button and section index (the rail). About 800px at
+     1280 (Figma 1449:1025), capped so lines never run very long. Tablet and
+     mobile use the page padding only (see the media queries below). */
+  --rail-w: 180px;
+  --rail-gap: 32px;
+  --article-col-w: min(
+    62.5vw,
+    calc(100vw - 2 * (var(--page-pad-x) + var(--rail-w) + var(--rail-gap))),
+    1120px
+  );
+  /* Pull quotes: 40px at 1025, 50px at 1280, 60px from 1920; 30 to 36px
+     below desktop. */
+  --article-pull-quote-size: clamp(
+    40px,
+    min(calc(40px + (100vw - 1025px) * (10 / 255)), calc(50px + (100vw - 1280px) * (10 / 640))),
+    60px
   );
 
   /* Long-form case study articles (Figma 1261:208). The text column spans
@@ -81,7 +102,6 @@
   --article-column-gap: 40px;
   --article-body-size: clamp(18px, calc(18px + (100vw - 393px) * (2 / 887)), 20px);
   --article-body-leading: 1.45;
-  --article-quote-size: clamp(22px, calc(22px + (100vw - 393px) * (6 / 887)), 28px);
   --article-section-title-size: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
   --article-hero-image-h: 480px;
   --article-hero-image-ratio: 4 / 3;
@@ -216,6 +236,9 @@
 
 @media (max-width: 1024px) {
   :root {
+    --case-back-row: calc(var(--case-back-h) + var(--progress-gap));
+    --article-col-w: 100%;
+    --article-pull-quote-size: clamp(30px, calc(30px + (100vw - 393px) * (6 / 631)), 36px);
     --visual-max-w: min(85%, 880px);
     --visual-pair-max-w: 85%;
     --phone-max-h: calc(var(--section-h) * 0.6);

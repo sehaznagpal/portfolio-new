@@ -47,7 +47,7 @@ export default function ArticleHero({
         ))}
       </div>
 
-      <section className={styles.tldr} aria-label="TL;DR">
+      <section id="tldr" className={styles.tldr} aria-label="TL;DR">
         {article.tldr.map((item, i) => (
           <p key={item.label} className={styles.tldrItem}>
             <span className={styles.tldrLabel}>

@@ -30,6 +30,7 @@ export const FRAUD_ARTICLE: ArticleData = {
     {
       number: '01',
       title: 'The contextual transfer problem',
+      shortLabel: 'Context',
       blocks: [
         {
           type: 'group',
@@ -64,6 +65,7 @@ export const FRAUD_ARTICLE: ArticleData = {
     {
       number: '02',
       title: 'Two halves of one question',
+      shortLabel: 'Two halves',
       blocks: [
         {
           type: 'group',
@@ -85,6 +87,7 @@ export const FRAUD_ARTICLE: ArticleData = {
     {
       number: '03',
       title: 'A fraud you can safely fall for',
+      shortLabel: 'The experiment',
       blocks: [
         {
           type: 'group',
@@ -143,6 +146,7 @@ export const FRAUD_ARTICLE: ArticleData = {
     {
       number: '04',
       title: 'What happened',
+      shortLabel: 'What happened',
       blocks: [
         {
           type: 'group',
@@ -200,6 +204,7 @@ export const FRAUD_ARTICLE: ArticleData = {
     {
       number: '05',
       title: 'The fix depends on the fraud',
+      shortLabel: 'The fix',
       blocks: [
         {
           type: 'group',
@@ -224,6 +229,7 @@ export const FRAUD_ARTICLE: ArticleData = {
     {
       number: '06',
       title: 'What this means for design',
+      shortLabel: 'For design',
       blocks: [
         {
           type: 'group',
@@ -257,6 +263,7 @@ export const FRAUD_ARTICLE: ArticleData = {
     {
       number: '07',
       title: "What's next",
+      shortLabel: "What's next",
       blocks: [
         {
           type: 'group',

@@ -21,6 +21,8 @@ export type ArticleBlock =
 export interface ArticleSectionData {
   number: string;
   title: string;
+  /* One to three words for the section index beside the article. */
+  shortLabel: string;
   blocks: ArticleBlock[];
 }
 

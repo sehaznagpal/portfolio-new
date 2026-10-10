@@ -1,5 +1,6 @@
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
+import { articleIndex } from '../components/article/articleIndex';
 import CaseStudyEnd from '../components/caseStudy/CaseStudyEnd';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import DrCuterusPoster from '../components/caseStudy/DrCuterusPoster';
@@ -20,6 +21,7 @@ const VISUALS = {
 export default function DrCuterusCaseStudyPage() {
   return (
     <CaseStudyLayout
+      index={articleIndex(DR_CUTERUS_ARTICLE)}
       footerPhoto={FOOTER_PHOTOS.drCuterus}
       after={<CaseStudyEnd current="dr-cuterus" link={DR_CUTERUS_ARTICLE.closingLink} />}
     >

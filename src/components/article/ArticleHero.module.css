@@ -1,5 +1,6 @@
-/* Figma 1261:208: everything stacked with a 32px rhythm in the article
-   column. Sizes ease from the 393 mobile values to the 1280 desktop ones. */
+/* Figma 1261:208 / 1449:1025: everything stacked with a 32px rhythm in the
+   centred article column, text centred. Sizes ease from the 393 mobile
+   values to the 1280 desktop ones. */
 .hero {
   display: flex;
   flex-direction: column;
@@ -11,6 +12,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  text-align: center;
 }
 
 .title {
@@ -57,15 +59,18 @@
   }
 }
 
+/* Role and Duration, then the tags on their own centred line. */
 .summary {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  gap: 12px;
 }
 
 .points {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
 }
 
@@ -100,6 +105,7 @@
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
 }
 
@@ -130,19 +136,6 @@
   }
 }
 
-@media (min-width: 1025px) {
-  .summary {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .tags {
-    justify-content: flex-end;
-  }
-}
-
 .links {
   display: flex;
   flex-wrap: wrap;
@@ -150,10 +143,18 @@
   gap: 16px;
 }
 
+/* A near-black box with a thin border; the index beside the article scrolls
+   it to just under the sticky header. */
 .tldr {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--case-study-light-grey);
+  border-radius: 12px;
+  background: var(--case-study-black);
+  text-align: center;
+  scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
 }
 
 .tldrItem {

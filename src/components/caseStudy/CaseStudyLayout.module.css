@@ -1,9 +1,11 @@
 /* Sits above the footer (z-index: 0, sticky to the bottom, see
    Footer.module.css) and covers it until this content scrolls past, which
-   reveals it. */
+   reveals it. Clipped so the fixed-feeling rail never paints over the
+   footer as the page leaves. */
 .page {
   position: relative;
   z-index: 1;
+  overflow: clip;
   background: var(--case-study-grey);
 }
 
@@ -15,7 +17,33 @@
   z-index: 10;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--progress-gap);
   padding: var(--case-header-pad-top) var(--page-pad-x) var(--case-header-pad-bottom);
   background: var(--case-study-grey);
+}
+
+.header > :last-child {
+  align-self: stretch;
+}
+
+/* Zero-height sticky line just under the header that the rail hangs from,
+   so it stays in view while reading and leaves with the page. Desktop only. */
+.railAnchor {
+  position: sticky;
+  top: var(--case-header-h);
+  z-index: 5;
+  height: 0;
+}
+
+@media (min-width: 1025px) {
+  .headerBack {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .railAnchor {
+    display: none;
+  }
 }

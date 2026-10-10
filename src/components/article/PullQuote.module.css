@@ -3,7 +3,7 @@
   font-family: 'Gambetta Variable', serif;
   font-weight: var(--gambetta-light);
   font-style: italic;
-  font-size: var(--article-quote-size);
+  font-size: var(--article-pull-quote-size);
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--case-study-white);
