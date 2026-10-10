@@ -1,24 +1,29 @@
-/* Sits in the left gutter beside the centred article column (desktop only).
-   Positioned inside CaseStudyLayout's sticky anchor, so it scrolls away with
-   the page as the footer is revealed. */
+/* Sits in the left gutter beside the centred article column (desktop only),
+   vertically centred in the screen below the sticky header, with the labels
+   centred under the back button. Positioned inside CaseStudyLayout's sticky
+   anchor, so it scrolls away with the page as the footer is revealed. */
 .rail {
   position: absolute;
-  top: var(--article-gap);
+  top: calc((var(--section-h) - var(--case-header-h)) / 2);
   left: var(--page-pad-x);
-  width: var(--rail-w);
+  width: max-content;
+  max-width: var(--rail-w);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
+  transform: translateY(-50%);
 }
 
 .index {
   margin: 0;
-  padding: 0 0 0 4px;
+  padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2px;
+  text-align: center;
   transition: opacity var(--sweep-duration) var(--ease-out-expo);
 }
 
