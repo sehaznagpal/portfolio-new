@@ -123,15 +123,17 @@
   --reveal-duration: 700ms;
   --reveal-distance: 32px;
 
-  /* Visuals inside bands (Dr Cuterus and MoolRoop): framed like a mat
-     inside the band box rather than filling it. --visual-inset adds to the
-     box's own padding (40px desktop, 16px mobile) for 64 / 20 in total.
+  /* Visuals inside bands (Dr Cuterus and MoolRoop). On desktop the band box
+     is the text column's width (VisualBand), so visuals fill it, within the
+     height caps below; tablet narrows them to frame them like a mat.
+     --visual-inset adds to the box's own padding (40px desktop, 16px
+     mobile) for 64 / 20 in total.
      --visual-chrome-h is what the band needs besides the visual (heading
      overlap, paddings, caption, sticky header), so on desktop a band and
      its whole visual fit one screen. */
   --visual-inset: clamp(4px, calc(4px + (100vw - 393px) * (20 / 887)), 24px);
-  --visual-max-w: min(70%, 880px);
-  --visual-pair-max-w: 75%;
+  --visual-max-w: 100%;
+  --visual-pair-max-w: 100%;
   --visual-chrome-h: 330px;
   --visual-max-h: min(
     calc(var(--section-h) * 0.65),

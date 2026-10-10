@@ -32,6 +32,15 @@
   }
 }
 
+/* Desktop: the heading and box sit in the text column (same width token as
+   the article text), so the box's edges match the text's. */
+@media (min-width: 1025px) {
+  .inner {
+    width: var(--article-col-w);
+    margin-inline: auto;
+  }
+}
+
 /* Pulled under the box by part of its own size (the old Fraud hero's
    heading-behind-box treatment). */
 .heading {
@@ -44,6 +53,14 @@
   color: var(--case-study-grey);
   white-space: nowrap;
   font-feature-settings: 'salt' 1;
+}
+
+/* Desktop: never wider than the box. The longest heading is about 9.5em
+   wide, so a tenth of the column always fits; most widths keep 70-80px. */
+@media (min-width: 1025px) {
+  .heading {
+    font-size: min(var(--band-heading-size), calc(var(--article-col-w) / 10));
+  }
 }
 
 /* --band-ink / --band-ink-muted: text colours that read on this tone, for
