@@ -1,4 +1,3 @@
-import VisualCaption from '../../article/VisualCaption';
 import styles from './ComparisonTable.module.css';
 
 type Mark = 'yes' | 'partial' | 'no';
@@ -6,7 +5,6 @@ type Mark = 'yes' | 'partial' | 'no';
 export interface ComparisonData {
   columns: { name: string; note?: string; highlight?: boolean }[];
   rows: { label: string; marks: Mark[] }[];
-  caption: string;
 }
 
 const MARK_LABEL: Record<Mark, string> = { yes: 'Yes', partial: 'Partial', no: 'No' };
@@ -19,7 +17,7 @@ function Dot({ mark }: { mark: Mark }) {
    ComparisonTable. Each mark is a dot plus a visually hidden word, so it
    never relies on the dot's fill alone. Scrolls sideways inside the band on
    narrow screens, with the criteria column pinned. */
-export default function ComparisonTable({ columns, rows, caption }: ComparisonData) {
+export default function ComparisonTable({ columns, rows }: ComparisonData) {
   return (
     <figure className={styles.figure}>
       <div className={styles.scroll}>
@@ -60,8 +58,6 @@ export default function ComparisonTable({ columns, rows, caption }: ComparisonDa
           </li>
         ))}
       </ul>
-
-      <VisualCaption>{caption}</VisualCaption>
     </figure>
   );
 }

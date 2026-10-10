@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import VisualCaption from '../../article/VisualCaption';
 import styles from './SitemapTree.module.css';
 
 export interface SitemapNode {
@@ -99,7 +98,7 @@ function buildLayout(root: SitemapNode) {
    SitemapTree. Node widths are measured from their labels, so the layout is
    redone once the web font has loaded. Wider than its band on small screens,
    where it scrolls sideways. */
-export default function SitemapTree({ root, caption }: { root: SitemapNode; caption: string }) {
+export default function SitemapTree({ root }: { root: SitemapNode }) {
   const [fontsReady, setFontsReady] = useState(false);
 
   useEffect(() => {
@@ -135,7 +134,6 @@ export default function SitemapTree({ root, caption }: { root: SitemapNode; capt
           ))}
         </div>
       </div>
-      <VisualCaption>{caption}</VisualCaption>
     </figure>
   );
 }

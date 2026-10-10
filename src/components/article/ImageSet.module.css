@@ -74,11 +74,6 @@
   width: var(--visual-max-w);
 }
 
-/* Wider than the detail itself, so centred under it. */
-.small > figcaption {
-  text-align: center;
-}
-
 .small .image {
   width: auto;
   max-width: 100%;

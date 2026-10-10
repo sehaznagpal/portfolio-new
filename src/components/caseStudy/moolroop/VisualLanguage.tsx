@@ -1,4 +1,3 @@
-import VisualCaption from '../../article/VisualCaption';
 import styles from './VisualLanguage.module.css';
 
 export interface VisualLanguageData {
@@ -6,7 +5,6 @@ export interface VisualLanguageData {
      is set in the article's own serif and says so. */
   typefaces: { name: string; role: string; fontFamily?: string }[];
   colours: string[];
-  caption: string;
 }
 
 const SPECIMEN_UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -25,7 +23,7 @@ function luminance(hex: string) {
 
 /* The app's two typefaces as specimens and its palette as large swatches,
    each labelled with its hex code. */
-export default function VisualLanguage({ typefaces, colours, caption }: VisualLanguageData) {
+export default function VisualLanguage({ typefaces, colours }: VisualLanguageData) {
   return (
     <figure className={styles.figure}>
       <div className={styles.type}>
@@ -56,8 +54,6 @@ export default function VisualLanguage({ typefaces, colours, caption }: VisualLa
           </li>
         ))}
       </ul>
-
-      <VisualCaption>{caption}</VisualCaption>
     </figure>
   );
 }

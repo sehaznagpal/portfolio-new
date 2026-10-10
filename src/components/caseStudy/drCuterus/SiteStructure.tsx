@@ -1,16 +1,14 @@
-import VisualCaption from '../../article/VisualCaption';
 import styles from './SiteStructure.module.css';
 
 export interface SiteStructureData {
   pages: { name: string; sections: string[] }[];
   cut: { name: string; label: string };
-  caption: string;
 }
 
 /* The site map as markup, in the style of the dissertation's Research
    Structure chart: each page heads a column of its sections, and the page
    that was cut sits beside them, struck through. */
-export default function SiteStructure({ pages, cut, caption }: SiteStructureData) {
+export default function SiteStructure({ pages, cut }: SiteStructureData) {
   return (
     <figure className={styles.chart}>
       <div className={styles.pages}>
@@ -33,7 +31,6 @@ export default function SiteStructure({ pages, cut, caption }: SiteStructureData
         <p className={styles.cutLabel}>{cut.label}</p>
       </div>
 
-      <VisualCaption>{caption}</VisualCaption>
     </figure>
   );
 }

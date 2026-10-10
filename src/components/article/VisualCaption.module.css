@@ -1,16 +1,24 @@
-/* Reads on every band tone (see VisualBand's --band-ink). As wide as the
-   visual it belongs to and aligned to its left edge, so it only wraps when
-   the copy itself is too long: desktop copy is written to fit one line;
-   narrower screens balance any wrap into even lines. */
+/* Centred under its visual. Desktop copy is written to fit one line;
+   narrower screens balance a wrap into even lines. */
 .caption {
   width: 100%;
   margin: 0;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
   font-size: clamp(13px, calc(13px + (100vw - 393px) * (2 / 887)), 15px);
-  line-height: 1.4;
-  color: var(--band-ink-muted);
-  text-align: start;
+  line-height: 1.7;
+  text-align: center;
   text-wrap: balance;
   font-feature-settings: 'salt' 1;
+}
+
+/* Near-black highlight with cream text: the "I am Sehaz" highlight inverted
+   for the light bands. Each wrapped line keeps its own padding and corners. */
+.label {
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--case-study-black);
+  color: var(--text-cream);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }

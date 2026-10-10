@@ -57,6 +57,11 @@
   border: 1px solid var(--case-study-grey);
 }
 
+/* The band's caption, centred under the box. */
+.caption {
+  margin-top: var(--band-caption-gap);
+}
+
 .box[data-tone='sky'] {
   background: var(--band-tone-sky);
 }

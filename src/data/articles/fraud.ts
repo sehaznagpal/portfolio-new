@@ -140,7 +140,13 @@ export const FRAUD_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'user-journey', heading: 'User Journey Flow', tone: 'brand' },
+        {
+          type: 'visual',
+          id: 'user-journey',
+          heading: 'User Journey Flow',
+          tone: 'brand',
+          caption: 'One screen changes. Everything else stays the same.',
+        },
       ],
     },
     {

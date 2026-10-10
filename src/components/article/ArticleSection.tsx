@@ -53,7 +53,7 @@ export default function ArticleSection({
 
       {section.blocks.map((block, i) =>
         block.type === 'visual' ? (
-          <VisualBand key={i} heading={block.heading} tone={block.tone}>
+          <VisualBand key={i} heading={block.heading} tone={block.tone} caption={block.caption}>
             {visuals[block.id]}
           </VisualBand>
         ) : (

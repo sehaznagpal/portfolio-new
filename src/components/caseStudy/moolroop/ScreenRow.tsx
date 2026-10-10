@@ -14,13 +14,12 @@ export interface RowScreen {
 
 export interface ScreenRowData {
   screens: RowScreen[];
-  caption?: string;
 }
 
-/* Phone-framed screens in a row, each with an optional caption, plus an
-   optional caption for the whole band. Rows of three or more become a
-   horizontal scroll-snap strip on mobile; a pair stacks on narrow screens. */
-export default function ScreenRow({ screens, caption }: ScreenRowData) {
+/* Phone-framed screens in a row, each with an optional caption. Rows of
+   three or more become a horizontal scroll-snap strip on mobile; a pair
+   stacks on narrow screens. */
+export default function ScreenRow({ screens }: ScreenRowData) {
   const layered = screens.some((screen) => screen.tag);
 
   return (
@@ -40,7 +39,6 @@ export default function ScreenRow({ screens, caption }: ScreenRowData) {
           </Fragment>
         ))}
       </div>
-      {caption && <VisualCaption>{caption}</VisualCaption>}
     </figure>
   );
 }

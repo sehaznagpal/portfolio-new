@@ -115,6 +115,7 @@
      covers the same share of the heading at any size. */
   --band-heading-size: clamp(70px, calc(70px + (100vw - 1280px) * (10 / 640)), 80px);
   --band-heading-overlap: 0.3em;
+  --band-caption-gap: 16px;
   --band-box-pad: clamp(16px, calc(16px + (100vw - 393px) * (24 / 887)), 40px);
   --band-tone-sky: rgba(178, 206, 255, 0.8);
   --band-tone-dark: rgba(18, 18, 18, 0.8);

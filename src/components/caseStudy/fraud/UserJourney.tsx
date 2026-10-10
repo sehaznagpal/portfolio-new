@@ -196,7 +196,6 @@ export default function UserJourney() {
         })}
       </div>
 
-      <p className={styles.caption}>One screen changes. Everything else stays the same.</p>
     </div>
   );
 }

@@ -67,7 +67,13 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'official-record', heading: 'The Official Record', tone: 'sky' },
+        {
+          type: 'visual',
+          id: 'official-record',
+          heading: 'The Official Record',
+          tone: 'sky',
+          caption: "GI Search, the government's registered applications database. Accurate, public and nowhere near a buy button.",
+        },
       ],
     },
     {
@@ -93,7 +99,13 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'competitive-landscape', heading: 'Competitive Landscape', tone: 'dark' },
+        {
+          type: 'visual',
+          id: 'competitive-landscape',
+          heading: 'Competitive Landscape',
+          tone: 'dark',
+          caption: 'Discovery by origin is common. Proof of origin is not.',
+        },
       ],
     },
     {
@@ -136,7 +148,13 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'opportunity', heading: 'The Opportunity', tone: 'brand' },
+        {
+          type: 'visual',
+          id: 'opportunity',
+          heading: 'The Opportunity',
+          tone: 'brand',
+          caption: 'Six steps, most of them outside the app, become four inside it.',
+        },
         {
           type: 'group',
           content: [
@@ -183,7 +201,13 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'app-structure', heading: 'App Structure', tone: 'dark' },
+        {
+          type: 'visual',
+          id: 'app-structure',
+          heading: 'App Structure',
+          tone: 'dark',
+          caption: 'Two entry points, one product page, and verification exactly one tap deep.',
+        },
       ],
     },
     {
@@ -201,7 +225,13 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'first-impression', heading: 'First Impression', tone: 'sky' },
+        {
+          type: 'visual',
+          id: 'first-impression',
+          heading: 'First Impression',
+          tone: 'sky',
+          caption: 'A short welcome sequence before the shopping begins.',
+        },
         { type: 'visual', id: 'two-ways-in', heading: 'Two Ways In', tone: 'brand' },
         {
           type: 'group',
@@ -223,7 +253,13 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'verify', heading: 'Verify in One Tap', tone: 'brand' },
+        {
+          type: 'visual',
+          id: 'verify',
+          heading: 'Verify in One Tap',
+          tone: 'brand',
+          caption: 'Quick for most people, complete for anyone who wants proof.',
+        },
         {
           type: 'group',
           content: [
@@ -251,7 +287,13 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'visual-language', heading: 'Visual Language', tone: 'dark' },
+        {
+          type: 'visual',
+          id: 'visual-language',
+          heading: 'Visual Language',
+          tone: 'dark',
+          caption: 'Two typefaces, five colours, one job: make verification feel trustworthy, not bureaucratic.',
+        },
       ],
     },
     {
@@ -306,7 +348,6 @@ export const MOOLROOP_RECORD: ImageSetData = {
       width: 1600,
       height: 963,
       alt: "GI Search Version 2.0, the government's Registered Applications table: application numbers alongside registered indications such as Darjeeling Tea, Pochampally Ikat, Chanderi Sarees and Mysore Silk, each with a View link.",
-      caption: "GI Search, the government's registered applications database. Accurate, public and nowhere near a buy button.",
     },
   ],
 };
@@ -328,7 +369,6 @@ export const MOOLROOP_COMPARISON: ComparisonData = {
     { label: 'Shows authorised seller info', marks: ['no', 'no', 'no', 'no', 'partial', 'yes'] },
     { label: 'Discovery by geographic origin', marks: ['partial', 'partial', 'yes', 'partial', 'yes', 'yes'] },
   ],
-  caption: 'Discovery by origin is common. Proof of origin is not.',
 };
 
 export const MOOLROOP_FLOW: StepFlowData = {
@@ -347,7 +387,6 @@ export const MOOLROOP_FLOW: StepFlowData = {
     label: 'MOOLROOP',
     steps: ['Browse product', 'Tap Verify', 'Verification summary and records', 'Decide'],
   },
-  caption: 'Six steps, most of them outside the app, become four inside it.',
 };
 
 const PRODUCT_FLOW: SitemapNode = {
@@ -370,7 +409,7 @@ const PRODUCT_FLOW: SitemapNode = {
   ],
 };
 
-export const MOOLROOP_SITEMAP: { root: SitemapNode; caption: string } = {
+export const MOOLROOP_SITEMAP: { root: SitemapNode } = {
   root: {
     label: 'Welcome carousel',
     children: [
@@ -395,7 +434,6 @@ export const MOOLROOP_SITEMAP: { root: SitemapNode; caption: string } = {
       },
     ],
   },
-  caption: 'Two entry points, one product page, and verification exactly one tap deep.',
 };
 
 /* Phone-framed screen bands, keyed by visual id. */
@@ -415,7 +453,6 @@ export const MOOLROOP_SCREENS: Record<string, ScreenRowData> = {
         alt: 'Welcome screen three: "with the authenticity it deserves" over a photo of hands embroidering, captioned "every region tells on itself".',
       },
     ],
-    caption: 'A short welcome sequence before the shopping begins.',
   },
   'two-ways-in': {
     screens: [
@@ -468,7 +505,6 @@ export const MOOLROOP_SCREENS: Record<string, ScreenRowData> = {
         tag: 'Layer 2: the full record',
       },
     ],
-    caption: 'Quick for most people, complete for anyone who wants proof.',
   },
   'kept-plain': {
     screens: [
@@ -503,5 +539,4 @@ export const MOOLROOP_VISUAL_LANGUAGE: VisualLanguageData = {
     { name: 'Open Sans', role: 'Body', fontFamily: "'Open Sans Variable', sans-serif" },
   ],
   colours: ['#D9CE6A', '#BF393C', '#2B4C5F', '#F3B5C0', '#24211F'],
-  caption: 'Two typefaces, five colours, one job: make verification feel trustworthy, not bureaucratic.',
 };
