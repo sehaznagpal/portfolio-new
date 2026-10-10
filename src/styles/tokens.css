@@ -106,13 +106,14 @@
   --article-hero-image-h: 480px;
   --article-hero-image-ratio: 4 / 3;
 
-  /* Visual bands: a huge serif heading with the visual's box overlapping its
-     lower part. The box reaches 16px past the text column on each side
-     (Figma: 1184 vs 1152 at 1280); the heading scales with the viewport so
-     it keeps the same proportion to the box and never wraps. */
+  /* Visual bands: a large serif heading with the visual's box overlapping its
+     lower part. The box reaches 16px past the page padding on each side
+     (Figma: 1184 vs 1152 at 1280). */
   --band-pad-y: 24px;
   --band-pad-x: max(16px, calc(var(--page-pad-x) - 16px));
-  --band-heading-size: 9.6vw;
+  /* Desktop: 70px at 1280 to 80px from 1920. The overlap is in em, so the box
+     covers the same share of the heading at any size. */
+  --band-heading-size: clamp(70px, calc(70px + (100vw - 1280px) * (10 / 640)), 80px);
   --band-heading-overlap: 0.3em;
   --band-box-pad: clamp(16px, calc(16px + (100vw - 393px) * (24 / 887)), 40px);
   --band-tone-sky: rgba(178, 206, 255, 0.8);
@@ -237,6 +238,9 @@
 @media (max-width: 1024px) {
   :root {
     --case-back-row: calc(var(--case-back-h) + var(--progress-gap));
+    /* Tracks the viewport so the longest heading (about 9.5em wide) always
+       fits its band: about 34px on a 375 phone, 56px from 610 up. */
+    --band-heading-size: clamp(32px, 9.2vw, 56px);
     --article-col-w: 100%;
     --article-pull-quote-size: clamp(30px, calc(30px + (100vw - 393px) * (6 / 631)), 36px);
     --visual-max-w: min(85%, 880px);
