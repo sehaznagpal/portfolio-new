@@ -111,9 +111,6 @@
   /* Light grey on the dark page so the handle stays visible; black on cream */
   --lamp-handle: var(--case-study-light-grey);
   --lamp-glow: rgba(245, 230, 92, 0.4);
-  --lamp-spring-ease: var(--pg-ease-spring);
-  --lamp-press-duration: 120ms;
-  --lamp-spring-duration: 420ms;
   --lamp-glow-duration: 360ms;
   --theme-reveal-duration: 550ms;
   --theme-fade-duration: 150ms;

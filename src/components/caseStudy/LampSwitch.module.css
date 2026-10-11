@@ -8,15 +8,20 @@
   line-height: 0;
 }
 
-/* A larger hit area than the drawing, without moving it. */
+/* A larger hit area than the drawing, without moving it: at least 24 x 44
+   around the cord and handle at every size. */
 .lamp {
-  --cord: 0;
   display: block;
   margin: calc(-1 * var(--lamp-hit-pad));
   padding: var(--lamp-hit-pad);
   border-radius: 6px;
+  cursor: grab;
   touch-action: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.lamp[data-dragging='true'] {
+  cursor: grabbing;
 }
 
 .lamp:focus-visible {
@@ -42,27 +47,17 @@
   fill: var(--color-brand);
 }
 
-/* The cord stretches from its top and the handle follows it down, both by
-   --cord (lamp units, set by LampSwitch.tsx). */
+/* The cord's curve and the handle's position are drawn each frame by
+   LampSwitch.tsx's spring simulation. */
 .cord {
+  fill: none;
   stroke: var(--case-study-light-grey);
   stroke-width: 0.8px;
-  transform-box: view-box;
-  transform-origin: 24px 2px;
-  transform: scaleY(calc(1 + var(--cord) / 30));
+  stroke-linecap: round;
 }
 
 .handle {
   fill: var(--lamp-handle);
-  transform: translateY(calc(var(--cord) * 1px));
-}
-
-.lamp[data-cord='press'] :is(.cord, .handle) {
-  transition: transform var(--lamp-press-duration) var(--ease-out-quint);
-}
-
-.lamp[data-cord='spring'] :is(.cord, .handle) {
-  transition: transform var(--lamp-spring-duration) var(--lamp-spring-ease);
 }
 
 .glowStop {
@@ -108,10 +103,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lamp :is(.cord, .handle) {
-    transition: none !important;
-  }
-
   .lamp[data-flicker='true'] .glow {
     animation: none;
   }

@@ -42,6 +42,9 @@ interface CursorTooltipProps {
      from the same movement, without it having to attach its own separate
      listener. */
   onHoverMove?: (event: React.MouseEvent) => void;
+  /* Keeps the pill hidden while hovering (e.g. while its trigger is being
+     dragged). */
+  hidden?: boolean;
 }
 
 // Small pill that trails the cursor (eased, not 1:1) while hovering its
@@ -54,6 +57,7 @@ export default function CursorTooltip({
   className,
   variant = 'light',
   onHoverMove,
+  hidden = false,
 }: CursorTooltipProps) {
   // Touch devices synthesize mouse events on tap, which would otherwise pop
   // the pill in at the tap point and leave it stuck there — a viewport-width
@@ -114,7 +118,7 @@ export default function CursorTooltip({
     }
     const clamped = clampToViewport(pos.current.x, pos.current.y);
     pillRef.current.style.transform = `translate(${clamped.x}px, ${clamped.y}px)`;
-  }, [visible, image]);
+  }, [visible, image, hidden]);
 
   function handleMouseMove(event: React.MouseEvent) {
     onHoverMove?.(event);
@@ -145,7 +149,7 @@ export default function CursorTooltip({
         </div>
       </div>
     );
-  } else if (hasFinePointer && !image && visible) {
+  } else if (hasFinePointer && !image && visible && !hidden) {
     pill = (
       <div className={`${styles.pill} ${variant === 'dark' ? styles.pillDark : ''}`} ref={pillRef} role="tooltip">
         {text}
