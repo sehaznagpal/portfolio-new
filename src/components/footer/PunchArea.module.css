@@ -21,37 +21,6 @@
   object-position: var(--photo-position);
 }
 
-/* Figma's duo noise (1px, 100% density) over the photo, under the strip,
-   chips and labels: a white and a black layer, each a tile of 1px grains
-   with random per-pixel alpha (independent seeds), at normal blend. Fixed
-   to the area, not the photo, so framing never scales or crops it; one
-   grain is one CSS pixel, kept crisp on retina. Static and click-through. */
-.photoGrain,
-.photoGrain::before,
-.photoGrain::after {
-  position: absolute;
-  inset: 0;
-  background-repeat: repeat;
-  background-size: 256px 256px;
-  image-rendering: pixelated;
-  pointer-events: none;
-}
-
-.photoGrain::before,
-.photoGrain::after {
-  content: '';
-}
-
-.photoGrain::before {
-  background-image: url('../../assets/images/footer/grain-white.png');
-  opacity: var(--photo-grain-white);
-}
-
-.photoGrain::after {
-  background-image: url('../../assets/images/footer/grain-black.png');
-  opacity: var(--photo-grain-black);
-}
-
 /* The sheet itself, painted by PunchArea.tsx in --case-study-black. It bleeds
    a pixel past the area's top, left and right edges (the area clips it):
    the area usually starts on a fractional pixel, and an exactly-sized sheet
