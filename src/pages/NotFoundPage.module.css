@@ -1,24 +1,177 @@
+/* Figma 1461:1187 (mobile, also tablet) and 1461:1141 (desktop). One
+   screen, the giant "404" clipped at its edges. */
 .page {
+  position: relative;
   box-sizing: border-box;
-  min-height: var(--section-h);
+  height: var(--section-h);
+  overflow: hidden;
+  background: var(--chrome-bg);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Mobile: "4", "0", "4" stacked, three lines filling the screen height
+   (400px type at 0.72 in the 852px frame), left-aligned in a box 0.655em
+   wide as in Figma. */
+.digits {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.655em;
+  margin: 0;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-bold);
+  font-style: italic;
+  font-size: calc(var(--section-h) / 2.16);
+  line-height: 0.72;
+  letter-spacing: -0.04em;
+  color: var(--case-study-grey);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+  font-feature-settings: 'salt' 1;
+}
+
+.digits span {
+  display: block;
+}
+
+/* Mobile: centred over the middle "0". */
+.message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--article-gap);
-  padding: var(--page-pad-top) var(--page-pad-x);
-  background: var(--case-study-grey);
-  text-align: center;
+  gap: 8px;
+  width: max-content;
+  transform: translate(-50%, -50%);
 }
 
-.title {
+.line {
+  position: relative;
+  max-width: 6.7em;
   margin: 0;
-  font-family: 'Gambetta Variable', serif;
-  font-weight: var(--gambetta-light);
-  font-style: italic;
-  font-size: clamp(40px, calc(40px + (100vw - 393px) * (24 / 887)), 64px);
-  line-height: 0.9;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: 36px;
+  line-height: 0.8;
   letter-spacing: -0.04em;
-  color: var(--case-study-white);
+  text-align: center;
+  color: var(--chrome-bg);
   font-feature-settings: 'salt' 1;
+}
+
+/* Each wrapped line keeps its own highlight; its text is invisible, the
+   visible copy sits in .text over it. */
+.highlight {
+  padding-inline: 0.1em;
+  background: var(--color-brand);
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.text {
+  position: absolute;
+  inset: 0;
+  padding-inline: 0.1em;
+}
+
+/* SweepButton with a cream fill sweeping in from the bottom-right corner;
+   keyboard focus shows the same state as hover. */
+.home {
+  --chip-bg: transparent;
+  --sweep-fill: var(--text-cream);
+  --sweep-origin: right bottom;
+  --sweep-rest: scale(0);
+  gap: 0.375em;
+  /* Room for the fill, without moving the text off its Figma position */
+  margin: -0.1em -0.15em;
+  padding: 0.1em 0.15em;
+  color: var(--text-cream);
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-regular);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 32px;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  transition: color var(--sweep-duration) var(--ease-out-expo);
+  font-feature-settings: 'salt' 1;
+}
+
+.home:focus-visible {
+  --sweep-rest: scale(1);
+  color: var(--chrome-bg);
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform var(--sweep-duration) var(--ease-out-expo);
+}
+
+.home:focus-visible .arrow {
+  transform: translateX(-0.15em);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home:hover .arrow {
+    transform: translateX(-0.15em);
+  }
+}
+
+/* Desktop: the note and link near the top in Figma units, and "404" on one
+   line as wide as the Figma frame's share of the screen (800 / 1280),
+   sunk past the bottom edge by the same share of its size. */
+@media (min-width: 1025px) {
+  .digits {
+    top: auto;
+    bottom: -0.11em;
+    width: auto;
+    font-size: 62.5vw;
+    line-height: 0.8;
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+
+  .digits span {
+    display: inline;
+  }
+
+  .message {
+    top: calc(120 * var(--u));
+    gap: calc(8 * var(--u));
+    transform: translateX(-50%);
+  }
+
+  .line {
+    max-width: none;
+    font-size: calc(36 * var(--u));
+    white-space: nowrap;
+  }
+
+  /* One line: the box hugs the 0.8 line height, as in Figma. */
+  .highlight {
+    display: inline-block;
+  }
+
+  .highlight,
+  .text {
+    padding-inline: 0.3em;
+  }
+
+  .home {
+    gap: 0.1875em;
+    font-weight: var(--bricolage-light);
+    font-size: calc(64 * var(--u));
+  }
 }

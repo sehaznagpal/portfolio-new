@@ -1,13 +1,52 @@
-import ArticleButton from '../components/article/ArticleButton';
+import { useEffect } from 'react';
+import SweepButton from '../components/chrome/SweepButton';
 import { LINKS } from '../data/links';
 import styles from './NotFoundPage.module.css';
 
-/* Any address the site doesn't have: says so and links home. */
+const TITLE = 'Page not found | Sehaz Nagpal';
+const NOTE = 'this portfolio was built in the spirit of exploration. but if you are lost:';
+
+/* Any address the site doesn't have (Figma 1461:1141 desktop, 1461:1187
+   mobile): a note and a link home over a giant decorative "404". */
 export default function NotFoundPage() {
+  // Own title, and kept out of search results, only while it's shown.
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = TITLE;
+    const robots = document.createElement('meta');
+    robots.name = 'robots';
+    robots.content = 'noindex';
+    document.head.appendChild(robots);
+    return () => {
+      document.title = previousTitle;
+      robots.remove();
+    };
+  }, []);
+
   return (
     <main className={styles.page}>
-      <h1 className={styles.title}>[COPY: page not found]</h1>
-      <ArticleButton link={{ label: '[COPY: back home] →', href: LINKS.home }} />
+      <h1 className={styles.visuallyHidden}>Page not found</h1>
+      <p className={styles.digits} aria-hidden="true">
+        <span>4</span>
+        <span>0</span>
+        <span>4</span>
+      </p>
+      <div className={styles.message}>
+        {/* Highlights and text on separate layers that wrap identically, so
+            no line's highlight paints over the descenders above it. */}
+        <p className={styles.line}>
+          <span className={styles.highlight} aria-hidden="true">
+            {NOTE}
+          </span>
+          <span className={styles.text}>{NOTE}</span>
+        </p>
+        <SweepButton to={LINKS.home} className={styles.home}>
+          <span className={styles.arrow} aria-hidden="true">
+            ←
+          </span>
+          go to home
+        </SweepButton>
+      </div>
     </main>
   );
 }

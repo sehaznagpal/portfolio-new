@@ -11,12 +11,15 @@
   outline-offset: 4px;
 }
 
+/* --sweep-fill, --sweep-origin and --sweep-rest let a caller recolour the
+   fill and sweep it from elsewhere (e.g. scale(0) from a corner); the
+   defaults are the brand fill sweeping in from the left. */
 .fill {
   position: absolute;
   inset: 0;
-  background: var(--color-brand);
-  transform: scaleX(0);
-  transform-origin: left center;
+  background: var(--sweep-fill, var(--color-brand));
+  transform: var(--sweep-rest, scaleX(0));
+  transform-origin: var(--sweep-origin, left center);
   transition: transform var(--sweep-duration) var(--ease-out-expo);
   pointer-events: none;
 }
