@@ -298,7 +298,7 @@ export default function PunchArea({
           decoding="async"
         />
       </picture>
-      {/* Film grain on the photo itself, so punched holes show it too */}
+      {/* Duo-noise grain on the photo itself, so punched holes show it too */}
       <span className={styles.photoGrain} aria-hidden="true" />
 
       <canvas
