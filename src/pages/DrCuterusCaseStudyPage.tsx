@@ -23,6 +23,8 @@ export default function DrCuterusCaseStudyPage() {
   return (
     <CaseStudyLayout
       index={articleIndex(DR_CUTERUS_ARTICLE)}
+      lampColor={DR_CUTERUS_ARTICLE.lampColor}
+      tagColor={DR_CUTERUS_ARTICLE.tagColor}
       footerPhoto={FOOTER_PHOTOS.drCuterus}
       after={<CaseStudyEnd current="dr-cuterus" link={DR_CUTERUS_ARTICLE.closingLink} />}
     >

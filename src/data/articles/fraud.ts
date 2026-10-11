@@ -299,4 +299,6 @@ export const FRAUD_ARTICLE: ArticleData = {
   ],
   closingLink: { label: 'Read the full dissertation →', href: LINKS.dissertation },
   accent: 'var(--accent-dissertation)',
+  lampColor: 'var(--dissertation-navy)',
+  tagColor: 'var(--dissertation-navy)',
 };

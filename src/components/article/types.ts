@@ -46,4 +46,8 @@ export interface ArticleData {
   /* Fill for accent-tone visual boxes, as a colour token; the page sets it
      as --case-accent. */
   accent: string;
+  /* The reading-mode lamp's shade, and the tag outlines in light mode, as
+     colour tokens (CaseStudyLayout sets them). */
+  lampColor: string;
+  tagColor: string;
 }

@@ -16,6 +16,11 @@
 
   /* Brand colour. Only ever use it through this token. */
   --color-brand: #d9ce6a;
+  /* The brand yellow darkened for text and thin lines on light surfaces:
+     4.95:1 on cream, 6.71:1 on white (WCAG AA). */
+  --brand-yellow-dark: #665c12;
+  /* Keyboard focus outline */
+  --focus-ring: var(--color-brand);
 
   /* Case Studies Index — page + card tokens (from Figma) */
   --case-study-grey: #1f1f1f;
@@ -24,6 +29,7 @@
   --case-study-black: #121212;
 
   --dr-cuterus-purple: #76359c;
+  --dr-cuterus-lilac: #dec3e9;
   /* The MoolRoop app's own "verified" green (its card's Vs badge, scan line
      and verified label), not the portfolio brand. */
   --moolroop-green: #a4cf4a;
@@ -74,6 +80,43 @@
   --case-header-h: calc(
     var(--case-header-pad-top) + var(--case-back-row) + var(--progress-h) + var(--case-header-pad-bottom)
   );
+
+  /* Case study reading mode. These are the dark values (lamp on); the light
+     ones (lamp off) override them under [data-theme='light'], set on the
+     case study wrapper (CaseStudyLayout). The footer sits outside it. */
+  --case-bg: var(--case-study-grey);
+  --case-text: var(--case-study-white);
+  --case-text-soft: var(--text-cream);
+  --case-text-muted: var(--case-study-light-grey);
+  --case-text-subtle: var(--case-study-light-grey);
+  --case-surface: var(--case-study-black);
+  --case-highlight: var(--color-brand);
+  --case-tag-border: var(--color-brand);
+  --case-hero-button-bg: var(--case-study-white);
+  --case-hero-button-ink: var(--case-study-grey);
+  --case-progress-track: var(--case-study-black);
+  --case-progress-fill: var(--color-brand);
+  --case-band-edge: transparent;
+
+  /* Pull-cord lamp (Figma 1462:1274, 49 x 35). The shade keeps a faint
+     outline in the text colour so every lamp colour reads on both pages. */
+  --case-lamp: var(--dissertation-navy);
+  --case-tag-light: var(--dissertation-navy);
+  --lamp-w: 49px;
+  --lamp-scale: 1;
+  --lamp-gap: 0px;
+  --lamp-inset: 20px;
+  --lamp-hit-pad: 8px;
+  --lamp-outline-opacity: 0.35;
+  /* Light grey on the dark page so the handle stays visible; black on cream */
+  --lamp-handle: var(--case-study-light-grey);
+  --lamp-glow: rgba(245, 230, 92, 0.4);
+  --lamp-spring-ease: var(--pg-ease-spring);
+  --lamp-press-duration: 120ms;
+  --lamp-spring-duration: 420ms;
+  --lamp-glow-duration: 360ms;
+  --theme-reveal-duration: 550ms;
+  --theme-fade-duration: 150ms;
 
   /* Case study reading column: centred with broad margins, the left one
      holding the back button and section index (the rail). About 800px at
@@ -196,6 +239,25 @@
   --pg-modal-fade-duration: 220ms;
 }
 
+/* Case study light reading mode (lamp off), Figma 1462:1197. Inactive
+   index items use a darker grey than Figma's #7b7b7b (3.1:1) for 4.9:1. */
+[data-theme='light'] {
+  --case-bg: var(--bg-canvas);
+  --case-text: var(--case-study-black);
+  --case-text-soft: var(--case-study-grey);
+  --case-text-muted: var(--case-study-grey);
+  --case-text-subtle: #5c5c5c;
+  --case-surface: var(--case-study-white);
+  --case-highlight: var(--brand-yellow-dark);
+  --case-tag-border: var(--case-tag-light);
+  --case-hero-button-bg: var(--case-study-black);
+  --case-hero-button-ink: var(--text-cream);
+  --case-progress-track: var(--case-study-grey);
+  --case-band-edge: var(--grid-line);
+  --focus-ring: var(--brand-yellow-dark);
+  --lamp-handle: var(--case-study-black);
+}
+
 /* Full-screen section height. svh where supported so a browser toolbar
    never changes it; the Home track moves by exactly this unit. */
 :root {
@@ -252,6 +314,8 @@
 @media (max-width: 1024px) {
   :root {
     --case-back-row: calc(var(--case-back-h) + var(--progress-gap));
+    --lamp-scale: 0.8;
+    --lamp-inset: 0px;
     /* Tracks the viewport so the longest heading (about 9.5em wide) always
        fits its band: about 34px on a 375 phone, 56px from 610 up. */
     --band-heading-size: clamp(32px, 9.2vw, 56px);

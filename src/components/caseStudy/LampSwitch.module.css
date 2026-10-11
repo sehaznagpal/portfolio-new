@@ -1,0 +1,118 @@
+/* Hangs from the progress bar at the top-right of the sticky header,
+   mirroring the back button (Figma 1462:1197: 20px in from the bar's end,
+   touching its underside). */
+.anchor {
+  position: absolute;
+  top: calc(var(--case-header-h) - var(--case-header-pad-bottom) + var(--lamp-gap));
+  right: calc(var(--page-pad-x) + var(--lamp-inset));
+  line-height: 0;
+}
+
+/* A larger hit area than the drawing, without moving it. */
+.lamp {
+  --cord: 0;
+  display: block;
+  margin: calc(-1 * var(--lamp-hit-pad));
+  padding: var(--lamp-hit-pad);
+  border-radius: 6px;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lamp:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.svg {
+  display: block;
+  width: calc(var(--lamp-w) * var(--lamp-scale));
+  height: auto;
+  overflow: visible;
+}
+
+.shade {
+  fill: var(--case-lamp);
+  stroke: var(--case-text);
+  stroke-opacity: var(--lamp-outline-opacity);
+  stroke-width: 1px;
+}
+
+.bulb {
+  fill: var(--color-brand);
+}
+
+/* The cord stretches from its top and the handle follows it down, both by
+   --cord (lamp units, set by LampSwitch.tsx). */
+.cord {
+  stroke: var(--case-study-light-grey);
+  stroke-width: 0.8px;
+  transform-box: view-box;
+  transform-origin: 24px 2px;
+  transform: scaleY(calc(1 + var(--cord) / 30));
+}
+
+.handle {
+  fill: var(--lamp-handle);
+  transform: translateY(calc(var(--cord) * 1px));
+}
+
+.lamp[data-cord='press'] :is(.cord, .handle) {
+  transition: transform var(--lamp-press-duration) var(--ease-out-quint);
+}
+
+.lamp[data-cord='spring'] :is(.cord, .handle) {
+  transition: transform var(--lamp-spring-duration) var(--lamp-spring-ease);
+}
+
+.glowStop {
+  stop-color: var(--lamp-glow);
+}
+
+.glowEnd {
+  stop-color: var(--lamp-glow);
+  stop-opacity: 0;
+}
+
+.glow {
+  opacity: 0;
+  transition: opacity var(--lamp-glow-duration) ease-out;
+}
+
+.lamp[data-on='true'] .glow {
+  opacity: 1;
+}
+
+/* Switching on: the glow fades in with one quick flicker. */
+.lamp[data-flicker='true'] .glow {
+  animation: lamp-flicker var(--lamp-glow-duration) ease-out;
+}
+
+@keyframes lamp-flicker {
+  0% {
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+
+  65%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lamp :is(.cord, .handle) {
+    transition: none !important;
+  }
+
+  .lamp[data-flicker='true'] .glow {
+    animation: none;
+  }
+}

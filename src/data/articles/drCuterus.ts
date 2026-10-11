@@ -234,6 +234,8 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
   ],
   closingLink: { label: 'Visit drcuterus.com →', href: LINKS.drCuterusSite },
   accent: 'var(--accent-dr-cuterus)',
+  lampColor: 'var(--dr-cuterus-lilac)',
+  tagColor: 'var(--dr-cuterus-purple)',
 };
 
 export const DR_CUTERUS_SITE_STRUCTURE: SiteStructureData = {

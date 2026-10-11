@@ -10,6 +10,13 @@
     <meta name="theme-color" content="#D9CE6A" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sehaz Nagpal | Product Designer Portfolio</title>
+    <!-- Case study reading mode, applied before first paint so a light-mode
+         reader never sees a dark flash (see src/lib/caseTheme.ts). -->
+    <script>
+      try {
+        if (localStorage.getItem('case-theme') === 'light') document.documentElement.setAttribute('data-case-theme', 'light');
+      } catch (e) {}
+    </script>
     <!-- Hero name hover-swap alternates (see HeroName.tsx) — preloaded so
          the first hover never has to wait on a network fetch. -->
     <link rel="preload" href="/fonts/PixelifySans-Medium.woff2" as="font" type="font/woff2" crossorigin />

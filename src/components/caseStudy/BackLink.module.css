@@ -6,14 +6,14 @@
   box-sizing: border-box;
   height: var(--case-back-h);
   padding: 0 14px;
-  border: 1px solid var(--case-study-white);
+  border: 1px solid var(--case-text);
   border-radius: 999px;
-  background: var(--case-study-grey);
+  background: var(--case-bg);
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-light);
   font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
   line-height: 1;
-  color: var(--case-study-white);
+  color: var(--case-text);
   white-space: nowrap;
   font-feature-settings: 'salt' 1;
   transition:
@@ -22,13 +22,13 @@
 }
 
 .back:focus-visible {
-  outline: 2px solid var(--color-brand);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .back:hover {
-    background: var(--case-study-white);
-    color: var(--case-study-grey);
+    background: var(--case-text);
+    color: var(--case-bg);
   }
 }

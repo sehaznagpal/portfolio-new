@@ -6,7 +6,7 @@
   position: relative;
   z-index: 1;
   overflow: clip;
-  background: var(--case-study-grey);
+  background: var(--case-bg);
 }
 
 /* Sticky inside .page, so it leaves with the content as the footer is
@@ -20,7 +20,7 @@
   align-items: flex-start;
   gap: var(--progress-gap);
   padding: var(--case-header-pad-top) var(--page-pad-x) var(--case-header-pad-bottom);
-  background: var(--case-study-grey);
+  background: var(--case-bg);
 }
 
 .header > :last-child {

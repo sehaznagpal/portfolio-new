@@ -1,7 +1,8 @@
 .button {
-  --chip-bg: var(--case-study-white);
+  /* --article-button-bg / -ink: an ancestor can recolour the chip */
+  --chip-bg: var(--article-button-bg, var(--case-study-white));
   padding: 4px 12px;
-  color: var(--case-study-grey);
+  color: var(--article-button-ink, var(--case-study-grey));
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-light);
   font-variation-settings: 'opsz' 14, 'wdth' 100;

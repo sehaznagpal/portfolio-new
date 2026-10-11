@@ -25,6 +25,8 @@ export default function FraudCaseStudyPage() {
   return (
     <CaseStudyLayout
       index={articleIndex(FRAUD_ARTICLE)}
+      lampColor={FRAUD_ARTICLE.lampColor}
+      tagColor={FRAUD_ARTICLE.tagColor}
       footerPhoto={FOOTER_PHOTOS.fraud}
       after={<CaseStudyEnd current="fraud" link={FRAUD_ARTICLE.closingLink} />}
     >

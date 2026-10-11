@@ -339,6 +339,8 @@ export const MOOLROOP_ARTICLE: ArticleData = {
   ],
   closingLink: PROTOTYPE_LINK,
   accent: 'var(--accent-moolroop)',
+  lampColor: 'var(--moolroop-poster-maroon)',
+  tagColor: 'var(--moolroop-poster-maroon)',
 };
 
 export const MOOLROOP_RECORD: ImageSetData = {

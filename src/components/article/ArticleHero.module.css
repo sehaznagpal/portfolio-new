@@ -23,7 +23,7 @@
   font-size: clamp(40px, calc(40px + (100vw - 393px) * (24 / 887)), 64px);
   line-height: 0.9;
   letter-spacing: -0.04em;
-  color: var(--case-study-white);
+  color: var(--case-text);
   text-wrap: balance;
   font-feature-settings: 'salt' 1;
 }
@@ -34,7 +34,7 @@
   font-weight: var(--author-regular);
   font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
   line-height: 1.2;
-  color: var(--text-cream);
+  color: var(--case-text-soft);
   font-feature-settings: 'salt' 1;
 }
 
@@ -89,14 +89,14 @@
   font-variation-settings: 'opsz' 14, 'wdth' 100;
   font-size: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
   letter-spacing: -0.04em;
-  color: var(--case-study-light-grey);
+  color: var(--case-text-muted);
 }
 
 .pointValue {
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-light);
   font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
-  color: var(--case-study-white);
+  color: var(--case-text);
 }
 
 .tags {
@@ -112,14 +112,14 @@
 .pill {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--color-brand);
+  border: 1px solid var(--case-tag-border);
   border-radius: 999px;
   padding: 4px 12px;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
   font-size: clamp(14px, calc(14px + (100vw - 393px) * (2 / 887)), 16px);
   line-height: 1;
-  color: var(--case-study-white);
+  color: var(--case-text);
   white-space: nowrap;
 }
 
@@ -136,7 +136,11 @@
   }
 }
 
+/* The hero's own buttons follow the reading mode (the end-of-page ones
+   keep ArticleButton's defaults). */
 .links {
+  --article-button-bg: var(--case-hero-button-bg);
+  --article-button-ink: var(--case-hero-button-ink);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -152,7 +156,7 @@
   padding: 20px;
   border: 1px solid var(--case-study-light-grey);
   border-radius: 12px;
-  background: var(--case-study-black);
+  background: var(--case-surface);
   text-align: center;
   scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
 }
@@ -163,12 +167,12 @@
   font-weight: var(--author-regular);
   font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
   line-height: 1.3;
-  color: var(--case-study-white);
+  color: var(--case-text);
   text-wrap: pretty;
   font-feature-settings: 'salt' 1;
 }
 
 .tldrLabel {
   font-weight: var(--author-semibold);
-  color: var(--color-brand);
+  color: var(--case-highlight);
 }

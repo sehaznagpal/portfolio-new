@@ -39,6 +39,8 @@ export default function MoolroopCaseStudyPage() {
   return (
     <CaseStudyLayout
       index={articleIndex(MOOLROOP_ARTICLE)}
+      lampColor={MOOLROOP_ARTICLE.lampColor}
+      tagColor={MOOLROOP_ARTICLE.tagColor}
       footerPhoto={FOOTER_PHOTOS.moolroop}
       after={<CaseStudyEnd current="moolroop" link={MOOLROOP_ARTICLE.closingLink} />}
     >

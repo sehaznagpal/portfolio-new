@@ -20,7 +20,7 @@
   font-size: var(--article-section-title-size);
   line-height: 1.1;
   letter-spacing: -0.02em;
-  color: var(--case-study-white);
+  color: var(--case-text);
   text-wrap: balance;
   font-feature-settings: 'salt' 1;
   scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
@@ -59,7 +59,7 @@
   font-weight: var(--author-light);
   font-size: var(--article-body-size);
   line-height: var(--article-body-leading);
-  color: var(--case-study-white);
+  color: var(--case-text);
   font-feature-settings: 'salt' 1;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .list li::marker {
-  color: var(--color-brand);
+  color: var(--case-highlight);
 }
 
 .body strong {

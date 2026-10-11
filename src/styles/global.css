@@ -47,3 +47,12 @@ img {
   display: block;
   max-width: 100%;
 }
+
+/* Case study reading-mode switch (src/lib/caseTheme.ts): the new view is
+   revealed by a clip-path circle animated from script, over the old view
+   held still, instead of the default crossfade. */
+:root[data-theme-reveal]::view-transition-old(root),
+:root[data-theme-reveal]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

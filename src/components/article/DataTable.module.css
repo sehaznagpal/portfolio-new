@@ -10,7 +10,7 @@
   font-family: 'Author Variable', sans-serif;
   font-size: var(--article-body-size);
   line-height: 1.2;
-  color: var(--case-study-white);
+  color: var(--case-text);
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'salt' 1;
 }
@@ -31,7 +31,7 @@
   font-weight: var(--bricolage-regular);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
   letter-spacing: -0.02em;
-  color: var(--case-study-light-grey);
+  color: var(--case-text-subtle);
   text-align: right;
 }
 

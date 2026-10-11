@@ -33,22 +33,22 @@
   font-weight: var(--author-light);
   font-size: clamp(16px, calc(16px + (100vw - 1025px) * (4 / 255)), 20px);
   line-height: 1.1;
-  color: var(--case-study-light-grey);
+  color: var(--case-text-subtle);
   font-feature-settings: 'salt' 1;
   transition: color var(--sweep-duration) var(--ease-out-expo);
 }
 
 .item[aria-current='location'] {
-  color: var(--case-study-white);
+  color: var(--case-text);
 }
 
 .item:focus-visible {
-  outline: 2px solid var(--color-brand);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .item:hover {
-    color: var(--case-study-white);
+    color: var(--case-text);
   }
 }

@@ -1,8 +1,11 @@
 /* Same grid surface as the Home hero (Stage.module.css). */
+/* --case-band-edge outlines the band where the page around it is the same
+   cream (light reading mode). */
 .band {
   width: 100%;
   padding: var(--band-pad-y) var(--band-pad-x);
   overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--case-band-edge);
   background-color: var(--bg-canvas);
   background-image:
     repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px var(--grid-line-spacing)),
