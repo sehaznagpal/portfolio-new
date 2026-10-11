@@ -1,6 +1,6 @@
 import me from '../assets/images/footer/me.webp';
 import meTight from '../assets/images/footer/me-tight.webp';
-import brewhouse from '../assets/images/footer/brewhouse.webp';
+import park from '../assets/images/footer/park.webp';
 import christmasCafe from '../assets/images/footer/christmas-cafe.webp';
 import lawn from '../assets/images/footer/lawn.webp';
 
@@ -37,11 +37,11 @@ export const FOOTER_PHOTOS = {
     position: 'center 60%',
   },
   fraud: {
-    src: brewhouse,
-    width: 986,
-    height: 1310,
-    alt: 'Sehaz Nagpal smiling under a yellow Teavaro sign',
-    position: 'center 50%',
+    src: park,
+    width: 960,
+    height: 1280,
+    alt: 'Sehaz Nagpal smiling in a sunlit park',
+    position: 'center 22%',
   },
   moolroop: {
     src: lawn,
