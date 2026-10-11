@@ -1,7 +1,7 @@
 import me from '../assets/images/footer/me.webp';
 import meTight from '../assets/images/footer/me-tight.webp';
-import sunflower from '../assets/images/footer/sunflower.webp';
-import table from '../assets/images/footer/table.webp';
+import brewhouse from '../assets/images/footer/brewhouse.webp';
+import christmasCafe from '../assets/images/footer/christmas-cafe.webp';
 import lawn from '../assets/images/footer/lawn.webp';
 
 export interface FooterPhoto {
@@ -29,22 +29,19 @@ export const FOOTER_PHOTOS = {
     position: '65% 10%',
     tight: { src: meTight, width: 843, height: 562, position: '55% 30%' },
   },
-  /* The face sits very high in this photo, so the file carries a softened,
-     mirrored band of the wall above it (top 320px). That band only ever
-     shows through holes punched in the strip, never at rest. */
   drCuterus: {
-    src: sunflower,
+    src: christmasCafe,
     width: 960,
-    height: 1600,
-    alt: 'Sehaz Nagpal smiling, holding a sunflower bouquet',
-    position: 'center 19%',
+    height: 1280,
+    alt: 'Sehaz Nagpal smiling in a café decorated for Christmas',
+    position: 'center 60%',
   },
   fraud: {
-    src: table,
-    width: 912,
-    height: 2000,
-    alt: 'Sehaz Nagpal smiling at a café table',
-    position: 'center 28%',
+    src: brewhouse,
+    width: 986,
+    height: 1310,
+    alt: 'Sehaz Nagpal smiling under a yellow Teavaro sign',
+    position: 'center 50%',
   },
   moolroop: {
     src: lawn,
