@@ -24,8 +24,12 @@ function saveCaseTheme(theme: CaseTheme) {
   }
 }
 
+// A duration token in ms. The production build minifies "550ms" to ".55s",
+// so the unit has to be read, not assumed.
 function cssMs(name: string) {
-  return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0;
+  const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const amount = parseFloat(value) || 0;
+  return value.endsWith('ms') ? amount : amount * 1000;
 }
 
 /* Saves `next` and applies it via `apply` (a state setter): revealed in a
