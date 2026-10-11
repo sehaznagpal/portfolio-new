@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
 import { articleIndex } from '../components/article/articleIndex';
@@ -25,7 +26,7 @@ export default function DrCuterusCaseStudyPage() {
       footerPhoto={FOOTER_PHOTOS.drCuterus}
       after={<CaseStudyEnd current="dr-cuterus" link={DR_CUTERUS_ARTICLE.closingLink} />}
     >
-      <article className={styles.article}>
+      <article className={styles.article} style={{ '--case-accent': DR_CUTERUS_ARTICLE.accent } as CSSProperties}>
         <div className={styles.hero}>
           <ArticleHero article={DR_CUTERUS_ARTICLE} image={<DrCuterusPoster />} />
         </div>

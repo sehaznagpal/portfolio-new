@@ -81,7 +81,7 @@ export const FRAUD_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'research-structure', heading: 'Dissertation Structure', tone: 'sky' },
+        { type: 'visual', id: 'research-structure', heading: 'Dissertation Structure', tone: 'accent' },
       ],
     },
     {
@@ -298,4 +298,5 @@ export const FRAUD_ARTICLE: ArticleData = {
     },
   ],
   closingLink: { label: 'Read the full dissertation →', href: LINKS.dissertation },
+  accent: 'var(--accent-dissertation)',
 };

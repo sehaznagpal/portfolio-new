@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
 import { articleIndex } from '../components/article/articleIndex';
@@ -27,7 +28,7 @@ export default function FraudCaseStudyPage() {
       footerPhoto={FOOTER_PHOTOS.fraud}
       after={<CaseStudyEnd current="fraud" link={FRAUD_ARTICLE.closingLink} />}
     >
-      <article className={styles.article}>
+      <article className={styles.article} style={{ '--case-accent': FRAUD_ARTICLE.accent } as CSSProperties}>
         <div className={styles.hero}>
           <ArticleHero article={FRAUD_ARTICLE} image={<FraudPoster />} />
         </div>

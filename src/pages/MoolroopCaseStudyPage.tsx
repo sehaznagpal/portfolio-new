@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import ArticleHero from '../components/article/ArticleHero';
 import ArticleSection from '../components/article/ArticleSection';
 import { articleIndex } from '../components/article/articleIndex';
@@ -41,7 +42,7 @@ export default function MoolroopCaseStudyPage() {
       footerPhoto={FOOTER_PHOTOS.moolroop}
       after={<CaseStudyEnd current="moolroop" link={MOOLROOP_ARTICLE.closingLink} />}
     >
-      <article className={styles.article}>
+      <article className={styles.article} style={{ '--case-accent': MOOLROOP_ARTICLE.accent } as CSSProperties}>
         <div className={styles.hero}>
           <ArticleHero article={MOOLROOP_ARTICLE} image={<MoolroopPoster />} />
         </div>

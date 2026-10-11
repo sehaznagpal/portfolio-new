@@ -10,7 +10,8 @@ export type ContentBlock =
   | { type: 'list'; items: RichText[] }
   | { type: 'table'; label: string; columns: string[]; rows: string[][] };
 
-export type VisualTone = 'sky' | 'dark' | 'brand';
+/* 'accent' is the case study's own colour (ArticleData.accent). */
+export type VisualTone = 'accent' | 'dark' | 'brand';
 
 export type ArticleBlock =
   /* Paragraphs introduced by an optional left-column pull quote. */
@@ -42,4 +43,7 @@ export interface ArticleData {
   tldr: { label: string; text: string }[];
   sections: ArticleSectionData[];
   closingLink: ArticleLink;
+  /* Fill for accent-tone visual boxes, as a colour token; the page sets it
+     as --case-accent. */
+  accent: string;
 }

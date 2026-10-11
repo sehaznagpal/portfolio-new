@@ -75,8 +75,8 @@
   margin-top: var(--band-caption-gap);
 }
 
-.box[data-tone='sky'] {
-  background: var(--band-tone-sky);
+.box[data-tone='accent'] {
+  background: var(--case-accent);
 }
 
 .box[data-tone='dark'] {

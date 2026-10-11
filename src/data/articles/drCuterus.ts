@@ -120,7 +120,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
           type: 'visual',
           id: 'colour-system',
           heading: 'Colour System',
-          tone: 'sky',
+          tone: 'accent',
           caption: 'Purple carries the site, yellow marks what matters. Each pairing is checked for contrast.',
         },
         {
@@ -175,7 +175,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
           type: 'visual',
           id: 'appointments',
           heading: 'Appointments',
-          tone: 'sky',
+          tone: 'accent',
           caption: 'Name the fear first. The booking button comes second.',
         },
         {
@@ -233,6 +233,7 @@ export const DR_CUTERUS_ARTICLE: ArticleData = {
     },
   ],
   closingLink: { label: 'Visit drcuterus.com →', href: LINKS.drCuterusSite },
+  accent: 'var(--accent-dr-cuterus)',
 };
 
 export const DR_CUTERUS_SITE_STRUCTURE: SiteStructureData = {

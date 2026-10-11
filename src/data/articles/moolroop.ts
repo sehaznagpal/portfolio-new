@@ -71,7 +71,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
           type: 'visual',
           id: 'official-record',
           heading: 'The Official Record',
-          tone: 'sky',
+          tone: 'accent',
           caption: "GI Search, the government's registered applications database. Accurate, public and nowhere near a buy button.",
         },
       ],
@@ -229,7 +229,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
           type: 'visual',
           id: 'first-impression',
           heading: 'First Impression',
-          tone: 'sky',
+          tone: 'accent',
           caption: 'A short welcome sequence before the shopping begins.',
         },
         { type: 'visual', id: 'two-ways-in', heading: 'Two Ways In', tone: 'brand' },
@@ -269,7 +269,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
             },
           ],
         },
-        { type: 'visual', id: 'kept-plain', heading: 'Kept Plain on Purpose', tone: 'sky' },
+        { type: 'visual', id: 'kept-plain', heading: 'Kept Plain on Purpose', tone: 'accent' },
       ],
     },
     {
@@ -338,6 +338,7 @@ export const MOOLROOP_ARTICLE: ArticleData = {
     },
   ],
   closingLink: PROTOTYPE_LINK,
+  accent: 'var(--accent-moolroop)',
 };
 
 export const MOOLROOP_RECORD: ImageSetData = {

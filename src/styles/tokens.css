@@ -127,7 +127,11 @@
   --band-heading-overlap: 0.3em;
   --band-caption-gap: 16px;
   --band-box-pad: clamp(16px, calc(16px + (100vw - 393px) * (24 / 887)), 40px);
-  --band-tone-sky: rgba(178, 206, 255, 0.8);
+  /* Each case study's accent, for its accent-tone visual boxes (set per page
+     as --case-accent). 80% fills, so the grid shows faintly through. */
+  --accent-dissertation: rgba(178, 206, 255, 0.8);
+  --accent-dr-cuterus: #dec3e9cc;
+  --accent-moolroop: #bf393ccc;
   --band-tone-dark: rgba(18, 18, 18, 0.8);
   --band-tone-brand: rgba(217, 206, 106, 0.64);
   --reveal-duration: 700ms;
