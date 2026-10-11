@@ -24,12 +24,6 @@
   align-items: center;
   gap: 2px;
   text-align: center;
-  transition: opacity var(--sweep-duration) var(--ease-out-expo);
-}
-
-.index[data-faded='true'] {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .item {

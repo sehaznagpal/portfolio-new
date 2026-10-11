@@ -111,9 +111,18 @@
      (Figma: 1184 vs 1152 at 1280). */
   --band-pad-y: 24px;
   --band-pad-x: max(16px, calc(var(--page-pad-x) - 16px));
-  /* Desktop: 70px at 1280 to 80px from 1920. The overlap is in em, so the box
-     covers the same share of the heading at any size. */
-  --band-heading-size: clamp(70px, calc(70px + (100vw - 1280px) * (10 / 640)), 80px);
+  /* Desktop: each band is a card as wide as the text column, with the visual's
+     box inset by --band-card-pad. One heading size for every band at a given
+     width, set by the longest heading (about 9.5em) so it fits the box: a
+     tenth of the box width (about 70px at 1280), up to 80px. The overlap is
+     in em, so the box covers the same share of the heading at any size. */
+  --band-card-radius: 12px;
+  --band-card-pad: clamp(20px, 2vw, 40px);
+  --band-heading-size: clamp(
+    40px,
+    calc((var(--article-col-w) - 2 * var(--band-card-pad)) / 10),
+    80px
+  );
   --band-heading-overlap: 0.3em;
   --band-caption-gap: 16px;
   --band-box-pad: clamp(16px, calc(16px + (100vw - 393px) * (24 / 887)), 40px);
