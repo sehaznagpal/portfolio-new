@@ -31,10 +31,10 @@ export const FRAUD_ARTICLE: ArticleData = {
       number: '01',
       title: 'The contextual transfer problem',
       shortLabel: 'Context',
+      quote: "Most fraud in India doesn't breach the system. It persuades the person holding the phone.",
       blocks: [
         {
           type: 'group',
-          quote: "Most fraud in India doesn't breach the system. It persuades the person holding the phone.",
           content: [
             {
               type: 'paragraph',
@@ -48,7 +48,6 @@ export const FRAUD_ARTICLE: ArticleData = {
         },
         {
           type: 'group',
-          quote: 'A design that protects one user can be invisible to another.',
           content: [
             {
               type: 'paragraph',
@@ -66,10 +65,10 @@ export const FRAUD_ARTICLE: ArticleData = {
       number: '02',
       title: 'Two halves of one question',
       shortLabel: 'Two halves',
+      quote: 'The full research had two halves. This is the one you can click through.',
       blocks: [
         {
           type: 'group',
-          quote: 'The full research had two halves. This is the one you can click through.',
           content: [
             {
               type: 'paragraph',
@@ -88,10 +87,10 @@ export const FRAUD_ARTICLE: ArticleData = {
       number: '03',
       title: 'A fraud you can safely fall for',
       shortLabel: 'The experiment',
+      quote: 'I built a payment app where falling for a scam costs nothing.',
       blocks: [
         {
           type: 'group',
-          quote: 'I built a payment app where falling for a scam costs nothing.',
           content: [
             {
               type: 'paragraph',
@@ -132,7 +131,6 @@ export const FRAUD_ARTICLE: ArticleData = {
         { type: 'visual', id: 'experiment-sitemap', heading: 'Experiment Sitemap', tone: 'dark' },
         {
           type: 'group',
-          quote: 'The warning asks the user to think. The CTA changes what is easiest to do.',
           content: [
             {
               type: 'paragraph',
@@ -153,10 +151,10 @@ export const FRAUD_ARTICLE: ArticleData = {
       number: '04',
       title: 'What happened',
       shortLabel: 'What happened',
+      quote: 'Changing the path nearly doubled safe choices. Adding words barely moved them.',
       blocks: [
         {
           type: 'group',
-          quote: 'Changing the path nearly doubled safe choices. Adding words barely moved them.',
           content: [
             {
               type: 'table',
@@ -176,7 +174,6 @@ export const FRAUD_ARTICLE: ArticleData = {
         },
         {
           type: 'group',
-          quote: 'Then the scam looked like a deal other people trusted.',
           content: [
             {
               type: 'table',
@@ -197,7 +194,6 @@ export const FRAUD_ARTICLE: ArticleData = {
         { type: 'visual', id: 'results', heading: 'Results as Graphs', tone: 'dark' },
         {
           type: 'group',
-          quote: 'Feeling safe and being safe turned out to be unrelated.',
           content: [
             {
               type: 'paragraph',
@@ -211,10 +207,10 @@ export const FRAUD_ARTICLE: ArticleData = {
       number: '05',
       title: 'The fix depends on the fraud',
       shortLabel: 'The fix',
+      quote: "There's no universal fix. The real question is: against which fraud?",
       blocks: [
         {
           type: 'group',
-          quote: "There's no universal fix. The real question is: against which fraud?",
           content: [
             {
               type: 'paragraph',
@@ -236,10 +232,10 @@ export const FRAUD_ARTICLE: ArticleData = {
       number: '06',
       title: 'What this means for design',
       shortLabel: 'For design',
+      quote: 'Design for vulnerability, not literacy.',
       blocks: [
         {
           type: 'group',
-          quote: 'Design for vulnerability, not literacy.',
           content: [
             {
               type: 'list',
@@ -270,10 +266,10 @@ export const FRAUD_ARTICLE: ArticleData = {
       number: '07',
       title: "What's next",
       shortLabel: "What's next",
+      quote: "Next: the users this study couldn't reach.",
       blocks: [
         {
           type: 'group',
-          quote: "Next: the users this study couldn't reach.",
           content: [
             {
               type: 'list',

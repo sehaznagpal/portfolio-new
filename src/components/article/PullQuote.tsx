@@ -1,6 +1,6 @@
 import styles from './PullQuote.module.css';
 
-/* Left-column quote that introduces the paragraph group beside it. */
+/* A section's pull quote, between its heading and its paragraphs. */
 export default function PullQuote({ text }: { text: string }) {
   return <blockquote className={styles.quote}>&ldquo;{text}&rdquo;</blockquote>;
 }

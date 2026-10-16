@@ -52,10 +52,10 @@ export const MOOLROOP_ARTICLE: ArticleData = {
       number: '01',
       title: 'The proof exists. Nobody uses it.',
       shortLabel: 'The proof',
+      quote: 'The problem was never missing information. It was the effort it takes to use it.',
       blocks: [
         {
           type: 'group',
-          quote: 'The problem was never missing information. It was the effort it takes to use it.',
           content: [
             {
               type: 'paragraph',
@@ -80,10 +80,10 @@ export const MOOLROOP_ARTICLE: ArticleData = {
       number: '02',
       title: 'Understanding the existing experience',
       shortLabel: 'Existing experience',
+      quote: "Buyers keep asking if it's real. No platform makes it easy to answer.",
       blocks: [
         {
           type: 'group',
-          quote: "Buyers keep asking if it's real. No platform makes it easy to answer.",
           content: [
             {
               type: 'paragraph',
@@ -112,10 +112,10 @@ export const MOOLROOP_ARTICLE: ArticleData = {
       number: '03',
       title: 'Turning six steps into one tap',
       shortLabel: 'One tap',
+      quote: "Verification shouldn't be a research project.",
       blocks: [
         {
           type: 'group',
-          quote: "Verification shouldn't be a research project.",
           content: [
             {
               type: 'paragraph',
@@ -173,10 +173,10 @@ export const MOOLROOP_ARTICLE: ArticleData = {
       number: '04',
       title: 'Structure before screens',
       shortLabel: 'Structure',
+      quote: 'I mapped the whole app before designing a single screen.',
       blocks: [
         {
           type: 'group',
-          quote: 'I mapped the whole app before designing a single screen.',
           content: [
             {
               type: 'paragraph',
@@ -214,10 +214,10 @@ export const MOOLROOP_ARTICLE: ArticleData = {
       number: '05',
       title: 'Designing the journey',
       shortLabel: 'The journey',
+      quote: 'Familiar where it should be. Different only where it matters.',
       blocks: [
         {
           type: 'group',
-          quote: 'Familiar where it should be. Different only where it matters.',
           content: [
             {
               type: 'paragraph',
@@ -245,7 +245,6 @@ export const MOOLROOP_ARTICLE: ArticleData = {
         { type: 'visual', id: 'two-stories', heading: 'Two Stories', tone: 'dark' },
         {
           type: 'group',
-          quote: 'A badge asks for trust. A record earns it. I needed both.',
           content: [
             {
               type: 'paragraph',
@@ -276,10 +275,10 @@ export const MOOLROOP_ARTICLE: ArticleData = {
       number: '06',
       title: 'Visual language',
       shortLabel: 'Visual language',
+      quote: 'Rooted in craft, without looking like a government website.',
       blocks: [
         {
           type: 'group',
-          quote: 'Rooted in craft, without looking like a government website.',
           content: [
             {
               type: 'paragraph',
@@ -300,10 +299,10 @@ export const MOOLROOP_ARTICLE: ArticleData = {
       number: '07',
       title: "What this does, and doesn't, solve",
       shortLabel: 'What it solves',
+      quote: "This doesn't end counterfeiting. It makes honesty easier to prove.",
       blocks: [
         {
           type: 'group',
-          quote: "This doesn't end counterfeiting. It makes honesty easier to prove.",
           content: [
             {
               type: 'paragraph',

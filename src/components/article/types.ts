@@ -14,8 +14,8 @@ export type ContentBlock =
 export type VisualTone = 'accent' | 'dark' | 'brand';
 
 export type ArticleBlock =
-  /* Paragraphs introduced by an optional left-column pull quote. */
-  | { type: 'group'; quote?: string; content: ContentBlock[] }
+  /* A run of paragraphs, lists or tables between visual bands. */
+  | { type: 'group'; content: ContentBlock[] }
   /* A full-bleed visual band; `id` picks the page's visual component and
      `caption` sits under its box. */
   | { type: 'visual'; id: string; heading: string; tone: VisualTone; caption?: string };
@@ -25,6 +25,8 @@ export interface ArticleSectionData {
   title: string;
   /* One to three words for the section index beside the article. */
   shortLabel: string;
+  /* At most one pull quote, shown under the heading. */
+  quote?: string;
   blocks: ArticleBlock[];
 }
 

@@ -115,29 +115,21 @@
   --theme-reveal-duration: 550ms;
   --theme-fade-duration: 150ms;
 
-  /* Case study reading column: centred with broad margins, the left one
-     holding the back button and section index (the rail). About 800px at
-     1280 (Figma 1449:1025), capped so lines never run very long. Tablet and
-     mobile use the page padding only (see the media queries below). */
+  /* Case study reading column: one centred column, half the screen wide
+     within 620 to 760px. Everything in the article (hero, TL;DR, text and
+     band cards) uses it, so every edge lines up; the back button and
+     section index (the rail, up to --rail-w) sit in the left margin, the
+     lamp in the right. Tablet and mobile use the page padding only (see
+     the media queries below). */
   --rail-w: 180px;
-  --rail-gap: 32px;
-  --article-col-w: min(
-    62.5vw,
-    calc(100vw - 2 * (var(--page-pad-x) + var(--rail-w) + var(--rail-gap))),
-    1120px
-  );
-  /* Pull quotes: 40px at 1025, 50px at 1280, 60px from 1920; 30 to 36px
-     below desktop. */
-  --article-pull-quote-size: clamp(
-    40px,
-    min(calc(40px + (100vw - 1025px) * (10 / 255)), calc(50px + (100vw - 1280px) * (10 / 640))),
-    60px
-  );
+  --article-col-w: clamp(620px, 50vw, 760px);
+  /* Pull quotes: 36px at 1025, growing to 44px at 1520, where the column
+     reaches its widest; 26 to 30px below desktop. */
+  --article-pull-quote-size: clamp(36px, calc(36px + (100vw - 1025px) * (8 / 495)), 44px);
 
   /* Long-form case study articles (Figma 1261:208). The text column spans
      the same width as the nav (page minus --page-pad-x each side). */
   --article-gap: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
-  --article-column-gap: 40px;
   --article-body-size: clamp(18px, calc(18px + (100vw - 393px) * (2 / 887)), 20px);
   --article-body-leading: 1.45;
   --article-section-title-size: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
@@ -317,7 +309,7 @@
        fits its band: about 34px on a 375 phone, 56px from 610 up. */
     --band-heading-size: clamp(32px, 9.2vw, 56px);
     --article-col-w: 100%;
-    --article-pull-quote-size: clamp(30px, calc(30px + (100vw - 393px) * (6 / 631)), 36px);
+    --article-pull-quote-size: clamp(26px, calc(26px + (100vw - 393px) * (4 / 631)), 30px);
     --visual-max-w: min(85%, 880px);
     --visual-pair-max-w: 85%;
     --phone-max-h: calc(var(--section-h) * 0.6);

@@ -26,32 +26,16 @@
   scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
 }
 
-/* Tablet/mobile: one column, each quote above its group. minmax(0, 1fr)
-   so a wide table scrolls inside its own wrapper instead of widening the
-   page. */
-.group {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 16px;
+/* Set apart from the heading above and the paragraphs below (on top of
+   the section's own gap), so it reads as a highlight, not a heading. */
+.quote {
+  margin-block: calc(var(--article-gap) / 2);
 }
 
-/* Desktop, in a section with pull quotes: quote and body side by side at
-   equal widths (a group without its own quote keeps that column empty, so
-   its body still lines up). A section without quotes stays one full-width
-   column. */
-@media (min-width: 1025px) {
-  .section[data-quotes='true'] .group {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: var(--article-column-gap);
-    align-items: start;
-  }
-
-  .section[data-quotes='true'] .body {
-    grid-column: 2;
-  }
-}
-
+/* min-width: 0 so a wide table scrolls inside its own wrapper instead of
+   widening the page. */
 .body {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 1em;

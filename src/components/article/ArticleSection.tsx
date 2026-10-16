@@ -29,12 +29,10 @@ function Content({ block }: { block: ContentBlock }) {
   }
 }
 
-/* One numbered article section. Each paragraph group is its own grid row,
-   so its pull quote always lines up with the top of the group it
-   introduces. A section with no pull quotes at all drops the quote column
-   and runs its body the full width of the article column. Visual bands
-   break out to full width between groups; `visuals` maps each band's id to
-   the component that fills its box. */
+/* One numbered article section in the single centred column: the
+   heading, its pull quote (if any), then its paragraph groups, with visual
+   bands between them; `visuals` maps each band's id to the component that
+   fills its box. */
 export default function ArticleSection({
   section,
   visuals = {},
@@ -43,13 +41,18 @@ export default function ArticleSection({
   visuals?: Record<string, ReactNode>;
 }) {
   const headingId = `section-${section.number}`;
-  const hasQuotes = section.blocks.some((block) => block.type === 'group' && block.quote);
 
   return (
-    <section className={styles.section} aria-labelledby={headingId} data-quotes={hasQuotes}>
+    <section className={styles.section} aria-labelledby={headingId}>
       <h2 id={headingId} className={`${styles.column} ${styles.title}`}>
         {section.number} {section.title}
       </h2>
+
+      {section.quote && (
+        <div className={`${styles.column} ${styles.quote}`}>
+          <PullQuote text={section.quote} />
+        </div>
+      )}
 
       {section.blocks.map((block, i) =>
         block.type === 'visual' ? (
@@ -57,17 +60,10 @@ export default function ArticleSection({
             {visuals[block.id]}
           </VisualBand>
         ) : (
-          <div key={i} className={`${styles.column} ${styles.group}`}>
-            {block.quote && (
-              <div className={styles.quote}>
-                <PullQuote text={block.quote} />
-              </div>
-            )}
-            <div className={styles.body}>
-              {block.content.map((content, j) => (
-                <Content key={j} block={content} />
-              ))}
-            </div>
+          <div key={i} className={`${styles.column} ${styles.body}`}>
+            {block.content.map((content, j) => (
+              <Content key={j} block={content} />
+            ))}
           </div>
         ),
       )}
