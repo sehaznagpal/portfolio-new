@@ -1,6 +1,6 @@
 /* Sits in the left gutter beside the centred article column (desktop only),
-   vertically centred in the screen below the sticky header, with the labels
-   centred under the back button. Positioned inside CaseStudyLayout's sticky
+   vertically centred in the screen below the sticky header, with the back
+   button and labels left-aligned at the page margin. Positioned inside CaseStudyLayout's sticky
    anchor, so it scrolls away with the page as the footer is revealed. */
 .rail {
   position: absolute;
@@ -10,7 +10,7 @@
   max-width: var(--rail-w);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   transform: translateY(-50%);
 }
@@ -21,9 +21,16 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 2px;
-  text-align: center;
+  text-align: left;
+}
+
+/* The back button, scaled down with the labels */
+.rail .back {
+  height: var(--rail-back-h);
+  padding-inline: 12px;
+  font-size: var(--rail-text-size);
 }
 
 .item {
@@ -31,7 +38,7 @@
   padding: 2px 0;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-light);
-  font-size: clamp(16px, calc(16px + (100vw - 1025px) * (4 / 255)), 20px);
+  font-size: var(--rail-text-size);
   line-height: 1.1;
   color: var(--case-text-subtle);
   font-feature-settings: 'salt' 1;

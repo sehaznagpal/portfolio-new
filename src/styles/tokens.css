@@ -122,6 +122,9 @@
      lamp in the right. Tablet and mobile use the page padding only (see
      the media queries below). */
   --rail-w: 180px;
+  /* The rail's back button and labels: 4px under the article's 20px body */
+  --rail-text-size: clamp(13px, calc(13px + (100vw - 1025px) * (3 / 255)), 16px);
+  --rail-back-h: 28px;
   --article-col-w: clamp(620px, 50vw, 760px);
   /* Pull quotes: 36px at 1025, growing to 44px at 1520, where the column
      reaches its widest; 26 to 30px below desktop. */
@@ -130,6 +133,9 @@
   /* Long-form case study articles (Figma 1261:208). The text column spans
      the same width as the nav (page minus --page-pad-x each side). */
   --article-gap: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
+  /* One even rhythm inside a section: heading, pull quote, paragraph
+     groups and visual bands. */
+  --section-gap: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
   --article-body-size: clamp(18px, calc(18px + (100vw - 393px) * (2 / 887)), 20px);
   --article-body-leading: 1.45;
   --article-section-title-size: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);

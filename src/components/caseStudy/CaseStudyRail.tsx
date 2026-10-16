@@ -46,7 +46,7 @@ export default function CaseStudyRail({ items }: { items: RailItem[] }) {
 
   return (
     <nav className={styles.rail} aria-label="On this page">
-      <BackLink />
+      <BackLink className={styles.back} />
       <ol className={styles.index}>
         {items.map(({ id, label }) => (
           <li key={id}>

@@ -49,7 +49,7 @@ export default function ArticleSection({
       </h2>
 
       {section.quote && (
-        <div className={`${styles.column} ${styles.quote}`}>
+        <div className={styles.column}>
           <PullQuote text={section.quote} />
         </div>
       )}
