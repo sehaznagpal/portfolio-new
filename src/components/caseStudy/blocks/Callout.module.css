@@ -1,7 +1,9 @@
 .callout {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  gap: var(--space-2xs);
+  text-align: center;
   padding: var(--story-card-pad);
   border: 1px solid var(--case-accent-ink);
   border-radius: var(--story-card-radius);
@@ -11,6 +13,7 @@
 .head {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 

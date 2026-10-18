@@ -20,10 +20,10 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  text-align: center;
 }
 
 .label {
-  margin-bottom: 4px;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-medium);
   font-variation-settings: 'opsz' 14, 'wdth' 100;

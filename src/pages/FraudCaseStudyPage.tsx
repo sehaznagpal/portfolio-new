@@ -14,9 +14,9 @@ import { FRAUD_STORY } from '../data/articles/fraud';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';
 import styles from './ArticlePage.module.css';
 
-/* Visual band and mini illustration ids used in FRAUD_STORY. */
+/* Big visual and mini illustration ids used in FRAUD_STORY. */
 const VISUALS = {
-  bands: {
+  frames: {
     'research-structure': <ResearchStructure />,
     'experiment-sitemap': <ExperimentSitemap />,
     'user-journey': <UserJourney />,
@@ -41,11 +41,12 @@ export default function FraudCaseStudyPage() {
             '--case-accent': FRAUD_STORY.accent,
             '--story-ink-dark': FRAUD_STORY.accentInk.dark,
             '--story-ink-light': FRAUD_STORY.accentInk.light,
+            '--story-panel': FRAUD_STORY.framePanel,
           } as CSSProperties
         }
       >
         <div className={styles.hero}>
-          <ArticleHero article={FRAUD_STORY} image={<FraudPoster />} />
+          <ArticleHero article={FRAUD_STORY} image={<FraudPoster />} spacing="story" />
         </div>
         {FRAUD_STORY.sections.map((section) => (
           <StorySection key={section.id} section={section} visuals={VISUALS} />

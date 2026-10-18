@@ -5,7 +5,8 @@
   gap: 16px;
 }
 
-/* Segmented control (Figma 1412:865): selected is navy, the rest white. */
+/* Segmented control (Figma 1412:865): white options; the selected one is
+   sky with navy text, so it stands out on the case study's navy frame. */
 .toggle {
   display: flex;
   gap: 8px;
@@ -28,12 +29,12 @@
 }
 
 .option[aria-pressed='true'] {
-  background: var(--dissertation-navy);
-  color: var(--case-study-white);
+  background: var(--dissertation-sky);
+  color: var(--dissertation-navy);
 }
 
 .option:focus-visible {
-  outline: 2px solid var(--case-study-grey);
+  outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
 

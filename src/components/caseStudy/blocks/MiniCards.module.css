@@ -19,7 +19,8 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2xs);
+  text-align: center;
   padding: 12px;
   border: 1px solid var(--case-card-border);
   border-radius: var(--story-card-radius);
@@ -30,12 +31,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 104px;
-  margin-bottom: 4px;
+  height: var(--story-mini-illustration-h);
   padding: 10px;
   border-radius: calc(var(--story-card-radius) - 4px);
   background: var(--case-inset-bg);
   overflow: hidden;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .title {

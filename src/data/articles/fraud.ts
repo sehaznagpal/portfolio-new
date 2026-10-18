@@ -35,6 +35,10 @@ export const FRAUD_STORY: StoryData = {
               values: ['Randomised experiment (3×3 mixed factorial)', 'Case analysis of 6 international interventions'],
             },
             { label: 'Presented at', values: ['IIM Bodh Gaya', 'Lady Shri Ram College', 'Shyam Lal College'] },
+            {
+              label: 'Tools',
+              values: ['Figma', 'AI-assisted front-end development', 'Google Apps Script', 'R'],
+            },
           ],
         },
       ],
@@ -127,7 +131,7 @@ export const FRAUD_STORY: StoryData = {
             },
           ],
         },
-        { type: 'band', id: 'research-structure', heading: 'Dissertation Structure', tone: 'accent' },
+        { type: 'frame', id: 'research-structure', title: 'Dissertation structure' },
       ],
     },
     {
@@ -200,7 +204,7 @@ export const FRAUD_STORY: StoryData = {
           type: 'step',
           number: '04',
           title: 'Building the simulator',
-          text: 'I built the simulator in HTML, CSS and vanilla JavaScript. Participants were randomly assigned to one of three conditions, and scam order was shuffled for each person.',
+          text: 'I designed every screen and interaction, then built the simulator in HTML, CSS and vanilla JavaScript using AI-assisted development. AI sped up the build; the experimental logic, conditions and controls were mine to define and verify. Participants were randomly assigned to one of three conditions, and scam order was shuffled for each person.',
           blocks: [
             {
               type: 'dotGrid',
@@ -217,12 +221,11 @@ export const FRAUD_STORY: StoryData = {
             },
           ],
         },
-        { type: 'band', id: 'experiment-sitemap', heading: 'Experiment Sitemap', tone: 'dark' },
+        { type: 'frame', id: 'experiment-sitemap', title: 'Experiment sitemap' },
         {
-          type: 'band',
+          type: 'frame',
           id: 'user-journey',
-          heading: 'User Journey Flow',
-          tone: 'brand',
+          title: 'User journey',
           caption: 'One screen changes. Everything else stays the same.',
         },
       ],
@@ -250,7 +253,7 @@ export const FRAUD_STORY: StoryData = {
           lead: 'Why it matters:',
           text: "the CTA added no hesitation. People weren't deliberating more; the safer option had simply become the easier one.",
         },
-        { type: 'band', id: 'results', heading: 'Results as Graphs', tone: 'dark' },
+        { type: 'frame', id: 'results', title: 'Results' },
         { type: 'highlight', text: 'Same people, same designs. Only the bias changed.' },
         {
           type: 'findings',
@@ -358,6 +361,7 @@ export const FRAUD_STORY: StoryData = {
   ],
   closingLink: { label: 'Read the full dissertation →', href: LINKS.dissertation },
   accent: 'var(--accent-dissertation)',
+  framePanel: 'var(--dissertation-navy)',
   lampColor: 'var(--dissertation-navy)',
   tagColor: 'var(--dissertation-navy)',
   accentInk: { dark: 'var(--dissertation-sky)', light: 'var(--dissertation-navy)' },

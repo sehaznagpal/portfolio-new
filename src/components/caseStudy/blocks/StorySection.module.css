@@ -1,26 +1,30 @@
-/* Full width so visual bands can bleed; everything else sits in the
-   centred article column. The section index scrolls a section to just
-   under the sticky header. */
+/* One section in the centred article column. The section index scrolls a
+   section to just under the sticky header. */
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--section-gap);
+  gap: var(--space-md);
+  width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
+  margin-inline: auto;
   scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
 }
 
-.column {
-  width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
-  margin-inline: auto;
+/* Eyebrow and heading, then the opening paragraphs. */
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
 }
 
 .header {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-2xs);
 }
 
 .visuallyHidden {
   position: absolute;
+  margin: 0;
   width: 1px;
   height: 1px;
   overflow: hidden;
@@ -31,6 +35,7 @@
 /* A mini illustration on its own, in a recessed panel. */
 .illustration {
   display: flex;
+  align-items: center;
   justify-content: center;
   margin: 0;
   padding: var(--story-card-pad);
@@ -82,7 +87,7 @@
 .subsection {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2xs);
 }
 
 .subheading {

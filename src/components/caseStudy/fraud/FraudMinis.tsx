@@ -5,7 +5,9 @@ import styles from './FraudMinis.module.css';
 /* Small UI snippets in the experiment simulator's visual language (UPI-style
    cards, banners, buttons, SMS bubbles), drawn in HTML/CSS for the story
    blocks' cards and steps. Decorative: each card's text says what it shows.
-   Grey bars stand in for text that isn't the point of the snippet. */
+   Grey bars stand in for text that isn't the point of the snippet. Every
+   snippet shares one radius, shadow and stroke (--mini-* tokens); emphasis
+   comes from colour, opacity and weight, not size. */
 
 function Lines({ count, short }: { count: number; short?: boolean }) {
   return (
@@ -44,7 +46,9 @@ function ScamSms() {
   );
 }
 
-// Insight 3: an incoming call from "Police", with a big answer button.
+// Insight 3: an incoming call from "Police". Both buttons are the same
+// size; the pull towards answering comes from the green at full strength
+// against a faded red.
 function PoliceCall() {
   return (
     <div className={styles.call}>
@@ -52,25 +56,29 @@ function PoliceCall() {
       <span className={styles.callName}>Police</span>
       <span className={styles.callButtons}>
         <span className={styles.decline}>
-          <PhoneOff size={8} strokeWidth={2.5} />
+          <PhoneOff size={14} strokeWidth={2} />
         </span>
         <span className={styles.answer}>
-          <Phone size={20} strokeWidth={2} />
+          <Phone size={14} strokeWidth={2} />
         </span>
       </span>
     </div>
   );
 }
 
-// Insight 4: no single language reaches everyone.
+// Insight 4: four named languages, each its own tint, and the many left
+// unnamed as a quiet second row.
 function LanguageChips() {
   return (
-    <div className={styles.chips}>
-      {['English', 'हिन्दी', 'தமிழ்', 'বাংলা', '+18'].map((language) => (
-        <span key={language} className={styles.chip}>
-          {language}
-        </span>
-      ))}
+    <div className={styles.languages}>
+      <div className={styles.chips}>
+        {['English', 'हिन्दी', 'தமிழ்', 'বাংলা'].map((language, i) => (
+          <span key={language} className={styles.chip} data-tint={i + 1}>
+            {language}
+          </span>
+        ))}
+      </div>
+      <span className={styles.more}>+18 more</span>
     </div>
   );
 }
@@ -175,10 +183,10 @@ function Exit() {
     <div className={styles.screen}>
       <span className={styles.exitBar}>
         <span className={styles.exitButton}>
-          <ArrowLeft size={10} strokeWidth={2.5} />
+          <ArrowLeft size={10} strokeWidth={2} />
         </span>
         <span className={styles.exitButton}>
-          <X size={10} strokeWidth={2.5} />
+          <X size={10} strokeWidth={2} />
         </span>
       </span>
       <Lines count={3} short />

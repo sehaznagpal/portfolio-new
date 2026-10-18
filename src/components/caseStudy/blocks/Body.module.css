@@ -1,7 +1,7 @@
 .body {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: var(--space-sm);
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-light);
   font-size: var(--article-body-size);

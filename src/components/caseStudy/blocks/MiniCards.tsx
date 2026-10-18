@@ -13,8 +13,10 @@ export default function MiniCards({ cards, minis = {} }: { cards: MiniCardData[]
           <div className={styles.visual} aria-hidden="true">
             {minis[card.visual]}
           </div>
-          <h4 className={styles.title}>{card.title}</h4>
-          <p className={styles.body}>{card.text}</p>
+          <div className={styles.text}>
+            <h4 className={styles.title}>{card.title}</h4>
+            <p className={styles.body}>{card.text}</p>
+          </div>
         </Reveal>
       ))}
     </div>

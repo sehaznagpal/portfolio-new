@@ -1,11 +1,19 @@
+/* The number with its heading and text, then any extras, --space-md
+   apart. */
 .step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.head {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 8px;
+  gap: var(--space-2xs);
 }
 
 @media (min-width: 1025px) {
-  .step {
+  .head {
     grid-template-columns: calc(var(--story-step-number-size) * 1.6) minmax(0, 1fr);
     column-gap: var(--story-grid-gap);
   }
@@ -26,7 +34,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-2xs);
   min-width: 0;
 }
 
@@ -54,13 +62,11 @@
   font-feature-settings: 'salt' 1;
 }
 
-/* Mini cards, a visual or a note: under the step, across both columns. */
+/* Mini cards, a visual or a note: under the step, full column width. */
 .extra {
   display: flex;
   flex-direction: column;
-  gap: var(--story-grid-gap);
-  grid-column: 1 / -1;
-  margin-top: 12px;
+  gap: var(--space-md);
   min-width: 0;
 }
 

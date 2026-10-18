@@ -17,14 +17,15 @@
 .group {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   margin: 0;
+  text-align: center;
 }
 
 .dots {
   display: block;
-  width: 100%;
-  max-width: 180px;
+  width: min(100%, 180px);
   height: auto;
   fill: var(--case-accent-ink);
 }

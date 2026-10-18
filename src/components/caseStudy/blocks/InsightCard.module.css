@@ -1,7 +1,7 @@
 .block {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-sm);
 }
 
 .grid {
@@ -19,7 +19,9 @@
 .card {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
+  text-align: center;
   padding: var(--story-card-pad);
   border: 1px solid var(--case-card-border);
   border-radius: var(--story-card-radius);
@@ -31,7 +33,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 150px;
+  align-self: stretch;
+  height: var(--story-illustration-h);
   padding: 16px;
   border-radius: calc(var(--story-card-radius) - 4px);
   background: var(--case-inset-bg);
@@ -44,6 +47,7 @@
 .text {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 6px;
 }
 

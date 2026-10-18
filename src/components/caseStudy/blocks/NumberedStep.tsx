@@ -18,14 +18,16 @@ export default function NumberedStep({
 }) {
   return (
     <div className={styles.step}>
-      <Reveal>
-        <p className={styles.number} aria-hidden="true">
-          {number}
-        </p>
-      </Reveal>
-      <div className={styles.content}>
-        <h3 className={styles.title}>{title}</h3>
-        <p className={styles.text}>{text}</p>
+      <div className={styles.head}>
+        <Reveal>
+          <p className={styles.number} aria-hidden="true">
+            {number}
+          </p>
+        </Reveal>
+        <div className={styles.content}>
+          <h3 className={styles.title}>{title}</h3>
+          <p className={styles.text}>{text}</p>
+        </div>
       </div>
       {children && <div className={styles.extra}>{children}</div>}
     </div>

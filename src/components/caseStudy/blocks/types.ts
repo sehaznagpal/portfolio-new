@@ -1,9 +1,9 @@
-import type { ArticleLink, VisualTone } from '../../article/types';
+import type { ArticleLink } from '../../article/types';
 
 /* Content schema for skimmable, component-based case studies: each section
    is an eyebrow, an optional takeaway heading and a list of typed blocks,
-   rendered by the components in this folder. Mini illustrations and visual
-   bands are referenced by id; the page maps ids to its own components. */
+   rendered by the components in this folder. Mini illustrations and big
+   visuals are referenced by id; the page maps ids to its own components. */
 
 export type StoryIcon = 'compass' | 'hand' | 'crosshair' | 'gauge' | 'scale';
 
@@ -59,8 +59,8 @@ export type StoryBlock =
   | { type: 'findings'; label?: string; items: { title: string; text: string }[] }
   | { type: 'subsection'; title: string; paragraphs: string[] }
   | { type: 'footnote'; text: string }
-  /* An existing visual band: `id` picks the page's visual component. */
-  | { type: 'band'; id: string; heading: string; tone: VisualTone; caption?: string };
+  /* A big visual in a VisualFrame: `id` picks the page's visual component. */
+  | { type: 'frame'; id: string; title: string; caption?: string };
 
 export interface StorySectionData {
   /* Anchor for the section index. */
@@ -80,9 +80,11 @@ export interface StoryData {
   links: ArticleLink[];
   sections: StorySectionData[];
   closingLink: ArticleLink;
-  /* Colour tokens: the visual box fill, the lamp, light-mode tags, and the
-     accent for text and marks in each reading mode. */
+  /* Colour tokens: the visual box fill, the lamp, light-mode tags, the
+     accent for text and marks in each reading mode, and the panel the big
+     visuals sit on. */
   accent: string;
+  framePanel: string;
   lampColor: string;
   tagColor: string;
   accentInk: { dark: string; light: string };

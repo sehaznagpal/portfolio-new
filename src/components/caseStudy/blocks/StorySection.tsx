@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import VisualBand from '../../article/VisualBand';
 import Body from './Body';
 import Callout from './Callout';
 import DotGrid from './DotGrid';
@@ -15,11 +14,12 @@ import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
 import StatBlock from './StatBlock';
 import type { StoryBlock, StorySectionData } from './types';
+import VisualFrame from './VisualFrame';
 import styles from './StorySection.module.css';
 
 interface Visuals {
-  /* Visual band ids to their components. */
-  bands: Record<string, ReactNode>;
+  /* Big visual ids (in VisualFrames) to their components. */
+  frames: Record<string, ReactNode>;
   /* Mini illustration ids to their components. */
   minis: Record<string, ReactNode>;
 }
@@ -84,41 +84,43 @@ function Block({ block, visuals }: { block: StoryBlock; visuals: Visuals }) {
       );
     case 'footnote':
       return <p className={styles.footnote}>{block.text}</p>;
-    case 'band':
-      return null;
+    case 'frame':
+      return (
+        <VisualFrame title={block.title} caption={block.caption}>
+          {visuals.frames[block.id]}
+        </VisualFrame>
+      );
   }
 }
 
-/* One section of a story case study: its eyebrow and takeaway heading,
-   then its blocks in the centred column. Visual bands sit between them at
-   their own width, like the article layout's. */
+/* One section of a story case study, in the centred column. Spacing comes
+   only from gaps: the lead (eyebrow, heading and an opening paragraph
+   group) is tight, and every block after it sits --space-md apart. */
 export default function StorySection({ section, visuals }: { section: StorySectionData; visuals: Visuals }) {
   const headingId = `${section.id}-heading`;
+  const [first, ...rest] = section.blocks;
+  const opensWithBody = first?.type === 'body';
+  const blocks = opensWithBody ? rest : section.blocks;
 
   return (
     <section id={section.id} className={styles.section} aria-labelledby={headingId}>
-      <header className={`${styles.column} ${styles.header}`}>
-        <Eyebrow>{section.eyebrow}</Eyebrow>
-        {section.heading ? (
-          <SectionHeading id={headingId}>{section.heading}</SectionHeading>
-        ) : (
-          <h2 id={headingId} className={styles.visuallyHidden}>
-            {section.eyebrow}
-          </h2>
-        )}
-      </header>
+      <div className={styles.lead}>
+        <header className={styles.header}>
+          <Eyebrow>{section.eyebrow}</Eyebrow>
+          {section.heading ? (
+            <SectionHeading id={headingId}>{section.heading}</SectionHeading>
+          ) : (
+            <h2 id={headingId} className={styles.visuallyHidden}>
+              {section.eyebrow}
+            </h2>
+          )}
+        </header>
+        {opensWithBody && <Block block={first} visuals={visuals} />}
+      </div>
 
-      {section.blocks.map((block, i) =>
-        block.type === 'band' ? (
-          <VisualBand key={i} heading={block.heading} tone={block.tone} caption={block.caption}>
-            {visuals.bands[block.id]}
-          </VisualBand>
-        ) : (
-          <div key={i} className={styles.column}>
-            <Block block={block} visuals={visuals} />
-          </div>
-        ),
-      )}
+      {blocks.map((block, i) => (
+        <Block key={i} block={block} visuals={visuals} />
+      ))}
     </section>
   );
 }

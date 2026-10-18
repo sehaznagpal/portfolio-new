@@ -15,6 +15,33 @@
   text-align: center;
 }
 
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+/* Role/Duration and tags, then the outbound links. */
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--article-gap);
+}
+
+/* Story case studies: title to subtitle sm, subtitle to image and image to
+   tags md, tags to buttons sm. */
+.hero[data-spacing='story'] {
+  gap: var(--space-md);
+}
+
+.hero[data-spacing='story'] .heading {
+  gap: var(--space-sm);
+}
+
+.hero[data-spacing='story'] .meta {
+  gap: var(--space-sm);
+}
+
 /* Small uppercase line above the title (e.g. where the work was done). */
 .context {
   margin: 0;

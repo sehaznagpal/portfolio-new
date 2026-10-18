@@ -146,9 +146,28 @@
   /* One even rhythm inside a section: heading, pull quote, paragraph
      groups and visual bands. */
   --section-gap: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
-  /* Story case studies: generous space between sections, the section gap
-     inside them, and the type and card sizes of the story blocks. */
-  --story-section-gap: clamp(72px, calc(72px + (100vw - 393px) * (48 / 887)), 120px);
+  /* Story case studies: one spacing system, applied only through parent
+     gaps (components have no outer margins). Inside a section: eyebrow to
+     heading 2xs, heading to body and paragraph to paragraph sm, anything
+     to a card, visual or other component md. Between sections (and hero to
+     the first section) one fluid gap: 80px at 1280, 112px from 2560. */
+  --space-2xs: 12px;
+  --space-sm: 24px;
+  --space-md: 40px;
+  --space-section: clamp(56px, calc(80px + (100vw - 1280px) * (32 / 1280)), 112px);
+  /* One fixed height for the illustration area of every card in a row */
+  --story-illustration-h: 150px;
+  --story-mini-illustration-h: 104px;
+  /* Mini illustrations (FraudMinis): one corner radius, shadow and stroke
+     for every snippet, and soft tints for the language chips. */
+  --mini-radius: 8px;
+  --mini-radius-inner: 5px;
+  --mini-shadow: 0 1px 3px rgba(18, 18, 18, 0.18);
+  --mini-stroke: 1.5px;
+  --mini-tint-1: #dbe7ff;
+  --mini-tint-2: #d8f0de;
+  --mini-tint-3: #ffe3cf;
+  --mini-tint-4: #ebdcf5;
   --story-grid-gap: clamp(12px, calc(12px + (100vw - 393px) * (8 / 887)), 20px);
   --story-card-pad: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
   --story-card-radius: 12px;
