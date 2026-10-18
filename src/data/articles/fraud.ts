@@ -34,7 +34,6 @@ export const FRAUD_STORY: StoryData = {
               label: 'Method',
               values: ['Randomised experiment (3×3 mixed factorial)', 'Case analysis of 6 international interventions'],
             },
-            { label: 'Presented at', values: ['IIM Bodh Gaya', 'Lady Shri Ram College', 'Shyam Lal College'] },
             {
               label: 'Tools',
               values: ['Figma', 'AI-assisted front-end development', 'Google Apps Script', 'R'],
