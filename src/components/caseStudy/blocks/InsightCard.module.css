@@ -1,0 +1,86 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--story-grid-gap);
+}
+
+@media (min-width: 641px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: var(--story-card-pad);
+  border: 1px solid var(--case-card-border);
+  border-radius: var(--story-card-radius);
+  background: var(--case-surface);
+}
+
+/* The illustration area: a recessed panel the mini UI sits in. */
+.visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  height: var(--story-illustration-h);
+  padding: 16px;
+  border-radius: calc(var(--story-card-radius) - 4px);
+  background: var(--case-inset-bg);
+}
+
+.icon {
+  color: var(--case-accent-ink);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(var(--story-eyebrow-size) - 1px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--case-accent-ink);
+}
+
+.title {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-card-title-size);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--case-text);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: var(--story-small-size);
+  line-height: 1.45;
+  color: var(--case-text-soft);
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}

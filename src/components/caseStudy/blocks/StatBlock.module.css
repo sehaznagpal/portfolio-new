@@ -1,0 +1,111 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--story-grid-gap);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--story-grid-gap);
+}
+
+@media (min-width: 641px) {
+  .row {
+    grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: var(--story-card-pad);
+  border: 1px solid var(--case-card-border);
+  border-radius: var(--story-card-radius);
+  background: var(--case-surface);
+}
+
+.value {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-stat-size);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--case-accent-ink);
+  white-space: nowrap;
+}
+
+.label {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: var(--story-small-size);
+  line-height: 1.4;
+  color: var(--case-text-soft);
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}
+
+/* The bar comparison: label, bar and value on one line per item. */
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: var(--story-card-pad);
+  border: 1px solid var(--case-card-border);
+  border-radius: var(--story-card-radius);
+  background: var(--case-surface);
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Author Variable', sans-serif;
+  font-size: var(--story-small-size);
+  color: var(--case-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.barLabel {
+  color: var(--case-text-label);
+}
+
+.track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--case-inset-bg);
+  overflow: hidden;
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--case-accent-ink);
+  transform: scaleX(var(--share));
+  transform-origin: left center;
+}
+
+.barValue {
+  font-weight: var(--author-medium);
+  white-space: nowrap;
+}
+
+.caption {
+  text-align: center;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-eyebrow-size);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--case-accent-ink);
+}

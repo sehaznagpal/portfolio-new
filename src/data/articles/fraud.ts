@@ -1,300 +1,373 @@
-import type { ArticleData } from '../../components/article/types';
+import type { StoryData } from '../../components/caseStudy/blocks/types';
 import { LINKS } from '../links';
 
-/* Copy and order follow dissertation-case-study.md exactly. */
-export const FRAUD_ARTICLE: ArticleData = {
+/* Copy, order, components and index labels follow
+   dissertation-case-study-v2.md exactly. */
+export const FRAUD_STORY: StoryData = {
+  context: 'Undergraduate dissertation · Hansraj College, University of Delhi',
   title: "A security problem that isn't really about security",
   subtitle: "Testing whether Western anti-fraud design works for India's UPI users",
-  role: 'Sole researcher and author',
-  duration: '1 year (2025 to 26)',
-  tags: ['Choice Architecture', 'RCT Experiment', 'Payment Simulation'],
+  tags: ['Choice Architecture', 'RCT Experiment', 'Payment Simulation', 'Behavioural Economics'],
   links: [
     { label: 'Visit Experiment Prototype →', href: LINKS.experimentPrototype },
     { label: 'Read Dissertation →', href: LINKS.dissertation },
   ],
-  tldr: [
-    {
-      label: 'Problem:',
-      text: "Anti-fraud designs from the West assume users who read, trust the platform and push back against authority. Many Indian UPI users don't fit that profile.",
-    },
-    {
-      label: 'What I did:',
-      text: 'Built a simulated UPI app and tested a warning and a choice architecture redesign against three types of scams with 116 users.',
-    },
-    {
-      label: 'What I found:',
-      text: 'The redesign nearly doubled safe choices, but only when the scam relied on authority or urgency, not when it looked like a deal other people trusted.',
-    },
-  ],
   sections: [
     {
-      number: '01',
-      title: 'The contextual transfer problem',
-      shortLabel: 'Context',
-      quote: "Most fraud in India doesn't breach the system. It persuades the person holding the phone.",
+      id: 'tldr',
+      eyebrow: 'TL;DR',
+      shortLabel: 'TL;DR',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'India lost over ₹22,495 crore to digital fraud in 2025, nearly three times the figure from 2023. Very little of it involved hacking. In a fake police fine, a "digital arrest" call or a too-good-to-be-true listing, the victim enters their own PIN and authorises the payment. No security layer can step in when the user makes the choice willingly, which makes fraud a problem of decision-making, and so a problem of design.',
-            },
-            {
-              type: 'paragraph',
-              text: 'Fraudsters engineer that decision. Fear, urgency and borrowed authority push people into System 1 thinking: fast, automatic and emotional. The slower System 2 reasoning that a warning depends on rarely gets a turn.',
-            },
+          type: 'body',
+          paragraphs: [
+            "Anti-fraud designs from mature markets assume users who read, trust the platform and push back against authority. Many Indian UPI users don't fit that profile.",
+            'I built a simulated UPI app and ran a 116-person experiment, testing a warning and a choice architecture redesign against three common scams. The redesign nearly doubled safe choices, but only when the scam relied on authority or urgency.',
           ],
         },
         {
-          type: 'group',
-          content: [
+          type: 'infoCard',
+          items: [
+            { label: 'My role', values: ['Sole researcher and author', 'Designed and built the payment simulator'] },
+            { label: 'Timeline', values: ['1 year (2025 to 26)'] },
             {
-              type: 'paragraph',
-              text: 'Banks in the UK, Singapore and Australia respond with choice architecture: intentional friction at risky moments, and a cancel option that is the most salient thing on the screen. In UK trials, one such redesign cut fraudulent payments by up to 94%. But these designs assume a digitally mature user who reads the interface fluently, trusts the platform and feels free to refuse authority. Many Indian UPI users learned payments as a sequence of taps rather than text to read, and a strong cultural deference to authority makes refusing "the police" feel like no option at all. A warning translated into Hindi or Tamil changes little if it was never going to be read.',
+              label: 'Method',
+              values: ['Randomised experiment (3×3 mixed factorial)', 'Case analysis of 6 international interventions'],
             },
             {
-              type: 'paragraph',
-              text: 'Indian fraud research mostly documents what scams look like. This study set out to test what actually stops them.',
+              label: 'Tools',
+              values: ['Figma', 'AI-assisted front-end development', 'Google Apps Script', 'R'],
             },
           ],
         },
       ],
     },
     {
-      number: '02',
-      title: 'Two halves of one question',
-      shortLabel: 'Two halves',
-      quote: 'The full research had two halves. This is the one you can click through.',
+      id: 'background',
+      eyebrow: 'Background',
+      heading: 'Fraud in India is a decision problem',
+      shortLabel: 'Background',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'The dissertation asked whether international anti-fraud designs transfer to India. The first half analysed six interventions from the UK, China, Singapore, Australia, Nigeria and a five-country study, extracting what each design quietly assumes about its user. In India, those assumptions break down along four dimensions: literacy access, typological fit, authority dynamics and linguistic reach.',
-            },
-            {
-              type: 'paragraph',
-              text: 'The second half tested one of them empirically: does the type of fraud change whether a design protects? This case study is about that experiment.',
-            },
+          type: 'body',
+          paragraphs: [
+            'India lost over ₹22,495 crore to digital fraud in 2025, nearly three times the figure from 2023. Very little of it involved hacking. The victim enters their own PIN, so no security layer can step in.',
           ],
         },
-        { type: 'visual', id: 'research-structure', heading: 'Dissertation Structure', tone: 'accent' },
+        {
+          type: 'stats',
+          stats: [{ value: '₹22,495 crore', label: 'lost to digital fraud in 2025' }],
+          bars: {
+            items: [
+              { label: '2023', value: 7488, display: '₹7,488 crore' },
+              { label: '2025', value: 22495, display: '₹22,495 crore' },
+            ],
+            caption: 'nearly 3× in two years',
+          },
+        },
+        { type: 'highlight', text: "Most fraud doesn't breach the system. It persuades the person holding the phone." },
       ],
     },
     {
-      number: '03',
-      title: 'A fraud you can safely fall for',
-      shortLabel: 'The experiment',
-      quote: 'I built a payment app where falling for a scam costs nothing.',
+      id: 'problem',
+      eyebrow: 'Problem',
+      heading: 'A playbook built for someone else',
+      shortLabel: 'Problem',
       blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'body',
+          paragraphs: [
+            'Banks in the UK, Singapore and Australia use choice architecture: friction at risky moments, and a cancel option that is the most visible thing on screen. In UK trials, one redesign cut fraudulent payments by up to 94%. But it assumes a user who reads fluently, trusts the platform and feels free to refuse authority.',
+            'Indian fraud research mostly documents what scams look like. This study set out to test what actually stops them.',
+          ],
+        },
+        {
+          type: 'callout',
+          icon: 'compass',
+          label: 'The research question',
+          text: "Do international anti-fraud designs transfer to India's UPI users, and does the type of fraud change whether a design protects?",
+        },
+      ],
+    },
+    {
+      id: 'research',
+      eyebrow: 'Research',
+      heading: 'Four places the playbook breaks',
+      shortLabel: 'Research',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'I analysed six interventions from the UK, China, Singapore, Australia, Nigeria and a five-country study, extracting what each design quietly assumes about its user. In India, those assumptions break along four dimensions.',
+          ],
+        },
+        {
+          type: 'insights',
+          label: 'Key insights',
+          cards: [
             {
-              type: 'paragraph',
-              text: '116 university students made payment decisions on a simulated UPI interface. Every request was fraudulent, though no one was told, and no one learned whether they chose correctly. Each scam exploited a different cognitive bias common in Indian fraud: authority (a traffic police fine with a legal threat), urgency (a friend who has "lost his phone") and social proof (an Instagram deal backed by glowing comments).',
+              tag: 'Literacy access',
+              title: 'A warning only works if it gets read',
+              text: 'Many users learned UPI as a sequence of taps, not text to read.',
+              visual: 'warning-blur',
             },
             {
-              type: 'paragraph',
-              text: 'Participants were randomly assigned to one of three conditions, held constant across all three scams: a standard payment flow (control), the same flow with a fraud warning on the PIN screen, or a CTA redesign where a red "Cancel Payment" became the primary action and paying was demoted to a secondary "Continue anyway". The outcome was a single behavioural measure: did the person cancel or pay.',
+              tag: 'Typological fit',
+              title: "India's scams look different",
+              text: "Most Western evidence covers commercial fraud. India's leans on impersonated authority.",
+              visual: 'scam-sms',
             },
             {
-              type: 'paragraph',
-              text: 'The simulator was built in HTML, CSS and vanilla JavaScript and hosted on Netlify, with a Google Apps Script backend logging every decision, response time and confidence rating in real time. Assignment happened invisibly in code, and scam order was shuffled for each participant to neutralise order effects.',
+              tag: 'Authority dynamics',
+              title: 'Refusing "the police" doesn\'t feel like an option',
+              text: 'Strong deference to authority makes saying no feel impossible.',
+              visual: 'police-call',
             },
             {
-              type: 'paragraph',
-              text: 'Every detail was designed to keep behaviour natural and the comparison clean:',
+              tag: 'Linguistic reach',
+              title: 'No single language reaches everyone',
+              text: 'A warning translated into Hindi or Tamil changes little if it was never going to be read.',
+              visual: 'language-chips',
+            },
+          ],
+        },
+        { type: 'frame', id: 'research-structure', title: 'Dissertation structure' },
+      ],
+    },
+    {
+      id: 'experiment',
+      eyebrow: 'Experiment',
+      heading: 'Designing a scam you can safely fall for',
+      shortLabel: 'Experiment',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'The second half tested one dimension directly: does the type of fraud change whether a design protects? Each decision below traded realism against control.',
+          ],
+        },
+        {
+          type: 'step',
+          number: '01',
+          title: 'Testing biases, not just scams',
+          text: 'Each scam exploited a different bias common in Indian fraud: authority, urgency and social proof.',
+          blocks: [
+            {
+              type: 'miniCards',
+              cards: [
+                { title: 'Authority', text: 'traffic police fine', visual: 'scam-authority' },
+                { title: 'Urgency', text: 'a friend who "lost his phone"', visual: 'scam-urgency' },
+                { title: 'Social proof', text: 'an Instagram deal with glowing comments', visual: 'scam-social' },
+              ],
             },
             {
-              type: 'list',
-              items: [
-                [
-                  { bold: 'Familiar but unbranded:' },
-                  " Indian UPI conventions so people acted on habit, without borrowing any real app's identity.",
-                ],
-                [{ bold: 'Non-round amounts' }, ' (₹4,500, ₹1,499, ₹3,000) so the number itself raised no suspicion.'],
-                [
-                  { bold: 'An exit on every screen' },
-                  ', as in real apps, so backing out at any point counted as protection.',
-                ],
-                [
-                  { bold: 'One variable at a time:' },
-                  ' each intervention changes a single screen and nothing else.',
-                ],
+              type: 'note',
+              lead: 'Blind by design:',
+              text: 'every request was fraudulent, though no one was told, and no one learned whether they chose correctly.',
+            },
+          ],
+        },
+        {
+          type: 'step',
+          number: '02',
+          title: 'Two theories of protection',
+          text: 'The warning is informational: it relies on people noticing, reading and reasoning under pressure. The CTA is architectural: "Cancel Payment" becomes the primary action, so the safe choice is also the easy one.',
+          blocks: [
+            {
+              type: 'illustration',
+              id: 'warning-vs-cta',
+              label: 'The warning banner on the PIN screen, beside the CTA redesign: a red Cancel Payment button above an outlined Continue anyway.',
+            },
+          ],
+        },
+        {
+          type: 'step',
+          number: '03',
+          title: 'Making it feel real, without being real',
+          text: 'Every detail kept behaviour natural and the comparison clean.',
+          blocks: [
+            {
+              type: 'miniCards',
+              cards: [
+                { title: 'Familiar, not branded', text: "UPI conventions without any real app's identity", visual: 'unbranded' },
+                {
+                  title: 'Non-round amounts',
+                  text: '₹4,500 · ₹1,499 · ₹3,000, so the number raised no suspicion',
+                  visual: 'amounts',
+                },
+                {
+                  title: 'An exit on every screen',
+                  text: 'backing out at any point counted as protection',
+                  visual: 'exit',
+                },
+                { title: 'One variable at a time', text: 'each design changes a single screen', visual: 'one-variable' },
               ],
             },
           ],
         },
-        { type: 'visual', id: 'experiment-sitemap', heading: 'Experiment Sitemap', tone: 'dark' },
         {
-          type: 'group',
-          content: [
+          type: 'step',
+          number: '04',
+          title: 'Building the simulator',
+          text: 'I designed every screen and interaction, then built the simulator in HTML, CSS and vanilla JavaScript using AI-assisted development. AI sped up the build; the experimental logic, conditions and controls were mine to define and verify. Participants were randomly assigned to one of three conditions, and scam order was shuffled for each person.',
+          blocks: [
             {
-              type: 'paragraph',
-              text: 'The two interventions test two different theories of protection. The warning is informational: it relies on the user noticing, reading and reasoning under pressure. The CTA is architectural: it reorders the choice so that cancelling becomes the default and the path of least resistance, with no reading required.',
+              type: 'dotGrid',
+              groups: [
+                { label: 'Control', count: 44 },
+                { label: 'Warning', count: 36 },
+                { label: 'CTA', count: 36 },
+              ],
+            },
+            {
+              type: 'note',
+              lead: 'Under the hood:',
+              text: 'assignment happened invisibly in code, and a Google Apps Script backend logged every decision, response time and confidence rating in real time.',
             },
           ],
         },
+        { type: 'frame', id: 'experiment-sitemap', title: 'Experiment sitemap' },
         {
-          type: 'visual',
+          type: 'frame',
           id: 'user-journey',
-          heading: 'User Journey Flow',
-          tone: 'brand',
+          title: 'User journey',
           caption: 'One screen changes. Everything else stays the same.',
         },
       ],
     },
     {
-      number: '04',
-      title: 'What happened',
-      shortLabel: 'What happened',
-      quote: 'Changing the path nearly doubled safe choices. Adding words barely moved them.',
+      id: 'results',
+      eyebrow: 'Results',
+      heading: 'Changing the path beat adding words',
+      shortLabel: 'Results',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'table',
-              label: 'Share of participants who cancelled the scam, by group',
-              columns: ['', 'Cancelled the scam'],
-              rows: [
-                ['Control', '36.4%'],
-                ['Warning', '47.2%'],
-                ['CTA redesign', '68.5%'],
-              ],
-            },
-            {
-              type: 'paragraph',
-              text: "The CTA lifted safe decisions by 32 percentage points over control. The warning added 11, a gain too small to be statistically reliable. The CTA also added no hesitation: median decision time was 4 seconds in every group. People weren't deliberating more. The safer option had simply become the easier one, which is exactly how choice architecture is meant to work, inside System 1 rather than against it.",
-            },
+          type: 'body',
+          paragraphs: ['The primary metric was a single behaviour: did the participant cancel the scam or pay?'],
+        },
+        {
+          type: 'stats',
+          stats: [
+            { value: '68.5%', label: 'cancelled with the CTA, vs 36.4% in control' },
+            { value: '+11 pts', label: 'from the warning, too small to be statistically reliable' },
+            { value: '4 s', label: 'median decision time in every group' },
           ],
         },
         {
-          type: 'group',
-          content: [
-            {
-              type: 'table',
-              label: 'Share of participants who cancelled the scam, by group and scam type',
-              columns: ['', 'Authority', 'Urgency', 'Social proof'],
-              rows: [
-                ['Control', '40.9%', '31.8%', '36.4%'],
-                ['Warning', '52.8%', '52.8%', '36.1%'],
-                ['CTA', '77.8%', '75.0%', '52.8%'],
-              ],
-            },
-            {
-              type: 'paragraph',
-              text: "Against authority and urgency scams, the CTA roughly doubled cancellations. Against social proof, the warning had no effect at all, and the CTA's advantage shrank to a 16-point gain that was no longer reliable. Same people, same designs. Only the bias changed.",
-            },
-          ],
+          type: 'note',
+          lead: 'Why it matters:',
+          text: "the CTA added no hesitation. People weren't deliberating more; the safer option had simply become the easier one.",
         },
-        { type: 'visual', id: 'results', heading: 'Results as Graphs', tone: 'dark' },
+        { type: 'frame', id: 'results', title: 'Results' },
+        { type: 'highlight', text: 'Same people, same designs. Only the bias changed.' },
         {
-          type: 'group',
-          content: [
+          type: 'findings',
+          label: 'What we found',
+          items: [
             {
-              type: 'paragraph',
-              text: 'How confident participants felt about spotting fraud had no relationship with whether they actually cancelled. This mirrors a false confidence effect seen in a Nigerian field study, where fraud training raised confidence without improving accuracy. For India\'s largely awareness-based prevention efforts, that is an uncomfortable signal.',
+              title: 'Authority and urgency: the CTA roughly doubled cancellations.',
+              text: '40.9% → 77.8% and 31.8% → 75.0%.',
+            },
+            {
+              title: 'Social proof broke both designs.',
+              text: "The warning had no effect (36.4% → 36.1%) and the CTA's gain shrank to 16 points, no longer reliable.",
+            },
+            {
+              title: 'Feeling safe and being safe were unrelated.',
+              text: 'Self-rated confidence in spotting fraud had no link to actually cancelling, mirroring a false-confidence effect seen in a Nigerian field study.',
             },
           ],
         },
       ],
     },
     {
-      number: '05',
-      title: 'The fix depends on the fraud',
-      shortLabel: 'The fix',
-      quote: "There's no universal fix. The real question is: against which fraud?",
+      id: 'implications',
+      eyebrow: 'Implications',
+      heading: 'Design for vulnerability, not literacy',
+      shortLabel: 'Implications',
       blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'insights',
+          cards: [
             {
-              type: 'paragraph',
-              text: 'The type of fraud, not the user\'s profile, decided whether a design protected anyone. That makes "does this design work?" an incomplete question.',
+              icon: 'hand',
+              title: 'Friction as a feature',
+              text: "Under cognitive load, people don't read. Reshape the choice instead of explaining it.",
             },
             {
-              type: 'paragraph',
-              text: 'Social proof is the blind spot. The international playbook was built for impersonation and urgency, where pressure peaks at the moment of payment. Social proof scams work earlier: perceived legitimacy is manufactured by a crowd of apparent buyers long before the payment screen appears. A design at the payment gate cannot repair trust that was built at the marketing gate. In India, where e-commerce fraud is the largest category by victim reports and social selling runs through Instagram and WhatsApp, this gap matters.',
+              icon: 'crosshair',
+              title: 'Intervene where the bias is triggered',
+              text: 'For social commerce, protection has to move upstream into the feed, the listing and the chat.',
             },
             {
-              type: 'paragraph',
-              text: "This was an exploratory study, and every participant was a student: young, urban, digitally fluent and comfortable in English. That is the best case for these designs, so the results are best read as upper limits. If one design can't perform consistently for this group, it is unlikely to for users facing language, literacy or authority barriers on top of it.",
+              icon: 'gauge',
+              title: 'Measure behaviour, not confidence',
+              text: 'Confidence can rise while protective behaviour stays flat.',
+            },
+            {
+              icon: 'scale',
+              title: 'A protective nudge is still a nudge',
+              text: 'A red cancel button works on the same fast thinking fraudsters exploit. Designers should be able to defend the difference.',
             },
           ],
         },
       ],
     },
     {
-      number: '06',
-      title: 'What this means for design',
-      shortLabel: 'For design',
-      quote: 'Design for vulnerability, not literacy.',
-      blocks: [
-        {
-          type: 'group',
-          content: [
-            {
-              type: 'list',
-              items: [
-                [
-                  { bold: 'Friction as a feature.' },
-                  " Under cognitive load, people don't read. Protection should reshape the choice, not explain it. Making cancellation the default did more than any message.",
-                ],
-                [
-                  { bold: 'Intervene where the bias is triggered.' },
-                  ' A payment-screen fix assumes persuasion happens at payment. For social commerce, protection has to move upstream, into the feed, the listing and the chat.',
-                ],
-                [
-                  { bold: 'Measure behaviour, not confidence.' },
-                  ' Awareness and self-reported confidence can rise while protective behaviour stays flat.',
-                ],
-                [
-                  { bold: 'A protective nudge is still a nudge.' },
-                  ' A red cancel button works on the same fast thinking fraudsters exploit. Designers should be able to defend why theirs is protection and not just a different push.',
-                ],
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      number: '07',
-      title: "What's next",
+      id: 'whats-next',
+      eyebrow: "What's next",
+      heading: "The users this study couldn't reach",
       shortLabel: "What's next",
-      quote: "Next: the users this study couldn't reach.",
       blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'list',
+          items: [
             {
-              type: 'list',
-              items: [
-                [
-                  { bold: 'Test with the people most at risk:' },
-                  ' older, rural and lower-literacy users, ideally on a live interface with a UPI partner.',
-                ],
-                [
-                  { bold: 'Design for the social proof gap:' },
-                  ' flags on suspicious sellers, counter-signals from real peers, or a short delay that lets manufactured urgency fade.',
-                ],
-                [
-                  { bold: 'Go beyond translation:' },
-                  ' test whether symbol-dominant design, using icons, colour and audio, protects users for whom any written warning, in any language, is a barrier.',
-                ],
-              ],
+              title: 'Test with the people most at risk:',
+              text: 'older, rural and lower-literacy users, ideally on a live interface with a UPI partner.',
+            },
+            {
+              title: 'Design for the social proof gap:',
+              text: 'flags on suspicious sellers, counter-signals from real peers, or a short delay that lets manufactured urgency fade.',
+            },
+            {
+              title: 'Go beyond translation:',
+              text: 'test whether icons, colour and audio protect users for whom any written warning is a barrier.',
             },
           ],
+        },
+      ],
+    },
+    {
+      id: 'reflections',
+      eyebrow: 'Reflections',
+      shortLabel: 'Reflections',
+      blocks: [
+        {
+          type: 'subsection',
+          title: 'Best case, by design',
+          paragraphs: [
+            "Every participant was a student: young, urban, digitally fluent and comfortable in English. That is the most favourable group for these designs, so the results are upper limits. If one design can't perform consistently here, it is unlikely to for users facing language, literacy or authority barriers on top of it.",
+          ],
+        },
+        {
+          type: 'subsection',
+          title: '"Does it work?" is the wrong question',
+          paragraphs: [
+            "The type of fraud, not the user's profile, decided whether a design protected anyone. The better question is: against which fraud?",
+          ],
+        },
+        {
+          type: 'footnote',
+          text: "This paper has been submitted for IIM Bodh Gaya's CIEMC 2.0 post-conference publication.",
         },
       ],
     },
   ],
   closingLink: { label: 'Read the full dissertation →', href: LINKS.dissertation },
   accent: 'var(--accent-dissertation)',
+  framePanel: 'var(--dissertation-navy)',
   lampColor: 'var(--dissertation-navy)',
   tagColor: 'var(--dissertation-navy)',
+  accentInk: { dark: 'var(--dissertation-sky)', light: 'var(--dissertation-navy)' },
 };

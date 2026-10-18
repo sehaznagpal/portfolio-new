@@ -1,0 +1,17 @@
+.note {
+  margin: 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--case-accent-ink);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: var(--story-small-size);
+  line-height: 1.5;
+  color: var(--case-text-soft);
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}
+
+.lead {
+  font-weight: var(--author-semibold);
+  color: var(--case-text);
+}

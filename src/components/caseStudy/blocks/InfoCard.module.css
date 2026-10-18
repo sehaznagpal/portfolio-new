@@ -1,0 +1,44 @@
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--story-card-pad);
+  margin: 0;
+  padding: var(--story-card-pad);
+  border: 1px solid var(--case-card-border);
+  border-radius: var(--story-card-radius);
+  background: var(--case-surface);
+}
+
+@media (min-width: 641px) {
+  .card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: calc(var(--story-card-pad) * 2);
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.label {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-eyebrow-size);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--case-text-label);
+}
+
+.value {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: var(--story-small-size);
+  line-height: 1.4;
+  color: var(--case-text);
+  font-feature-settings: 'salt' 1;
+}

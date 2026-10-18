@@ -1,0 +1,12 @@
+.heading {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-heading-size);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--case-text);
+  text-wrap: balance;
+  font-feature-settings: 'salt' 1;
+}

@@ -10,3 +10,15 @@
   width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
   margin-inline: auto;
 }
+
+/* Story case studies (component blocks): one gap between the hero and
+   every section, and the accent ink for eyebrows, numbers and marks in
+   each reading mode. */
+.story {
+  --case-accent-ink: var(--story-ink-dark);
+  gap: var(--space-section);
+}
+
+[data-theme='light'] .story {
+  --case-accent-ink: var(--story-ink-light);
+}

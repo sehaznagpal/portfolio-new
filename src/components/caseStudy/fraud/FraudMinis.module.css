@@ -1,0 +1,379 @@
+/* Snippets are light phone UI in both reading modes, like the simulator's
+   own screens. Sizes are fixed so each fits its card's illustration area. */
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 112px;
+  padding: 10px;
+  border-radius: var(--mini-radius);
+  background: var(--case-study-white);
+  color: var(--case-study-black);
+  box-shadow: var(--mini-shadow);
+  font-family: 'Author Variable', sans-serif;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.wide {
+  width: 190px;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.line {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.14);
+}
+
+.line[data-short='true'] {
+  width: 60%;
+}
+
+/* The simulator's yellow warning banner. */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--mini-radius-inner);
+  background: var(--fraud-alert-bg);
+}
+
+.banner .line {
+  background: rgba(123, 106, 36, 0.45);
+}
+
+.bannerIcon {
+  flex: none;
+  color: var(--fraud-alert-text);
+}
+
+/* Unreadable text: soft, blurred strokes. */
+.scribble {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  filter: blur(1.4px);
+}
+
+.scribble span {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--fraud-alert-text);
+}
+
+.scribble span:nth-child(2) {
+  width: 85%;
+}
+
+.scribble span:nth-child(3) {
+  width: 55%;
+}
+
+/* SMS / chat bubbles. */
+.thread {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 200px;
+}
+
+.sender {
+  font-family: 'Author Variable', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--case-text-label);
+}
+
+.sms {
+  margin: 0;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--mini-radius) var(--mini-radius) var(--mini-radius) var(--mini-radius-inner);
+  background: var(--fraud-screen-default);
+  box-shadow: var(--mini-shadow);
+  color: var(--case-study-black);
+  font-family: 'Author Variable', sans-serif;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.smsLines {
+  width: 120px;
+}
+
+/* An incoming call, dark like a phone's call screen. */
+.call {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 130px;
+  padding: 12px 10px;
+  border-radius: var(--mini-radius);
+  background: var(--case-study-black);
+  color: var(--case-study-white);
+  font-family: 'Author Variable', sans-serif;
+  box-shadow: var(--mini-shadow);
+}
+
+.callMeta {
+  font-size: 9px;
+  color: var(--fraud-call-meta);
+}
+
+.callName {
+  font-size: 16px;
+  font-weight: var(--author-semibold);
+}
+
+.callButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 6px 0;
+}
+
+.decline,
+.answer {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--case-study-white);
+}
+
+.decline {
+  background: var(--fraud-cancel-bg);
+  opacity: 0.35;
+}
+
+.answer {
+  background: var(--fraud-cta-hover-green);
+}
+
+/* Language and amount chips. */
+.languages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.more {
+  padding: 3px 10px;
+  border: var(--mini-stroke) dashed var(--case-card-border);
+  border-radius: var(--mini-radius);
+  font-family: 'Author Variable', sans-serif;
+  font-size: 11px;
+  color: var(--case-text-label);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 220px;
+}
+
+.chip {
+  padding: 5px 10px;
+  border-radius: var(--mini-radius);
+  background: var(--case-study-white);
+  color: var(--case-study-black);
+  box-shadow: var(--mini-shadow);
+  font-family: 'Author Variable', sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.chip[data-tint='1'] {
+  background: var(--mini-tint-1);
+}
+
+.chip[data-tint='2'] {
+  background: var(--mini-tint-2);
+}
+
+.chip[data-tint='3'] {
+  background: var(--mini-tint-3);
+}
+
+.chip[data-tint='4'] {
+  background: var(--mini-tint-4);
+}
+
+.amountChip {
+  font-weight: var(--author-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Payment request (authority). */
+.payee {
+  font-weight: var(--author-semibold);
+}
+
+.amount {
+  font-size: 18px;
+  font-weight: var(--author-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.payButton {
+  padding: 4px 0;
+  border-radius: var(--mini-radius-inner);
+  background: var(--fraud-continue-text);
+  color: var(--case-study-white);
+  text-align: center;
+  font-weight: var(--author-semibold);
+}
+
+/* A social post with glowing comments. */
+.post {
+  gap: 5px;
+}
+
+.postImage {
+  height: 30px;
+  border-radius: var(--mini-radius-inner);
+  background: linear-gradient(135deg, #f7c6a3, #e58fb0 60%, #9b7be0);
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.heart {
+  flex: none;
+  fill: var(--fraud-cancel-bg);
+}
+
+/* Warning vs CTA, side by side (stacked when narrow). */
+.compare {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 24px;
+}
+
+.compareItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.compareLabel {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--case-text-label);
+}
+
+.screenTitle {
+  font-weight: var(--author-semibold);
+  text-align: center;
+}
+
+.pin {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding-block: 2px 4px;
+}
+
+.pin span {
+  width: 14px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.3);
+}
+
+.cancel,
+.continue {
+  padding: 6px 0;
+  border-radius: var(--mini-radius-inner);
+  text-align: center;
+  font-weight: var(--author-semibold);
+}
+
+.cancel {
+  background: var(--fraud-cancel-bg);
+  color: var(--case-study-white);
+}
+
+.continue {
+  border: var(--mini-stroke) solid var(--fraud-continue-border);
+  color: var(--fraud-continue-text);
+}
+
+/* An unbranded app bar. */
+.appBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: var(--mini-stroke) dashed rgba(18, 18, 18, 0.35);
+  border-radius: 50%;
+}
+
+/* Back and close, always available. */
+.exitBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.exitButton {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  outline: var(--mini-stroke) solid var(--color-brand);
+  background: var(--case-study-white);
+}
+
+/* Five screens, one changed (the journey's yellow outline). */
+.flow {
+  display: flex;
+  gap: 6px;
+}
+
+.flowScreen {
+  width: 22px;
+  height: 44px;
+  border-radius: var(--mini-radius-inner);
+  background: var(--case-study-white);
+  box-shadow: var(--mini-shadow);
+  opacity: 0.55;
+}
+
+.flowScreen[data-changed='true'] {
+  outline: var(--mini-stroke) solid var(--color-brand);
+  outline-offset: 1px;
+  opacity: 1;
+}

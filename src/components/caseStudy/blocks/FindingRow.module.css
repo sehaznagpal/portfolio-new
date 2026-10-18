@@ -1,0 +1,43 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--case-card-border);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-block: 18px;
+  border-top: 1px solid var(--case-card-border);
+}
+
+.title {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-card-title-size);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--case-text);
+  text-wrap: pretty;
+}
+
+.text {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: var(--story-small-size);
+  line-height: 1.5;
+  color: var(--case-text-soft);
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}

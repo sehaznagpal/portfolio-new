@@ -1,0 +1,15 @@
+.eyebrow {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-eyebrow-size);
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--case-accent-ink);
+}
+
+.eyebrow[data-tone='muted'] {
+  color: var(--case-text-label);
+}

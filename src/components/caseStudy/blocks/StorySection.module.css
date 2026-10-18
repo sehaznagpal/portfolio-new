@@ -1,0 +1,113 @@
+/* One section in the centred article column. The section index scrolls a
+   section to just under the sticky header. */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
+  margin-inline: auto;
+  scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
+}
+
+/* Eyebrow and heading, then the opening paragraphs. */
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.visuallyHidden {
+  position: absolute;
+  margin: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* A mini illustration on its own, in a recessed panel. */
+.illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: var(--story-card-pad);
+  border-radius: var(--story-card-radius);
+  background: var(--case-inset-bg);
+}
+
+/* Compact numbered list: accent number, then a bold lead-in and its line. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: grid;
+  grid-template-columns: 2.4em minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+
+.listNumber {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-card-title-size);
+  color: var(--case-accent-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.listText {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: var(--article-body-size);
+  line-height: var(--article-body-leading);
+  color: var(--case-text);
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}
+
+.listTitle {
+  font-weight: var(--author-semibold);
+}
+
+.subsection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.subheading {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(20px, calc(20px + (100vw - 393px) * (6 / 887)), 26px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--case-text);
+  text-wrap: balance;
+}
+
+.footnote {
+  margin: 0;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  font-size: var(--story-small-size);
+  line-height: 1.5;
+  color: var(--case-text-soft);
+}

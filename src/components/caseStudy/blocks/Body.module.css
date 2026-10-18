@@ -1,0 +1,25 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: var(--article-body-size);
+  line-height: var(--article-body-leading);
+  color: var(--case-text);
+  font-feature-settings: 'salt' 1;
+}
+
+.paragraph {
+  margin: 0;
+  hyphens: auto;
+  text-wrap: pretty;
+}
+
+/* Justified only where the column is wide enough not to open visible word
+   gaps. */
+@media (min-width: 641px) {
+  .paragraph {
+    text-align: justify;
+  }
+}
