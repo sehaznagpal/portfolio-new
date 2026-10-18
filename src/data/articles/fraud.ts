@@ -78,6 +78,7 @@ export const FRAUD_STORY: StoryData = {
           type: 'body',
           paragraphs: [
             'Banks in the UK, Singapore and Australia use choice architecture: friction at risky moments, and a cancel option that is the most visible thing on screen. In UK trials, one redesign cut fraudulent payments by up to 94%. But it assumes a user who reads fluently, trusts the platform and feels free to refuse authority.',
+            'Indian fraud research mostly documents what scams look like. This study set out to test what actually stops them.',
           ],
         },
         {
@@ -158,6 +159,11 @@ export const FRAUD_STORY: StoryData = {
                 { title: 'Urgency', text: 'a friend who "lost his phone"', visual: 'scam-urgency' },
                 { title: 'Social proof', text: 'an Instagram deal with glowing comments', visual: 'scam-social' },
               ],
+            },
+            {
+              type: 'note',
+              lead: 'Blind by design:',
+              text: 'every request was fraudulent, though no one was told, and no one learned whether they chose correctly.',
             },
           ],
         },
