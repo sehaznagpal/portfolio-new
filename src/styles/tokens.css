@@ -33,7 +33,7 @@
   /* The MoolRoop app's own "verified" green (its card's Vs badge, scan line
      and verified label), not the portfolio brand. */
   --moolroop-green: #a4cf4a;
-  --dissertation-navy: #062d6e;
+  --dissertation-navy: #032357;
   --dissertation-sky: #b2ceff;
   --moolroop-poster-maroon: #bf393c;
   --fraud-cta-hover-green: #25873a;
@@ -248,7 +248,7 @@
   --step-arrow-h: 20px;
 
   /* Fraud user journey (Figma 1276:1851) */
-  --journey-strip-bg: rgba(6, 45, 110, 0.8);
+  --journey-strip-bg: rgba(3, 35, 87, 0.8);
   --journey-gap: clamp(12px, calc(12px + (100vw - 393px) * (8 / 887)), 20px);
   /* Vertical space the band needs besides the screens themselves (toggle,
      strip padding, labels, caption, sticky header), so a desktop row of
