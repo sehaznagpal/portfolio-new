@@ -1,8 +1,9 @@
 /* Ported from the old repo's Experiment Flow view: same structure, current
    tokens, and fluid instead of a fixed 560px canvas. Connectors are CSS
-   lines so the diagram reflows with its band box. */
+   lines so the diagram reflows with its frame. Nodes are opaque; the lines
+   and the labels between them use the frame panel's ink (--band-ink). */
 .flow {
-  --line: var(--case-study-light-grey);
+  --line: var(--band-ink);
   --line-w: 2px;
   --stub: 24px;
   --gap: clamp(8px, calc(8px + (100vw - 393px) * (8 / 887)), 16px);
@@ -248,6 +249,5 @@
   margin: 8px 0 0;
   font-size: 0.87em;
   text-align: center;
-  color: var(--text-cream);
-  opacity: 0.8;
+  color: var(--band-ink);
 }
