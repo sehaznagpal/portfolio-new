@@ -30,6 +30,8 @@
 
   --dr-cuterus-purple: #76359c;
   --dr-cuterus-lilac: #dec3e9;
+  /* The pink her brief ruled out (struck through in the case study) */
+  --dr-cuterus-pink: #f4a7c8;
   /* The MoolRoop app's own "verified" green (its card's Vs badge, scan line
      and verified label), not the portfolio brand. */
   --moolroop-green: #a4cf4a;

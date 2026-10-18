@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import RichTextView from '../../article/RichText';
+import type { RichText } from '../../article/types';
 import Reveal from './Reveal';
 import styles from './NumberedStep.module.css';
 
@@ -13,7 +15,7 @@ export default function NumberedStep({
 }: {
   number: string;
   title: string;
-  text: string;
+  text: RichText;
   children?: ReactNode;
 }) {
   return (
@@ -26,7 +28,9 @@ export default function NumberedStep({
         </Reveal>
         <div className={styles.content}>
           <h3 className={styles.title}>{title}</h3>
-          <p className={styles.text}>{text}</p>
+          <p className={styles.text}>
+            <RichTextView value={text} />
+          </p>
         </div>
       </div>
       {children && <div className={styles.extra}>{children}</div>}

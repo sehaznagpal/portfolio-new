@@ -17,11 +17,11 @@
   background: var(--case-surface);
 }
 
-/* The visual, centred on the case-colour panel. --band-ink and its muted
-   twin are the light ink the visuals use on a dark box. */
+/* The visual, centred on the case-colour panel. --band-ink (and its muted
+   twin) is the ink visuals drawn on the panel use: --story-panel-ink. */
 .panel {
-  --band-ink: var(--case-study-white);
-  --band-ink-muted: var(--text-cream);
+  --band-ink: var(--story-panel-ink);
+  --band-ink-muted: var(--story-panel-ink);
   display: flex;
   flex-direction: column;
   align-items: center;

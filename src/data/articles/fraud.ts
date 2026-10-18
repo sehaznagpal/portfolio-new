@@ -367,6 +367,7 @@ export const FRAUD_STORY: StoryData = {
   closingLink: { label: 'Read the full dissertation →', href: LINKS.dissertation },
   accent: 'var(--accent-dissertation)',
   framePanel: 'var(--dissertation-navy)',
+  framePanelInk: 'var(--case-study-white)',
   lampColor: 'var(--dissertation-navy)',
   tagColor: 'var(--dissertation-navy)',
   accentInk: { dark: 'var(--dissertation-sky)', light: 'var(--dissertation-navy)' },

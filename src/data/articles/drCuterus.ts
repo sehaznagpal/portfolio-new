@@ -1,4 +1,4 @@
-import type { ArticleData } from '../../components/article/types';
+import type { StoryData } from '../../components/caseStudy/blocks/types';
 import { LINKS } from '../links';
 import type { ImageSetData } from '../../components/article/ImageSet';
 import type { SiteStructureData } from '../../components/caseStudy/drCuterus/SiteStructure';
@@ -16,226 +16,314 @@ import homeMobile from '../../assets/images/dr-cuterus/article/about-home-screen
 import footerMobile from '../../assets/images/dr-cuterus/article/outcome-phone-screen.webp';
 import liveLaptop from '../../assets/images/dr-cuterus/article/outcome-laptop-screen.webp';
 
-/* Copy and order follow docs/case-studies/dr-cuterus-case-study.md exactly.
-   This case study has no left-column pull quotes. */
-export const DR_CUTERUS_ARTICLE: ArticleData = {
+/* Copy, order, components and index labels follow drcuterus-case-study-v2.md
+   exactly (Reflections, marked [CONFIRM], is left out). The press ticker
+   note also names CNN and The Economist, and the appointment chips add
+   discharge and orgasm, both from the previous case study. */
+export const DR_CUTERUS_STORY: StoryData = {
+  context: 'Client project · Website design · 2026',
   title: 'Creating an identity which is unmistakably her',
   subtitle: 'A bilingual website for a doctor, author and sex educator with millions of followers',
-  role: 'Design Lead',
-  duration: '4 months (2026)',
-  tags: ['Client Project', 'Website Design', 'Design System'],
+  tags: ['Client Project', 'Website Design', 'Design System', 'Bilingual'],
   links: [{ label: 'Visit Live Site →', href: LINKS.drCuterusSite }],
-  tldr: [
-    {
-      label: 'The brief:',
-      text: 'One website for patients, followers, brands and organisations that felt as credible as a doctor and as unmistakably her as her feed.',
-    },
-    {
-      label: 'What I did:',
-      text: 'Led the design end to end, built the visual and bilingual system, structured the site around its audiences, and built about 40% of the live site alongside a developer.',
-    },
-    {
-      label: 'What shipped:',
-      text: 'A four-page site in English and Hinglish, live at drcuterus.com across mobile, tablet and desktop.',
-    },
-  ],
   sections: [
     {
-      number: '01',
-      title: 'The brief',
-      shortLabel: 'The brief',
+      id: 'tldr',
+      eyebrow: 'TL;DR',
+      shortLabel: 'TL;DR',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'Dr Tanaya Narendra, known online as Dr Cuterus, is an Oxford-trained doctor, author and sex educator with 1.9 million followers on Instagram and 834K on YouTube. Her brand runs on one line, said in English and Hinglish: 100% science, 0% sharam.',
-            },
-            {
-              type: 'paragraph',
-              text: 'She needed one website for four very different visitors: patients booking appointments, followers looking for her content, brands wanting to collaborate and organisations booking workshops. A generic clinic site would lose her voice. A link-in-bio would lose her authority.',
-            },
-            {
-              type: 'paragraph',
-              text: 'That tension shaped the whole project. Every decision that follows balances medical credibility against a personality that is warm, loud and a little cheeky on purpose.',
-            },
+          type: 'body',
+          paragraphs: [
+            'One website for patients, followers, brands and organisations that had to feel as credible as a doctor and as unmistakably her as her feed.',
+            'I led the design end to end, built the visual and bilingual system, structured the site around its audiences, and built about 40% of the live site alongside a developer. A four-page site in English and Hinglish is now live at drcuterus.com.',
           ],
         },
         {
-          type: 'visual',
+          type: 'infoCard',
+          items: [
+            { label: 'My role', values: ['Design lead', 'Built about 40% of the site, including all component styling'] },
+            { label: 'Duration', values: ['4 months (2026)'] },
+            { label: 'Audiences', values: ['Patients, followers', 'Brands, organisations'] },
+            { label: 'Built with', values: ['Figma', 'Astro, alongside a developer'] },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'brief',
+      eyebrow: 'Brief',
+      heading: 'Credible as a doctor, unmistakably her',
+      shortLabel: 'Brief',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'Dr Tanaya Narendra, known online as Dr Cuterus, is an Oxford-trained doctor, author and sex educator. Her brand runs on one line, said in English and Hinglish: 100% science, 0% sharam.',
+          ],
+        },
+        {
+          type: 'stats',
+          stats: [
+            { value: '1.9M', label: 'followers on Instagram' },
+            { value: '834K', label: 'subscribers on YouTube' },
+            { value: '4', label: 'audiences, one website' },
+          ],
+        },
+        {
+          type: 'callout',
+          icon: 'target',
+          label: 'The design challenge',
+          text: 'A generic clinic site would lose her voice. A link-in-bio would lose her authority.',
+        },
+        {
+          type: 'insights',
+          label: 'Four visitors',
+          cards: [
+            { title: 'Patients', text: 'booking an appointment', visual: 'book-whatsapp' },
+            { title: 'Followers', text: 'looking for her content', visual: 'video-tile' },
+            { title: 'Brands', text: 'wanting to collaborate', visual: 'work-with-me' },
+            { title: 'Organisations', text: 'booking workshops', visual: 'enquiry' },
+          ],
+        },
+        {
+          type: 'note',
+          lead: 'Why it matters:',
+          text: 'every decision that follows balances medical credibility against a personality that is warm, loud and a little cheeky on purpose.',
+        },
+        {
+          type: 'frame',
           id: 'homepage-hero',
-          heading: 'Homepage Hero',
-          tone: 'brand',
+          title: 'Homepage hero',
           caption: 'A polaroid mosaic of her life comes before any button asks for a click.',
         },
       ],
     },
     {
-      number: '02',
-      title: 'Structure before screens',
+      id: 'voice',
+      eyebrow: 'Research',
+      heading: 'Her voice came before any screen',
+      shortLabel: 'Her voice',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'Before designing anything, I went through her Instagram, YouTube and Spotify to understand how she actually talks. That gave the site its tone before it had a single screen.',
+          ],
+        },
+        {
+          type: 'miniCards',
+          cards: [
+            {
+              title: 'Simple, never dumbed down',
+              text: 'she simplifies the science without losing it',
+              visual: 'bubble-tick',
+            },
+            { title: 'Playful, still science', text: 'the humour never undercuts the facts', visual: 'bubble-sparkle' },
+            { title: 'Hinglish is native', text: 'not a stylistic add-on', visual: 'hinglish' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'structure',
+      eyebrow: 'Structure',
+      heading: 'Four pages for four audiences',
       shortLabel: 'Structure',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'Before designing anything, I went through her Instagram, YouTube and Spotify to understand how she actually talks. She simplifies without dumbing down, stays playful without losing the science, and Hinglish is native to her rather than a stylistic add-on. That gave the site its tone before it had a single screen.',
-            },
-            {
-              type: 'paragraph',
-              text: 'The structure keeps the most important things at the top, so no visitor has to dig for what they came for. Four pages cover the four audiences: Home, Appointments, Blog and Corporate Workshops. The blog exists because the same few questions kept resurfacing in her DMs and comments. Instead of answering them one at a time forever, they now have a permanent home.',
-            },
-            {
-              type: 'paragraph',
-              text: "One page didn't survive. An early version had a full page cataloguing her achievements and press, newsletter-style. When she reviewed it, she pointed out that it wasn't doing anything a visitor actually needed. It became the Corporate Workshops page, and the press moved into a scrolling ticker on the homepage. The credibility stayed. The page asking people to read through it went.",
-            },
+          type: 'body',
+          paragraphs: [
+            'The most important things sit at the top, so no visitor has to dig for what they came for. The blog exists because the same few questions kept resurfacing in her DMs and comments; now they have a permanent home.',
           ],
         },
         {
-          type: 'visual',
+          type: 'frame',
           id: 'site-structure',
-          heading: 'Site Structure',
-          tone: 'dark',
-          caption: "Four pages for four audiences. The cut page is part of the structure's story.",
+          title: 'Site structure',
+          caption: 'Four pages for four audiences. The cut page is part of the story.',
+        },
+        {
+          type: 'note',
+          lead: 'What feedback changed:',
+          text: "an early version had a full page cataloguing her achievements and press. She pointed out it wasn't doing anything a visitor needed. It became the Corporate Workshops page, and the press moved into a scrolling ticker on the homepage. The credibility stayed; the page asking people to read through it went.",
         },
       ],
     },
     {
-      number: '03',
-      title: 'A system that sounds like her',
-      shortLabel: 'The system',
+      id: 'system',
+      eyebrow: 'Visual system',
+      heading: 'A system that sounds like her',
+      shortLabel: 'System',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'She wanted purple and yellow, bright rather than muted, playful without becoming unserious for a practising doctor, and deliberately no pink. Purple appeared far more often across her existing content, so it became the base. Yellow is reserved for accents: loud where it counts, not everywhere.',
-            },
+          type: 'body',
+          paragraphs: [
+            'She wanted purple and yellow, bright rather than muted, playful without becoming unserious for a practising doctor, and deliberately no pink.',
           ],
         },
         {
-          type: 'visual',
+          type: 'miniCards',
+          cards: [
+            { title: 'Purple is the base', text: 'it appeared far more often across her content', visual: 'swatch-purple' },
+            { title: 'Yellow marks what matters', text: 'loud where it counts, not everywhere', visual: 'yellow-accent' },
+            { title: 'No pink, on purpose', text: 'a deliberate brief, not an oversight', visual: 'no-pink' },
+          ],
+        },
+        {
+          type: 'frame',
           id: 'colour-system',
-          heading: 'Colour System',
-          tone: 'accent',
-          caption: 'Purple carries the site, yellow marks what matters. Each pairing is checked for contrast.',
+          title: 'Colour system',
+          caption: 'Purple carries the site, yellow marks what matters. Every pairing is contrast-checked.',
         },
         {
-          type: 'group',
-          content: [
+          type: 'miniCards',
+          cards: [
             {
-              type: 'paragraph',
-              text: 'Headings run in Sentient, a serif with enough personality to feel human rather than clinical. Body text sits in Cabinet Grotesk, a clean sans that stays readable across long blog answers and dense appointment details.',
+              title: 'Sentient',
+              text: 'headings: a serif with enough personality to feel human, not clinical',
+              visual: 'aa-serif',
             },
             {
-              type: 'paragraph',
-              text: 'Language went deeper than a toggle. Nearly every headline was written as two real sentences, "Hey, I\'m Dr Tanaya Narendra" and "Hi, main hoon Dr Tanaya Narendra", rather than one translated from the other after the fact. The toggle sits in the header and switches the whole site, so neither audience reads as an afterthought.',
+              title: 'Cabinet Grotesk',
+              text: 'body: a clean sans that stays readable across long answers',
+              visual: 'aa-sans',
             },
           ],
         },
-        { type: 'visual', id: 'type-and-language', heading: 'Type and Language', tone: 'dark' },
+        { type: 'frame', id: 'typography', title: 'Typography' },
+        {
+          type: 'subsection',
+          title: 'Bilingual by writing, not translating',
+          paragraphs: [
+            'Nearly every headline was written as two real sentences, rather than one translated from the other. The toggle sits in the header and switches the whole site, so neither audience reads as an afterthought.',
+          ],
+        },
+        {
+          type: 'illustration',
+          id: 'bilingual-toggle',
+          label: 'The same headline written twice, "Hey, I\'m Dr Tanaya Narendra" and "Hi, main hoon Dr Tanaya Narendra", with the language toggle between them.',
+        },
+        { type: 'frame', id: 'language-toggle', title: 'Language toggle', caption: 'English and Hinglish, one tap apart.' },
       ],
     },
     {
-      number: '04',
-      title: 'Pages that act like her, not like a clinic',
-      shortLabel: 'The pages',
+      id: 'pages',
+      eyebrow: 'Pages',
+      heading: 'Pages that act like her, not like a clinic',
+      shortLabel: 'Pages',
       blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'step',
+          number: '01',
+          title: 'The homepage reads like her feed, organised',
+          text: [
+            'Her book, ',
+            { italic: 'Everything Nobody Tells You About Your Body' },
+            ', sits there with its GoodReads rating, in English, Hindi, Punjabi and Marathi. Her bra collaboration, FURSAT, sits next to her podcast, Breast Friends, and her Instagram, YouTube and Spotify are pulled into one place.',
+          ],
+          blocks: [
             {
-              type: 'paragraph',
-              text: [
-                'The homepage reads like her feed, just organised. Her book, ',
-                { italic: 'Everything Nobody Tells You About Your Body' },
-                ', sits there with its GoodReads rating, available in English, Hindi, Punjabi and Marathi. A few sections down, her bra collaboration, FURSAT, sits next to her podcast, Breast Friends. Her Instagram, YouTube and Spotify presence is pulled into one place instead of asking visitors to go and find it.',
-              ],
-            },
-            {
-              type: 'paragraph',
-              text: "Beneath the hero, nearly thirty names run past in a continuous ticker: Forbes India, Vogue, CNN, The Economist, the World Health Organization, India's Ministry of Health. Credibility is felt in seconds instead of read in paragraphs.",
+              type: 'note',
+              lead: 'Credibility in seconds:',
+              text: "beneath the hero, nearly thirty names run past in a continuous ticker, from Forbes India, Vogue, CNN and The Economist to the World Health Organization and India's Ministry of Health.",
             },
           ],
         },
-        { type: 'visual', id: 'homepage', heading: 'Homepage', tone: 'brand' },
+        { type: 'frame', id: 'homepage', title: 'Homepage' },
         {
-          type: 'group',
-          content: [
+          type: 'step',
+          number: '02',
+          title: 'Appointments name the fear first',
+          text: 'Booking a sexual health appointment is rarely simple, so the page opens with the worries people keep to themselves. Seeing the question written plainly does most of the persuading before the button has to.',
+          blocks: [
             {
-              type: 'paragraph',
-              text: 'Booking a sexual health appointment is rarely a simple decision, so the Appointments page opens by naming the worries people usually keep to themselves: pain during sex, irregular periods, PCOD, discharge, not being able to orgasm. Seeing the question written plainly, instead of hidden behind clinical language, does most of the persuading before the booking button has to.',
+              type: 'illustration',
+              id: 'appointment-chips',
+              label: 'Worries as tags, "Does sex hurt?", "Irregular periods?", "Have PCOD?", "Discharge?" and "Struggling to orgasm?", above a Book via WhatsApp button.',
             },
           ],
         },
         {
-          type: 'visual',
+          type: 'frame',
           id: 'appointments',
-          heading: 'Appointments',
-          tone: 'accent',
+          title: 'Appointments',
           caption: 'Name the fear first. The booking button comes second.',
         },
         {
-          type: 'visual',
+          type: 'step',
+          number: '03',
+          title: 'The blog answers once, for everyone',
+          text: 'The questions she was answering one DM at a time now have a permanent home.',
+        },
+        {
+          type: 'frame',
           id: 'blog',
-          heading: 'Blog',
-          tone: 'dark',
+          title: 'Blog',
           caption: 'The questions she was answering one DM at a time, now answered once, for everyone.',
         },
       ],
     },
     {
-      number: '05',
-      title: 'Built for the phone first',
-      shortLabel: 'Phone first',
+      id: 'mobile',
+      eyebrow: 'Mobile',
+      heading: 'Built for the phone first',
+      shortLabel: 'Mobile',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'Her own homepage copy says it: "How you will find me while scrolling on your phone." Most of her audience meets her mid-scroll, between reels, on a screen the size of their palm. The site had to hold up there first, and on a desktop pitch second.',
-            },
+          type: 'body',
+          paragraphs: [
+            'Most of her audience meets her mid-scroll, between reels, on a screen the size of their palm. The site had to hold up there first, and on a desktop pitch second.',
           ],
         },
-        { type: 'visual', id: 'on-mobile', heading: 'On Mobile', tone: 'brand' },
+        { type: 'highlight', text: '"How you will find me while scrolling on your phone."' },
+        { type: 'frame', id: 'on-mobile', title: 'On mobile' },
       ],
     },
     {
-      number: '06',
-      title: 'The outcome',
+      id: 'outcome',
+      eyebrow: 'Outcome',
+      heading: 'Live in two languages, on every screen',
       shortLabel: 'Outcome',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'The site is live at drcuterus.com, built in Astro. It holds her tone in English and Hinglish across mobile, tablet and desktop. Patients can book, followers land on content that looks like her, and organisations have a clear page to reach out from. The blog is live and growing, one question at a time.',
-            },
-            {
-              type: 'paragraph',
-              text: 'I led the design end to end and built about 40% of the site alongside a developer, including the full component styling.',
-            },
+          type: 'body',
+          paragraphs: [
+            'The site is live at drcuterus.com, built in Astro, and holds her tone in English and Hinglish across mobile, tablet and desktop.',
           ],
         },
         {
-          type: 'visual',
-          id: 'live-site',
-          heading: 'Live Site',
-          tone: 'dark',
-          caption: 'Your next door sexpert, live.',
+          type: 'findings',
+          label: 'What shipped',
+          items: [
+            { title: 'Patients can book.', text: 'Straight from the Appointments page, via WhatsApp.' },
+            {
+              title: 'Followers land on content that looks like her.',
+              text: 'Her book, podcast, merch and platforms in one place.',
+            },
+            {
+              title: 'Organisations have a clear page to reach out from.',
+              text: 'Corporate Workshops replaced the old achievements page.',
+            },
+            { title: 'The blog is live and growing.', text: 'One question at a time.' },
+          ],
         },
+        {
+          type: 'note',
+          lead: 'My part:',
+          text: 'I led the design end to end and built about 40% of the site alongside a developer, including the full component styling.',
+        },
+        { type: 'frame', id: 'live-site', title: 'Live site', caption: 'Your next door sexpert, live.' },
       ],
     },
   ],
   closingLink: { label: 'Visit drcuterus.com →', href: LINKS.drCuterusSite },
   accent: 'var(--accent-dr-cuterus)',
+  framePanel: 'var(--dr-cuterus-lilac)',
+  framePanelInk: 'var(--case-study-grey)',
   lampColor: 'var(--dr-cuterus-lilac)',
   tagColor: 'var(--dr-cuterus-purple)',
+  accentInk: { dark: 'var(--dr-cuterus-lilac)', light: 'var(--dr-cuterus-purple)' },
 };
 
 export const DR_CUTERUS_SITE_STRUCTURE: SiteStructureData = {
@@ -251,7 +339,7 @@ export const DR_CUTERUS_SITE_STRUCTURE: SiteStructureData = {
   cut: { name: 'Achievements page', label: 'Cut: replaced by the press ticker and Corporate Workshops' },
 };
 
-/* Image bands, keyed by visual id. */
+/* Image sets for the VisualFrames, keyed by frame id. */
 export const DR_CUTERUS_IMAGE_SETS: Record<string, ImageSetData> = {
   'homepage-hero': {
     layout: 'single',
@@ -275,7 +363,7 @@ export const DR_CUTERUS_IMAGE_SETS: Record<string, ImageSetData> = {
       },
     ],
   },
-  'type-and-language': {
+  typography: {
     layout: 'pair',
     images: [
       {
@@ -292,12 +380,16 @@ export const DR_CUTERUS_IMAGE_SETS: Record<string, ImageSetData> = {
         alt: 'Cabinet Grotesk type specimen: the alphabet and a scale of display and text sizes from Display 2XL down to Text XS.',
         caption: 'Cabinet Grotesk: the text typeface',
       },
+    ],
+  },
+  'language-toggle': {
+    layout: 'single',
+    images: [
       {
         src: languageToggle,
         width: 170,
         height: 29,
         alt: 'The header language toggle, switching between English and Hinglish.',
-        caption: 'English and Hinglish, one tap apart',
         small: true,
       },
     ],

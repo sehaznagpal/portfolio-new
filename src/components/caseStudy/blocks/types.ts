@@ -1,11 +1,11 @@
-import type { ArticleLink } from '../../article/types';
+import type { ArticleLink, RichText } from '../../article/types';
 
 /* Content schema for skimmable, component-based case studies: each section
    is an eyebrow, an optional takeaway heading and a list of typed blocks,
    rendered by the components in this folder. Mini illustrations and big
    visuals are referenced by id; the page maps ids to its own components. */
 
-export type StoryIcon = 'compass' | 'hand' | 'crosshair' | 'gauge' | 'scale';
+export type StoryIcon = 'compass' | 'hand' | 'crosshair' | 'gauge' | 'scale' | 'target';
 
 export interface MiniCardData {
   title: string;
@@ -48,7 +48,7 @@ export type StoryBlock =
       type: 'step';
       number: string;
       title: string;
-      text: string;
+      text: RichText;
       /* Shown under the step's text: mini cards, a dot grid, a note... */
       blocks?: StoryBlock[];
     }
@@ -85,6 +85,8 @@ export interface StoryData {
      visuals sit on. */
   accent: string;
   framePanel: string;
+  /* Text and line colour for visuals drawn directly on the frame panel. */
+  framePanelInk: string;
   lampColor: string;
   tagColor: string;
   accentInk: { dark: string; light: string };

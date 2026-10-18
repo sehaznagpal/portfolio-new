@@ -1,0 +1,273 @@
+/* Snippets are light UI in both reading modes, like her site; sizes are
+   fixed so each fits its card's illustration area. */
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.line {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.14);
+}
+
+.line[data-short='true'] {
+  width: 60%;
+}
+
+/* Buttons: purple primary, yellow accent pill. */
+.primary,
+.accent {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-semibold);
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: var(--mini-shadow);
+}
+
+.primary {
+  background: var(--dr-cuterus-purple);
+  color: var(--case-study-white);
+}
+
+.accent {
+  background: var(--color-brand);
+  color: var(--case-study-black);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border-radius: var(--mini-radius);
+  background: var(--case-study-white);
+  box-shadow: var(--mini-shadow);
+}
+
+/* A video tile with a play button. */
+.video {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--mini-radius);
+  background: linear-gradient(135deg, var(--dr-cuterus-purple), var(--dr-cuterus-lilac));
+  box-shadow: var(--mini-shadow);
+}
+
+.play {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--case-study-white);
+  color: var(--dr-cuterus-purple);
+}
+
+.enquiry {
+  width: 130px;
+}
+
+.enquiryHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.enquiryIcon {
+  flex: none;
+  color: var(--dr-cuterus-purple);
+}
+
+/* Speech bubbles. */
+.bubbleWrap {
+  position: relative;
+}
+
+.bubble {
+  display: flex;
+  min-width: 96px;
+  padding: 9px 12px;
+  border-radius: var(--mini-radius) var(--mini-radius) var(--mini-radius) var(--mini-radius-inner);
+  background: var(--case-study-white);
+  color: var(--case-study-black);
+  box-shadow: var(--mini-shadow);
+  font-family: 'Author Variable', sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--dr-cuterus-purple);
+  color: var(--case-study-white);
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.thread .bubble {
+  min-width: 0;
+  width: max-content;
+}
+
+.reply {
+  align-self: flex-end;
+  border-radius: var(--mini-radius) var(--mini-radius) var(--mini-radius-inner) var(--mini-radius);
+  background: var(--dr-cuterus-purple);
+  color: var(--case-study-white);
+}
+
+/* Swatches. */
+.swatch {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--mini-radius);
+  box-shadow: var(--mini-shadow);
+}
+
+.purple {
+  background: var(--dr-cuterus-purple);
+}
+
+.bar {
+  display: flex;
+  justify-content: flex-end;
+  width: 120px;
+  height: 28px;
+  padding: 6px;
+  border-radius: var(--mini-radius);
+  background: var(--dr-cuterus-purple);
+  box-shadow: var(--mini-shadow);
+}
+
+.barYellow {
+  width: 16px;
+  border-radius: var(--mini-radius-inner);
+  background: var(--color-brand);
+}
+
+/* Pink, struck through: a diagonal line across the swatch. */
+.pink {
+  position: relative;
+  background: var(--dr-cuterus-pink);
+  overflow: hidden;
+}
+
+.pink::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  width: 120%;
+  height: var(--mini-stroke);
+  background: var(--case-study-black);
+  transform: rotate(-45deg);
+}
+
+/* "Aa" in the site's own serif and sans. */
+.specimen {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--case-text);
+}
+
+.specimen[data-serif='true'] {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-medium);
+  font-variation-settings: normal;
+}
+
+/* The bilingual headline pair with the header toggle between them. */
+.bilingual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 16px;
+}
+
+.headline {
+  padding: 8px 12px;
+  border-radius: var(--mini-radius);
+  background: var(--case-study-white);
+  color: var(--case-study-black);
+  box-shadow: var(--mini-shadow);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-medium);
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.toggle {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--case-study-white);
+  box-shadow: var(--mini-shadow);
+}
+
+.toggleOption {
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-semibold);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--case-study-black);
+}
+
+.toggleOption[data-on='true'] {
+  background: var(--dr-cuterus-purple);
+  color: var(--case-study-white);
+}
+
+/* Appointment worries as chips, above the booking button. */
+.appointments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 340px;
+}
+
+.chip {
+  padding: 5px 10px;
+  border: var(--mini-stroke) solid var(--dr-cuterus-purple);
+  border-radius: 999px;
+  background: var(--case-study-white);
+  color: var(--dr-cuterus-purple);
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-medium);
+  font-size: 12px;
+  line-height: 1.2;
+}

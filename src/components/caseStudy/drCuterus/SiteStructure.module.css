@@ -1,7 +1,8 @@
-/* Same node, line and type treatment as fraud/ResearchStructure, recoloured
-   for the dark band: Dr Cuterus purple page nodes, grey section nodes. */
+/* Same node, line and type treatment as fraud/ResearchStructure: Dr Cuterus
+   purple page nodes and grey section nodes, opaque, joined by lines in the
+   frame panel's ink (--band-ink), which the cut page and its label use too. */
 .chart {
-  --line: var(--case-study-light-grey);
+  --line: var(--band-ink);
   --line-w: 2px;
   --stub: 20px;
   display: flex;
@@ -85,13 +86,16 @@
   align-items: center;
   gap: 8px;
   width: min(100%, 360px);
-  opacity: 0.6;
+  /* Reads as removed through the dashed border and strike, while staying
+     4.5:1 on the frame panel. */
+  opacity: 0.8;
 }
 
 .cutNode {
   width: 100%;
   border-style: dashed;
   background: transparent;
+  color: var(--band-ink);
 }
 
 .cutNode del {
@@ -101,6 +105,6 @@
 .cutLabel {
   margin: 0;
   font-size: 0.85em;
-  color: var(--text-cream);
+  color: var(--band-ink);
   text-align: center;
 }

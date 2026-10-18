@@ -1,4 +1,4 @@
-import { Compass, Crosshair, Gauge, Hand, Scale, type LucideIcon } from 'lucide-react';
+import { Compass, Crosshair, Gauge, Hand, Scale, Target, type LucideIcon } from 'lucide-react';
 import type { StoryIcon as StoryIconName } from './types';
 
 const ICONS: Record<StoryIconName, LucideIcon> = {
@@ -7,6 +7,7 @@ const ICONS: Record<StoryIconName, LucideIcon> = {
   crosshair: Crosshair,
   gauge: Gauge,
   scale: Scale,
+  target: Target,
 };
 
 /* A small line icon for callouts and cards, in the current text colour. */

@@ -42,6 +42,7 @@ export default function FraudCaseStudyPage() {
             '--story-ink-dark': FRAUD_STORY.accentInk.dark,
             '--story-ink-light': FRAUD_STORY.accentInk.light,
             '--story-panel': FRAUD_STORY.framePanel,
+            '--story-panel-ink': FRAUD_STORY.framePanelInk,
           } as CSSProperties
         }
       >
