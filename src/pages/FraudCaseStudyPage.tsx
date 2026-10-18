@@ -1,41 +1,54 @@
 import type { CSSProperties } from 'react';
 import ArticleHero from '../components/article/ArticleHero';
-import ArticleSection from '../components/article/ArticleSection';
-import { articleIndex } from '../components/article/articleIndex';
+import StorySection from '../components/caseStudy/blocks/StorySection';
+import { storyIndex } from '../components/caseStudy/blocks/storyIndex';
 import CaseStudyEnd from '../components/caseStudy/CaseStudyEnd';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import FraudPoster from '../components/caseStudy/FraudPoster';
 import ResearchStructure from '../components/caseStudy/fraud/ResearchStructure';
 import ExperimentSitemap from '../components/caseStudy/fraud/ExperimentSitemap';
+import { FRAUD_MINIS } from '../components/caseStudy/fraud/FraudMinis';
 import ResultsGraphs from '../components/caseStudy/fraud/ResultsGraphs';
 import UserJourney from '../components/caseStudy/fraud/UserJourney';
-import { FRAUD_ARTICLE } from '../data/articles/fraud';
+import { FRAUD_STORY } from '../data/articles/fraud';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';
 import styles from './ArticlePage.module.css';
 
-/* Visual band ids used in FRAUD_ARTICLE. */
+/* Visual band and mini illustration ids used in FRAUD_STORY. */
 const VISUALS = {
-  'research-structure': <ResearchStructure />,
-  'experiment-sitemap': <ExperimentSitemap />,
-  'user-journey': <UserJourney />,
-  results: <ResultsGraphs />,
+  bands: {
+    'research-structure': <ResearchStructure />,
+    'experiment-sitemap': <ExperimentSitemap />,
+    'user-journey': <UserJourney />,
+    results: <ResultsGraphs />,
+  },
+  minis: FRAUD_MINIS,
 };
 
 export default function FraudCaseStudyPage() {
   return (
     <CaseStudyLayout
-      index={articleIndex(FRAUD_ARTICLE)}
-      lampColor={FRAUD_ARTICLE.lampColor}
-      tagColor={FRAUD_ARTICLE.tagColor}
+      index={storyIndex(FRAUD_STORY)}
+      lampColor={FRAUD_STORY.lampColor}
+      tagColor={FRAUD_STORY.tagColor}
       footerPhoto={FOOTER_PHOTOS.fraud}
-      after={<CaseStudyEnd current="fraud" link={FRAUD_ARTICLE.closingLink} />}
+      after={<CaseStudyEnd current="fraud" link={FRAUD_STORY.closingLink} />}
     >
-      <article className={styles.article} style={{ '--case-accent': FRAUD_ARTICLE.accent } as CSSProperties}>
+      <article
+        className={`${styles.article} ${styles.story}`}
+        style={
+          {
+            '--case-accent': FRAUD_STORY.accent,
+            '--story-ink-dark': FRAUD_STORY.accentInk.dark,
+            '--story-ink-light': FRAUD_STORY.accentInk.light,
+          } as CSSProperties
+        }
+      >
         <div className={styles.hero}>
-          <ArticleHero article={FRAUD_ARTICLE} image={<FraudPoster />} />
+          <ArticleHero article={FRAUD_STORY} image={<FraudPoster />} />
         </div>
-        {FRAUD_ARTICLE.sections.map((section) => (
-          <ArticleSection key={section.number} section={section} visuals={VISUALS} />
+        {FRAUD_STORY.sections.map((section) => (
+          <StorySection key={section.id} section={section} visuals={VISUALS} />
         ))}
       </article>
     </CaseStudyLayout>

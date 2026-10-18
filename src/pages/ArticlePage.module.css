@@ -10,3 +10,14 @@
   width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
   margin-inline: auto;
 }
+
+/* Story case studies (component blocks): more space between sections, and
+   the accent ink for eyebrows, numbers and marks in each reading mode. */
+.story {
+  --case-accent-ink: var(--story-ink-dark);
+  gap: var(--story-section-gap);
+}
+
+[data-theme='light'] .story {
+  --case-accent-ink: var(--story-ink-light);
+}
