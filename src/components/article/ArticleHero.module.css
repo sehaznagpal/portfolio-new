@@ -15,6 +15,20 @@
   text-align: center;
 }
 
+/* Small uppercase line above the title (e.g. where the work was done). */
+.context {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-eyebrow-size);
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--case-text-label);
+  text-wrap: balance;
+}
+
 .title {
   margin: 0;
   font-family: 'Gambetta Variable', serif;

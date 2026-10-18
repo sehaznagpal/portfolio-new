@@ -1,0 +1,31 @@
+.callout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--story-card-pad);
+  border: 1px solid var(--case-accent-ink);
+  border-radius: var(--story-card-radius);
+  background: var(--case-surface);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  flex: none;
+  color: var(--case-accent-ink);
+}
+
+.text {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: clamp(18px, calc(18px + (100vw - 393px) * (4 / 887)), 22px);
+  line-height: 1.35;
+  color: var(--case-text);
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}

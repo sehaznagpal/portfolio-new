@@ -1,0 +1,12 @@
+.line {
+  margin: 0;
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-light);
+  font-style: italic;
+  font-size: var(--article-pull-quote-size);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--case-text);
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}

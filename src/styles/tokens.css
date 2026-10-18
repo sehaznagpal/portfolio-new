@@ -43,6 +43,8 @@
   --fraud-continue-border: #0b57cf;
   --fraud-continue-text: #0b57cf;
   --fraud-screen-default: #f5f5f5;
+  /* Secondary text on the dark incoming-call snippet (FraudMinis) */
+  --fraud-call-meta: #a6a6a6;
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -89,6 +91,9 @@
   --case-text-soft: var(--text-cream);
   --case-text-muted: var(--case-study-light-grey);
   --case-text-subtle: var(--case-study-light-grey);
+  /* Small labels on cards (eyebrow sub-labels, chart and dot labels):
+     4.5:1 or more on every surface in both modes. */
+  --case-text-label: #a6a6a6;
   --case-surface: var(--case-study-black);
   --case-highlight: var(--color-brand);
   --case-tag-border: var(--color-brand);
@@ -97,6 +102,11 @@
   --case-progress-track: var(--case-study-black);
   --case-progress-fill: var(--color-brand);
   --case-band-edge: transparent;
+
+  /* Story case study blocks (src/components/caseStudy/blocks): soft cards on
+     the page, with a faint border and a recessed area for mini UI. */
+  --case-card-border: rgba(254, 254, 254, 0.14);
+  --case-inset-bg: rgba(254, 254, 254, 0.06);
 
   /* Pull-cord lamp (Figma 1462:1274, 49 x 35). The shade keeps a faint
      outline in the text colour so every lamp colour reads on both pages. */
@@ -136,6 +146,20 @@
   /* One even rhythm inside a section: heading, pull quote, paragraph
      groups and visual bands. */
   --section-gap: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
+  /* Story case studies: generous space between sections, the section gap
+     inside them, and the type and card sizes of the story blocks. */
+  --story-section-gap: clamp(72px, calc(72px + (100vw - 393px) * (48 / 887)), 120px);
+  --story-grid-gap: clamp(12px, calc(12px + (100vw - 393px) * (8 / 887)), 20px);
+  --story-card-pad: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  --story-card-radius: 12px;
+  --story-eyebrow-size: clamp(12px, calc(12px + (100vw - 393px) * (2 / 887)), 14px);
+  --story-heading-size: clamp(28px, calc(28px + (100vw - 393px) * (14 / 887)), 42px);
+  --story-card-title-size: clamp(17px, calc(17px + (100vw - 393px) * (3 / 887)), 20px);
+  --story-small-size: clamp(14px, calc(14px + (100vw - 393px) * (2 / 887)), 16px);
+  --story-stat-size: clamp(40px, calc(40px + (100vw - 393px) * (16 / 887)), 56px);
+  --story-step-number-size: clamp(32px, calc(32px + (100vw - 393px) * (16 / 887)), 48px);
+  --story-reveal-distance: 16px;
+  --story-reveal-stagger: 70ms;
   --article-body-size: clamp(18px, calc(18px + (100vw - 393px) * (2 / 887)), 20px);
   --article-body-leading: 1.45;
   --article-section-title-size: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
@@ -242,6 +266,7 @@
   --case-text-soft: var(--case-study-grey);
   --case-text-muted: var(--case-study-grey);
   --case-text-subtle: #5c5c5c;
+  --case-text-label: #545454;
   --case-surface: var(--case-study-white);
   --case-highlight: var(--brand-yellow-dark);
   --case-tag-border: var(--case-tag-light);
@@ -251,6 +276,8 @@
   --case-band-edge: var(--grid-line);
   --focus-ring: var(--brand-yellow-dark);
   --lamp-handle: var(--case-study-black);
+  --case-card-border: rgba(18, 18, 18, 0.14);
+  --case-inset-bg: rgba(18, 18, 18, 0.05);
 }
 
 /* Full-screen section height. svh where supported so a browser toolbar

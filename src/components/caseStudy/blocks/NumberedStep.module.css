@@ -1,0 +1,71 @@
+.step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: 1025px) {
+  .step {
+    grid-template-columns: calc(var(--story-step-number-size) * 1.6) minmax(0, 1fr);
+    column-gap: var(--story-grid-gap);
+  }
+}
+
+.number {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-step-number-size);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--case-accent-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: clamp(20px, calc(20px + (100vw - 393px) * (6 / 887)), 26px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--case-text);
+  text-wrap: balance;
+}
+
+.text {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-light);
+  font-size: var(--article-body-size);
+  line-height: var(--article-body-leading);
+  color: var(--case-text);
+  hyphens: auto;
+  text-wrap: pretty;
+  font-feature-settings: 'salt' 1;
+}
+
+/* Mini cards, a visual or a note: under the step, across both columns. */
+.extra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--story-grid-gap);
+  grid-column: 1 / -1;
+  margin-top: 12px;
+  min-width: 0;
+}
+
+@media (min-width: 641px) {
+  .text {
+    text-align: justify;
+  }
+}
