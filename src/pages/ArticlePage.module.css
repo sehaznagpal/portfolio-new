@@ -1,24 +1,19 @@
-/* Page shell shared by every long-form case study article. */
+/* Page shell shared by every case study: one gap between the hero and
+   every section, and the accent ink for eyebrows, numbers and marks in
+   each reading mode. */
 .article {
+  --case-accent-ink: var(--story-ink-dark);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--article-gap) * 1.5);
+  gap: var(--space-section);
   padding-top: var(--article-gap);
+}
+
+[data-theme='light'] .article {
+  --case-accent-ink: var(--story-ink-light);
 }
 
 .hero {
   width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
   margin-inline: auto;
-}
-
-/* Story case studies (component blocks): one gap between the hero and
-   every section, and the accent ink for eyebrows, numbers and marks in
-   each reading mode. */
-.story {
-  --case-accent-ink: var(--story-ink-dark);
-  gap: var(--space-section);
-}
-
-[data-theme='light'] .story {
-  --case-accent-ink: var(--story-ink-light);
 }

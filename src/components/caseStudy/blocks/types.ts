@@ -24,6 +24,39 @@ export interface InsightCardData {
   icon?: StoryIcon;
 }
 
+export type Mark = 'yes' | 'partial' | 'no';
+
+export interface ComparisonData {
+  /* The highlighted column is the proposal being compared. */
+  columns: { name: string; note?: string; highlight?: boolean }[];
+  rows: { label: string; marks: Mark[] }[];
+}
+
+export interface JourneyData {
+  label: string;
+  steps: { text: string; outside?: boolean }[];
+  /* Marks a drop-off after this step number. */
+  dropAfter?: number;
+  /* Steps in the case accent (the proposal). */
+  accent?: boolean;
+}
+
+export interface DecisionData {
+  title: string;
+  obvious: string;
+  needed: string;
+  why: string;
+  visual?: string;
+}
+
+export interface OptionData {
+  name: string;
+  visual?: string;
+  pro?: string;
+  con?: string;
+  chosen?: boolean;
+}
+
 export interface StatData {
   value: string;
   label: string;
@@ -40,7 +73,15 @@ export type StoryBlock =
       bars?: { items: { label: string; value: number; display: string }[]; caption: string };
     }
   | { type: 'dotGrid'; groups: { label: string; count: number }[] }
-  | { type: 'insights'; label?: string; cards: InsightCardData[] }
+  /* Two by two, or three across (compact, smaller illustrations). */
+  | { type: 'insights'; label?: string; cards: InsightCardData[]; compact?: boolean }
+  | { type: 'comparison'; table: ComparisonData; caption?: string }
+  | { type: 'journey'; journeys: JourneyData[]; caption?: string }
+  | { type: 'decisions'; label?: string; items: DecisionData[] }
+  | { type: 'options'; items: OptionData[] }
+  | { type: 'scope'; inScope: string[]; outOfScope: string[] }
+  /* A row of colour swatches, each with its hex and an optional note. */
+  | { type: 'swatches'; swatches: { hex: string; note?: string }[]; caption?: string }
   | { type: 'miniCards'; cards: MiniCardData[] }
   /* A single mini illustration (by id), full column width. */
   | { type: 'illustration'; id: string; label: string }

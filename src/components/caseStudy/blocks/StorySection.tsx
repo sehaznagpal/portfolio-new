@@ -1,18 +1,24 @@
 import type { ReactNode } from 'react';
 import Body from './Body';
 import Callout from './Callout';
+import ComparisonTable from './ComparisonTable';
+import DecisionCards from './DecisionCard';
 import DotGrid from './DotGrid';
 import Eyebrow from './Eyebrow';
 import FindingRows from './FindingRow';
 import HighlightLine from './HighlightLine';
 import InfoCard from './InfoCard';
 import InsightCards from './InsightCard';
+import JourneyCompare from './JourneyCompare';
 import MiniCards from './MiniCards';
 import Note from './Note';
 import NumberedStep from './NumberedStep';
+import OptionsCompare from './OptionsCompare';
 import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
+import ScopeList from './ScopeList';
 import StatBlock from './StatBlock';
+import Swatches from './Swatches';
 import type { StoryBlock, StorySectionData } from './types';
 import VisualFrame from './VisualFrame';
 import styles from './StorySection.module.css';
@@ -37,7 +43,19 @@ function Block({ block, visuals }: { block: StoryBlock; visuals: Visuals }) {
     case 'dotGrid':
       return <DotGrid groups={block.groups} />;
     case 'insights':
-      return <InsightCards label={block.label} cards={block.cards} minis={visuals.minis} />;
+      return <InsightCards label={block.label} cards={block.cards} minis={visuals.minis} compact={block.compact} />;
+    case 'comparison':
+      return <ComparisonTable table={block.table} caption={block.caption} />;
+    case 'journey':
+      return <JourneyCompare journeys={block.journeys} caption={block.caption} />;
+    case 'decisions':
+      return <DecisionCards label={block.label} items={block.items} minis={visuals.minis} />;
+    case 'options':
+      return <OptionsCompare items={block.items} minis={visuals.minis} />;
+    case 'scope':
+      return <ScopeList inScope={block.inScope} outOfScope={block.outOfScope} />;
+    case 'swatches':
+      return <Swatches swatches={block.swatches} caption={block.caption} />;
     case 'miniCards':
       return <MiniCards cards={block.cards} minis={visuals.minis} />;
     case 'illustration':

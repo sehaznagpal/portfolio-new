@@ -33,7 +33,7 @@
 
 .edge {
   fill: none;
-  stroke: var(--case-study-light-grey);
+  stroke: var(--band-ink);
   stroke-width: 1.5;
 }
 
@@ -62,7 +62,8 @@
 
 .node[data-future='true'] {
   border-style: dashed;
-  border-color: var(--case-study-light-grey);
+  border-color: var(--band-ink);
   background: transparent;
-  color: var(--case-study-light-grey);
+  color: var(--band-ink);
+  font-style: italic;
 }

@@ -33,7 +33,7 @@ export default function DrCuterusCaseStudyPage() {
       after={<CaseStudyEnd current="dr-cuterus" link={DR_CUTERUS_STORY.closingLink} />}
     >
       <article
-        className={`${styles.article} ${styles.story}`}
+        className={styles.article}
         style={
           {
             '--case-accent': DR_CUTERUS_STORY.accent,
@@ -45,7 +45,7 @@ export default function DrCuterusCaseStudyPage() {
         }
       >
         <div className={styles.hero}>
-          <ArticleHero article={DR_CUTERUS_STORY} image={<DrCuterusPoster />} spacing="story" />
+          <ArticleHero article={DR_CUTERUS_STORY} image={<DrCuterusPoster />} />
         </div>
         {DR_CUTERUS_STORY.sections.map((section) => (
           <StorySection key={section.id} section={section} visuals={VISUALS} />

@@ -35,7 +35,7 @@ export default function FraudCaseStudyPage() {
       after={<CaseStudyEnd current="fraud" link={FRAUD_STORY.closingLink} />}
     >
       <article
-        className={`${styles.article} ${styles.story}`}
+        className={styles.article}
         style={
           {
             '--case-accent': FRAUD_STORY.accent,
@@ -47,7 +47,7 @@ export default function FraudCaseStudyPage() {
         }
       >
         <div className={styles.hero}>
-          <ArticleHero article={FRAUD_STORY} image={<FraudPoster />} spacing="story" />
+          <ArticleHero article={FRAUD_STORY} image={<FraudPoster />} />
         </div>
         {FRAUD_STORY.sections.map((section) => (
           <StorySection key={section.id} section={section} visuals={VISUALS} />

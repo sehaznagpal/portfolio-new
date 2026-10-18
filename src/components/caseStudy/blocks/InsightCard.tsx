@@ -5,22 +5,25 @@ import StoryIcon from './StoryIcon';
 import type { InsightCardData } from './types';
 import styles from './InsightCard.module.css';
 
-/* Cards two by two on wider screens: a mini UI illustration (or a small
-   icon) on top, then a bold title and one line. `minis` maps each card's
-   illustration id to its component. */
+/* Cards two by two on wider screens (or three across when `compact`, with
+   smaller illustrations): a mini UI illustration (or a small icon) on top,
+   then a bold title and one line. `minis` maps each card's illustration id
+   to its component. */
 export default function InsightCards({
   label,
   cards,
   minis = {},
+  compact = false,
 }: {
   label?: string;
   cards: InsightCardData[];
   minis?: Record<string, ReactNode>;
+  compact?: boolean;
 }) {
   return (
     <div className={styles.block}>
       {label && <Eyebrow tone="muted">{label}</Eyebrow>}
-      <div className={styles.grid}>
+      <div className={styles.grid} data-compact={compact}>
         {cards.map((card, i) => (
           <Reveal key={card.title} index={i % 2} className={styles.card}>
             {card.visual && (

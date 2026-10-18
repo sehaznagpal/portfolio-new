@@ -1,55 +1,56 @@
 import type { CSSProperties } from 'react';
 import ArticleHero from '../components/article/ArticleHero';
-import ArticleSection from '../components/article/ArticleSection';
-import { articleIndex } from '../components/article/articleIndex';
 import ImageSet from '../components/article/ImageSet';
+import StorySection from '../components/caseStudy/blocks/StorySection';
+import { storyIndex } from '../components/caseStudy/blocks/storyIndex';
 import CaseStudyEnd from '../components/caseStudy/CaseStudyEnd';
 import CaseStudyLayout from '../components/caseStudy/CaseStudyLayout';
 import MoolroopPoster from '../components/caseStudy/MoolroopPoster';
-import ComparisonTable from '../components/caseStudy/moolroop/ComparisonTable';
-import StepFlow from '../components/caseStudy/moolroop/StepFlow';
+import { MOOLROOP_MINIS } from '../components/caseStudy/moolroop/MoolroopMinis';
 import SitemapTree from '../components/caseStudy/moolroop/SitemapTree';
 import ScreenRow from '../components/caseStudy/moolroop/ScreenRow';
-import VisualLanguage from '../components/caseStudy/moolroop/VisualLanguage';
-import {
-  MOOLROOP_ARTICLE,
-  MOOLROOP_COMPARISON,
-  MOOLROOP_FLOW,
-  MOOLROOP_RECORD,
-  MOOLROOP_SCREENS,
-  MOOLROOP_SITEMAP,
-  MOOLROOP_VISUAL_LANGUAGE,
-} from '../data/articles/moolroop';
+import { MOOLROOP_RECORD, MOOLROOP_SCREENS, MOOLROOP_SITEMAP, MOOLROOP_STORY } from '../data/articles/moolroop';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';
 import styles from './ArticlePage.module.css';
 
-/* Visual band ids used in MOOLROOP_ARTICLE. */
+/* Big visual and mini illustration ids used in MOOLROOP_STORY. */
 const VISUALS = {
-  'official-record': <ImageSet {...MOOLROOP_RECORD} />,
-  'competitive-landscape': <ComparisonTable {...MOOLROOP_COMPARISON} />,
-  opportunity: <StepFlow {...MOOLROOP_FLOW} />,
-  'app-structure': <SitemapTree {...MOOLROOP_SITEMAP} />,
-  'visual-language': <VisualLanguage {...MOOLROOP_VISUAL_LANGUAGE} />,
-  ...Object.fromEntries(
-    Object.entries(MOOLROOP_SCREENS).map(([id, row]) => [id, <ScreenRow key={id} {...row} />]),
-  ),
+  frames: {
+    'official-record': <ImageSet {...MOOLROOP_RECORD} />,
+    'app-structure': <SitemapTree {...MOOLROOP_SITEMAP} />,
+    ...Object.fromEntries(
+      Object.entries(MOOLROOP_SCREENS).map(([id, row]) => [id, <ScreenRow key={id} {...row} />]),
+    ),
+  },
+  minis: MOOLROOP_MINIS,
 };
 
 export default function MoolroopCaseStudyPage() {
   return (
     <CaseStudyLayout
-      index={articleIndex(MOOLROOP_ARTICLE)}
-      lampColor={MOOLROOP_ARTICLE.lampColor}
-      tagColor={MOOLROOP_ARTICLE.tagColor}
+      index={storyIndex(MOOLROOP_STORY)}
+      lampColor={MOOLROOP_STORY.lampColor}
+      tagColor={MOOLROOP_STORY.tagColor}
       footerPhoto={FOOTER_PHOTOS.moolroop}
-      after={<CaseStudyEnd current="moolroop" link={MOOLROOP_ARTICLE.closingLink} />}
+      after={<CaseStudyEnd current="moolroop" link={MOOLROOP_STORY.closingLink} />}
     >
-      <article className={styles.article} style={{ '--case-accent': MOOLROOP_ARTICLE.accent } as CSSProperties}>
+      <article
+        className={styles.article}
+        style={
+          {
+            '--case-accent': MOOLROOP_STORY.accent,
+            '--story-ink-dark': MOOLROOP_STORY.accentInk.dark,
+            '--story-ink-light': MOOLROOP_STORY.accentInk.light,
+            '--story-panel': MOOLROOP_STORY.framePanel,
+            '--story-panel-ink': MOOLROOP_STORY.framePanelInk,
+          } as CSSProperties
+        }
+      >
         <div className={styles.hero}>
-          <ArticleHero article={MOOLROOP_ARTICLE} image={<MoolroopPoster />} />
+          <ArticleHero article={MOOLROOP_STORY} image={<MoolroopPoster />} />
         </div>
-        {MOOLROOP_ARTICLE.sections.map((section) => (
-          <ArticleSection key={section.number} section={section} visuals={VISUALS} />
+        {MOOLROOP_STORY.sections.map((section) => (
+          <StorySection key={section.id} section={section} visuals={VISUALS} />
         ))}
       </article>
     </CaseStudyLayout>

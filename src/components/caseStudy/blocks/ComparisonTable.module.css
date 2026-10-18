@@ -1,0 +1,151 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  margin: 0;
+  padding: var(--story-card-pad);
+  border: 1px solid var(--case-card-border);
+  border-radius: var(--story-card-radius);
+  background: var(--case-surface);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Author Variable', sans-serif;
+  font-size: var(--story-small-size);
+  color: var(--case-text-label);
+}
+
+/* Scrolls sideways when the table is wider than the column. */
+.scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.scroll:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-size: var(--story-small-size);
+  line-height: 1.25;
+  color: var(--case-text);
+  font-feature-settings: 'salt' 1;
+}
+
+.table th,
+.table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--case-card-border);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child > * {
+  border-bottom: none;
+}
+
+.column {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  letter-spacing: -0.01em;
+  vertical-align: bottom;
+}
+
+.note {
+  display: block;
+  margin-top: 2px;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 0.8em;
+  color: var(--case-text-label);
+}
+
+/* The criteria column stays put while the rest scrolls under it. */
+.corner,
+.criterion {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 9.5em;
+  background: var(--case-surface);
+  text-align: left;
+}
+
+.criterion {
+  font-weight: var(--author-regular);
+  text-align: left;
+}
+
+/* The proposal's column: an accent wash, with its header in the accent ink. */
+[data-highlight='true'] {
+  background: color-mix(in srgb, var(--case-accent) 22%, transparent);
+}
+
+.column[data-highlight='true'] {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: var(--case-accent-ink);
+}
+
+/* Chips: filled with a tick (yes), half filled (partial), empty (no). */
+.mark {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: var(--mini-stroke) solid var(--case-text);
+  border-radius: 50%;
+  color: var(--case-surface);
+  vertical-align: middle;
+}
+
+.mark[data-mark='yes'] {
+  background: var(--case-text);
+}
+
+.mark[data-mark='partial'] {
+  background: linear-gradient(90deg, var(--case-text) 50%, transparent 50%);
+}
+
+.mark[data-mark='no'] {
+  border-color: var(--case-text-label);
+}
+
+.caption {
+  font-family: 'Author Variable', sans-serif;
+  font-size: var(--story-small-size);
+  line-height: 1.4;
+  text-align: center;
+  color: var(--case-text-label);
+  text-wrap: balance;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

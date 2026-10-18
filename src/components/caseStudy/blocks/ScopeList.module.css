@@ -1,0 +1,72 @@
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--story-card-pad);
+  padding: var(--story-card-pad);
+  border: 1px solid var(--case-card-border);
+  border-radius: var(--story-card-radius);
+  background: var(--case-surface);
+}
+
+@media (min-width: 641px) {
+  .card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  text-align: center;
+}
+
+.label {
+  margin: 0;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: var(--story-eyebrow-size);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--case-accent-ink);
+}
+
+.column[data-muted='true'] .label {
+  color: var(--case-text-label);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Author Variable', sans-serif;
+  font-size: var(--story-small-size);
+  line-height: 1.35;
+  color: var(--case-text);
+}
+
+.column[data-muted='true'] .item {
+  color: var(--case-text-label);
+}
+
+.tick {
+  flex: none;
+  color: var(--case-accent-ink);
+}
+
+.dash {
+  flex: none;
+  color: var(--case-text-label);
+}

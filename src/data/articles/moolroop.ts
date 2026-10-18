@@ -1,11 +1,8 @@
-import type { ArticleData } from '../../components/article/types';
+import type { StoryData } from '../../components/caseStudy/blocks/types';
 import { LINKS } from '../links';
 import type { ImageSetData } from '../../components/article/ImageSet';
-import type { ComparisonData } from '../../components/caseStudy/moolroop/ComparisonTable';
-import type { StepFlowData } from '../../components/caseStudy/moolroop/StepFlow';
 import type { SitemapNode } from '../../components/caseStudy/moolroop/SitemapTree';
 import type { ScreenRowData } from '../../components/caseStudy/moolroop/ScreenRow';
-import type { VisualLanguageData } from '../../components/caseStudy/moolroop/VisualLanguage';
 import giSearch from '../../assets/images/moolroop/article/gi-search-registered-applications.webp';
 import loader1 from '../../assets/images/moolroop/article/loader-1.webp';
 import loader2 from '../../assets/images/moolroop/article/loader-2.webp';
@@ -25,311 +22,506 @@ import bag from '../../assets/images/moolroop/article/bag.webp';
 
 const PROTOTYPE_LINK = { label: 'Try the Prototype →', href: LINKS.moolroopPrototype };
 
-/* Copy and order follow docs/case-studies/moolroop-case-study.md exactly. */
-export const MOOLROOP_ARTICLE: ArticleData = {
+/* Copy, order, components, table data and index labels follow
+   moolroop-case-study-v2.md exactly. Items marked [CONFIRM] there are left
+   out: Reflections, the "Two layers" con, the two "what it would mean"
+   lines and the measurement note. "Verification shouldn't be a research
+   project" returns from the previous case study as a highlight line. */
+export const MOOLROOP_STORY: StoryData = {
+  context: 'Self-initiated project · Mobile app · 2026',
   title: 'Making authenticity as easy to verify as price',
   subtitle: 'A buyer-side app that brings government craft certification into the shopping journey',
-  role: 'Solo designer and researcher',
-  duration: '1 month (2026)',
-  tags: ['Buyer-side Mobile App', 'Information Architecture', 'Figma Prototype'],
+  tags: ['Buyer-side Mobile App', 'UX Research', 'Information Architecture', 'Figma Prototype'],
   links: [PROTOTYPE_LINK],
-  tldr: [
-    {
-      label: 'Problem:',
-      text: 'Proof that an Indian craft is genuine already exists in government records, but it sits several clicks away from where people actually shop.',
-    },
-    {
-      label: 'What I did:',
-      text: 'Mapped how authenticity is communicated today, then designed a buyer-side app where verification is part of browsing, not a detour from it.',
-    },
-    {
-      label: 'What I designed:',
-      text: 'A two-layer verification system, a quick summary for everyone and the full record for anyone who wants it, inside a shopping flow that stays familiar.',
-    },
-  ],
   sections: [
     {
-      number: '01',
-      title: 'The proof exists. Nobody uses it.',
-      shortLabel: 'The proof',
-      quote: 'The problem was never missing information. It was the effort it takes to use it.',
+      id: 'tldr',
+      eyebrow: 'TL;DR',
+      shortLabel: 'TL;DR',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'A GI tag (Geographical Indication) is a government-issued legal certification that ties a craft to a specific place, process and community of makers: a Kashmiri Pashmina, a Sanganeri block print. India has over 400 of them. In theory, a buyer can check whether a product is genuine. In practice, almost nobody does, because the information is fragmented, hard to access and completely disconnected from the buying journey.',
-            },
-            {
-              type: 'paragraph',
-              text: 'I noticed the gap while freelance-writing product descriptions for craft sellers, sourcing details from the same government databases. The records were detailed and public. They just lived in a registry that no shopper would ever open in the middle of a purchase.',
-            },
+          type: 'body',
+          paragraphs: [
+            'Proof that an Indian craft is genuine already exists in government records, but it sits several clicks away from where people actually shop.',
+            'I mapped how authenticity is communicated today, then designed a buyer-side app where verification is part of browsing, not a detour from it. The result is a two-layer verification system, a quick summary for everyone and the full record for anyone who wants it, inside a shopping flow that stays familiar.',
           ],
         },
         {
-          type: 'visual',
+          type: 'infoCard',
+          items: [
+            { label: 'My role', values: ['Solo designer and researcher'] },
+            { label: 'Duration', values: ['1 month (2026)'] },
+            { label: 'Methods', values: ['Desk research, community listening', 'Competitive audit, information architecture'] },
+            { label: 'Deliverable', values: ['Interactive Figma prototype'] },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'problem',
+      eyebrow: 'Problem',
+      heading: 'The proof exists. Nobody uses it.',
+      shortLabel: 'Problem',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'A GI tag (Geographical Indication) is a government-issued legal certification that ties a craft to a specific place, process and community of makers: a Kashmiri Pashmina, a Sanganeri block print. In theory, a buyer can check whether a product is genuine. In practice, almost nobody does.',
+          ],
+        },
+        {
+          type: 'stats',
+          stats: [
+            { value: '400+', label: 'GI-registered products in India' },
+            { value: '0', label: 'of five craft platforms reviewed link to the official registry' },
+          ],
+        },
+        {
+          type: 'insights',
+          compact: true,
+          cards: [
+            { title: 'Fragmented', text: 'spread across registry pages, not one place', visual: 'scattered-docs' },
+            { title: 'Hard to access', text: 'built for applications, not shoppers', visual: 'dense-row' },
+            { title: 'Disconnected from buying', text: 'nowhere near a buy button', visual: 'broken-link' },
+          ],
+        },
+        { type: 'highlight', text: 'The problem was never missing information. It was the effort it takes to use it.' },
+        {
+          type: 'frame',
           id: 'official-record',
-          heading: 'The Official Record',
-          tone: 'accent',
+          title: 'The official record',
           caption: "GI Search, the government's registered applications database. Accurate, public and nowhere near a buy button.",
         },
-      ],
-    },
-    {
-      number: '02',
-      title: 'Understanding the existing experience',
-      shortLabel: 'Existing experience',
-      quote: "Buyers keep asking if it's real. No platform makes it easy to answer.",
-      blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'Before proposing anything, I looked at how authenticity is communicated today across three sources: the official GI databases, community discussions such as Reddit, and existing craft marketplaces.',
-            },
-            {
-              type: 'paragraph',
-              text: "Buyers frequently ask whether a product is genuine, especially for high-value handicrafts bought online. Even Amazon Karigar, India's largest artisan programme, has been reported to fail at telling authentic craft apart from mass-produced imitations.",
-            },
-            {
-              type: 'paragraph',
-              text: 'I then compared five platforms that sell Indian handicrafts against six authenticity criteria. Most cleared one or two at best. None showed a GI registration number or linked to the official registry. That made the direction clear: not another craft marketplace, but a shopping experience where verification is built in.',
-            },
-          ],
-        },
-        {
-          type: 'visual',
-          id: 'competitive-landscape',
-          heading: 'Competitive Landscape',
-          tone: 'dark',
-          caption: 'Discovery by origin is common. Proof of origin is not.',
+          type: 'note',
+          lead: 'How I found it:',
+          text: 'while freelance-writing product descriptions for craft sellers, I sourced details from these same government databases. The records were detailed and public. They just lived in a registry no shopper would open in the middle of a purchase.',
         },
       ],
     },
     {
-      number: '03',
-      title: 'Turning six steps into one tap',
-      shortLabel: 'One tap',
-      quote: "Verification shouldn't be a research project.",
+      id: 'research',
+      eyebrow: 'Research',
+      heading: "Buyers keep asking if it's real",
+      shortLabel: 'Research',
       blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'body',
+          paragraphs: ['Before proposing anything, I looked at how authenticity is communicated today across three sources.'],
+        },
+        {
+          type: 'miniCards',
+          cards: [
             {
-              type: 'paragraph',
-              text: 'Today, a careful buyer has to browse a product, notice a GI claim, search a government website, find the registration, compare it with the seller\'s details and then decide whether to trust it. Most people stop at step two.',
+              title: 'Official GI databases',
+              text: "what the records contain and how they're accessed",
+              visual: 'registry-row',
             },
-            {
-              type: 'paragraph',
-              text: 'MoolRoop collapses that into a single action. Browse, tap Verify, read a summary of the official record, decide. The design goal was specific: reduce the effort required to verify authenticity without replacing the official source.',
-            },
-            {
-              type: 'paragraph',
-              text: 'Three principles followed from that goal and guided every screen:',
-            },
-            {
-              type: 'list',
-              items: [
-                [
-                  { bold: 'Trust should be immediate.' },
-                  ' A buyer should understand whether a product is authentic within seconds, without reading official documents.',
-                ],
-                [
-                  { bold: 'Verification should stay transparent.' },
-                  ' The app summarises official records but never replaces them. Every summary links directly to the original government source.',
-                ],
-                [
-                  { bold: 'Provenance is part of discovery.' },
-                  " Authenticity isn't only a certificate. Knowing where a craft comes from and how it's made is part of why it's worth buying.",
-                ],
-              ],
-            },
+            { title: 'Community discussions', text: 'what buyers ask, on forums such as Reddit', visual: 'forum-post' },
+            { title: 'Craft marketplaces', text: 'how platforms communicate authenticity', visual: 'vague-label' },
           ],
         },
         {
-          type: 'visual',
-          id: 'opportunity',
-          heading: 'The Opportunity',
-          tone: 'brand',
+          type: 'insights',
+          label: 'Key insights',
+          compact: true,
+          cards: [
+            {
+              title: 'Doubt is common',
+              text: 'buyers frequently ask whether a product is genuine, especially for high-value handicrafts bought online.',
+              visual: 'question-product',
+            },
+            {
+              title: 'Even the biggest programme struggles',
+              text: "Amazon Karigar, India's largest artisan programme, has been reported to fail at telling authentic craft apart from mass-produced imitations.",
+              visual: 'lookalikes',
+            },
+            {
+              title: 'Origin is shown, proof is not',
+              text: 'platforms let you browse by region, but none prove where a product comes from.',
+              visual: 'pin-no-cert',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'audit',
+      eyebrow: 'Competitive audit',
+      heading: 'Discovery by origin is common. Proof of origin is not.',
+      shortLabel: 'Audit',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'I compared five platforms that sell Indian handicrafts against six authenticity criteria. Most cleared one or two at best. None showed a GI registration number or linked to the official registry.',
+          ],
+        },
+        {
+          type: 'comparison',
+          table: {
+            columns: [
+              { name: 'Amazon Karigar' },
+              { name: 'GiTagged' },
+              { name: 'GoSwadeshi' },
+              { name: 'India Handmade' },
+              { name: 'iTokri' },
+              { name: 'MoolRoop', note: '(proposal)', highlight: true },
+            ],
+            rows: [
+              { label: 'Mobile app', marks: ['yes', 'yes', 'no', 'yes', 'no', 'yes'] },
+              { label: 'GI-certified products only', marks: ['no', 'yes', 'no', 'no', 'no', 'yes'] },
+              { label: 'Shows GI registration number', marks: ['no', 'no', 'no', 'no', 'no', 'yes'] },
+              { label: 'Links to official registry', marks: ['no', 'no', 'no', 'no', 'no', 'yes'] },
+              { label: 'Shows authorised seller info', marks: ['no', 'no', 'no', 'no', 'partial', 'yes'] },
+              { label: 'Discovery by geographic origin', marks: ['partial', 'partial', 'yes', 'partial', 'yes', 'yes'] },
+            ],
+          },
+        },
+        {
+          type: 'note',
+          lead: 'What this ruled out:',
+          text: 'not another craft marketplace, but a shopping experience where verification is built in.',
+        },
+      ],
+    },
+    {
+      id: 'opportunity',
+      eyebrow: 'Opportunity',
+      heading: 'Turning six steps into one tap',
+      shortLabel: 'Opportunity',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'Today, a careful buyer has to leave the shopping journey to verify anything. Most people stop at step two.',
+          ],
+        },
+        {
+          type: 'journey',
           caption: 'Six steps, most of them outside the app, become four inside it.',
+          journeys: [
+            {
+              label: 'Today',
+              dropAfter: 2,
+              steps: [
+                { text: 'Browse product' },
+                { text: 'Notice GI tag' },
+                { text: 'Search government website', outside: true },
+                { text: 'Find registration', outside: true },
+                { text: 'Compare seller details', outside: true },
+                { text: 'Trust (?) and decide' },
+              ],
+            },
+            {
+              label: 'MoolRoop',
+              accent: true,
+              steps: [
+                { text: 'Browse product' },
+                { text: 'Tap Verify' },
+                { text: 'Verification summary and records' },
+                { text: 'Decide' },
+              ],
+            },
+          ],
+        },
+        { type: 'highlight', text: "Verification shouldn't be a research project." },
+        {
+          type: 'callout',
+          icon: 'target',
+          label: 'Design goal',
+          text: 'Reduce the effort required to verify authenticity, without replacing the official source.',
         },
         {
-          type: 'group',
-          content: [
+          type: 'insights',
+          label: 'Design principles',
+          compact: true,
+          cards: [
             {
-              type: 'paragraph',
-              text: [
-                { bold: 'Scope.' },
-                ' MoolRoop is deliberately buyer-side: no login, no checkout and no seller flows. The prototype focuses on the journey that matters, from discovery to verification.',
-              ],
+              title: 'Trust should be immediate',
+              text: 'a buyer should understand whether a product is authentic within seconds, without reading official documents.',
+              visual: 'stopwatch-tick',
+            },
+            {
+              title: 'Verification should stay transparent',
+              text: 'the app summarises official records but never replaces them; every summary links to the government source.',
+              visual: 'summary-link',
+            },
+            {
+              title: 'Provenance is part of discovery',
+              text: "knowing where a craft comes from and how it's made is part of why it's worth buying.",
+              visual: 'pin-product',
             },
           ],
         },
       ],
     },
     {
-      number: '04',
-      title: 'Structure before screens',
-      shortLabel: 'Structure',
-      quote: 'I mapped the whole app before designing a single screen.',
+      id: 'scope',
+      eyebrow: 'Scope',
+      heading: 'Deliberately buyer-side',
+      shortLabel: 'Scope',
       blocks: [
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'I mapped the full structure first: home, categories, states, product pages, and exactly where verification and provenance would sit inside them. Three structural decisions came out of that map, and each one is a choice between the obvious pattern and the one this problem needed.',
-            },
-            {
-              type: 'list',
-              items: [
-                [
-                  { bold: 'One craft, many products.' },
-                  ' The obvious pattern is one listing per product. But a single craft like Pashmina can be sold as a shawl, a kurta or a saree, each possibly from a different seller. So every craft has its own page with all its SKUs underneath. Verification stays tied to the craft, while sellers and formats vary below it.',
-                ],
-                [
-                  { bold: 'Two independent ways in.' },
-                  ' Most marketplaces support one browsing path well. But "what\'s made in Rajasthan?" and "I need a gift" are genuinely different searches. MoolRoop treats geography (state) and use (type) as two independent filters, so both paths stay equally short.',
-                ],
-                [
-                  { bold: 'Search that never hides.' },
-                  " Search usually lives behind its own tap. Since the app's whole purpose is reducing effort, the search bar stays visible across every browsing screen.",
-                ],
-              ],
-            },
+          type: 'body',
+          paragraphs: ['The prototype focuses on the journey that matters, from discovery to verification.'],
+        },
+        {
+          type: 'scope',
+          inScope: [
+            'Discovery by category and state',
+            'Craft and product pages',
+            'Verification and provenance',
+            'Search, wishlist, bag',
+          ],
+          outOfScope: ['Login and signup', 'Checkout', 'Seller flows'],
+        },
+      ],
+    },
+    {
+      id: 'structure',
+      eyebrow: 'Information architecture',
+      heading: 'Structure before screens',
+      shortLabel: 'Structure',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            'I mapped the full app before designing a single screen: home, categories, states, product pages, and exactly where verification and provenance would sit. Three structural decisions came out of that map, each a choice between the obvious pattern and the one this problem needed.',
           ],
         },
         {
-          type: 'visual',
+          type: 'frame',
           id: 'app-structure',
-          heading: 'App Structure',
-          tone: 'dark',
+          title: 'App structure',
           caption: 'Two entry points, one product page, and verification exactly one tap deep.',
         },
-      ],
-    },
-    {
-      number: '05',
-      title: 'Designing the journey',
-      shortLabel: 'The journey',
-      quote: 'Familiar where it should be. Different only where it matters.',
-      blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'decisions',
+          label: 'Key decisions',
+          items: [
             {
-              type: 'paragraph',
-              text: 'The app opens with a short welcome sequence, then drops the buyer into a shopping experience that looks deliberately familiar. GI-certified crafts sit inside the layouts people already know, so discovery never feels like a detour into paperwork.',
+              title: 'One craft, many products',
+              obvious: 'one listing per product',
+              needed: 'every craft gets its own page, with all its SKUs underneath',
+              why: 'a single craft like Pashmina can be a shawl, a kurta or a saree, each possibly from a different seller. Verification stays tied to the craft while sellers and formats vary below it.',
+              visual: 'craft-branch',
+            },
+            {
+              title: 'Two independent ways in',
+              obvious: 'one browsing path done well',
+              needed: 'geography (state) and use (type) as two independent filters',
+              why: '"what\'s made in Rajasthan?" and "I need a gift" are genuinely different searches, so both paths stay equally short.',
+              visual: 'two-entries',
+            },
+            {
+              title: 'Search that never hides',
+              obvious: 'search behind its own tap',
+              needed: 'a search bar visible on every browsing screen',
+              why: "the app's whole purpose is reducing effort.",
+              visual: 'search-grid',
             },
           ],
         },
+      ],
+    },
+    {
+      id: 'design',
+      eyebrow: 'Design',
+      heading: 'Familiar where it should be. Different only where it matters.',
+      shortLabel: 'Design',
+      blocks: [
         {
-          type: 'visual',
+          type: 'body',
+          paragraphs: [
+            'GI-certified crafts sit inside the layouts people already know, so discovery never feels like a detour into paperwork.',
+          ],
+        },
+        {
+          type: 'step',
+          number: '01',
+          title: 'A short welcome, then straight to shopping',
+          text: 'The app opens with a three-screen welcome sequence that sets the promise, then drops the buyer into a familiar shopping experience.',
+        },
+        {
+          type: 'frame',
           id: 'first-impression',
-          heading: 'First Impression',
-          tone: 'accent',
+          title: 'First impression',
           caption: 'A short welcome sequence before the shopping begins.',
         },
-        { type: 'visual', id: 'two-ways-in', heading: 'Two Ways In', tone: 'brand' },
         {
-          type: 'group',
-          content: [
+          type: 'step',
+          number: '02',
+          title: 'Two ways in, one craft page',
+          text: 'Home offers both entry points side by side. Category and state pages lead to the same craft page, where every SKU sits under one verified craft.',
+        },
+        { type: 'frame', id: 'two-ways-in', title: 'Two ways in' },
+        {
+          type: 'step',
+          number: '03',
+          title: 'Every product tells two stories',
+          text: 'Every product page carries the item for sale and the place it comes from. The origin sits beside the price, not behind a separate link.',
+        },
+        { type: 'frame', id: 'two-stories', title: 'Two stories' },
+      ],
+    },
+    {
+      id: 'verification',
+      eyebrow: 'Verification',
+      heading: 'The hardest design problem',
+      shortLabel: 'Verification',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            "Verification had to be fast enough that people actually use it, and honest enough that it's worth using.",
+          ],
+        },
+        {
+          type: 'options',
+          items: [
             {
-              type: 'paragraph',
-              text: 'Every product page carries two stories at once: the item for sale and the place it comes from. The origin sits beside the price, not behind a separate link a buyer has to go looking for.',
+              name: 'A trust badge',
+              visual: 'badge',
+              pro: 'fast, readable at a glance',
+              con: "asks the buyer to take the app's word for it",
+            },
+            {
+              name: 'The full registry record',
+              visual: 'dense-doc',
+              pro: 'honest and complete',
+              con: 'no one can read it at a glance',
+            },
+            {
+              name: 'Two layers',
+              visual: 'two-layers',
+              pro: 'a plain summary for everyone, the full record for anyone who wants proof',
+              chosen: true,
             },
           ],
         },
-        { type: 'visual', id: 'two-stories', heading: 'Two Stories', tone: 'dark' },
         {
-          type: 'group',
-          content: [
+          type: 'findings',
+          items: [
             {
-              type: 'paragraph',
-              text: "Verification was the hardest design problem. A trust badge alone is fast, but it asks the buyer to take the app's word for it. The full registry record is honest, but no one can read it at a glance. So verification works in two layers. The first is a plain-language summary that confirms whether the seller is authorised. The second is the full GI registration and seller detail, with a link to the original government record. The buyer decides how deep to go.",
+              title: 'Layer 1: the summary',
+              text: 'a plain-language check that confirms the seller is authorised, the GI registration is active, the product is eligible and official details are available.',
+            },
+            {
+              title: 'Layer 2: the full record',
+              text: 'seller details, GI registration and certificate numbers, what the GI protects and who tests and certifies it, with a link to the original government record.',
             },
           ],
         },
         {
-          type: 'visual',
+          type: 'frame',
           id: 'verify',
-          heading: 'Verify in One Tap',
-          tone: 'brand',
-          caption: 'Quick for most people, complete for anyone who wants proof.',
+          title: 'Verify in one tap',
+          caption: 'Quick for most people, complete for anyone who wants proof. The buyer decides how deep to go.',
         },
         {
-          type: 'group',
-          content: [
-            {
-              type: 'paragraph',
-              text: 'Everything else stays deliberately plain. Menu, wishlist and bag do their job and get out of the way, so verification is the one thing in the app that stands out.',
-            },
+          type: 'subsection',
+          title: 'Kept plain on purpose',
+          paragraphs: [
+            'Menu, wishlist and bag do their job and get out of the way, so verification is the one thing in the app that stands out.',
           ],
         },
-        { type: 'visual', id: 'kept-plain', heading: 'Kept Plain on Purpose', tone: 'accent' },
+        { type: 'frame', id: 'kept-plain', title: 'Kept plain on purpose' },
       ],
     },
     {
-      number: '06',
-      title: 'Visual language',
+      id: 'visual-language',
+      eyebrow: 'Visual language',
+      heading: 'Rooted in craft, without looking like a government website',
       shortLabel: 'Visual language',
-      quote: 'Rooted in craft, without looking like a government website.',
       blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'body',
+          paragraphs: [
+            'The visual language had to feel trustworthy without feeling official, and warm without becoming decorative.',
+          ],
+        },
+        {
+          type: 'miniCards',
+          cards: [
+            { title: 'Fletcha M', text: 'headings: a crafted, editorial character', visual: 'aa-standin' },
             {
-              type: 'paragraph',
-              text: 'The visual language had to feel trustworthy without feeling official, and warm without becoming decorative. Fletcha M gives headings a crafted, editorial character. Open Sans keeps product details, prices and verification text easy to read at small sizes. Five colours carry the app, with a near-black to keep it grounded.',
+              title: 'Open Sans',
+              text: 'body: product details, prices and verification text stay readable at small sizes',
+              visual: 'aa-open-sans',
             },
           ],
         },
         {
-          type: 'visual',
-          id: 'visual-language',
-          heading: 'Visual Language',
-          tone: 'dark',
+          type: 'swatches',
           caption: 'Two typefaces, five colours, one job: make verification feel trustworthy, not bureaucratic.',
+          swatches: [
+            { hex: '#D9CE6A' },
+            { hex: '#BF393C' },
+            { hex: '#2B4C5F' },
+            { hex: '#F3B5C0' },
+            { hex: '#24211F', note: 'near-black that keeps it grounded' },
+          ],
         },
       ],
     },
     {
-      number: '07',
-      title: "What this does, and doesn't, solve",
-      shortLabel: 'What it solves',
-      quote: "This doesn't end counterfeiting. It makes honesty easier to prove.",
+      id: 'impact',
+      eyebrow: 'Impact and limits',
+      heading: "This doesn't end counterfeiting. It makes honesty easier to prove.",
+      shortLabel: 'Impact',
       blocks: [
         {
-          type: 'group',
-          content: [
+          type: 'body',
+          paragraphs: [
+            'MoolRoop started as a question about trust and became an exercise in making public information usable.',
+          ],
+        },
+        {
+          type: 'findings',
+          items: [
+            { title: 'What it does:', text: 'makes fraud more visible and more effortful.' },
+            { title: 'Who it helps:', text: 'gives honest sellers a way to show proof.' },
+            { title: "What it doesn't:", text: "it doesn't solve counterfeiting on its own." },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'testing',
+      eyebrow: "What I'd test first",
+      heading: "Do buyers open the trail, or just trust it's there?",
+      shortLabel: 'Testing',
+      blocks: [
+        {
+          type: 'body',
+          paragraphs: [
+            "Those are two different UX outcomes, and they would lead the design in different directions. That is the first thing I'd test with real users.",
+          ],
+        },
+        { type: 'options', items: [{ name: 'They open it' }, { name: "They trust it's there" }] },
+      ],
+    },
+    {
+      id: 'whats-next',
+      eyebrow: "What's next",
+      heading: 'Where it could go',
+      shortLabel: "What's next",
+      blocks: [
+        {
+          type: 'miniCards',
+          cards: [
             {
-              type: 'paragraph',
-              text: "MoolRoop started as a question about trust and became an exercise in making public information usable. It doesn't solve counterfeiting. What the provenance trail does is make fraud more visible and more effortful, and give honest sellers a way to show proof.",
+              title: 'Live registry integration',
+              text: 'syncing authorised seller information from official databases automatically',
+              visual: 'sync',
             },
+            { title: 'QR verification', text: 'scan a GI label in a shop and check it instantly', visual: 'qr' },
+            { title: 'Artisan profiles', text: 'introduce the people behind each craft', visual: 'profile' },
             {
-              type: 'paragraph',
-              text: "The most important open question is one only real users can answer: do buyers actually open the verification trail, or do they simply trust that it's there? Those are two different UX outcomes, and they would lead the design in different directions. That is the first thing I'd test.",
-            },
-            { type: 'paragraph', text: 'Where it could go next:' },
-            {
-              type: 'list',
-              items: [
-                [
-                  { bold: 'Live registry integration' },
-                  ', syncing authorised seller information from official databases automatically.',
-                ],
-                [
-                  { bold: 'QR verification' },
-                  ', so a buyer can scan a GI label in a shop and check it instantly.',
-                ],
-                [{ bold: 'Artisan profiles' }, ' that introduce the people behind each craft.'],
-                [
-                  { bold: 'A seller dashboard' },
-                  ' for verified sellers to manage products and certification details.',
-                ],
-              ],
+              title: 'Seller dashboard',
+              text: 'verified sellers manage products and certification details',
+              visual: 'dashboard',
             },
           ],
         },
@@ -338,8 +530,11 @@ export const MOOLROOP_ARTICLE: ArticleData = {
   ],
   closingLink: PROTOTYPE_LINK,
   accent: 'var(--accent-moolroop)',
+  framePanel: 'var(--moolroop-poster-maroon)',
+  framePanelInk: 'var(--case-study-white)',
   lampColor: 'var(--moolroop-poster-maroon)',
   tagColor: 'var(--moolroop-poster-maroon)',
+  accentInk: { dark: 'var(--moolroop-red-light)', light: 'var(--moolroop-red-deep)' },
 };
 
 export const MOOLROOP_RECORD: ImageSetData = {
@@ -352,43 +547,6 @@ export const MOOLROOP_RECORD: ImageSetData = {
       alt: "GI Search Version 2.0, the government's Registered Applications table: application numbers alongside registered indications such as Darjeeling Tea, Pochampally Ikat, Chanderi Sarees and Mysore Silk, each with a View link.",
     },
   ],
-};
-
-export const MOOLROOP_COMPARISON: ComparisonData = {
-  columns: [
-    { name: 'Amazon Karigar' },
-    { name: 'GiTagged' },
-    { name: 'GoSwadeshi' },
-    { name: 'India Handmade' },
-    { name: 'iTokri' },
-    { name: 'MoolRoop', note: 'My proposal', highlight: true },
-  ],
-  rows: [
-    { label: 'Mobile app', marks: ['yes', 'yes', 'no', 'yes', 'no', 'yes'] },
-    { label: 'GI-certified products only', marks: ['no', 'yes', 'no', 'no', 'no', 'yes'] },
-    { label: 'Shows GI registration number', marks: ['no', 'no', 'no', 'no', 'no', 'yes'] },
-    { label: 'Links to official registry', marks: ['no', 'no', 'no', 'no', 'no', 'yes'] },
-    { label: 'Shows authorised seller info', marks: ['no', 'no', 'no', 'no', 'partial', 'yes'] },
-    { label: 'Discovery by geographic origin', marks: ['partial', 'partial', 'yes', 'partial', 'yes', 'yes'] },
-  ],
-};
-
-export const MOOLROOP_FLOW: StepFlowData = {
-  before: {
-    label: 'TODAY',
-    steps: [
-      'Browse product',
-      'Notice GI tag',
-      'Search government website',
-      'Find registration',
-      'Compare seller details',
-      'Trust (?) and decide',
-    ],
-  },
-  after: {
-    label: 'MOOLROOP',
-    steps: ['Browse product', 'Tap Verify', 'Verification summary and records', 'Decide'],
-  },
 };
 
 const PRODUCT_FLOW: SitemapNode = {
@@ -438,7 +596,7 @@ export const MOOLROOP_SITEMAP: { root: SitemapNode } = {
   },
 };
 
-/* Phone-framed screen bands, keyed by visual id. */
+/* Phone-framed screen rows for the VisualFrames, keyed by frame id. */
 export const MOOLROOP_SCREENS: Record<string, ScreenRowData> = {
   'first-impression': {
     screens: [
@@ -532,13 +690,4 @@ export const MOOLROOP_SCREENS: Record<string, ScreenRowData> = {
       },
     ],
   },
-};
-
-export const MOOLROOP_VISUAL_LANGUAGE: VisualLanguageData = {
-  typefaces: [
-    /* Not available to load here, so it's shown in a stand-in. */
-    { name: 'Fletcha M', role: 'Headings' },
-    { name: 'Open Sans', role: 'Body', fontFamily: "'Open Sans Variable', sans-serif" },
-  ],
-  colours: ['#D9CE6A', '#BF393C', '#2B4C5F', '#F3B5C0', '#24211F'],
 };

@@ -38,6 +38,13 @@
   --dissertation-navy: #032357;
   --dissertation-sky: #b2ceff;
   --moolroop-poster-maroon: #bf393c;
+  /* MoolRoop's red as text: lighter on the dark page (6.8:1), deeper on
+     cream (5.35:1); and the rest of its five-colour palette for the minis */
+  --moolroop-red-light: #ef8a8c;
+  --moolroop-red-deep: #9f2c2f;
+  --moolroop-teal: #2b4c5f;
+  --moolroop-pink: #f3b5c0;
+  --moolroop-ink: #24211f;
   --fraud-cta-hover-green: #25873a;
   --fraud-alert-bg: #fff090;
   --fraud-alert-text: #7b6a24;
@@ -91,19 +98,16 @@
   --case-bg: var(--case-study-grey);
   --case-text: var(--case-study-white);
   --case-text-soft: var(--text-cream);
-  --case-text-muted: var(--case-study-light-grey);
   --case-text-subtle: var(--case-study-light-grey);
   /* Small labels on cards (eyebrow sub-labels, chart and dot labels):
      4.5:1 or more on every surface in both modes. */
   --case-text-label: #a6a6a6;
   --case-surface: var(--case-study-black);
-  --case-highlight: var(--color-brand);
   --case-tag-border: var(--color-brand);
   --case-hero-button-bg: var(--case-study-white);
   --case-hero-button-ink: var(--case-study-grey);
   --case-progress-track: var(--case-study-black);
   --case-progress-fill: var(--color-brand);
-  --case-band-edge: transparent;
 
   /* Story case study blocks (src/components/caseStudy/blocks): soft cards on
      the page, with a faint border and a recessed area for mini UI. */
@@ -128,8 +132,8 @@
   --theme-fade-duration: 150ms;
 
   /* Case study reading column: one centred column, half the screen wide
-     within 620 to 760px. Everything in the article (hero, TL;DR, text and
-     band cards) uses it, so every edge lines up; the back button and
+     within 620 to 760px. Everything in the article (hero, sections and
+     visual frames) uses it, so every edge lines up; the back button and
      section index (the rail, up to --rail-w) sit in the left margin, the
      lamp in the right. Tablet and mobile use the page padding only (see
      the media queries below). */
@@ -138,17 +142,13 @@
   --rail-text-size: clamp(13px, calc(13px + (100vw - 1025px) * (3 / 255)), 16px);
   --rail-back-h: 28px;
   --article-col-w: clamp(620px, 50vw, 760px);
-  /* Pull quotes: 36px at 1025, growing to 44px at 1520, where the column
-     reaches its widest; 26 to 30px below desktop. */
+  /* Highlight lines: 36px at 1025, growing to 44px at 1520, where the
+     column reaches its widest; 26 to 30px below desktop. */
   --article-pull-quote-size: clamp(36px, calc(36px + (100vw - 1025px) * (8 / 495)), 44px);
 
-  /* Long-form case study articles (Figma 1261:208). The text column spans
-     the same width as the nav (page minus --page-pad-x each side). */
+  /* Space above the article and around the end links */
   --article-gap: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
-  /* One even rhythm inside a section: heading, pull quote, paragraph
-     groups and visual bands. */
-  --section-gap: clamp(20px, calc(20px + (100vw - 393px) * (4 / 887)), 24px);
-  /* Story case studies: one spacing system, applied only through parent
+  /* Case studies: one spacing system, applied only through parent
      gaps (components have no outer margins). Inside a section: eyebrow to
      heading 2xs, heading to body and paragraph to paragraph sm, anything
      to a card, visual or other component md. Between sections (and hero to
@@ -160,7 +160,7 @@
   /* One fixed height for the illustration area of every card in a row */
   --story-illustration-h: 150px;
   --story-mini-illustration-h: 104px;
-  /* Mini illustrations (FraudMinis): one corner radius, shadow and stroke
+  /* Mini illustrations (each case study's *Minis): one corner radius, shadow and stroke
      for every snippet, and soft tints for the language chips. */
   --mini-radius: 8px;
   --mini-radius-inner: 5px;
@@ -183,48 +183,24 @@
   --story-reveal-stagger: 70ms;
   --article-body-size: clamp(18px, calc(18px + (100vw - 393px) * (2 / 887)), 20px);
   --article-body-leading: 1.45;
-  --article-section-title-size: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
   --article-hero-image-h: 480px;
   --article-hero-image-ratio: 4 / 3;
 
-  /* Visual bands: a large serif heading with the visual's box overlapping its
-     lower part. The box reaches 16px past the page padding on each side
-     (Figma: 1184 vs 1152 at 1280). */
-  --band-pad-y: 24px;
-  --band-pad-x: max(16px, calc(var(--page-pad-x) - 16px));
-  /* Desktop: each band is a card as wide as the text column, with the visual's
-     box inset by --band-card-pad. One heading size for every band at a given
-     width, set by the longest heading (about 9.5em) so it fits the box: a
-     tenth of the box width (about 70px at 1280), up to 80px. The overlap is
-     in em, so the box covers the same share of the heading at any size. */
-  --band-card-radius: 12px;
-  --band-card-pad: clamp(20px, 2vw, 40px);
-  --band-heading-size: clamp(
-    40px,
-    calc((var(--article-col-w) - 2 * var(--band-card-pad)) / 10),
-    80px
-  );
-  --band-heading-overlap: 0.3em;
-  --band-caption-gap: 16px;
+  /* Padding of a visual frame's panel */
   --band-box-pad: clamp(16px, calc(16px + (100vw - 393px) * (24 / 887)), 40px);
-  /* Each case study's accent, for its accent-tone visual boxes (set per page
-     as --case-accent). 80% fills, so the grid shows faintly through. */
+  /* Each case study's accent at 80% (set per page as --case-accent): frame
+     panels, the proposal's column in comparison tables. */
   --accent-dissertation: rgba(178, 206, 255, 0.8);
   --accent-dr-cuterus: #dec3e9cc;
   --accent-moolroop: #bf393ccc;
-  --band-tone-dark: rgba(18, 18, 18, 0.8);
-  --band-tone-brand: rgba(217, 206, 106, 0.64);
   --reveal-duration: 700ms;
-  --reveal-distance: 32px;
 
-  /* Visuals inside bands (Dr Cuterus and MoolRoop). On desktop the band box
-     is the text column's width (VisualBand), so visuals fill it, within the
-     height caps below; tablet narrows them to frame them like a mat.
-     --visual-inset adds to the box's own padding (40px desktop, 16px
-     mobile) for 64 / 20 in total.
-     --visual-chrome-h is what the band needs besides the visual (heading
-     overlap, paddings, caption, sticky header), so on desktop a band and
-     its whole visual fit one screen. */
+  /* Visuals inside frames (image sets, screen rows, diagrams). They fill
+     the frame within the height caps below; tablet narrows them to frame
+     them like a mat. --visual-inset adds to the panel's own padding.
+     --visual-chrome-h is what a frame needs besides the visual (title,
+     paddings, caption, sticky header), so on desktop a frame and its
+     whole visual fit one screen. */
   --visual-inset: clamp(4px, calc(4px + (100vw - 393px) * (20 / 887)), 24px);
   --visual-max-w: 100%;
   --visual-pair-max-w: 100%;
@@ -244,15 +220,10 @@
   --flip-fade-duration: 200ms;
   --flip-perspective: 1400px;
 
-  /* Step flows (MoolRoop "The Opportunity"): steps appear one by one */
-  --step-stagger: 90ms;
-  --step-reveal-distance: 12px;
-  --step-arrow-h: 20px;
-
   /* Fraud user journey (Figma 1276:1851) */
   --journey-strip-bg: rgba(3, 35, 87, 0.8);
   --journey-gap: clamp(12px, calc(12px + (100vw - 393px) * (8 / 887)), 20px);
-  /* Vertical space the band needs besides the screens themselves (toggle,
+  /* Vertical space the frame needs besides the screens themselves (toggle,
      strip padding, labels, caption, sticky header), so a desktop row of
      five always fits the viewport height. */
   --journey-chrome-h: 260px;
@@ -285,16 +256,13 @@
   --case-bg: var(--bg-canvas);
   --case-text: var(--case-study-black);
   --case-text-soft: var(--case-study-grey);
-  --case-text-muted: var(--case-study-grey);
   --case-text-subtle: #5c5c5c;
   --case-text-label: #545454;
   --case-surface: var(--case-study-white);
-  --case-highlight: var(--brand-yellow-dark);
   --case-tag-border: var(--case-tag-light);
   --case-hero-button-bg: var(--case-study-black);
   --case-hero-button-ink: var(--text-cream);
   --case-progress-track: var(--case-study-grey);
-  --case-band-edge: var(--grid-line);
   --focus-ring: var(--brand-yellow-dark);
   --lamp-handle: var(--case-study-black);
   --case-card-border: rgba(18, 18, 18, 0.14);
@@ -359,9 +327,6 @@
     --case-back-row: calc(var(--case-back-h) + var(--progress-gap));
     --lamp-scale: 0.8;
     --lamp-inset: 0px;
-    /* Tracks the viewport so the longest heading (about 9.5em wide) always
-       fits its band: about 34px on a 375 phone, 56px from 610 up. */
-    --band-heading-size: clamp(32px, 9.2vw, 56px);
     --article-col-w: 100%;
     --article-pull-quote-size: clamp(26px, calc(26px + (100vw - 393px) * (4 / 631)), 30px);
     --visual-max-w: min(85%, 880px);

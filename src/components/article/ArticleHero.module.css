@@ -1,17 +1,17 @@
-/* Figma 1261:208 / 1449:1025: everything stacked with a 32px rhythm in the
-   centred article column, text centred. Sizes ease from the 393 mobile
-   values to the 1280 desktop ones. */
+/* Everything stacked and centred in the article column, spaced by the
+   story spacing tokens. Sizes ease from the 393 mobile values to the 1280
+   desktop ones. */
 .hero {
   display: flex;
   flex-direction: column;
-  gap: var(--article-gap);
+  gap: var(--space-md);
   width: 100%;
 }
 
 .heading {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-sm);
   text-align: center;
 }
 
@@ -21,24 +21,10 @@
   gap: var(--space-2xs);
 }
 
-/* Role/Duration and tags, then the outbound links. */
+/* Tags, then the outbound links. */
 .meta {
   display: flex;
   flex-direction: column;
-  gap: var(--article-gap);
-}
-
-/* Story case studies: title to subtitle sm, subtitle to image and image to
-   tags md, tags to buttons sm. */
-.hero[data-spacing='story'] {
-  gap: var(--space-md);
-}
-
-.hero[data-spacing='story'] .heading {
-  gap: var(--space-sm);
-}
-
-.hero[data-spacing='story'] .meta {
   gap: var(--space-sm);
 }
 
@@ -100,46 +86,6 @@
   }
 }
 
-/* Role and Duration, then the tags on their own centred line. */
-.summary {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.points {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.point {
-  margin: 0;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-  line-height: 1;
-}
-
-.pointLabel {
-  font-family: 'Bricolage Grotesque Variable', sans-serif;
-  font-weight: var(--bricolage-light);
-  font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
-  letter-spacing: -0.04em;
-  color: var(--case-text-muted);
-}
-
-.pointValue {
-  font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-light);
-  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
-  color: var(--case-text);
-}
-
 .tags {
   margin: 0;
   padding: 0;
@@ -164,19 +110,6 @@
   white-space: nowrap;
 }
 
-@media (min-width: 641px) {
-  .points {
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: 20px;
-  }
-
-  .point {
-    flex-wrap: nowrap;
-    white-space: nowrap;
-  }
-}
-
 /* The hero's own buttons follow the reading mode (the end-of-page ones
    keep ArticleButton's defaults). */
 .links {
@@ -186,34 +119,4 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
-}
-
-/* A near-black box with a thin border; the index beside the article scrolls
-   it to just under the sticky header. */
-.tldr {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-  border: 1px solid var(--case-study-light-grey);
-  border-radius: 12px;
-  background: var(--case-surface);
-  text-align: center;
-  scroll-margin-top: calc(var(--case-header-h) + var(--article-gap));
-}
-
-.tldrItem {
-  margin: 0;
-  font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-regular);
-  font-size: clamp(16px, calc(16px + (100vw - 393px) * (4 / 887)), 20px);
-  line-height: 1.3;
-  color: var(--case-text);
-  text-wrap: pretty;
-  font-feature-settings: 'salt' 1;
-}
-
-.tldrLabel {
-  font-weight: var(--author-semibold);
-  color: var(--case-highlight);
 }

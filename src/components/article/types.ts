@@ -1,55 +1,10 @@
-/* Content schema for long-form case study articles. A case study is one data
-   file of these shapes, rendered by the generic article components. */
+/* Shared shapes for case study copy and links. */
 
-/* Plain text, or runs where some are bold (e.g. a list item's lead-in) or
-   italic (e.g. a book title). */
+/* Plain text, or runs where some are bold (e.g. a lead-in) or italic (e.g.
+   a book title). */
 export type RichText = string | Array<string | { bold: string } | { italic: string }>;
-
-export type ContentBlock =
-  | { type: 'paragraph'; text: RichText }
-  | { type: 'list'; items: RichText[] }
-  | { type: 'table'; label: string; columns: string[]; rows: string[][] };
-
-/* 'accent' is the case study's own colour (ArticleData.accent). */
-export type VisualTone = 'accent' | 'dark' | 'brand';
-
-export type ArticleBlock =
-  /* A run of paragraphs, lists or tables between visual bands. */
-  | { type: 'group'; content: ContentBlock[] }
-  /* A full-bleed visual band; `id` picks the page's visual component and
-     `caption` sits under its box. */
-  | { type: 'visual'; id: string; heading: string; tone: VisualTone; caption?: string };
-
-export interface ArticleSectionData {
-  number: string;
-  title: string;
-  /* One to three words for the section index beside the article. */
-  shortLabel: string;
-  /* At most one pull quote, shown under the heading. */
-  quote?: string;
-  blocks: ArticleBlock[];
-}
 
 export interface ArticleLink {
   label: string;
   href: string;
-}
-
-export interface ArticleData {
-  title: string;
-  subtitle: string;
-  role: string;
-  duration: string;
-  tags: string[];
-  links: ArticleLink[];
-  tldr: { label: string; text: string }[];
-  sections: ArticleSectionData[];
-  closingLink: ArticleLink;
-  /* Fill for accent-tone visual boxes, as a colour token; the page sets it
-     as --case-accent. */
-  accent: string;
-  /* The reading-mode lamp's shade, and the tag outlines in light mode, as
-     colour tokens (CaseStudyLayout sets them). */
-  lampColor: string;
-  tagColor: string;
 }

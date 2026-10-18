@@ -1,88 +1,47 @@
 import type { ReactNode } from 'react';
 import ArticleButton from './ArticleButton';
-import type { ArticleData } from './types';
+import type { ArticleLink } from './types';
 import styles from './ArticleHero.module.css';
 
-type HeroData = Pick<ArticleData, 'title' | 'subtitle' | 'tags' | 'links'> &
-  Partial<Pick<ArticleData, 'role' | 'duration' | 'tldr'>> & {
-    context?: string;
-  };
+interface HeroData {
+  context?: string;
+  title: string;
+  subtitle: string;
+  tags: string[];
+  links: ArticleLink[];
+}
 
-/* Article opener: an optional context line, title, subtitle, wide image,
-   Role/Duration (when given) + tags, outbound links and the TL;DR (when
-   given; story case studies have their own TL;DR section). The image is
-   supplied by the case study. `spacing="story"` applies the story case
-   studies' spacing system. */
-export default function ArticleHero({
-  article,
-  image,
-  spacing,
-}: {
-  article: HeroData;
-  image: ReactNode;
-  spacing?: 'story';
-}) {
-  const title = <h1 className={styles.title}>{article.title}</h1>;
-
+/* Case study opener: a context line, title, subtitle, wide image (supplied
+   by the case study), tags and outbound links, spaced by the story spacing
+   tokens: context to title 2xs, title to subtitle sm, subtitle to image and
+   image to tags md, tags to buttons sm. */
+export default function ArticleHero({ article, image }: { article: HeroData; image: ReactNode }) {
   return (
-    <header className={styles.hero} data-spacing={spacing}>
+    <header className={styles.hero}>
       <div className={styles.heading}>
-        {article.context ? (
-          <div className={styles.titleGroup}>
-            <p className={styles.context}>{article.context}</p>
-            {title}
-          </div>
-        ) : (
-          title
-        )}
+        <div className={styles.titleGroup}>
+          {article.context && <p className={styles.context}>{article.context}</p>}
+          <h1 className={styles.title}>{article.title}</h1>
+        </div>
         <p className={styles.subtitle}>{article.subtitle}</p>
       </div>
 
       <div className={styles.image}>{image}</div>
 
       <div className={styles.meta}>
-        <div className={styles.summary}>
-          {article.role && article.duration && (
-            <div className={styles.points}>
-              <p className={styles.point}>
-                <span className={styles.pointLabel}>Role:</span>
-                <span className={styles.pointValue}>{article.role}</span>
-              </p>
-              <p className={styles.point}>
-                <span className={styles.pointLabel}>Duration:</span>
-                <span className={styles.pointValue}>{article.duration}</span>
-              </p>
-            </div>
-          )}
-          <ul className={styles.tags}>
-            {article.tags.map((tag) => (
-              <li key={tag} className={styles.pill}>
-                {tag}
-              </li>
-            ))}
-          </ul>
-        </div>
-
+        <ul className={styles.tags}>
+          {article.tags.map((tag) => (
+            <li key={tag} className={styles.pill}>
+              {tag}
+            </li>
+          ))}
+        </ul>
         <div className={styles.links}>
           {article.links.map((link) => (
             <ArticleButton key={link.href} link={link} />
           ))}
         </div>
       </div>
-
-      {article.tldr && (
-        <section id="tldr" className={styles.tldr} aria-label="TL;DR">
-          {article.tldr.map((item, i) => (
-            <p key={item.label} className={styles.tldrItem}>
-              <span className={styles.tldrLabel}>
-                {i === 0 && 'TL;DR '}
-                {item.label}
-              </span>{' '}
-              {item.text}
-            </p>
-          ))}
-        </section>
-      )}
     </header>
   );
 }
