@@ -19,9 +19,7 @@
 .stat {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 8px;
-  text-align: center;
   padding: var(--story-card-pad);
   border: 1px solid var(--case-card-border);
   border-radius: var(--story-card-radius);
@@ -33,7 +31,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-stat-size);
+  font-size: var(--type-h2);
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--case-accent-ink);
@@ -44,7 +42,7 @@
   margin: 0;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
-  font-size: var(--story-small-size);
+  font-size: var(--type-small);
   line-height: 1.4;
   color: var(--case-text-soft);
   text-wrap: pretty;
@@ -69,7 +67,7 @@
   align-items: center;
   gap: 12px;
   font-family: 'Author Variable', sans-serif;
-  font-size: var(--story-small-size);
+  font-size: var(--type-small);
   color: var(--case-text);
   font-variant-numeric: tabular-nums;
 }
@@ -100,11 +98,10 @@
 }
 
 .caption {
-  text-align: center;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-medium);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-eyebrow-size);
+  font-size: var(--type-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--case-accent-ink);

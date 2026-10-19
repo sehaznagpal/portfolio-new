@@ -17,9 +17,7 @@
 .column {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--space-2xs);
-  text-align: center;
 }
 
 .label {
@@ -27,7 +25,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-eyebrow-size);
+  font-size: var(--type-label);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--case-accent-ink);
@@ -40,7 +38,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -52,7 +50,7 @@
   align-items: center;
   gap: 8px;
   font-family: 'Author Variable', sans-serif;
-  font-size: var(--story-small-size);
+  font-size: var(--type-small);
   line-height: 1.35;
   color: var(--case-text);
 }

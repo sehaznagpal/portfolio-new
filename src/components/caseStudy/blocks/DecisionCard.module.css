@@ -16,13 +16,11 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
   padding: var(--story-card-pad);
   border: 1px solid var(--case-card-border);
   border-radius: var(--story-card-radius);
   background: var(--case-surface);
-  text-align: center;
 }
 
 .visual {
@@ -40,7 +38,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-card-title-size);
+  font-size: var(--type-h3);
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--case-text);
@@ -74,7 +72,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: calc(var(--story-eyebrow-size) - 1px);
+  font-size: var(--type-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--case-text-label);
@@ -83,8 +81,8 @@
 .partText {
   margin: 0;
   font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-light);
-  font-size: var(--story-small-size);
+  font-weight: var(--author-regular);
+  font-size: var(--type-small);
   line-height: 1.45;
   color: var(--case-text);
   text-wrap: pretty;

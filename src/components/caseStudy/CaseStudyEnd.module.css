@@ -1,11 +1,12 @@
-/* Desktop: one centred row. Tablet/mobile: a full-width stack with touch
+/* Desktop: one row from the column's left edge. Tablet/mobile: a full-width stack with touch
    targets at least 44px tall. */
 .end {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 16px;
-  padding: calc(var(--article-gap) * 2) var(--page-pad-x) calc(var(--article-gap) * 3);
+  width: min(100% - 2 * var(--page-pad-x), var(--article-col-w));
+  margin-inline: auto;
+  padding-block: calc(var(--article-gap) * 2) calc(var(--article-gap) * 3);
 }
 
 /* Keyboard focus shows the hover sweep too. */

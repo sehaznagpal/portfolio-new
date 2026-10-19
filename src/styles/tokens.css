@@ -138,6 +138,9 @@
   --lamp-w: 49px;
   --lamp-scale: 1;
   --lamp-gap: 0px;
+  /* Desktop: the lamp hangs on a rod from the bar down to the content's
+     first line, level with the rail's back button. */
+  --lamp-drop: calc(var(--case-header-pad-bottom) + var(--article-gap));
   --lamp-inset: 20px;
   --lamp-hit-pad: 8px;
   --lamp-outline-opacity: 0.35;
@@ -159,9 +162,16 @@
   --rail-text-size: clamp(13px, calc(13px + (100vw - 1025px) * (3 / 255)), 16px);
   --rail-back-h: 28px;
   --article-col-w: clamp(620px, 50vw, 760px);
-  /* Highlight lines: 36px at 1025, growing to 44px at 1520, where the
-     column reaches its widest; 26 to 30px below desktop. */
-  --article-pull-quote-size: clamp(36px, calc(36px + (100vw - 1025px) * (8 / 495)), 44px);
+  /* Case study type scale: one set of steps, about 1.25 apart on desktop
+     and 1.2 on mobile, fluid from 393 to 1280px. */
+  --type-title: clamp(36px, calc(36px + (100vw - 393px) * (20 / 887)), 56px);
+  --type-h2: clamp(26px, calc(26px + (100vw - 393px) * (9 / 887)), 35px);
+  --type-highlight: clamp(22px, calc(22px + (100vw - 393px) * (6 / 887)), 28px);
+  --type-h3: clamp(19px, calc(19px + (100vw - 393px) * (3 / 887)), 22px);
+  --type-body: clamp(16px, calc(16px + (100vw - 393px) * (2 / 887)), 18px);
+  --type-small: clamp(14px, calc(14px + (100vw - 393px) * (1 / 887)), 15px);
+  --type-label: clamp(11px, calc(11px + (100vw - 393px) * (1 / 887)), 12px);
+  --type-body-leading: 1.6;
 
   /* Space above the article and around the end links */
   --article-gap: clamp(24px, calc(24px + (100vw - 393px) * (8 / 887)), 32px);
@@ -191,16 +201,8 @@
   --story-grid-gap: clamp(12px, calc(12px + (100vw - 393px) * (8 / 887)), 20px);
   --story-card-pad: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
   --story-card-radius: 12px;
-  --story-eyebrow-size: clamp(12px, calc(12px + (100vw - 393px) * (2 / 887)), 14px);
-  --story-heading-size: clamp(28px, calc(28px + (100vw - 393px) * (14 / 887)), 42px);
-  --story-card-title-size: clamp(17px, calc(17px + (100vw - 393px) * (3 / 887)), 20px);
-  --story-small-size: clamp(14px, calc(14px + (100vw - 393px) * (2 / 887)), 16px);
-  --story-stat-size: clamp(40px, calc(40px + (100vw - 393px) * (16 / 887)), 56px);
-  --story-step-number-size: clamp(32px, calc(32px + (100vw - 393px) * (16 / 887)), 48px);
   --story-reveal-distance: 16px;
   --story-reveal-stagger: 70ms;
-  --article-body-size: clamp(18px, calc(18px + (100vw - 393px) * (2 / 887)), 20px);
-  --article-body-leading: 1.45;
   --article-hero-image-h: 480px;
   --article-hero-image-ratio: 4 / 3;
 
@@ -345,8 +347,8 @@
     --case-back-row: calc(var(--case-back-h) + var(--progress-gap));
     --lamp-scale: 0.8;
     --lamp-inset: 0px;
+    --lamp-drop: 0px;
     --article-col-w: 100%;
-    --article-pull-quote-size: clamp(26px, calc(26px + (100vw - 393px) * (4 / 631)), 30px);
     --visual-max-w: min(85%, 880px);
     --visual-pair-max-w: 85%;
     --phone-max-h: calc(var(--section-h) * 0.6);

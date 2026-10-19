@@ -6,17 +6,11 @@
   gap: var(--space-md);
 }
 
+/* The number above its title, both on the column's left edge. */
 .head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: var(--space-2xs);
-}
-
-@media (min-width: 1025px) {
-  .head {
-    grid-template-columns: calc(var(--story-step-number-size) * 1.6) minmax(0, 1fr);
-    column-gap: var(--story-grid-gap);
-  }
 }
 
 .number {
@@ -24,7 +18,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-step-number-size);
+  font-size: var(--type-h2);
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--case-accent-ink);
@@ -43,21 +37,20 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: clamp(20px, calc(20px + (100vw - 393px) * (6 / 887)), 26px);
-  line-height: 1.15;
+  font-size: var(--type-h3);
+  line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--case-text);
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .text {
   margin: 0;
   font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-light);
-  font-size: var(--article-body-size);
-  line-height: var(--article-body-leading);
-  color: var(--case-text);
-  hyphens: auto;
+  font-weight: var(--author-regular);
+  font-size: var(--type-body);
+  line-height: var(--type-body-leading);
+  color: var(--case-text-soft);
   text-wrap: pretty;
   font-feature-settings: 'salt' 1;
 }
@@ -68,10 +61,4 @@
   flex-direction: column;
   gap: var(--space-md);
   min-width: 0;
-}
-
-@media (min-width: 641px) {
-  .text {
-    text-align: justify;
-  }
 }

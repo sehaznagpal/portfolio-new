@@ -12,7 +12,6 @@
 .legend {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 8px 20px;
   margin: 0;
   padding: 0;
@@ -24,7 +23,7 @@
   align-items: center;
   gap: 8px;
   font-family: 'Author Variable', sans-serif;
-  font-size: var(--story-small-size);
+  font-size: var(--type-small);
   color: var(--case-text-label);
 }
 
@@ -45,7 +44,7 @@
   border-collapse: separate;
   border-spacing: 0;
   font-family: 'Author Variable', sans-serif;
-  font-size: var(--story-small-size);
+  font-size: var(--type-small);
   line-height: 1.25;
   color: var(--case-text);
   font-feature-settings: 'salt' 1;
@@ -76,7 +75,7 @@
   margin-top: 2px;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
-  font-size: 0.8em;
+  font-size: var(--type-label);
   color: var(--case-text-label);
 }
 
@@ -133,11 +132,10 @@
 
 .caption {
   font-family: 'Author Variable', sans-serif;
-  font-size: var(--story-small-size);
+  font-size: var(--type-small);
   line-height: 1.4;
-  text-align: center;
   color: var(--case-text-label);
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .visuallyHidden {

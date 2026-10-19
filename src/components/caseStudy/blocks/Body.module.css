@@ -3,23 +3,15 @@
   flex-direction: column;
   gap: var(--space-sm);
   font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-light);
-  font-size: var(--article-body-size);
-  line-height: var(--article-body-leading);
-  color: var(--case-text);
+  font-weight: var(--author-regular);
+  font-size: var(--type-body);
+  line-height: var(--type-body-leading);
+  color: var(--case-text-soft);
   font-feature-settings: 'salt' 1;
 }
 
+/* Ragged right, never justified or hyphenated. */
 .paragraph {
   margin: 0;
-  hyphens: auto;
   text-wrap: pretty;
-}
-
-/* Justified only where the column is wide enough not to open visible word
-   gaps. */
-@media (min-width: 641px) {
-  .paragraph {
-    text-align: justify;
-  }
 }

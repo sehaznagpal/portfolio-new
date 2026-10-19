@@ -3,7 +3,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-heading-size);
+  font-size: var(--type-h2);
   line-height: 1.05;
   letter-spacing: -0.03em;
   color: var(--case-text);

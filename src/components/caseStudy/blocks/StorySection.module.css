@@ -1,4 +1,4 @@
-/* One section in the centred article column. The section index scrolls a
+/* One section in the article column. The section index scrolls a
    section to just under the sticky header. */
 .section {
   display: flex;
@@ -64,7 +64,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-card-title-size);
+  font-size: var(--type-h3);
   color: var(--case-accent-ink);
   font-variant-numeric: tabular-nums;
 }
@@ -72,16 +72,17 @@
 .listText {
   margin: 0;
   font-family: 'Author Variable', sans-serif;
-  font-weight: var(--author-light);
-  font-size: var(--article-body-size);
-  line-height: var(--article-body-leading);
-  color: var(--case-text);
+  font-weight: var(--author-regular);
+  font-size: var(--type-body);
+  line-height: var(--type-body-leading);
+  color: var(--case-text-soft);
   text-wrap: pretty;
   font-feature-settings: 'salt' 1;
 }
 
 .listTitle {
   font-weight: var(--author-semibold);
+  color: var(--case-text);
 }
 
 .subsection {
@@ -95,11 +96,11 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: clamp(20px, calc(20px + (100vw - 393px) * (6 / 887)), 26px);
-  line-height: 1.15;
+  font-size: var(--type-h3);
+  line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--case-text);
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .footnote {
@@ -107,7 +108,7 @@
   font-family: 'Gambetta Variable', serif;
   font-weight: var(--gambetta-light);
   font-style: italic;
-  font-size: var(--story-small-size);
+  font-size: var(--type-small);
   line-height: 1.5;
   color: var(--case-text-soft);
 }

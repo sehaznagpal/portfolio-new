@@ -17,10 +17,8 @@
 .group {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
   margin: 0;
-  text-align: center;
 }
 
 .dots {
@@ -42,7 +40,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-medium);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-eyebrow-size);
+  font-size: var(--type-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--case-text-label);

@@ -1,9 +1,7 @@
 .callout {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--space-2xs);
-  text-align: center;
   padding: var(--story-card-pad);
   border: 1px solid var(--case-accent-ink);
   border-radius: var(--story-card-radius);
@@ -13,7 +11,6 @@
 .head {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
 }
 
@@ -26,8 +23,8 @@
   margin: 0;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
-  font-size: clamp(18px, calc(18px + (100vw - 393px) * (4 / 887)), 22px);
-  line-height: 1.35;
+  font-size: var(--type-body);
+  line-height: 1.45;
   color: var(--case-text);
   text-wrap: pretty;
   font-feature-settings: 'salt' 1;

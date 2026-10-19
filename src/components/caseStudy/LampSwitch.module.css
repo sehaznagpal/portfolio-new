@@ -1,11 +1,22 @@
-/* Hangs from the progress bar at the top-right of the sticky header,
-   mirroring the back button (Figma 1462:1197: 20px in from the bar's end,
-   touching its underside). */
+/* Hangs from the progress bar at the top-right of the sticky header, 20px
+   in from the bar's end (Figma 1462:1197). On desktop a rod drops it to the
+   back button's line (--lamp-drop); below desktop it touches the bar. */
 .anchor {
   position: absolute;
-  top: calc(var(--case-header-h) - var(--case-header-pad-bottom) + var(--lamp-gap));
+  top: calc(var(--case-header-h) - var(--case-header-pad-bottom) + var(--lamp-gap) + var(--lamp-drop));
   right: calc(var(--page-pad-x) + var(--lamp-inset));
   line-height: 0;
+}
+
+.anchor::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 1px;
+  height: var(--lamp-drop);
+  background: var(--case-study-light-grey);
+  transform: translateX(-50%);
 }
 
 /* A larger hit area than the drawing, without moving it: at least 24 x 44

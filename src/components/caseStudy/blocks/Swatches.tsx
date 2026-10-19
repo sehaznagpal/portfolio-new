@@ -3,7 +3,7 @@ import Reveal from './Reveal';
 import styles from './Swatches.module.css';
 
 /* A row of colour swatches, each with its hex (and an optional note),
-   wrapping on narrow screens, with a centred caption below. */
+   wrapping on narrow screens, with a caption below. */
 export default function Swatches({ swatches, caption }: { swatches: { hex: string; note?: string }[]; caption?: string }) {
   return (
     <Reveal>

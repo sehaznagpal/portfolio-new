@@ -1,14 +1,12 @@
-/* Centred under its visual. Desktop copy is written to fit one line;
-   narrower screens balance a wrap into even lines. */
+/* Left-aligned under its visual, on the column's edge. */
 .caption {
   width: 100%;
   margin: 0;
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
-  font-size: clamp(13px, calc(13px + (100vw - 393px) * (2 / 887)), 15px);
+  font-size: var(--type-small);
   line-height: 1.7;
-  text-align: center;
-  text-wrap: balance;
+  text-wrap: pretty;
   font-feature-settings: 'salt' 1;
 }
 

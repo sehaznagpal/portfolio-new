@@ -6,7 +6,7 @@
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-light);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: clamp(18px, calc(18px + (100vw - 393px) * (6 / 887)), 24px);
+  font-size: var(--type-h3);
   line-height: 1;
   letter-spacing: -0.06em;
   white-space: nowrap;
