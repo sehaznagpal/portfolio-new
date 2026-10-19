@@ -1,0 +1,127 @@
+.card {
+  --card-padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  color: inherit;
+}
+
+.frame {
+  position: relative;
+  display: block;
+  padding: var(--card-padding);
+  background: var(--pg-paper);
+  border: 1px solid var(--pg-frame-border);
+  border-radius: var(--pg-frame-radius);
+  box-shadow: var(--pg-frame-shadow);
+  transition: transform var(--pg-lift-duration) var(--ease-out-expo);
+}
+
+/* A deeper shadow faded in on hover (opacity only, never box-shadow) */
+.frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--pg-frame-shadow-lifted);
+  opacity: 0;
+  transition: opacity var(--pg-lift-duration) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.noteFrame {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* A note tile (Say hello) takes the same size as the thumbnail tiles, its
+   type scaled to the tile's width */
+.tile .noteFrame {
+  aspect-ratio: 4 / 3;
+  container-type: inline-size;
+}
+
+.tile .noteFrame > * {
+  height: 100%;
+}
+
+/* Every thumbnail in the same 4:3 box, whatever its own shape */
+.artBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  padding: 10px;
+  border-radius: calc(var(--pg-frame-radius) - var(--card-padding) / 2);
+  background: var(--pg-frame-inset);
+}
+
+.art {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* A small grid card */
+.tile {
+  min-width: 0;
+}
+
+/* The intro as a full-width banner: its text runs in long lines */
+.banner .caption {
+  text-align: center;
+}
+
+.caption {
+  display: block;
+  min-height: var(--pg-caption-height);
+  padding-top: 10px;
+  font-family: 'Source Code Pro', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--pg-caption);
+  opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity var(--pg-lift-duration) ease-out;
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:focus-visible {
+  outline: none;
+}
+
+.interactive:focus-visible .frame {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive:hover .frame {
+    transform: translateY(-4px);
+  }
+
+  .interactive:hover .frame::after {
+    opacity: 1;
+  }
+
+  .interactive:hover .caption {
+    opacity: 1;
+  }
+}
+
+.interactive:focus-visible .caption {
+  opacity: 1;
+}

@@ -1,0 +1,53 @@
+.toggle {
+  --scale: var(--pg-chrome-scale);
+  position: fixed;
+  top: 36px;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--pg-paper);
+  border: 1px solid var(--pg-frame-border);
+  border-radius: 999px;
+  box-shadow: var(--pg-chip-shadow);
+  transform: translateX(-50%);
+}
+
+/* Below Share, which is centred on phones */
+@media (max-width: 640px) {
+  .toggle {
+    top: 98px;
+  }
+}
+
+.option {
+  padding: calc(6px * var(--scale)) calc(14px * var(--scale));
+  border-radius: 999px;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-medium);
+  font-size: calc(16px * var(--scale));
+  line-height: 1;
+  color: var(--pg-ink);
+  opacity: 0.55;
+  transition:
+    opacity 150ms ease-out,
+    background-color 150ms ease-out;
+}
+
+.option[aria-pressed='true'] {
+  background: var(--pg-ink);
+  color: var(--pg-paper);
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .option:hover {
+    opacity: 1;
+  }
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}

@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react';
-import type { PanListener } from './useCanvasViewport';
+import type { PanListener } from './canvas/useWorldViewport';
 
 type SubscribePan = (listener: PanListener) => () => void;
 
-/* Lets canvas items react to pan gestures (the letter waits for a pan
-   toward it) without adding their own wheel or touch listeners. */
+/* Lets canvas items react to pans (the letter waits for a pan toward it)
+   without adding their own wheel or touch listeners. */
 export const PanContext = createContext<SubscribePan | null>(null);
 
 export function useSubscribePan() {

@@ -1,0 +1,27 @@
+.frame {
+  display: grid;
+  place-items: center;
+  width: min(420px, 90vw);
+  height: 240px;
+  background: var(--pg-paper);
+  border-radius: 22px;
+}
+
+.close {
+  background: rgba(18, 18, 18, 0.06);
+  color: var(--pg-ink);
+}
+
+.close:hover {
+  background: rgba(18, 18, 18, 0.12);
+}
+
+.soon {
+  margin: 0;
+  font-family: 'Author Variable', sans-serif;
+  font-weight: var(--author-regular);
+  font-size: 14px;
+  color: var(--pg-ink);
+  opacity: 0.6;
+  text-align: center;
+}

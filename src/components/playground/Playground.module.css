@@ -1,0 +1,22 @@
+/* --pg-ground, --pg-ground-dot and --pg-caption come from the theme (set
+   inline by Playground.tsx), so they can never reach another route. */
+.playground {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* The ground colour, fixed behind both views; the theme curtain slides
+   across it. The canvas draws its own dots so they pan with the world. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--pg-ground);
+}
+
+.dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--pg-ground-dot) 0.75px, transparent 1.25px);
+  background-size: var(--pg-dot-spacing) var(--pg-dot-spacing);
+}

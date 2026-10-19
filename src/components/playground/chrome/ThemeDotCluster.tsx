@@ -38,7 +38,7 @@ export default function ThemeDotCluster({ activeTheme, spinSignal }: { activeThe
     <motion.span className={styles.cluster} animate={spin}>
       {SLOT_RENDER_ORDER.map((slot) => {
         const option = themeOption(THEME_CYCLE[(activeIndex + slot) % THEME_CYCLE.length])!;
-        const dotStyle = { background: option.swatchFill, borderColor: option.swatchStroke };
+        const dotStyle = { background: option.ground, borderColor: option.swatchStroke };
         return (
           <span key={slot} className={styles.slot}>
             {slot === ACTIVE_SLOT ? (

@@ -165,7 +165,7 @@ export default function ShareMenu() {
               <span className={styles.optionLabel}>{option.label}</span>
               <span
                 className={`${styles.swatch} ${theme === option.id ? styles.swatchActive : ''}`}
-                style={{ background: option.swatchFill, borderColor: option.swatchStroke }}
+                style={{ background: option.ground, borderColor: option.swatchStroke }}
               />
             </button>
           ))}

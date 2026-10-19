@@ -1,7 +1,7 @@
 /* Old-repo sizes multiplied by --scale (the pill is ~17% smaller) */
 .pill {
   --scale: var(--pg-chrome-scale);
-  position: absolute;
+  position: fixed;
   top: 36px;
   right: 36px;
   z-index: 10;
@@ -11,7 +11,7 @@
   justify-content: center;
   height: calc(60px * var(--scale));
   padding: calc(8px * var(--scale));
-  background: var(--color-brand);
+  background: var(--pg-paper);
   border-radius: 4px;
   box-shadow: var(--pg-chip-shadow);
 }

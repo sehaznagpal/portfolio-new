@@ -19,7 +19,7 @@ const PRESS_TIMING = { duration: 320, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)
 
 const CLICKABLE = 'a[href], button, [role="button"], [role="link"], [role="menuitemradio"], label, summary, select';
 const TEXT_INPUT = 'input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]';
-// Set by useCanvasViewport while the canvas is being dragged.
+// Set by useWorldViewport while the canvas is being dragged.
 const DRAGGING = '[data-dragging]';
 
 type TimedPoint = TrailPoint & { t: number };

@@ -1,0 +1,46 @@
+/* Clears the fixed UI: top chips and toggle above, toolbar below */
+.page {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 130px var(--page-pad-x) 140px;
+}
+
+.banner {
+  margin-bottom: 36px;
+}
+
+.signOff {
+  max-width: 720px;
+  margin: 48px auto 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  gap: 28px 20px;
+}
+
+@media (max-width: 1439px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding-top: 160px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 14px;
+  }
+}

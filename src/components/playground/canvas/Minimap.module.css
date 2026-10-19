@@ -1,0 +1,39 @@
+/* Clear of the toolbar (bottom centre) at every width */
+.map {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 10;
+  overflow: hidden;
+  border: 1px solid var(--pg-frame-border);
+  border-radius: 10px;
+  background: var(--pg-paper);
+  box-shadow: var(--pg-frame-shadow);
+  touch-action: none;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .map {
+    bottom: 104px;
+    transform: scale(0.7);
+    transform-origin: bottom right;
+  }
+}
+
+.item {
+  position: absolute;
+  border: 1px solid rgba(18, 18, 18, 0.35);
+  border-radius: 1.5px;
+}
+
+.visible {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1.5px solid var(--color-brand);
+  border-radius: 3px;
+  background: rgba(217, 206, 106, 0.18);
+  will-change: transform;
+  pointer-events: none;
+}

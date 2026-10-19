@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 
-export type AutoHoverKey = 'photobooth' | 'amora' | 'sipStudio' | 'website' | 'motionDemo' | 'sayHello' | 'extras';
+export type AutoHoverKey =
+  | 'photobooth'
+  | 'amora'
+  | 'sipStudio'
+  | 'website'
+  | 'motionDemo'
+  | 'sayHello'
+  | 'extras'
+  | 'worktape';
 
 /* Touch screens can't hover, so there the items take turns playing their
    hover state on a timer instead. Desktop keeps pure :hover. */
@@ -8,7 +16,7 @@ const GROUPS: AutoHoverKey[][] = [
   ['photobooth', 'amora'],
   ['sipStudio', 'website'],
   ['motionDemo', 'sayHello'],
-  ['extras'],
+  ['extras', 'worktape'],
 ];
 const INTERVAL_MS = 5000;
 const NONE: AutoHoverKey[] = [];
