@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
-import { WORLD_HEIGHT, WORLD_WIDTH } from '../playgroundLayout';
+import { WORLD_HEIGHT, WORLD_WIDTH } from './canvasLayout';
 
 export type ViewMode = 'normal' | 'overview';
+export type PanListener = (dx: number, dy: number) => void;
 /* Visible part of the world, in world px. */
 export interface WorldView {
   x: number;
@@ -57,9 +58,18 @@ export function useWorldViewport({
   initialFocus: { x: number; y: number };
 }) {
   const [mode, setMode] = useState<ViewMode>('normal');
+  const panListenersRef = useRef(new Set<PanListener>());
   const viewListenersRef = useRef(new Set<ViewListener>());
   const moveToRef = useRef<(x: number, y: number, animate: boolean) => void>(() => {});
   const initialFocusRef = useRef(initialFocus);
+
+  const subscribePan = useCallback((listener: PanListener) => {
+    const listeners = panListenersRef.current;
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
+    };
+  }, []);
 
   const subscribeView = useCallback((listener: ViewListener) => {
     const listeners = viewListenersRef.current;
@@ -84,11 +94,20 @@ export function useWorldViewport({
     let momentumFrame = 0;
     let zoomTimer: ReturnType<typeof setTimeout> | undefined;
 
-    const coverZoom = () => Math.max(viewportW / WORLD_WIDTH, viewportH / WORLD_HEIGHT);
+    // Never zooms in past 1:1, and never out so far that the world stops covering the screen.
+    const coverZoom = () => Math.min(1, Math.max(viewportW / WORLD_WIDTH, viewportH / WORLD_HEIGHT));
+
+    /* Clamped to the world's edges. On an axis where the screen is bigger
+       than the world, the world is centred instead (the dotted ground runs
+       on past it, so there's no empty edge). */
+    function clampAxis(value: number, viewportSize: number, worldSize: number) {
+      const overflow = viewportSize - worldSize * view.zoom;
+      return overflow >= 0 ? overflow / 2 : clamp(value, overflow, 0);
+    }
 
     function clampView() {
-      view.x = clamp(view.x, viewportW - WORLD_WIDTH * view.zoom, 0);
-      view.y = clamp(view.y, viewportH - WORLD_HEIGHT * view.zoom, 0);
+      view.x = clampAxis(view.x, viewportW, WORLD_WIDTH);
+      view.y = clampAxis(view.y, viewportH, WORLD_HEIGHT);
     }
 
     function visibleWorld(): WorldView {
@@ -156,6 +175,7 @@ export function useWorldViewport({
 
     function panBy(dx: number, dy: number) {
       if (currentMode !== 'normal' || (dx === 0 && dy === 0)) return;
+      panListenersRef.current.forEach((listener) => listener(dx, dy));
       view.x += dx;
       view.y += dy;
       clampView();
@@ -376,5 +396,5 @@ export function useWorldViewport({
     };
   }, [rootRef, groundRef, contentRef]);
 
-  return { mode, subscribeView, moveTo };
+  return { mode, subscribePan, subscribeView, moveTo };
 }

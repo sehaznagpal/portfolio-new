@@ -1,37 +1,46 @@
 /* Clears the fixed UI: top chips and toggle above, toolbar below */
-.grid {
+.page {
   position: relative;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 140px var(--page-pad-x) 140px;
+  padding: 130px var(--page-pad-x) 140px;
 }
 
-.header {
-  max-width: 560px;
-  margin: 0 auto 40px;
+.banner {
+  margin-bottom: 36px;
 }
 
-.columns {
-  display: flex;
-  align-items: flex-start;
-  gap: 28px;
+.signOff {
+  max-width: 720px;
+  margin: 48px auto 0;
 }
 
-.column {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  gap: 28px 20px;
+}
+
+@media (max-width: 1439px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
-  .grid {
+  .page {
     padding-top: 160px;
   }
 
-  .columns,
-  .column {
-    gap: 18px;
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 14px;
   }
 }

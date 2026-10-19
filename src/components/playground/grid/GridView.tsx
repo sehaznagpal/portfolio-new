@@ -1,53 +1,33 @@
 import { PLAYGROUND_ITEMS, type PlaygroundItem } from '../../../data/playgroundItems';
-import { useMediaQuery } from '../../../lib/useMediaQuery';
-import { itemSize } from '../playgroundLayout';
 import PlaygroundCard from '../cards/PlaygroundCard';
 import styles from './GridView.module.css';
 
-function useColumnCount() {
-  const four = useMediaQuery('(min-width: 1280px)');
-  const three = useMediaQuery('(min-width: 1025px)');
-  const two = useMediaQuery('(min-width: 481px)');
-  return four ? 4 : three ? 3 : two ? 2 : 1;
-}
-
-/* Deals items into columns in data order, each onto the currently shortest
-   column (by its estimated aspect), so the masonry still reads across. */
-function toColumns(items: PlaygroundItem[], count: number) {
-  const columns: PlaygroundItem[][] = Array.from({ length: count }, () => []);
-  const heights = Array.from({ length: count }, () => 0);
-  items.forEach((item) => {
-    const { w, h } = itemSize(item);
-    const shortest = heights.indexOf(Math.min(...heights));
-    columns[shortest].push(item);
-    heights[shortest] += h / w;
-  });
-  return columns;
-}
-
-/* Every item as a card in a masonry, in data order, with normal page
-   scroll. The intro note sits above it as a header. */
+/* One note explaining everything, then the things it talks about: the
+   Drafts note as a full-width banner, every item as a small card in a tidy
+   grid (in group order), and the letter as a full-width sign-off. Calm by
+   design: no canvas interactions, just a lift on hover. */
 export default function GridView({ onOpenModal }: { onOpenModal: (item: PlaygroundItem) => void }) {
-  const columnCount = useColumnCount();
-  const header = PLAYGROUND_ITEMS.find((item) => item.note === 'intro');
-  const rest = PLAYGROUND_ITEMS.filter((item) => item !== header);
+  const banner = PLAYGROUND_ITEMS.find((item) => item.note === 'intro');
+  const signOff = PLAYGROUND_ITEMS.find((item) => item.note === 'letter');
+  const cards = PLAYGROUND_ITEMS.filter((item) => item !== banner && item !== signOff);
 
   return (
-    <div className={styles.grid}>
-      {header && (
-        <div className={styles.header}>
-          <PlaygroundCard item={header} onOpenModal={onOpenModal} />
+    <div className={styles.page}>
+      {banner && (
+        <div className={styles.banner}>
+          <PlaygroundCard item={banner} onOpenModal={onOpenModal} variant="banner" />
         </div>
       )}
-      <div className={styles.columns}>
-        {toColumns(rest, columnCount).map((column, i) => (
-          <div key={i} className={styles.column}>
-            {column.map((item) => (
-              <PlaygroundCard key={item.id} item={item} onOpenModal={onOpenModal} />
-            ))}
-          </div>
+      <div className={styles.grid}>
+        {cards.map((item) => (
+          <PlaygroundCard key={item.id} item={item} onOpenModal={onOpenModal} variant="tile" />
         ))}
       </div>
+      {signOff && (
+        <div className={styles.signOff}>
+          <PlaygroundCard item={signOff} onOpenModal={onOpenModal} variant="banner" />
+        </div>
+      )}
     </div>
   );
 }

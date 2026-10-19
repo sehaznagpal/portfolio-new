@@ -11,7 +11,7 @@
   justify-content: center;
   height: calc(60px * var(--scale));
   padding: calc(8px * var(--scale));
-  background: var(--color-brand);
+  background: var(--pg-paper);
   border-radius: 4px;
   box-shadow: var(--pg-chip-shadow);
 }

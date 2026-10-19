@@ -42,6 +42,7 @@
 }
 
 .introBody {
+  max-width: 920px;
   font-weight: var(--author-regular);
   text-align: justify;
 }
@@ -66,45 +67,14 @@
   white-space: pre-wrap;
 }
 
-.untyped {
-  visibility: hidden;
-}
-
-.caret {
-  display: inline-block;
-  width: 2px;
-  margin-left: 1px;
-  margin-right: -3px;
-  background: var(--pg-ink);
-  animation: caretBlink 900ms step-end infinite;
-}
-
-@keyframes caretBlink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-.visuallyHidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 /* Say hello */
 .contact {
+  justify-content: space-between;
   gap: 18px;
   padding: 22px 22px 18px;
   background: var(--color-brand);
 }
+
 
 .contactHeading {
   font-family: 'Gambetta Variable', serif;
@@ -151,4 +121,26 @@
 .contactLink:focus-visible {
   outline: 2px solid var(--pg-ink);
   outline-offset: 2px;
+}
+
+/* Say hello as a grid tile: type scaled to the tile (after the base rules so it wins) */
+@container (max-width: 480px) {
+  .contact {
+    gap: 6cqw;
+    padding: 7cqw 7cqw 6cqw;
+  }
+
+  .contactHeading {
+    font-size: 19cqw;
+    white-space: nowrap;
+  }
+
+  .contactName {
+    font-size: 6cqw;
+  }
+
+  .contactLink {
+    width: 10cqw;
+    height: 10cqw;
+  }
 }

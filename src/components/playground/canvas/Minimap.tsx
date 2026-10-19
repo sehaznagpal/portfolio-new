@@ -1,9 +1,9 @@
 import { useEffect, useRef, type PointerEvent } from 'react';
-import { WORLD_HEIGHT, WORLD_WIDTH, type PlacedItem } from '../playgroundLayout';
+import { CAPTION_HEIGHT, WORLD_HEIGHT, WORLD_WIDTH, type PlacedItem } from './canvasLayout';
 import type { ViewListener } from './useWorldViewport';
 import styles from './Minimap.module.css';
 
-const MAP_WIDTH = 200;
+const MAP_WIDTH = 220;
 const SCALE = MAP_WIDTH / WORLD_WIDTH;
 const MAP_HEIGHT = WORLD_HEIGHT * SCALE;
 
@@ -27,9 +27,14 @@ export default function Minimap({
       subscribeView((view) => {
         const el = visibleRef.current;
         if (!el) return;
-        el.style.width = `${Math.min(MAP_WIDTH, view.width * SCALE)}px`;
-        el.style.height = `${Math.min(MAP_HEIGHT, view.height * SCALE)}px`;
-        el.style.transform = `translate3d(${view.x * SCALE}px, ${view.y * SCALE}px, 0)`;
+        // Clipped to the map: on a screen bigger than the world, the view extends past it.
+        const left = Math.max(0, view.x);
+        const top = Math.max(0, view.y);
+        const right = Math.min(WORLD_WIDTH, view.x + view.width);
+        const bottom = Math.min(WORLD_HEIGHT, view.y + view.height);
+        el.style.width = `${(right - left) * SCALE}px`;
+        el.style.height = `${(bottom - top) * SCALE}px`;
+        el.style.transform = `translate3d(${left * SCALE}px, ${top * SCALE}px, 0)`;
       }),
     [subscribeView],
   );
@@ -64,7 +69,7 @@ export default function Minimap({
         <span
           key={box.item.id}
           className={styles.item}
-          style={{ left: box.x * SCALE, top: box.y * SCALE, width: box.w * SCALE, height: box.h * SCALE }}
+          style={{ left: box.x * SCALE, top: box.y * SCALE, width: box.w * SCALE, height: (box.h + CAPTION_HEIGHT) * SCALE }}
         />
       ))}
       <span ref={visibleRef} className={styles.visible} />

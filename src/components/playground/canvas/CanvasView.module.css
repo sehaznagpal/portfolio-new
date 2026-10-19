@@ -11,7 +11,7 @@
   cursor: zoom-in;
 }
 
-/* Both layers are the full world and get the same transform from
+/* Both layers are the world and get the same transform from
    useWorldViewport (translate, plus scale only in the overview). */
 .layer {
   position: absolute;
@@ -25,7 +25,47 @@
   transition: transform var(--pg-zoom-duration) var(--pg-ease-standard);
 }
 
-.ground {
+/* The dots run well past the world, so a screen bigger than it (where the
+   world is centred) still has dotted ground to its edges. */
+.ground::before {
+  content: '';
+  position: absolute;
+  inset: -2400px;
   background-image: radial-gradient(circle, var(--pg-ground-dot) 0.75px, transparent 1.25px);
   background-size: var(--pg-dot-spacing) var(--pg-dot-spacing);
+}
+
+/* One item: its artwork straight on the ground (no frame), centred in its
+   box with room for its interaction to move outside it, and the caption below. */
+.item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.caption {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  padding-top: 12px;
+  font-family: 'Source Code Pro', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--pg-caption);
+  opacity: 0.6;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Drafts keeps its paper card: it's the note that explains the rest */
+.introCard {
+  display: block;
+  width: 100%;
+  background: var(--pg-paper);
+  border: 1px solid var(--pg-frame-border);
+  border-radius: var(--pg-frame-radius);
+  box-shadow: var(--pg-frame-shadow);
 }

@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { PlaygroundItem } from '../../../data/playgroundItems';
 import IntroNote from './IntroNote';
 import LetterNote from './LetterNote';
@@ -7,20 +7,18 @@ import styles from './PlaygroundCard.module.css';
 
 const NOTES = { intro: IntroNote, letter: LetterNote, contact: ContactNote };
 
-/* One frame for every item, on the canvas and in the grid: the item's
-   artwork (or note) on a paper card, with a "title · type" caption below.
-   A modal item is a button, a link item opens in a new tab. On the canvas
-   `width` fixes the card's size; in the grid it fills its column. */
+/* A grid card: the item's thumbnail (or note) in a paper frame with a
+   "title · type" caption below. A modal item is a button, a link item opens
+   in a new tab. `banner` is the full-width intro; `tile` is a small card
+   whose thumbnail sits in a fixed 4:3 box so the grid stays tidy. */
 export default function PlaygroundCard({
   item,
   onOpenModal,
-  width,
-  style,
+  variant,
 }: {
   item: PlaygroundItem;
   onOpenModal: (item: PlaygroundItem) => void;
-  width?: number;
-  style?: CSSProperties;
+  variant: 'banner' | 'tile';
 }) {
   const Note = item.note ? NOTES[item.note] : null;
   const frame = (
@@ -29,16 +27,18 @@ export default function PlaygroundCard({
         <Note />
       ) : (
         item.thumbnail && (
-          <img
-            className={styles.art}
+          <span className={styles.artBox}>
+            <img
+              className={styles.art}
             src={item.thumbnail.src}
             alt=""
             width={item.thumbnail.width}
             height={item.thumbnail.height}
-            loading="lazy"
-            decoding="async"
-            draggable={false}
-          />
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+            />
+          </span>
         )
       )}
     </span>
@@ -55,12 +55,12 @@ export default function PlaygroundCard({
       {caption}
     </>
   );
-  const cardStyle = { ...style, ...(width && { width }) };
+  const cardClass = `${styles.card} ${styles[variant]}`;
   const { action } = item;
 
   if (action && 'href' in action) {
     return (
-      <a className={`${styles.card} ${styles.interactive}`} style={cardStyle} href={action.href} target="_blank" rel="noopener noreferrer">
+      <a className={`${cardClass} ${styles.interactive}`} href={action.href} target="_blank" rel="noopener noreferrer">
         {body}
       </a>
     );
@@ -69,8 +69,7 @@ export default function PlaygroundCard({
     return (
       <button
         type="button"
-        className={`${styles.card} ${styles.interactive}`}
-        style={cardStyle}
+        className={`${cardClass} ${styles.interactive}`}
         aria-haspopup="dialog"
         onClick={() => onOpenModal(item)}
       >
@@ -79,7 +78,7 @@ export default function PlaygroundCard({
     );
   }
   return (
-    <div className={styles.card} style={cardStyle}>
+    <div className={cardClass}>
       {body}
     </div>
   );

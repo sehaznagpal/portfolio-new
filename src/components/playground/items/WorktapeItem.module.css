@@ -1,0 +1,82 @@
+/* Figma units (1506:2496); layers placed at their Figma coordinates. */
+.root {
+  position: relative;
+  width: calc(446 * var(--cu));
+  height: calc(271 * var(--cu));
+}
+
+.root img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.panel {
+  position: absolute;
+  inset: 0;
+  background: #0e0e0e;
+}
+
+.cassette,
+.frosted {
+  position: absolute;
+  width: calc(382.51 * var(--cu));
+  height: calc(200 * var(--cu));
+  will-change: transform;
+}
+
+.cassette {
+  left: calc(32 * var(--cu));
+  top: calc(36 * var(--cu));
+}
+
+/* The glass window clips the frosted copy; above it the sharp cassette shows */
+.glass {
+  position: absolute;
+  left: calc(23 * var(--cu));
+  top: calc(26 * var(--cu));
+  width: calc(400 * var(--cu));
+  height: calc(220 * var(--cu));
+  overflow: hidden;
+}
+
+.frosted {
+  left: calc(9 * var(--cu));
+  top: calc(10 * var(--cu));
+}
+
+.tint {
+  position: absolute;
+  inset: 0;
+  background: rgba(120, 120, 120, 0.6);
+}
+
+.title,
+.accessTag,
+.vibeCoded {
+  position: absolute;
+}
+
+.root .title {
+  left: calc(20 * var(--cu));
+  top: calc(37 * var(--cu));
+  width: calc(407 * var(--cu));
+  height: calc(72 * var(--cu));
+}
+
+.root .accessTag {
+  left: calc(191 * var(--cu));
+  top: calc(145 * var(--cu));
+  width: calc(228.42 * var(--cu));
+  height: calc(84.7 * var(--cu));
+}
+
+.root .vibeCoded {
+  left: calc(29 * var(--cu));
+  top: calc(216 * var(--cu));
+  width: calc(70 * var(--cu));
+  height: calc(20 * var(--cu));
+}

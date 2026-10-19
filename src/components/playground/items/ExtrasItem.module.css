@@ -1,0 +1,98 @@
+/* Figma units (1387:2972); artwork placed in % of the card */
+.root {
+  width: calc(290.19 * var(--cu));
+  height: calc(345.56 * var(--cu));
+  filter: drop-shadow(calc(2.25 * var(--cu)) calc(4.5 * var(--cu)) calc(9 * var(--cu)) rgba(0, 0, 0, 0.4));
+}
+
+.card {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--pg-ink);
+  border: calc(2.58 * var(--cu)) solid var(--pg-paper);
+  border-radius: calc(13.93 * var(--cu));
+  overflow: hidden;
+}
+
+.card img {
+  position: absolute;
+  max-width: none;
+}
+
+.cornerTl,
+.cornerBr {
+  width: 13.96%;
+  height: 12.07%;
+}
+
+.cornerTl {
+  left: 1.97%;
+  top: 3.59%;
+}
+
+.cornerBr {
+  right: 1.83%;
+  bottom: 3.95%;
+  transform: rotate(180deg);
+}
+
+.iconTl,
+.iconBr {
+  width: 10.78%;
+  height: 8.62%;
+}
+
+.iconTl {
+  left: 3.54%;
+  top: 14.25%;
+}
+
+.iconBr {
+  right: 3.56%;
+  bottom: 13.93%;
+  transform: rotate(180deg);
+}
+
+.heart {
+  left: 13.55%;
+  top: 21.26%;
+  width: 72.15%;
+  height: 61.26%;
+}
+
+/* EXTRAS lettering: each corner-lean variant keeps its own Figma inset */
+.lettersNone {
+  left: 17.13%;
+  top: 23.05%;
+  width: 61.94%;
+  height: 51.27%;
+}
+
+.lettersTl {
+  left: 16.19%;
+  top: 23.05%;
+  width: 62.88%;
+  height: 51.27%;
+}
+
+.lettersTr {
+  left: 17.13%;
+  top: 24.23%;
+  width: 62.86%;
+  height: 50.09%;
+}
+
+.lettersBl {
+  left: 18.27%;
+  top: 23.05%;
+  width: 60.8%;
+  height: 51.3%;
+}
+
+.lettersBr {
+  left: 17.13%;
+  top: 23.05%;
+  width: 64.05%;
+  height: 51.27%;
+}

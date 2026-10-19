@@ -1,0 +1,71 @@
+/* Figma units (1415:899). Both scallops rest in the same spot; on hover
+   they part to their hover-frame positions. */
+.root {
+  position: relative;
+  width: calc(433.38 * var(--cu));
+  height: calc(429.86 * var(--cu));
+}
+
+.cloud,
+.badge {
+  position: absolute;
+  left: calc(52.71 * var(--cu));
+  top: calc(55.11 * var(--cu));
+  width: calc(329.15 * var(--cu));
+  height: calc(320.84 * var(--cu));
+  transition: transform 380ms var(--ease-out-expo);
+}
+
+/* Hidden at rest so no white edge shows around the badge */
+.cloud {
+  background: var(--pg-paper);
+  opacity: 0;
+  transition:
+    transform 380ms var(--ease-out-expo),
+    opacity 120ms ease-out;
+}
+
+.badge {
+  background: var(--pg-ink);
+}
+
+.badge img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+.label {
+  position: absolute;
+  left: calc(70.68 * var(--cu));
+  top: calc(91.05 * var(--cu));
+  text-align: left;
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-semibold);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: calc(33.54 * var(--cu));
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--pg-ink);
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root:hover .cloud {
+    opacity: 1;
+    transform: translate(calc(-52.71 * var(--cu)), calc(-55.11 * var(--cu)));
+  }
+
+  .root:hover .badge {
+    transform: translate(calc(51.52 * var(--cu)), calc(53.91 * var(--cu)));
+  }
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .cloud {
+  opacity: 1;
+  transform: translate(calc(-52.71 * var(--cu)), calc(-55.11 * var(--cu)));
+}
+
+.root:is(:focus-visible, [data-auto-hover]) .badge {
+  transform: translate(calc(51.52 * var(--cu)), calc(53.91 * var(--cu)));
+}
