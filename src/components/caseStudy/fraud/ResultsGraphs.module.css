@@ -1,12 +1,5 @@
-/* Side by side, the two chart cards share one height. */
+/* The two chart cards stacked, each the full frame width. */
 .grid {
   display: grid;
   gap: var(--article-gap);
-  align-items: stretch;
-}
-
-@media (min-width: 1025px) {
-  .grid {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  }
 }

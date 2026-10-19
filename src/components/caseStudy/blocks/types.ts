@@ -1,4 +1,5 @@
 import type { ArticleLink, RichText } from '../../article/types';
+import type { ToolId } from './toolMarks';
 
 /* Content schema for skimmable, component-based case studies: each section
    is an eyebrow, an optional takeaway heading and a list of typed blocks,
@@ -57,6 +58,19 @@ export interface OptionData {
   chosen?: boolean;
 }
 
+/* A tool shown as its logo; `use` finishes the tooltip "<Tool>: <use>". */
+export interface ToolData {
+  id: ToolId;
+  use: string;
+}
+
+/* One InfoCard fact: text lines, a row of tool logos, or both. */
+export interface InfoItemData {
+  label: string;
+  values?: string[];
+  tools?: ToolData[];
+}
+
 export interface StatData {
   value: string;
   label: string;
@@ -64,7 +78,7 @@ export interface StatData {
 
 export type StoryBlock =
   | { type: 'body'; paragraphs: string[] }
-  | { type: 'infoCard'; items: { label: string; values: string[] }[] }
+  | { type: 'infoCard'; items: InfoItemData[] }
   | { type: 'callout'; icon: StoryIcon; label: string; text: string }
   /* A row of stats, optionally with a two-bar comparison under it. */
   | {

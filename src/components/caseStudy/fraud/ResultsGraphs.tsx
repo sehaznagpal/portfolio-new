@@ -29,7 +29,7 @@ const BY_BIAS: BarGroup[] = [
   biasGroup('Social proof', 36.4, 36.1, 52.8),
 ];
 
-/* Visuals 4 and 5; the bias breakdown gets the larger share of the band. */
+/* Visuals 4 and 5, treatment groups first, then the bias breakdown. */
 export default function ResultsGraphs() {
   return (
     <div className={styles.grid}>

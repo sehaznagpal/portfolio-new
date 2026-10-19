@@ -6,7 +6,7 @@
   --bar-gap: 4px;
   position: relative;
   margin: 0;
-  padding: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  padding: var(--story-card-pad);
   border: 1px solid var(--case-study-light-grey);
   border-radius: var(--card-radius);
   background: var(--case-study-grey);
@@ -124,7 +124,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  padding: clamp(16px, calc(16px + (100vw - 393px) * (8 / 887)), 24px);
+  padding: var(--story-card-pad);
   border-radius: inherit;
 }
 
@@ -186,4 +186,21 @@
   font-size: 1.05em;
   line-height: 1.4;
   text-wrap: pretty;
+}
+
+/* Phones: the title takes the full width, the pill moves to the bottom and
+   a narrower label column leaves the 0 to 100% axis room for its labels. */
+@media (max-width: 640px) {
+  .card {
+    --label-w: 4.75em;
+    padding-bottom: calc(var(--story-card-pad) + 2.5em);
+  }
+
+  .title {
+    padding-right: 0;
+  }
+
+  .toggle {
+    align-items: flex-end;
+  }
 }

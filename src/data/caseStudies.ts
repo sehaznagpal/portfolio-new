@@ -11,6 +11,10 @@ export interface CaseStudyDef {
   // How other pages refer to it, e.g. "See MoolRoop →".
   shortTitle: string;
   href: string;
+  /* The case accent at full strength, and the text colour that reads on it
+     (AA): the fill of the buttons other pages link to it with. */
+  accent: string;
+  accentText: string;
 }
 
 /* Order and copy match the Figma "case studies index" frames exactly
@@ -27,6 +31,8 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     titleBold: 'Dr Cuterus',
     shortTitle: 'Dr Cuterus',
     href: LINKS.drCuterus,
+    accent: 'var(--dr-cuterus-lilac)',
+    accentText: 'var(--case-study-grey)',
   },
   {
     id: 'fraud',
@@ -36,6 +42,8 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     titleBold: 'Fraud',
     shortTitle: 'Designing Against Fraud',
     href: LINKS.fraud,
+    accent: 'var(--dissertation-sky)',
+    accentText: 'var(--case-study-grey)',
   },
   {
     id: 'moolroop',
@@ -45,6 +53,8 @@ export const CASE_STUDIES: CaseStudyDef[] = [
     titleBold: 'App',
     shortTitle: 'MoolRoop',
     href: LINKS.moolroop,
+    accent: 'var(--moolroop-poster-maroon)',
+    accentText: 'var(--case-study-white)',
   },
 ];
 

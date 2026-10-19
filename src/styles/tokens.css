@@ -152,11 +152,12 @@
      gaps (components have no outer margins). Inside a section: eyebrow to
      heading 2xs, heading to body and paragraph to paragraph sm, anything
      to a card, visual or other component md. Between sections (and hero to
-     the first section) one fluid gap: 80px at 1280, 112px from 2560. */
+     the first section) one fluid gap, about 1.5 times md: 60px at 1280,
+     64px from 2560, 56px at its smallest. */
   --space-2xs: 12px;
   --space-sm: 24px;
   --space-md: 40px;
-  --space-section: clamp(56px, calc(80px + (100vw - 1280px) * (32 / 1280)), 112px);
+  --space-section: clamp(56px, calc(60px + (100vw - 1280px) * (4 / 1280)), 64px);
   /* One fixed height for the illustration area of every card in a row */
   --story-illustration-h: 150px;
   --story-mini-illustration-h: 104px;

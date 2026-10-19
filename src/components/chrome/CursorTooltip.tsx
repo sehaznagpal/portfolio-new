@@ -12,6 +12,11 @@ const LERP_FACTOR = 0.18;
 const OFFSET_X = 16;
 const OFFSET_Y = 20;
 
+// Gap between a pinned text pill and the trigger above it, and the margin
+// it keeps from the viewport's edges.
+const PIN_GAP = 8;
+const PIN_MARGIN = 16;
+
 // Image tooltips pin just under the trigger instead of following the
 // cursor: slightly in from its left edge and tucked a few px up under it
 // (Figma 1296:1813).
@@ -45,6 +50,10 @@ interface CursorTooltipProps {
   /* Keeps the pill hidden while hovering (e.g. while its trigger is being
      dragged). */
   hidden?: boolean;
+  /* Text pills only: keyboard focus inside the trigger, or a tap on a touch
+     screen, shows the pill pinned under the trigger instead of trailing a
+     cursor. Escape, blur or a tap elsewhere hides it. */
+  pinnable?: boolean;
 }
 
 // Small pill that trails the cursor (eased, not 1:1) while hovering its
@@ -58,6 +67,7 @@ export default function CursorTooltip({
   variant = 'light',
   onHoverMove,
   hidden = false,
+  pinnable = false,
 }: CursorTooltipProps) {
   // Touch devices synthesize mouse events on tap, which would otherwise pop
   // the pill in at the tap point and leave it stuck there — a viewport-width
@@ -65,6 +75,7 @@ export default function CursorTooltip({
   // this checks the actual pointer capability instead (see useHasFinePointer).
   const hasFinePointer = useHasFinePointer();
   const [visible, setVisible] = useState(false);
+  const [pinned, setPinned] = useState(false);
   // Image tooltips stay mounted after the first hover so they can fade out
   // (and the photo stays loaded) instead of vanishing on unmount.
   const [imageRequested, setImageRequested] = useState(false);
@@ -86,8 +97,27 @@ export default function CursorTooltip({
     return { x: Math.min(Math.max(x, 0), maxX), y: Math.min(Math.max(y, 0), maxY) };
   }
 
+  // A pinned pill closes on Escape, a tap outside its trigger, or a scroll
+  // (it is fixed to the viewport, so it would drift off the trigger).
   useEffect(() => {
-    if (!visible || image) return;
+    if (!pinned) return;
+    function close(event: Event) {
+      if (event instanceof KeyboardEvent && event.key !== 'Escape') return;
+      if (event.type === 'pointerdown' && triggerRef.current?.contains(event.target as Node)) return;
+      setPinned(false);
+    }
+    document.addEventListener('keydown', close);
+    document.addEventListener('pointerdown', close);
+    window.addEventListener('scroll', close, { passive: true });
+    return () => {
+      document.removeEventListener('keydown', close);
+      document.removeEventListener('pointerdown', close);
+      window.removeEventListener('scroll', close);
+    };
+  }, [pinned]);
+
+  useEffect(() => {
+    if (!visible || image || pinned) return;
 
     function tick() {
       pos.current.x += (target.current.x - pos.current.x) * LERP_FACTOR;
@@ -103,12 +133,23 @@ export default function CursorTooltip({
     return () => {
       if (rafId.current !== null) cancelAnimationFrame(rafId.current);
     };
-  }, [visible, image]);
+  }, [visible, image, pinned]);
 
   // Places the pill at the cursor (or under the trigger, for images)
   // immediately on the frame it shows, so it doesn't flash in at (0, 0).
   useLayoutEffect(() => {
-    if (!visible || !pillRef.current) return;
+    if (!pillRef.current) return;
+    if (pinned && !image) {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (rect) {
+        const el = pillRef.current;
+        const maxX = Math.max(window.innerWidth - el.offsetWidth - PIN_MARGIN, PIN_MARGIN);
+        const x = Math.min(Math.max(rect.left + rect.width / 2 - el.offsetWidth / 2, PIN_MARGIN), maxX);
+        el.style.transform = `translate(${x}px, ${rect.bottom + PIN_GAP}px)`;
+      }
+      return;
+    }
+    if (!visible) return;
     if (image) {
       const rect = triggerRef.current?.getBoundingClientRect();
       if (rect) {
@@ -118,7 +159,7 @@ export default function CursorTooltip({
     }
     const clamped = clampToViewport(pos.current.x, pos.current.y);
     pillRef.current.style.transform = `translate(${clamped.x}px, ${clamped.y}px)`;
-  }, [visible, image, hidden]);
+  }, [visible, image, hidden, pinned]);
 
   function handleMouseMove(event: React.MouseEvent) {
     onHoverMove?.(event);
@@ -140,6 +181,18 @@ export default function CursorTooltip({
     setVisible(false);
   }
 
+  function handleFocus(event: React.FocusEvent) {
+    if (pinnable && (event.target as HTMLElement).matches(':focus-visible')) setPinned(true);
+  }
+
+  function handleBlur() {
+    if (pinnable) setPinned(false);
+  }
+
+  function handleClick() {
+    if (pinnable && !hasFinePointer) setPinned((open) => !open);
+  }
+
   let pill: ReactNode = null;
   if (hasFinePointer && image && imageRequested) {
     pill = (
@@ -149,9 +202,13 @@ export default function CursorTooltip({
         </div>
       </div>
     );
-  } else if (hasFinePointer && !image && visible && !hidden) {
+  } else if (!image && !hidden && (pinned || (hasFinePointer && visible))) {
     pill = (
-      <div className={`${styles.pill} ${variant === 'dark' ? styles.pillDark : ''}`} ref={pillRef} role="tooltip">
+      <div
+        className={`${styles.pill} ${variant === 'dark' ? styles.pillDark : ''} ${pinned ? styles.pillPinned : ''}`}
+        ref={pillRef}
+        role="tooltip"
+      >
         {text}
       </div>
     );
@@ -164,6 +221,9 @@ export default function CursorTooltip({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onClick={handleClick}
     >
       {children}
       {pill && createPortal(pill, document.body)}

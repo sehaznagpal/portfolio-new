@@ -19,18 +19,24 @@
 .item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   text-align: center;
 }
 
+/* The label leads in the case accent, a clear step above its values. */
 .label {
+  margin-bottom: 10px;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
-  font-weight: var(--bricolage-medium);
+  font-weight: var(--bricolage-semibold);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: var(--story-eyebrow-size);
-  letter-spacing: 0.12em;
+  font-size: var(--story-small-size);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--case-text-label);
+  color: var(--case-accent-ink);
+}
+
+.tools {
+  margin: 0 0 6px;
 }
 
 .value {
@@ -38,7 +44,7 @@
   font-family: 'Author Variable', sans-serif;
   font-weight: var(--author-regular);
   font-size: var(--story-small-size);
-  line-height: 1.4;
+  line-height: 1.3;
   color: var(--case-text);
   font-feature-settings: 'salt' 1;
 }

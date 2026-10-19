@@ -45,7 +45,14 @@ export const DR_CUTERUS_STORY: StoryData = {
             { label: 'My role', values: ['Design lead', 'Built about 40% of the site, including all component styling'] },
             { label: 'Duration', values: ['4 months (2026)'] },
             { label: 'Audiences', values: ['Patients, followers', 'Brands, organisations'] },
-            { label: 'Built with', values: ['Figma', 'Astro, alongside a developer'] },
+            {
+              label: 'Built with',
+              tools: [
+                { id: 'figma', use: 'designing the site' },
+                { id: 'astro', use: 'building the site alongside a developer' },
+              ],
+              values: ['alongside a developer'],
+            },
           ],
         },
       ],

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './SweepButton.module.css';
 
@@ -9,12 +9,15 @@ import styles from './SweepButton.module.css';
 export default function SweepButton({
   children,
   className,
+  style,
   onClick,
   href,
   to,
 }: {
   children: ReactNode;
   className?: string;
+  /* For custom properties a caller sets per instance (e.g. --chip-bg). */
+  style?: CSSProperties;
   onClick?: () => void;
   href?: string;
   to?: string;
@@ -29,7 +32,7 @@ export default function SweepButton({
 
   if (to) {
     return (
-      <Link className={classes} to={to}>
+      <Link className={classes} style={style} to={to}>
         {content}
       </Link>
     );
@@ -37,14 +40,14 @@ export default function SweepButton({
 
   if (href) {
     return (
-      <a className={classes} href={href} target="_blank" rel="noopener noreferrer">
+      <a className={classes} style={style} href={href} target="_blank" rel="noopener noreferrer">
         {content}
       </a>
     );
   }
 
   return (
-    <button type="button" className={classes} onClick={onClick}>
+    <button type="button" className={classes} style={style} onClick={onClick}>
       {content}
     </button>
   );

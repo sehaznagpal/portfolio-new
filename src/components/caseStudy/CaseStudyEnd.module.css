@@ -8,6 +8,15 @@
   padding: calc(var(--article-gap) * 2) var(--page-pad-x) calc(var(--article-gap) * 3);
 }
 
+/* Keyboard focus shows the hover sweep too. */
+.other:focus-visible > span:first-child {
+  transform: scaleX(1);
+}
+
+.other:focus-visible > span:last-child {
+  color: var(--chrome-bg);
+}
+
 @media (max-width: 1024px) {
   .end {
     flex-direction: column;

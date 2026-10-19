@@ -1,10 +1,12 @@
+import type { CSSProperties } from 'react';
 import ArticleButton from '../article/ArticleButton';
 import type { ArticleLink } from '../article/types';
 import { CASE_STUDIES, type CaseStudyId } from '../../data/caseStudies';
 import styles from './CaseStudyEnd.module.css';
 
 /* The end of a case study: its own outbound link (live site, prototype or
-   dissertation) first, then the other case studies in Home index order. */
+   dissertation) first, then the other case studies in Home index order,
+   each filled with its own accent. */
 export default function CaseStudyEnd({ current, link }: { current: CaseStudyId; link: ArticleLink }) {
   const others = CASE_STUDIES.filter((study) => study.id !== current);
 
@@ -15,7 +17,8 @@ export default function CaseStudyEnd({ current, link }: { current: CaseStudyId; 
         <ArticleButton
           key={study.id}
           link={{ label: `See ${study.shortTitle} →`, href: study.href }}
-          className={styles.button}
+          className={`${styles.button} ${styles.other}`}
+          style={{ '--article-button-bg': study.accent, '--article-button-ink': study.accentText } as CSSProperties}
         />
       ))}
     </nav>

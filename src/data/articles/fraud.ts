@@ -36,7 +36,12 @@ export const FRAUD_STORY: StoryData = {
             },
             {
               label: 'Tools',
-              values: ['Figma', 'AI-assisted front-end development', 'Google Apps Script', 'R'],
+              tools: [
+                { id: 'figma', use: 'designing the simulator' },
+                { id: 'claude', use: 'AI-assisted front-end development' },
+                { id: 'appsScript', use: 'logging every response in real time' },
+                { id: 'r', use: 'statistical analysis' },
+              ],
             },
           ],
         },
@@ -262,7 +267,7 @@ export const FRAUD_STORY: StoryData = {
         { type: 'highlight', text: 'Same people, same designs. Only the bias changed.' },
         {
           type: 'findings',
-          label: 'What we found',
+          label: 'What I found',
           items: [
             {
               title: 'Authority and urgency: the CTA roughly doubled cancellations.',
@@ -359,7 +364,7 @@ export const FRAUD_STORY: StoryData = {
         },
         {
           type: 'footnote',
-          text: "This paper has been submitted for IIM Bodh Gaya's CIEMC 2.0 post-conference publication.",
+          text: 'Presented at three research conferences (IIM Bodh Gaya, Lady Shri Ram College and Shyam Lal College), and selected by the IIM Bodh Gaya conference editors as a chapter for an upcoming World Scientific book.',
         },
       ],
     },
