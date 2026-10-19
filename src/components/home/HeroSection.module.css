@@ -58,3 +58,34 @@
     color: inherit;
   }
 }
+
+/* The ambient loop (ScrollCue.tsx): a brand band over the label carrying a
+   dark copy of it. Both start parked out of view; the loop's animations
+   move them with transforms only. */
+.loop {
+  position: absolute;
+  inset: 0;
+  gap: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.loopBand {
+  position: absolute;
+  inset: 0;
+  gap: inherit;
+  background: var(--color-brand);
+  transform: translateX(-100%);
+  will-change: transform;
+}
+
+.loopText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: inherit;
+  color: var(--chrome-bg);
+  transform: translateX(100%);
+  will-change: transform;
+}

@@ -104,10 +104,11 @@ export default function HomePage() {
               ready={heroReady}
               onOpenAbout={openAbout}
               onExplore={() => goTo('work')}
+              cueActive={section === 'hero'}
             />
           </div>
           <div {...layerProps('work')}>
-            <WorkSection />
+            <WorkSection inView={section === 'work'} />
           </div>
           <div className={styles.footerSlot} aria-hidden="true" />
         </div>

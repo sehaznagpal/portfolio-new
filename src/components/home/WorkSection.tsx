@@ -3,7 +3,7 @@ import DesktopCarousel from '../caseStudiesIndex/DesktopCarousel';
 import MobileCarousel from '../caseStudiesIndex/MobileCarousel';
 import styles from './WorkSection.module.css';
 
-export default function WorkSection() {
+export default function WorkSection({ inView }: { inView: boolean }) {
   const isDesktopCarousel = useIsDesktopCarousel();
 
   return (
@@ -14,7 +14,7 @@ export default function WorkSection() {
         <p className={styles.heading}>
           <span className={styles.headingItalic}>Featured</span> Work
         </p>
-        {isDesktopCarousel ? <DesktopCarousel /> : <MobileCarousel />}
+        {isDesktopCarousel ? <DesktopCarousel inView={inView} /> : <MobileCarousel />}
       </div>
     </div>
   );

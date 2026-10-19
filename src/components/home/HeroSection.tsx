@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
 import Stage from '../viewport/Stage';
 import Hero from '../hero/Hero';
-import SweepButton from '../chrome/SweepButton';
+import ScrollCue from './ScrollCue';
 import styles from './HeroSection.module.css';
 
 const CONTENT_FADE = { duration: 0.55, ease: [0.16, 1, 0.3, 1] } as const;
@@ -12,6 +11,7 @@ export default function HeroSection({
   ready,
   onOpenAbout,
   onExplore,
+  cueActive,
 }: {
   /* False only while the loader is still on screen: the grid fades in once it clears. */
   backgroundVisible: boolean;
@@ -19,6 +19,8 @@ export default function HeroSection({
   ready: boolean;
   onOpenAbout: () => void;
   onExplore: () => void;
+  /* False once the visitor has left the hero, which ends the cue's loop. */
+  cueActive: boolean;
 }) {
   return (
     <Stage dark={!backgroundVisible}>
@@ -34,10 +36,7 @@ export default function HeroSection({
           <div className={styles.cardArea}>
             <Hero onOpenAbout={onOpenAbout} />
           </div>
-          <SweepButton className={styles.cue} onClick={onExplore}>
-            <span className={styles.cueText}>scroll down to explore work</span>
-            <ArrowDown className={styles.cueText} size={12} strokeWidth={1.75} aria-hidden="true" />
-          </SweepButton>
+          <ScrollCue active={cueActive} onExplore={onExplore} />
         </motion.div>
       )}
     </Stage>

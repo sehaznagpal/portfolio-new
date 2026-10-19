@@ -1,3 +1,11 @@
+/* Holds the coverflow and, just below it, the progress lines. */
+.carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 /* perspective itself is set inline from DesktopCarousel.tsx's PERSPECTIVE
    constant (kept in JS since the compensated-scale math there needs the
    exact same number). Focusable (arrow keys step the carousel) and
@@ -88,6 +96,11 @@
    tall for the space, in which case it shrinks to fit (keeping its own
    proportions). Side cards are sized from the centre card in JS. */
 @media (min-width: 1025px) {
+  .carousel {
+    flex: 1;
+    min-height: 0;
+  }
+
   .perspective {
     --card-height-ratio: 1.045; /* tallest card's height / width */
     flex: 1;
@@ -108,4 +121,87 @@
    this sidesteps. */
 .slotVisual {
   width: 100%;
+}
+
+/* Progress lines: hung just below the cards in the section's bottom padding,
+   out of flow, so the cards keep exactly the space they had. */
+.progress {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  transform: translateX(-50%);
+}
+
+/* The visible line is 2px; the button around it gives a usable hit area. */
+.progressLine {
+  position: relative;
+  width: 28px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.progressLine::before,
+.progressFill {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 1px;
+}
+
+.progressLine::before {
+  background: var(--index-progress-track);
+  transition: background var(--sweep-duration) var(--ease-out-expo);
+}
+
+.progressFill {
+  background: var(--index-progress-fill);
+  transform-origin: left center;
+  animation: progressFill var(--progress-duration) linear forwards;
+}
+
+/* Reduced motion: no fill, the active line just shows as filled. */
+.progressFillStatic {
+  animation: none;
+}
+
+.progressLine:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .progressLine:hover::before {
+    background: var(--index-progress-track-hover);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (min-width: 1025px) {
+  .progress {
+    gap: calc(6 * var(--u));
+    margin-top: calc(12 * var(--u) * var(--space));
+  }
+
+  .progressLine {
+    width: calc(28 * var(--u));
+  }
 }

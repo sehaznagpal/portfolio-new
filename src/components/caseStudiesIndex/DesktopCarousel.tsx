@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type FocusEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { CASE_STUDIES, DEFAULT_ACTIVE_INDEX } from '../../data/caseStudies';
 import CursorTooltip from '../chrome/CursorTooltip';
+import { useMediaQuery } from '../../lib/useMediaQuery';
 import FeaturedCard from './cards/FeaturedCard';
 import styles from './DesktopCarousel.module.css';
 
@@ -39,8 +40,9 @@ const WHEEL_THRESHOLD = 6;
 const WHEEL_COOLDOWN_MS = 450;
 
 // Auto-advance, reset on every step (manual or automatic) so it never fires
-// right on the heels of something the user just did.
-const AUTO_ADVANCE_MS = 8000;
+// right on the heels of something the user just did. The progress lines
+// under the cards fill over the same interval.
+const AUTO_ADVANCE_MS = 5000;
 
 // The cursor pill's "which zone" boundaries, as a fraction of .perspective's
 // own width — roughly matches the visual edges between the center card and
@@ -136,8 +138,9 @@ function computeSlotProps(slot: Slot, cardWidth: number) {
   };
 }
 
-export default function DesktopCarousel() {
+export default function DesktopCarousel({ inView }: { inView: boolean }) {
   const navigate = useNavigate();
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
   const perspectiveElRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const visualRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -148,6 +151,18 @@ export default function DesktopCarousel() {
   const isFirstLayoutRef = useRef(true);
   const wheelLockedRef = useRef(false);
   const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // What's left of the current interval, and when it last started counting
+  // down, so a pause picks up where it stopped rather than starting over.
+  const remainingRef = useRef(AUTO_ADVANCE_MS);
+  const countdownStartRef = useRef(0);
+  // Bumped whenever the interval restarts, which restarts the active line's fill.
+  const [cycle, setCycle] = useState(0);
+  const [pointerInside, setPointerInside] = useState(false);
+  const [focusInside, setFocusInside] = useState(false);
+  const [tabHidden, setTabHidden] = useState(() => typeof document !== 'undefined' && document.hidden);
+  const paused = reducedMotion || !inView || tabHidden || pointerInside || focusInside;
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
 
   function currentCardWidth() {
     return cardRefs.current[0]?.offsetWidth || BASE_CARD_WIDTH;
@@ -227,22 +242,75 @@ export default function DesktopCarousel() {
     scheduleAutoAdvance();
   }
 
+  // A progress line's click: straight to that case study, interval restarted.
+  function jumpTo(index: number) {
+    if (index !== activeIndex) {
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+      setActiveIndex(index);
+    }
+    scheduleAutoAdvance();
+  }
+
   // Recursive setTimeout rather than setInterval — every step (manual or
   // this timer firing itself) reschedules the next one from scratch, so a
   // burst of manual swipes can never leave a stale interval queued up to
-  // fire moments later on top of one the user just triggered.
+  // fire moments later on top of one the user just triggered. While paused
+  // (see `paused`) the countdown holds, and resumes with what was left.
   function scheduleAutoAdvance() {
+    remainingRef.current = AUTO_ADVANCE_MS;
+    setCycle((current) => current + 1);
+    startCountdown();
+  }
+
+  function startCountdown() {
     if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
-    autoAdvanceTimerRef.current = setTimeout(() => stepCarousel(1), AUTO_ADVANCE_MS);
+    autoAdvanceTimerRef.current = null;
+    if (pausedRef.current) return;
+    countdownStartRef.current = performance.now();
+    autoAdvanceTimerRef.current = setTimeout(() => {
+      autoAdvanceTimerRef.current = null;
+      if (isAnimatingRef.current) scheduleAutoAdvance();
+      else stepCarousel(1);
+    }, remainingRef.current);
+  }
+
+  function holdCountdown() {
+    if (!autoAdvanceTimerRef.current) return;
+    clearTimeout(autoAdvanceTimerRef.current);
+    autoAdvanceTimerRef.current = null;
+    const elapsed = performance.now() - countdownStartRef.current;
+    remainingRef.current = Math.max(0, remainingRef.current - elapsed);
   }
 
   useEffect(() => {
-    scheduleAutoAdvance();
-    return () => {
-      if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
-    };
+    if (paused) holdCountdown();
+    else startCountdown();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paused]);
+
+  useEffect(
+    () => () => {
+      if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const update = () => setTabHidden(document.hidden);
+    document.addEventListener('visibilitychange', update);
+    return () => document.removeEventListener('visibilitychange', update);
   }, []);
+
+  // Keyboard focus anywhere in the cards or the lines holds the rotation;
+  // the focus a mouse click leaves behind doesn't.
+  function handleFocusIn(event: FocusEvent<HTMLDivElement>) {
+    setFocusInside((event.target as Element).matches(':focus-visible'));
+  }
+
+  function handleFocusOut(event: FocusEvent<HTMLDivElement>) {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocusInside(false);
+  }
 
   // Trackpad horizontal swipe (deltaX) or a shift-modified wheel. A single
   // gesture fires many wheel events, so a short cooldown turns it into one
@@ -312,60 +380,94 @@ export default function DesktopCarousel() {
 
   return (
     <div
-      ref={perspectiveElRef}
-      className={styles.perspective}
-      style={{ perspective: `${PERSPECTIVE}px`, WebkitPerspective: `${PERSPECTIVE}px` }}
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
+      className={styles.carousel}
+      onMouseEnter={() => setPointerInside(true)}
+      onMouseLeave={() => setPointerInside(false)}
+      onFocus={handleFocusIn}
+      onBlur={handleFocusOut}
     >
-      {/* Sit behind the cards (earlier in DOM, same stacking level) so a
-          click that actually lands on a visible card reaches the card, and
-          only genuinely empty margin space falls through to these. */}
-      <button
-        type="button"
-        className={`${styles.edgeZone} ${styles.edgeZoneLeft}`}
-        aria-label="Previous case study"
-        onClick={() => stepCarousel(-1)}
-      />
-      <button
-        type="button"
-        className={`${styles.edgeZone} ${styles.edgeZoneRight}`}
-        aria-label="Next case study"
-        onClick={() => stepCarousel(1)}
-      />
-
-      <CursorTooltip
-        text={hoverPillText}
-        onHoverMove={handleHoverMove}
-        className={styles.tooltipWrapper}
+      <div
+        ref={perspectiveElRef}
+        className={styles.perspective}
+        style={{ perspective: `${PERSPECTIVE}px`, WebkitPerspective: `${PERSPECTIVE}px` }}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
       >
-        <div className={styles.stage}>
-          <div className={styles.ring}>
-            {CASE_STUDIES.map((study, i) => (
-              <div
-                key={study.id}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
-                className={styles.slot}
-                onClick={() => handleCardClick(i)}
-              >
-                {/* Opacity lives here, one level below the 3D-transformed
-                    .slot itself — see computeSlotProps' own comment for why
-                    this split exists. */}
+        {/* Sit behind the cards (earlier in DOM, same stacking level) so a
+            click that actually lands on a visible card reaches the card, and
+            only genuinely empty margin space falls through to these. */}
+        <button
+          type="button"
+          className={`${styles.edgeZone} ${styles.edgeZoneLeft}`}
+          aria-label="Previous case study"
+          onClick={() => stepCarousel(-1)}
+        />
+        <button
+          type="button"
+          className={`${styles.edgeZone} ${styles.edgeZoneRight}`}
+          aria-label="Next case study"
+          onClick={() => stepCarousel(1)}
+        />
+
+        <CursorTooltip
+          text={hoverPillText}
+          onHoverMove={handleHoverMove}
+          className={styles.tooltipWrapper}
+        >
+          <div className={styles.stage}>
+            <div className={styles.ring}>
+              {CASE_STUDIES.map((study, i) => (
                 <div
+                  key={study.id}
                   ref={(el) => {
-                    visualRefs.current[i] = el;
+                    cardRefs.current[i] = el;
                   }}
-                  className={styles.slotVisual}
+                  className={styles.slot}
+                  onClick={() => handleCardClick(i)}
                 >
-                  <FeaturedCard study={study} active={i === activeIndex} plain />
+                  {/* Opacity lives here, one level below the 3D-transformed
+                      .slot itself — see computeSlotProps' own comment for why
+                      this split exists. */}
+                  <div
+                    ref={(el) => {
+                      visualRefs.current[i] = el;
+                    }}
+                    className={styles.slotVisual}
+                  >
+                    <FeaturedCard study={study} active={i === activeIndex} plain />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </CursorTooltip>
+        </CursorTooltip>
+      </div>
+
+      {/* Story-style progress: one line per case study, the active one
+          filling over the auto-advance interval and holding while paused. */}
+      <div
+        className={styles.progress}
+        style={{ '--progress-duration': `${AUTO_ADVANCE_MS}ms` } as CSSProperties}
+      >
+        {CASE_STUDIES.map((study, i) => (
+          <button
+            key={study.id}
+            type="button"
+            className={styles.progressLine}
+            aria-label={`Show ${study.shortTitle}`}
+            aria-current={i === activeIndex ? 'true' : undefined}
+            onClick={() => jumpTo(i)}
+          >
+            {i === activeIndex && (
+              <span
+                key={cycle}
+                className={`${styles.progressFill} ${reducedMotion ? styles.progressFillStatic : ''}`}
+                style={{ animationPlayState: paused ? 'paused' : 'running' }}
+              />
+            )}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
