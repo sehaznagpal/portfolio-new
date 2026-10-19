@@ -69,16 +69,16 @@
      footer -> hero, which skips the index in between */
   --section-dip-duration: 400ms;
   --section-fade-duration: 200ms;
-  /* Hero scroll cue's ambient loop (ScrollCue.tsx): the brand fill sweeps
-     in, holds, sweeps out to the right, then pauses before repeating. The
-     arrow nudges down as the fill completes. */
+  /* Hero scroll cue's loop (ScrollCue.tsx, HeroSection.module.css): the
+     brand fill sweeps in, holds, sweeps out to the right, then rests empty.
+     The @keyframes stops are these phases as a share of --cue-duration
+     (27.5% / 37.5% / 65%), so change them together. */
   --cue-start-delay: 1500ms;
-  --cue-fill-in: 1000ms;
-  --cue-hold: 300ms;
-  --cue-fill-out: 1000ms;
-  --cue-pause: 1200ms;
-  --cue-nudge: 500ms;
-  --cue-nudge-distance: 4px;
+  --cue-fill-in: 1100ms;
+  --cue-hold: 400ms;
+  --cue-fill-out: 1100ms;
+  --cue-pause: 1400ms;
+  --cue-duration: calc(var(--cue-fill-in) + var(--cue-hold) + var(--cue-fill-out) + var(--cue-pause));
   --cue-fade-out: 400ms;
   --cue-ease: cubic-bezier(0.65, 0, 0.35, 1);
   /* Hero "me" items emerging from behind the card */

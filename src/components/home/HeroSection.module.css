@@ -20,11 +20,18 @@
   justify-content: center;
 }
 
+/* The scroll cue's grey label, with its ambient loop on top: one CSS
+   animation, no hover effect of any kind. */
 .cue {
-  --chip-bg: var(--bg-canvas);
+  --cue-gap: 8px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   flex-shrink: 0;
-  gap: 8px;
-  color: var(--chrome-bg);
+  overflow: hidden;
+  background: var(--bg-canvas);
+  color: var(--case-study-light-grey);
+  cursor: pointer;
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-regular);
   font-variation-settings: 'opsz' 14, 'wdth' 100;
@@ -35,15 +42,14 @@
   font-feature-settings: 'salt' 1;
 }
 
-/* Grey at rest per Figma; on hover it takes the button's own hover color. */
-.cueText {
-  color: var(--case-study-light-grey);
-  transition: color var(--sweep-duration) var(--ease-out-expo);
+.cue:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
 }
 
 @media (min-width: 1025px) {
   .cue {
-    gap: calc(8 * var(--u));
+    --cue-gap: calc(8 * var(--u));
     font-size: calc(16 * var(--u));
   }
 
@@ -53,39 +59,73 @@
   }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .cue:hover .cueText {
-    color: inherit;
-  }
+.cueLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cue-gap);
 }
 
-/* The ambient loop (ScrollCue.tsx): a brand band over the label carrying a
-   dark copy of it. Both start parked out of view; the loop's animations
-   move them with transforms only. */
-.loop {
+/* The loop: a brand fill with a dark copy of the label inside it, both
+   revealed by one clip-path, so the text darkens exactly where the fill's
+   edge passes and the two can never drift. It rests fully clipped, so
+   nothing shows before the delay or after the stop. */
+.cueSweep {
   position: absolute;
   inset: 0;
-  gap: inherit;
-  overflow: hidden;
   pointer-events: none;
+  clip-path: inset(0% 100% 0% 0%);
+  animation: cue-sweep var(--cue-duration) var(--cue-ease) var(--cue-start-delay) infinite;
 }
 
-.loopBand {
+.cueFill {
   position: absolute;
   inset: 0;
-  gap: inherit;
   background: var(--color-brand);
-  transform: translateX(-100%);
   will-change: transform;
 }
 
-.loopText {
+.cueInk {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
-  gap: inherit;
+  gap: var(--cue-gap);
   color: var(--chrome-bg);
-  transform: translateX(100%);
-  will-change: transform;
+}
+
+/* Share of the loop (--cue-duration) for each phase: fill in 1.1s of 4s =
+   27.5%, hold to 37.5%, fill out to 65%, then rest. Move these with the
+   --cue-* timings in tokens.css. Easing applies to the moving phases; the
+   hold and the rest are the same value at both ends. The last frame and the
+   first are both fully clipped, so the loop boundary can't jump. */
+@keyframes cue-sweep {
+  0% {
+    clip-path: inset(0% 100% 0% 0%);
+  }
+  27.5% {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+  37.5% {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+  65% {
+    clip-path: inset(0% 0% 0% 100%);
+  }
+  100% {
+    clip-path: inset(0% 0% 0% 100%);
+  }
+}
+
+/* Set once by ScrollCue on the first scroll or click, and never removed:
+   fade the overlay out and freeze the loop. */
+.cueDone .cueSweep {
+  opacity: 0;
+  animation-play-state: paused;
+  transition: opacity var(--cue-fade-out) ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cueSweep {
+    animation: none;
+  }
 }
