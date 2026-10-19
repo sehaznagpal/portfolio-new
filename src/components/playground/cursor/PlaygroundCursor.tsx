@@ -11,8 +11,7 @@ const DOT_RADIUS = DOT_DIAMETER / 2;
 const TIP_RATIO = 0.25;
 const TIP_RADIUS = DOT_RADIUS * TIP_RATIO;
 /* Each position stays in the trail this long, so the tail's length follows
-   speed and it retracts into the dot within ~200ms of stopping. The trail
-   is only recorded while the canvas is being dragged. */
+   speed and it retracts into the dot within ~200ms of stopping. */
 const TRAIL_LIFETIME_MS = 160;
 const MAX_TRAIL_PX = 220;
 const PRESS_SQUISH = [{ transform: 'scale(1)' }, { transform: 'scale(0.85)' }, { transform: 'scale(1)' }];
@@ -54,8 +53,7 @@ function trailPath(head: TrailPoint, history: TimedPoint[], now: number) {
 }
 
 /* The playground's own cursor: a red dot that tracks the pointer exactly,
-   with a tapered trail (drawn on one canvas) behind it while the canvas is
-   being dragged. Mounted
+   with a tapered trail (drawn on one canvas) that lags behind it. Mounted
    only on fine-pointer devices; hides the native cursor for as long as it
    is mounted, which is only while on /playground. */
 export default function PlaygroundCursor() {
@@ -115,9 +113,8 @@ export default function PlaygroundCursor() {
       dot!.style.transform = `translate3d(${head.x}px, ${head.y}px, 0)`;
       setFlag('visible', true);
       const target = event.target instanceof Element ? event.target : null;
-      const dragging = !!target?.closest(DRAGGING);
-      setFlag('dragging', dragging);
-      if (!ctx || !dragging) return;
+      setFlag('dragging', !!target?.closest(DRAGGING));
+      if (!ctx) return;
       // Coalesced samples fill in fast flicks so the curve never steps.
       const samples = event.getCoalescedEvents?.() ?? [];
       for (const sample of samples.length ? samples : [event]) {
