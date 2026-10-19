@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ThemeProvider } from '../components/playground/theme/ThemeContext';
-import PlaygroundCanvas from '../components/playground/PlaygroundCanvas';
+import Playground from '../components/playground/Playground';
 import { PageSweepOut } from '../components/chrome/PageSweep';
 import PlaygroundCursor from '../components/playground/cursor/PlaygroundCursor';
 import { useMediaQuery } from '../lib/useMediaQuery';
@@ -20,8 +20,7 @@ function usePlaygroundFonts() {
   }, []);
 }
 
-/* /playground: the Experiment Zone canvas. The page itself never scrolls;
-   the canvas pans instead. */
+/* /playground: the Experiment Zone, as a pannable canvas or a scrolling grid. */
 export default function PlaygroundPage() {
   usePageMeta({
     page: 'Experiment Zone',
@@ -31,17 +30,9 @@ export default function PlaygroundPage() {
   // Touch devices keep their native behaviour.
   const hasMouse = useMediaQuery('(hover: hover) and (pointer: fine)');
 
-  useEffect(() => {
-    const { overflow } = document.body.style;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = overflow;
-    };
-  }, []);
-
   return (
     <ThemeProvider>
-      <PlaygroundCanvas />
+      <Playground />
       <PageSweepOut />
       {hasMouse && <PlaygroundCursor />}
     </ThemeProvider>

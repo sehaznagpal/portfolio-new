@@ -11,7 +11,8 @@ const DOT_RADIUS = DOT_DIAMETER / 2;
 const TIP_RATIO = 0.25;
 const TIP_RADIUS = DOT_RADIUS * TIP_RATIO;
 /* Each position stays in the trail this long, so the tail's length follows
-   speed and it retracts into the dot within ~200ms of stopping. */
+   speed and it retracts into the dot within ~200ms of stopping. The trail
+   is only recorded while the canvas is being dragged. */
 const TRAIL_LIFETIME_MS = 160;
 const MAX_TRAIL_PX = 220;
 const PRESS_SQUISH = [{ transform: 'scale(1)' }, { transform: 'scale(0.85)' }, { transform: 'scale(1)' }];
@@ -19,7 +20,7 @@ const PRESS_TIMING = { duration: 320, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)
 
 const CLICKABLE = 'a[href], button, [role="button"], [role="link"], [role="menuitemradio"], label, summary, select';
 const TEXT_INPUT = 'input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]';
-// Set by useCanvasViewport while the canvas is being dragged.
+// Set by useWorldViewport while the canvas is being dragged.
 const DRAGGING = '[data-dragging]';
 
 type TimedPoint = TrailPoint & { t: number };
@@ -53,7 +54,8 @@ function trailPath(head: TrailPoint, history: TimedPoint[], now: number) {
 }
 
 /* The playground's own cursor: a red dot that tracks the pointer exactly,
-   with a tapered trail (drawn on one canvas) that lags behind it. Mounted
+   with a tapered trail (drawn on one canvas) behind it while the canvas is
+   being dragged. Mounted
    only on fine-pointer devices; hides the native cursor for as long as it
    is mounted, which is only while on /playground. */
 export default function PlaygroundCursor() {
@@ -113,8 +115,9 @@ export default function PlaygroundCursor() {
       dot!.style.transform = `translate3d(${head.x}px, ${head.y}px, 0)`;
       setFlag('visible', true);
       const target = event.target instanceof Element ? event.target : null;
-      setFlag('dragging', !!target?.closest(DRAGGING));
-      if (!ctx) return;
+      const dragging = !!target?.closest(DRAGGING);
+      setFlag('dragging', dragging);
+      if (!ctx || !dragging) return;
       // Coalesced samples fill in fast flicks so the curve never steps.
       const samples = event.getCoalescedEvents?.() ?? [];
       for (const sample of samples.length ? samples : [event]) {

@@ -1,0 +1,31 @@
+.surface {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.surface[data-mode='overview'] {
+  cursor: zoom-in;
+}
+
+/* Both layers are the full world and get the same transform from
+   useWorldViewport (translate, plus scale only in the overview). */
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.surface[data-zooming] .layer {
+  transition: transform var(--pg-zoom-duration) var(--pg-ease-standard);
+}
+
+.ground {
+  background-image: radial-gradient(circle, var(--pg-ground-dot) 0.75px, transparent 1.25px);
+  background-size: var(--pg-dot-spacing) var(--pg-dot-spacing);
+}

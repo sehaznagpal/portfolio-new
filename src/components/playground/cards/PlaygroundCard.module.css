@@ -1,0 +1,95 @@
+/* Geometry mirrored in playgroundLayout.ts (CARD_PADDING, CAPTION_HEIGHT). */
+.card {
+  --card-padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  color: inherit;
+}
+
+.frame {
+  position: relative;
+  display: block;
+  padding: var(--card-padding);
+  background: var(--pg-paper);
+  border: 1px solid var(--pg-frame-border);
+  border-radius: var(--pg-frame-radius);
+  box-shadow: var(--pg-frame-shadow);
+  transition: transform var(--pg-lift-duration) var(--ease-out-expo);
+}
+
+/* A deeper shadow faded in on hover (opacity only, never box-shadow) */
+.frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--pg-frame-shadow-lifted);
+  opacity: 0;
+  transition: opacity var(--pg-lift-duration) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.noteFrame {
+  padding: 0;
+  overflow: hidden;
+}
+
+.art {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--pg-frame-radius) - var(--card-padding) / 2);
+  background: var(--pg-frame-inset);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.caption {
+  display: block;
+  height: var(--pg-caption-height);
+  padding-top: 10px;
+  font-family: 'Source Code Pro', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--pg-caption);
+  opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity var(--pg-lift-duration) ease-out;
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:focus-visible {
+  outline: none;
+}
+
+.interactive:focus-visible .frame {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive:hover .frame {
+    transform: translateY(-4px);
+  }
+
+  .interactive:hover .frame::after {
+    opacity: 1;
+  }
+
+  .interactive:hover .caption {
+    opacity: 1;
+  }
+}
+
+.interactive:focus-visible .caption {
+  opacity: 1;
+}

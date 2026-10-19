@@ -1,0 +1,154 @@
+/* Text cards that sit in the same paper frame as the artwork cards. */
+.note {
+  display: flex;
+  flex-direction: column;
+  color: var(--pg-ink);
+}
+
+/* Intro: "More from my Drafts" */
+.intro {
+  align-items: center;
+  gap: 16px;
+  padding: 28px 36px 32px;
+  text-align: center;
+}
+
+.introHeading {
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  font-feature-settings: 'salt' 1;
+}
+
+.italic {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-regular);
+  font-style: italic;
+}
+
+.bold {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-medium);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+}
+
+.introBody,
+.introHighlight {
+  font-family: 'Author Variable', sans-serif;
+  font-size: 15px;
+  line-height: 1.35;
+  font-feature-settings: 'salt' 1;
+}
+
+.introBody {
+  font-weight: var(--author-regular);
+  text-align: justify;
+}
+
+.introHighlight {
+  padding: 2px 6px;
+  background: var(--color-brand);
+  font-weight: var(--author-medium);
+}
+
+/* Letter: handwriting on the site's light cream */
+.letter {
+  position: relative;
+  padding: 22px 24px;
+  background: var(--text-cream);
+}
+
+.letterText {
+  font-family: 'Crafty Girls', cursive;
+  font-size: 16px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+}
+
+.untyped {
+  visibility: hidden;
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  margin-left: 1px;
+  margin-right: -3px;
+  background: var(--pg-ink);
+  animation: caretBlink 900ms step-end infinite;
+}
+
+@keyframes caretBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Say hello */
+.contact {
+  gap: 18px;
+  padding: 22px 22px 18px;
+  background: var(--color-brand);
+}
+
+.contactHeading {
+  font-family: 'Gambetta Variable', serif;
+  font-weight: var(--gambetta-medium);
+  font-style: italic;
+  font-size: 64px;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  font-feature-settings: 'salt' 1;
+}
+
+.contactRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.contactName {
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-weight: var(--bricolage-light);
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 17px;
+  letter-spacing: -0.04em;
+}
+
+.contactLinks {
+  display: flex;
+  gap: 6px;
+}
+
+.contactLink {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.contactLink img {
+  width: 100%;
+  height: 100%;
+}
+
+.contactLink:focus-visible {
+  outline: 2px solid var(--pg-ink);
+  outline-offset: 2px;
+}

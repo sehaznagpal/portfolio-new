@@ -1,7 +1,7 @@
 /* Old-repo sizes multiplied by --scale (the pill is ~17% smaller) */
 .pill {
   --scale: var(--pg-chrome-scale);
-  position: absolute;
+  position: fixed;
   top: 36px;
   right: 36px;
   z-index: 10;

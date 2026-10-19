@@ -1,13 +1,22 @@
 export type ThemeName = 'default' | 'pina-colada' | 'seaglass' | 'blush' | 'wakanda';
 export type PickableTheme = Exclude<ThemeName, 'default'>;
 
-/* Swatch colours double as each theme's canvas fill and grid line (see
-   PlaygroundCanvas.module.css). */
-export const THEME_OPTIONS: { id: PickableTheme; label: string; swatchFill: string; swatchStroke: string }[] = [
-  { id: 'pina-colada', label: 'Piña Colada', swatchFill: '#F8FFD1', swatchStroke: '#C2F2E4' },
-  { id: 'seaglass', label: 'Seaglass', swatchFill: '#DDECF1', swatchStroke: '#AED9C6' },
-  { id: 'blush', label: 'Blush', swatchFill: '#C84F6B', swatchStroke: '#D1798E' },
-  { id: 'wakanda', label: 'Wakanda', swatchFill: '#121212', swatchStroke: '#1E1E1E' },
+/* Each theme is a soft, muted ground plus its dot colour. `dark` flips the
+   text that sits directly on the ground (captions) to light. */
+export interface ThemeGround {
+  ground: string;
+  dot: string;
+  dark: boolean;
+}
+
+export const DEFAULT_GROUND: ThemeGround = { ground: '#ECE8DE', dot: 'rgba(18, 18, 18, 0.18)', dark: false };
+
+/* The switcher's swatches show each theme's own ground. */
+export const THEME_OPTIONS: ({ id: PickableTheme; label: string; swatchStroke: string } & ThemeGround)[] = [
+  { id: 'pina-colada', label: 'Piña Colada', swatchStroke: '#CFE6DC', ground: '#F5F7E4', dot: 'rgba(18, 18, 18, 0.16)', dark: false },
+  { id: 'seaglass', label: 'Seaglass', swatchStroke: '#C3DCD2', ground: '#E6EEF0', dot: 'rgba(18, 18, 18, 0.16)', dark: false },
+  { id: 'blush', label: 'Blush', swatchStroke: '#DDB6BF', ground: '#EEDDE0', dot: 'rgba(18, 18, 18, 0.16)', dark: false },
+  { id: 'wakanda', label: 'Wakanda', swatchStroke: '#2C2C2C', ground: '#1B1B1B', dot: 'rgba(254, 254, 254, 0.12)', dark: true },
 ];
 
 /* Order the dot-cluster button steps through, and the order its four dots sit
@@ -16,4 +25,8 @@ export const THEME_CYCLE: PickableTheme[] = ['wakanda', 'pina-colada', 'seaglass
 
 export function themeOption(theme: ThemeName) {
   return THEME_OPTIONS.find((option) => option.id === theme);
+}
+
+export function themeGround(theme: ThemeName): ThemeGround {
+  return themeOption(theme) ?? DEFAULT_GROUND;
 }
