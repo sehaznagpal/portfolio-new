@@ -4,6 +4,7 @@ import PlaygroundCanvas from '../components/playground/PlaygroundCanvas';
 import { PageSweepOut } from '../components/chrome/PageSweep';
 import PlaygroundCursor from '../components/playground/cursor/PlaygroundCursor';
 import { useMediaQuery } from '../lib/useMediaQuery';
+import { usePageMeta } from '../lib/usePageMeta';
 
 // Fonts only the playground uses (letter, SiP Studio modal), so Home never loads them.
 const FONTS_HREF =
@@ -22,6 +23,10 @@ function usePlaygroundFonts() {
 /* /playground: the Experiment Zone canvas. The page itself never scrolls;
    the canvas pans instead. */
 export default function PlaygroundPage() {
+  usePageMeta({
+    page: 'Experiment Zone',
+    description: 'Small things made to see how they hold up when someone actually uses them.',
+  });
   usePlaygroundFonts();
   // Touch devices keep their native behaviour.
   const hasMouse = useMediaQuery('(hover: hover) and (pointer: fine)');

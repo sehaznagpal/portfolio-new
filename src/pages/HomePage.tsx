@@ -7,6 +7,7 @@ import SiteNav, { type NavTheme } from '../components/nav/SiteNav';
 import HeroSection from '../components/home/HeroSection';
 import WorkSection from '../components/home/WorkSection';
 import Footer from '../components/footer/Footer';
+import { HOME_DESCRIPTION, usePageMeta } from '../lib/usePageMeta';
 import { useSectionNav, type SectionId } from '../lib/useSectionNav';
 import styles from './HomePage.module.css';
 
@@ -46,6 +47,7 @@ const NAV_THEME: Record<SectionId, NavTheme> = {
    footer still behind it (see useSectionNav and HomePage.module.css); on
    touch they're plain native scroll-snap. */
 export default function HomePage() {
+  usePageMeta({ description: HOME_DESCRIPTION });
   // The loader introduces the site on its first page load only. Arriving
   // from another page in the app (a case study's "work", the playground)
   // goes straight to the section asked for.

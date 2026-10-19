@@ -1,27 +1,18 @@
-import { useEffect } from 'react';
 import SweepButton from '../components/chrome/SweepButton';
 import { LINKS } from '../data/links';
+import { usePageMeta } from '../lib/usePageMeta';
 import styles from './NotFoundPage.module.css';
 
-const TITLE = 'Page not found | Sehaz Nagpal';
 const NOTE = 'this portfolio was built in the spirit of exploration. but if you are lost:';
 
 /* Any address the site doesn't have (Figma 1461:1141 desktop, 1461:1187
    mobile): a note and a link home over a giant decorative "404". */
 export default function NotFoundPage() {
-  // Own title, and kept out of search results, only while it's shown.
-  useEffect(() => {
-    const previousTitle = document.title;
-    document.title = TITLE;
-    const robots = document.createElement('meta');
-    robots.name = 'robots';
-    robots.content = 'noindex';
-    document.head.appendChild(robots);
-    return () => {
-      document.title = previousTitle;
-      robots.remove();
-    };
-  }, []);
+  usePageMeta({
+    page: 'Page not found',
+    description: 'This portfolio was built in the spirit of exploration.',
+    noindex: true,
+  });
 
   return (
     <main className={styles.page}>

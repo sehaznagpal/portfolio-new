@@ -51,3 +51,8 @@ export const CASE_STUDIES: CaseStudyDef[] = [
 // Dr Cuterus (index 0) is the default centered/active card on both the
 // desktop coverflow and the mobile vertical stack.
 export const DEFAULT_ACTIVE_INDEX = 0;
+
+// A case study's page title, as its index card names it.
+export function caseStudyTitle(id: CaseStudyId): string {
+  return CASE_STUDIES.find((study) => study.id === id)!.shortTitle;
+}

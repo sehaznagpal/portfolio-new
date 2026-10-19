@@ -9,7 +9,9 @@ import DrCuterusPoster from '../components/caseStudy/DrCuterusPoster';
 import { DR_CUTERUS_MINIS } from '../components/caseStudy/drCuterus/DrCuterusMinis';
 import SiteStructure from '../components/caseStudy/drCuterus/SiteStructure';
 import { DR_CUTERUS_IMAGE_SETS, DR_CUTERUS_SITE_STRUCTURE, DR_CUTERUS_STORY } from '../data/articles/drCuterus';
+import { caseStudyTitle } from '../data/caseStudies';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';
+import { usePageMeta } from '../lib/usePageMeta';
 import styles from './ArticlePage.module.css';
 
 /* Big visual and mini illustration ids used in DR_CUTERUS_STORY. */
@@ -24,6 +26,8 @@ const VISUALS = {
 };
 
 export default function DrCuterusCaseStudyPage() {
+  usePageMeta({ page: caseStudyTitle('dr-cuterus'), description: `${DR_CUTERUS_STORY.subtitle}.` });
+
   return (
     <CaseStudyLayout
       index={storyIndex(DR_CUTERUS_STORY)}

@@ -2,14 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- ?v= busts browsers' long-lived favicon cache; bump it whenever the icons change. -->
-    <link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.ico?v=3" sizes="16x16 32x32" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+    <!-- Icon files carry the year in their names: a renamed file can't come
+         from any browser's cache (Safari ignores ?v= query strings). Rename
+         them again whenever the icon changes. /favicon.ico stays at the root
+         for browsers that request it directly. -->
+    <link rel="icon" href="/icon-2026.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-2026.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/icon-2026-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-2026.png" sizes="180x180" />
     <!-- Brand colour (--color-brand in src/styles/tokens.css); meta tags can't read CSS variables. -->
     <meta name="theme-color" content="#D9CE6A" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sehaz Nagpal | Product Designer Portfolio</title>
+    <title>Sehaz Nagpal</title>
+    <!-- Home's metadata; each route updates these (src/lib/usePageMeta.ts). -->
+    <meta name="description" content="Why do people do what they do? A question carried through an economics degree, a dissertation and now design." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sehaz Nagpal" />
+    <meta property="og:title" content="Sehaz Nagpal" />
+    <meta property="og:description" content="Why do people do what they do? A question carried through an economics degree, a dissertation and now design." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sehaz Nagpal" />
+    <meta name="twitter:description" content="Why do people do what they do? A question carried through an economics degree, a dissertation and now design." />
     <!-- Case study reading mode, applied before first paint so a light-mode
          reader never sees a dark flash (see src/lib/caseTheme.ts). -->
     <script>

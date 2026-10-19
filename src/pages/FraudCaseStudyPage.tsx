@@ -11,7 +11,9 @@ import { FRAUD_MINIS } from '../components/caseStudy/fraud/FraudMinis';
 import ResultsGraphs from '../components/caseStudy/fraud/ResultsGraphs';
 import UserJourney from '../components/caseStudy/fraud/UserJourney';
 import { FRAUD_STORY } from '../data/articles/fraud';
+import { caseStudyTitle } from '../data/caseStudies';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';
+import { usePageMeta } from '../lib/usePageMeta';
 import styles from './ArticlePage.module.css';
 
 /* Big visual and mini illustration ids used in FRAUD_STORY. */
@@ -26,6 +28,8 @@ const VISUALS = {
 };
 
 export default function FraudCaseStudyPage() {
+  usePageMeta({ page: caseStudyTitle('fraud'), description: `${FRAUD_STORY.subtitle}.` });
+
   return (
     <CaseStudyLayout
       index={storyIndex(FRAUD_STORY)}

@@ -1,4 +1,4 @@
-<!-- Brand favicon (Figma 1406:2342). Favicons can't read CSS variables, so the
+<!-- Brand icon (Figma 1406:2342). Favicons can't read CSS variables, so the
      brand colour (--color-brand in src/styles/tokens.css) is written out here;
      keep the edge stop in sync with that token. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250">

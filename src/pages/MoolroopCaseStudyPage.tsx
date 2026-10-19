@@ -10,7 +10,9 @@ import { MOOLROOP_MINIS } from '../components/caseStudy/moolroop/MoolroopMinis';
 import SitemapTree from '../components/caseStudy/moolroop/SitemapTree';
 import ScreenRow from '../components/caseStudy/moolroop/ScreenRow';
 import { MOOLROOP_RECORD, MOOLROOP_SCREENS, MOOLROOP_SITEMAP, MOOLROOP_STORY } from '../data/articles/moolroop';
+import { caseStudyTitle } from '../data/caseStudies';
 import { FOOTER_PHOTOS } from '../data/footerPhotos';
+import { usePageMeta } from '../lib/usePageMeta';
 import styles from './ArticlePage.module.css';
 
 /* Big visual and mini illustration ids used in MOOLROOP_STORY. */
@@ -26,6 +28,8 @@ const VISUALS = {
 };
 
 export default function MoolroopCaseStudyPage() {
+  usePageMeta({ page: caseStudyTitle('moolroop'), description: `${MOOLROOP_STORY.subtitle}.` });
+
   return (
     <CaseStudyLayout
       index={storyIndex(MOOLROOP_STORY)}
