@@ -43,7 +43,7 @@ const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
    the first card. The track only moves with the arrows. Chromium
    ignores smooth scrollBy on an overflow-hidden element, so the scroll is
    animated by hand in rAF. */
-export default function ExtrasModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function ExtrasModal({ open, onClose, note }: { open: boolean; onClose: () => void; note?: string }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef(0);
 
@@ -67,6 +67,7 @@ export default function ExtrasModal({ open, onClose }: { open: boolean; onClose:
   return (
     <PlaygroundModal
       open={open}
+      note={note}
       onClose={onClose}
       label="Extras, a few small illustrations"
       frameClassName={styles.frame}

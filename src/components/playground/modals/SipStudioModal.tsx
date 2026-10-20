@@ -32,10 +32,11 @@ const GALLERY = [
   { src: mockupCup, alt: 'SiP Studio patterned cup' },
 ];
 
-export default function SipStudioModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function SipStudioModal({ open, onClose, note }: { open: boolean; onClose: () => void; note?: string }) {
   return (
     <PlaygroundModal
       open={open}
+      note={note}
       onClose={onClose}
       label="SiP Studio, brand concept case study"
       frameClassName={styles.frame}

@@ -1,21 +1,27 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
+import { useTheme } from '../theme/ThemeContext';
+import { themeGround } from '../theme/themes';
+import ProjectNote from '../note/ProjectNote';
 import styles from './PlaygroundModal.module.css';
 
-// Matches --pg-modal-fade-duration: the exit fade before unmounting.
-const EXIT_MS = 220;
+// Matches --pg-modal-duration: the exit fade before unmounting.
+const EXIT_MS = 300;
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, video[controls], [tabindex]:not([tabindex="-1"])';
 
-/* Shared shell for the playground's project modals: fades and scales in,
-   closes on Escape, backdrop click or the close button, keeps Tab inside,
-   and hands focus back to whatever opened it. Each modal supplies its own
-   frame size and close-button colours. */
+/* Shared shell for the playground's project modals: a frosted veil (its
+   tint from the theme) and the modal fading and scaling in; closes on
+   Escape, a click on the veil or the close button, keeps Tab inside, and
+   hands focus back to whatever opened it. With a `note`, a draggable
+   notebook page sits beside it and describes it to screen readers. Each
+   modal supplies its own frame size and close-button colours. */
 export default function PlaygroundModal({
   open,
   onClose,
   label,
+  note,
   frameClassName,
   closeClassName,
   children,
@@ -23,10 +29,13 @@ export default function PlaygroundModal({
   open: boolean;
   onClose: () => void;
   label: string;
+  note?: string;
   frameClassName: string;
   closeClassName: string;
   children: ReactNode;
 }) {
+  const { theme } = useTheme();
+  const noteId = useId();
   const [rendered, setRendered] = useState(open);
   const [visible, setVisible] = useState(false);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -85,25 +94,30 @@ export default function PlaygroundModal({
   if (!rendered) return null;
 
   return createPortal(
-    <div
-      className={`${styles.overlay} ${visible ? styles.visible : ''}`}
-      onClick={onClose}
-      role="presentation"
-    >
+    <>
       <div
-        ref={frameRef}
-        className={`${styles.frame} ${frameClassName}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label={label}
-        onClick={(event) => event.stopPropagation()}
+        className={`${styles.overlay} ${visible ? styles.visible : ''}`}
+        style={{ '--pg-veil': themeGround(theme).veil } as CSSProperties}
+        onClick={onClose}
+        role="presentation"
       >
-        <button ref={closeRef} type="button" className={`${styles.close} ${closeClassName}`} aria-label="Close" onClick={onClose}>
-          <X size={20} strokeWidth={1.75} />
-        </button>
-        {children}
+        <div
+          ref={frameRef}
+          className={`${styles.frame} ${frameClassName}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label={label}
+          aria-describedby={note ? noteId : undefined}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <button ref={closeRef} type="button" className={`${styles.close} ${closeClassName}`} aria-label="Close" onClick={onClose}>
+            <X size={20} strokeWidth={1.75} />
+          </button>
+          {children}
+        </div>
       </div>
-    </div>,
+      {note && <ProjectNote id={noteId} text={note} visible={visible} closeButtonRef={closeRef} />}
+    </>,
     document.body,
   );
 }

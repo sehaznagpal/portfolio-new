@@ -238,10 +238,11 @@ function Photobooth() {
   );
 }
 
-export default function PhotoboothModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function PhotoboothModal({ open, onClose, note }: { open: boolean; onClose: () => void; note?: string }) {
   return (
     <PlaygroundModal
       open={open}
+      note={note}
       onClose={onClose}
       label="Photobooth"
       frameClassName={styles.frame}

@@ -54,6 +54,8 @@ interface CursorTooltipProps {
      screen, shows the pill pinned under the trigger instead of trailing a
      cursor. Escape, blur or a tap elsewhere hides it. */
   pinnable?: boolean;
+  /* Lifts the pill above modals, for triggers that sit over one. */
+  elevated?: boolean;
 }
 
 // Small pill that trails the cursor (eased, not 1:1) while hovering its
@@ -68,6 +70,7 @@ export default function CursorTooltip({
   onHoverMove,
   hidden = false,
   pinnable = false,
+  elevated = false,
 }: CursorTooltipProps) {
   // Touch devices synthesize mouse events on tap, which would otherwise pop
   // the pill in at the tap point and leave it stuck there — a viewport-width
@@ -205,7 +208,7 @@ export default function CursorTooltip({
   } else if (!image && !hidden && (pinned || (hasFinePointer && visible))) {
     pill = (
       <div
-        className={`${styles.pill} ${variant === 'dark' ? styles.pillDark : ''} ${pinned ? styles.pillPinned : ''}`}
+        className={`${styles.pill} ${variant === 'dark' ? styles.pillDark : ''} ${pinned ? styles.pillPinned : ''} ${elevated ? styles.elevated : ''}`}
         ref={pillRef}
         role="tooltip"
       >

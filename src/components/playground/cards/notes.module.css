@@ -53,17 +53,15 @@
   font-weight: var(--author-medium);
 }
 
-/* Letter: handwriting on the site's light cream */
+/* Letter: handwriting on notebook paper (notebookPaper.module.css) */
 .letter {
-  position: relative;
-  padding: 22px 24px;
-  background: var(--text-cream);
+  --paper-font: 16px;
+  --paper-rule: 22px;
+  --paper-top: 22px;
+  padding: var(--paper-top) 24px;
 }
 
 .letterText {
-  font-family: 'Crafty Girls', cursive;
-  font-size: 16px;
-  line-height: 1.35;
   white-space: pre-wrap;
 }
 

@@ -1,0 +1,54 @@
+/* Notebook paper, shared by the project notes and the letter: cream paper
+   with soft, slightly hand-drawn brand-yellow rules that the handwriting
+   sits on.
+
+   The element sets three sizes and the rules follow them:
+     --paper-font   the handwriting's font size
+     --paper-rule   its line height, which is also the rule spacing
+     --paper-top    the text's top padding
+   Each rule lands on a line's baseline. In Crafty Girls (ascent 0.9em,
+   descent 0.25em) a baseline sits at half the line box plus 0.325 of the
+   font size; the rule is drawn 33/40 of the way down its tile row in
+   ruled-lines.svg (one tile is four rows). */
+.paper {
+  --paper-baseline-ratio: 0.325;
+  --paper-rule-row: 0.825;
+  position: relative;
+  isolation: isolate;
+  background: var(--text-cream);
+}
+
+.paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--color-brand);
+  opacity: var(--pg-rule-opacity);
+  -webkit-mask-image: url('../../../assets/images/playground/ruled-lines.svg');
+  mask-image: url('../../../assets/images/playground/ruled-lines.svg');
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: 400px calc(var(--paper-rule) * 4);
+  mask-size: 400px calc(var(--paper-rule) * 4);
+  -webkit-mask-position: 0
+    calc(
+      var(--paper-top) + var(--paper-rule) / 2 + var(--paper-font) * var(--paper-baseline-ratio) - var(--paper-rule) *
+        var(--paper-rule-row)
+    );
+  mask-position: 0
+    calc(
+      var(--paper-top) + var(--paper-rule) / 2 + var(--paper-font) * var(--paper-baseline-ratio) - var(--paper-rule) *
+        var(--paper-rule-row)
+    );
+  pointer-events: none;
+}
+
+/* The handwriting itself: line height locked to the rule spacing */
+.writing {
+  font-family: 'Crafty Girls', cursive;
+  font-size: var(--paper-font);
+  line-height: var(--paper-rule);
+  color: var(--pg-ink);
+}

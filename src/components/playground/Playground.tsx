@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import type { PlaygroundItem, PlaygroundModalId } from '../../data/playgroundItems';
+import { PLAYGROUND_ITEMS, type PlaygroundItem, type PlaygroundModalId } from '../../data/playgroundItems';
 import { useHasFinePointer } from '../../lib/useHasFinePointer';
 import { useTheme } from './theme/ThemeContext';
 import { themeGround } from './theme/themes';
@@ -76,7 +76,11 @@ export default function Playground() {
     '--pg-ground-dot': ground.dot,
     '--pg-caption': ground.dark ? 'var(--pg-paper)' : 'var(--pg-ink)',
   } as CSSProperties;
-  const modalProps = (id: PlaygroundModalId) => ({ open: openModal === id, onClose: () => setOpenModal(null) });
+  const modalProps = (id: PlaygroundModalId) => ({
+    open: openModal === id,
+    onClose: () => setOpenModal(null),
+    note: PLAYGROUND_ITEMS.find((item) => item.action && 'modal' in item.action && item.action.modal === id)?.note,
+  });
   const fade = reducedMotion ? { duration: 0 } : FADE;
 
   return (

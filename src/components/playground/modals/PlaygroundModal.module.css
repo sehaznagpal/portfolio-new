@@ -6,22 +6,32 @@
   align-items: center;
   justify-content: center;
   padding: 4vh 4vw;
-  background: rgba(20, 18, 16, 0.4);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  /* A bright frosted haze: the theme's white tint (--pg-veil, set inline),
+     blurred and slightly saturated so the canvas reads as soft light */
+  background: var(--pg-veil);
+  -webkit-backdrop-filter: blur(var(--pg-veil-blur)) saturate(var(--pg-veil-saturate));
+  backdrop-filter: blur(var(--pg-veil-blur)) saturate(var(--pg-veil-saturate));
   opacity: 0;
-  transition: opacity var(--pg-modal-fade-duration) ease-out;
+  transition: opacity var(--pg-modal-duration) var(--ease-out-expo);
 }
 
+/* Without backdrop-filter, a more opaque white keeps it bright */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .overlay {
+    background: rgba(255, 255, 255, 0.82);
+  }
+}
+
+/* Floats on a soft, diffused shadow; no hard edge */
 .frame {
   position: relative;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--pg-modal-shadow);
   opacity: 0;
-  transform: scale(0.94) translateY(10px);
+  transform: scale(var(--pg-modal-scale-from));
   transition:
     transform var(--pg-modal-duration) var(--ease-out-expo),
-    opacity var(--pg-modal-fade-duration) ease-out;
+    opacity var(--pg-modal-duration) var(--ease-out-expo);
 }
 
 .visible,

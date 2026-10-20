@@ -17,7 +17,8 @@ const MAX_TRAIL_PX = 220;
 const PRESS_SQUISH = [{ transform: 'scale(1)' }, { transform: 'scale(0.85)' }, { transform: 'scale(1)' }];
 const PRESS_TIMING = { duration: 320, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' };
 
-const CLICKABLE = 'a[href], button, [role="button"], [role="link"], [role="menuitemradio"], label, summary, select';
+// Includes draggable things (the project notes), so the dot grows over them too.
+const CLICKABLE = 'a[href], button, [role="button"], [role="link"], [role="menuitemradio"], label, summary, select, [data-draggable]';
 const TEXT_INPUT = 'input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]';
 // Set by useWorldViewport while the canvas is being dragged.
 const DRAGGING = '[data-dragging]';

@@ -7,8 +7,8 @@ import styles from './GridView.module.css';
    grid (in group order), and the letter as a full-width sign-off. Calm by
    design: no canvas interactions, just a lift on hover. */
 export default function GridView({ onOpenModal }: { onOpenModal: (item: PlaygroundItem) => void }) {
-  const banner = PLAYGROUND_ITEMS.find((item) => item.note === 'intro');
-  const signOff = PLAYGROUND_ITEMS.find((item) => item.note === 'letter');
+  const banner = PLAYGROUND_ITEMS.find((item) => item.card === 'intro');
+  const signOff = PLAYGROUND_ITEMS.find((item) => item.card === 'letter');
   const cards = PLAYGROUND_ITEMS.filter((item) => item !== banner && item !== signOff);
 
   return (

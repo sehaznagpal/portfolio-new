@@ -1,10 +1,11 @@
-/* Old paper: the site's light cream (--text-cream, which playground
-   themes never override), with a fainter grain. Figma units (1415:897). */
+/* Notebook paper (see notebookPaper.module.css): the handwriting's size,
+   line height and padding set the rules. Figma units (1415:897). */
 .letter {
-  --grain: 0.08;
+  --paper-font: calc(25.52 * var(--cu));
+  --paper-rule: calc(30.624 * var(--cu));
+  --paper-top: calc(25.52 * var(--cu));
   width: calc(501.09 * var(--cu));
-  padding: calc(25.52 * var(--cu));
-  background: var(--text-cream);
+  padding: var(--paper-top);
   border-radius: calc(8.51 * var(--cu));
   box-shadow: calc(2.13 * var(--cu)) calc(4.25 * var(--cu)) calc(8.51 * var(--cu)) rgba(0, 0, 0, 0.4);
   transform: rotate(-1.76deg);
@@ -12,10 +13,6 @@
 
 .text {
   margin: 0;
-  font-family: 'Crafty Girls', cursive;
-  font-size: calc(25.52 * var(--cu));
-  line-height: 1.2;
-  color: var(--pg-ink);
   white-space: pre-wrap;
 }
 

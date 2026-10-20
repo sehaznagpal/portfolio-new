@@ -273,8 +273,18 @@
   --pg-sweep-in-duration: 462ms;
   --pg-sweep-out-duration: 468ms;
   --pg-zoom-duration: 400ms;
-  --pg-modal-duration: 260ms;
-  --pg-modal-fade-duration: 220ms;
+  /* Modals open over a frosted veil (tint per theme, see themes.ts) */
+  --pg-modal-duration: 300ms;
+  --pg-modal-scale-from: 0.96;
+  --pg-veil-blur: 16px;
+  --pg-veil-saturate: 1.2;
+  --pg-modal-shadow: 0 2px 8px rgba(18, 18, 18, 0.05), 0 24px 64px rgba(18, 18, 18, 0.14);
+  /* Notebook paper: the project notes and the letter */
+  --pg-rule-opacity: 0.55;
+  --pg-note-width: 280px;
+  --pg-note-tilt: 2deg;
+  --pg-note-shadow: 0 1px 2px rgba(18, 18, 18, 0.08), 0 8px 18px rgba(18, 18, 18, 0.12);
+  --pg-note-shadow-lifted: 0 2px 4px rgba(18, 18, 18, 0.08), 0 22px 40px rgba(18, 18, 18, 0.2);
 }
 
 /* Case study light reading mode (lamp off), Figma 1462:1197. Inactive

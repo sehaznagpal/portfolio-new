@@ -20,7 +20,7 @@ export default function PlaygroundCard({
   onOpenModal: (item: PlaygroundItem) => void;
   variant: 'banner' | 'tile';
 }) {
-  const Note = item.note ? NOTES[item.note] : null;
+  const Note = item.card ? NOTES[item.card] : null;
   const frame = (
     <span className={`${styles.frame} ${Note ? styles.noteFrame : ''}`}>
       {Note ? (

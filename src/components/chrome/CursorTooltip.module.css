@@ -85,3 +85,8 @@
   line-height: 1.1;
   white-space: normal;
 }
+
+/* Above the playground's modals (1000) and project notes, below its cursor (3000) */
+.elevated {
+  z-index: 2500;
+}

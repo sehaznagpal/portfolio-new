@@ -1,0 +1,87 @@
+/* Positioned by translate3d from ProjectNote.tsx; above the modal (1000),
+   below the elevated tooltip (2500) and the playground cursor (3000). */
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  width: var(--pg-note-width);
+  max-width: calc(100vw - 32px);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity var(--pg-modal-duration) ease-out;
+  will-change: transform;
+}
+
+.root[data-dragging] {
+  cursor: grabbing;
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* The tilt, the settle on arrival and the pickup straighten all live here,
+   apart from the position, so they can ease while the drag itself is 1:1. */
+.tilt {
+  position: relative;
+  transform: rotate(var(--pg-note-tilt));
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+.visible .tilt {
+  animation: settle 520ms var(--ease-out-expo) 150ms backwards;
+}
+
+.root[data-dragging] .tilt {
+  transform: rotate(0deg) scale(1.02);
+}
+
+/* A deeper shadow faded in while held (opacity only, never box-shadow) */
+.tilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: var(--pg-note-shadow-lifted);
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+  pointer-events: none;
+}
+
+.root[data-dragging] .tilt::after {
+  opacity: 1;
+}
+
+/* Paper and rules come from notebookPaper.module.css; this sets the sizes
+   the rules follow (17px writing on 26px rules). */
+.page {
+  --paper-font: 17px;
+  --paper-rule: 26px;
+  --paper-top: 14px;
+  margin: 0;
+  padding: var(--paper-top) 20px 18px;
+  box-shadow: var(--pg-note-shadow);
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) rotate(calc(var(--pg-note-tilt) * 3));
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--pg-note-tilt));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt,
+  .visible .tilt,
+  .root[data-dragging] .tilt {
+    transform: none;
+    animation: none;
+  }
+}
