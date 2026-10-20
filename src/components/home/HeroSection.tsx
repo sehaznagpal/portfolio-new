@@ -19,7 +19,7 @@ export default function HeroSection({
   ready: boolean;
   onOpenAbout: () => void;
   onExplore: () => void;
-  /* False once the visitor has left the hero, which ends the cue's loop. */
+  /* Whether the hero is the current section: the cue's loop runs, stops and restarts with it. */
   cueActive: boolean;
 }) {
   return (

@@ -1,90 +1,66 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { ArrowDown } from 'lucide-react';
 import styles from './HeroSection.module.css';
 
 const LABEL = 'scroll down to explore work';
-// Once a visitor has scrolled (or clicked the cue) the loop has done its job:
-// it stays off for the rest of the visit, including later returns to home.
-const DONE_KEY = 'portfolio:cue-done';
-let doneThisVisit = false;
 
-function isDone(): boolean {
-  if (doneThisVisit) return true;
-  try {
-    return sessionStorage.getItem(DONE_KEY) === '1';
-  } catch {
-    return false;
-  }
+/* `run` keys the animated overlay, so bumping it remounts that element and
+   its CSS animation begins again from the start (with its own start delay). */
+interface CueState {
+  run: number;
+  stopped: boolean;
 }
 
-function markDone(): void {
-  doneThisVisit = true;
-  try {
-    sessionStorage.setItem(DONE_KEY, '1');
-  } catch {
-    // sessionStorage unavailable: the module flag still covers this visit
-  }
+function reduce(state: CueState, action: 'stop' | 'restart'): CueState {
+  if (action === 'stop') return state.stopped ? state : { ...state, stopped: true };
+  return { run: state.run + 1, stopped: false };
 }
 
 /* The hero's "scroll down to explore work" button. Its ambient loop is one
    pure CSS animation (see HeroSection.module.css): a brand fill sweeps in
    from the left, holds, then leaves to the right, with a dark copy of the
    label inside the same clipped overlay so the text darkens exactly where
-   the fill's edge passes. Nothing here drives or restarts it. The only JS is
-   a one-shot stop: the first scroll, swipe, key press or click adds a single
-   class (never removed) that fades the overlay out and pauses the loop. The
-   class goes straight onto the element, not through React state, so no
-   render can touch the animation. */
+   the fill's edge passes.
+
+   The stop state belongs to each arrival at the hero, not to the visit: it
+   lives only in this component, so it resets whenever Home mounts, and it
+   follows `active` (the section controller's "hero is the current section"):
+   - active again: a fresh run, the overlay remounted so the loop restarts
+     from the beginning after its delay;
+   - the first scroll, swipe, key press or click while active, or leaving the
+     hero: stopped, which fades the overlay out and pauses the loop.
+   The stop listeners exist only while the hero is mounted, active and not yet
+   stopped. */
 export default function ScrollCue({ active, onExplore }: { active: boolean; onExplore: () => void }) {
-  const cueRef = useRef<HTMLButtonElement>(null);
-  const stopRef = useRef<() => void>(() => {});
+  const [{ run, stopped }, dispatch] = useReducer(reduce, undefined, () => ({ run: 0, stopped: !active }));
+
+  // Follows the controller: render-time sync, so a change in `active` and the
+  // restart it causes land in the same render (no frame of the old state).
+  const [wasActive, setWasActive] = useState(active);
+  if (active !== wasActive) {
+    setWasActive(active);
+    dispatch(active ? 'restart' : 'stop');
+  }
 
   useEffect(() => {
-    const cue = cueRef.current;
-    if (!cue) return;
-    if (isDone()) {
-      cue.classList.add(styles.cueDone);
-      return;
-    }
-
-    let stopped = false;
-    function stop() {
-      if (stopped) return;
-      stopped = true;
-      markDone();
-      cue!.classList.add(styles.cueDone);
-      removeListeners();
-    }
-    stopRef.current = stop;
-
+    if (!active || stopped) return;
+    const stop = () => dispatch('stop');
     const windowEvents = ['wheel', 'touchmove', 'keydown'] as const;
     windowEvents.forEach((type) => window.addEventListener(type, stop, { passive: true }));
     // Scroll doesn't bubble, so it's caught on the way down from any scroller.
     document.addEventListener('scroll', stop, { capture: true, passive: true });
-
-    function removeListeners() {
+    return () => {
       windowEvents.forEach((type) => window.removeEventListener(type, stop));
       document.removeEventListener('scroll', stop, { capture: true });
-    }
-
-    return () => {
-      removeListeners();
-      stopRef.current = () => {};
     };
-  }, []);
-
-  // Leaving the hero any other way (the nav's "work", say) ends it too.
-  useEffect(() => {
-    if (!active) stopRef.current();
-  }, [active]);
+  }, [active, stopped]);
 
   return (
     <button
-      ref={cueRef}
       type="button"
-      className={styles.cue}
+      className={`${styles.cue} ${stopped ? styles.cueDone : ''}`}
       onClick={() => {
-        stopRef.current();
+        dispatch('stop');
         onExplore();
       }}
     >
@@ -92,7 +68,7 @@ export default function ScrollCue({ active, onExplore }: { active: boolean; onEx
         {LABEL}
         <ArrowDown size={12} strokeWidth={1.75} aria-hidden="true" />
       </span>
-      <span className={styles.cueSweep} aria-hidden="true">
+      <span key={run} className={styles.cueSweep} aria-hidden="true">
         <span className={styles.cueFill} />
         <span className={styles.cueInk}>
           {LABEL}

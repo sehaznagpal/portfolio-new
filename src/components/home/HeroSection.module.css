@@ -116,8 +116,9 @@
   }
 }
 
-/* Set once by ScrollCue on the first scroll or click, and never removed:
-   fade the overlay out and freeze the loop. */
+/* Set by ScrollCue once the visitor has scrolled, clicked the cue or left the
+   hero, and cleared when the hero becomes active again (which also remounts
+   the overlay, restarting the loop): fade the overlay out and freeze it. */
 .cueDone .cueSweep {
   opacity: 0;
   animation-play-state: paused;
