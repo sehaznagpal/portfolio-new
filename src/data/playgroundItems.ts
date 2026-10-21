@@ -51,7 +51,7 @@ const ITEMS: PlaygroundItem[] = [
     type: 'app',
     action: { modal: 'photobooth' },
     note:
-      'I made this so you can take a few pictures and keep them. It also helped me learn how to use a camera inside a browser.',
+      'Smile! I made this so you can take a souvenir home from this website. It also helped me figure out how to add a camera to an app that runs in the browser.',
     pinned: { x: -600, y: -130 },
     order: 3,
   },
@@ -61,7 +61,7 @@ const ITEMS: PlaygroundItem[] = [
     type: 'app',
     action: { modal: 'worktape' },
     note:
-      'I kept opening the same files and apps every time I sat down to work. So I made Worktape. One click opens everything I need for a task, and one click closes it all. I wanted it to be easy and fun to use, so I made it look like cassettes.',
+      'I kept opening the same files and apps every time I sat down to work on a task. So I wondered, what if starting work was as easy as putting in a cassette? Pop it in and everything opens. Eject it and work mode ends.',
     pinned: { x: -600, y: 150 },
     order: 4,
   },
@@ -72,7 +72,7 @@ const ITEMS: PlaygroundItem[] = [
     type: 'motion',
     action: { modal: 'motionDemo' },
     note:
-      'This was my first time animating something, and my first time using Figma Motion. Re-Wired had launched something new and needed a short video to show it, so I learned while making this.',
+      'My first attempt at Figma Motion. More to come!',
     pinned: { x: -230, y: -410 },
     order: 5,
   },
@@ -83,7 +83,7 @@ const ITEMS: PlaygroundItem[] = [
     type: 'branding',
     action: { modal: 'sipStudio' },
     note:
-      'SiP Studio is a café I made up. I wanted to practise branding, so I designed one for a place that doesn’t exist.',
+      'A made-up brand I created to imagine what a pottery studio and a café could look like as one place.',
     pinned: { x: -645, y: 515 },
     order: 6,
   },
