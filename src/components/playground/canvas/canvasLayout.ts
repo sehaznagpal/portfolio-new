@@ -19,7 +19,7 @@ export const ARTWORK_BOXES: Record<string, { w: number; h: number; scale: number
   motion: { w: 264.96, h: 248.19, scale: 0.98 },
   sip: { w: 329.15, h: 299.96, scale: 0.79 },
   extras: { w: 290.19, h: 345.56, scale: 0.9 },
-  me: { w: 329.04, h: 329.04, scale: 0.79 },
+  me: { w: 308, h: 352, scale: 0.79 },
   hello: { w: 344.6, h: 238.73, scale: 0.87 },
   letter: { w: 517.61, h: 562.13, scale: 0.72 },
 };

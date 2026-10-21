@@ -59,8 +59,8 @@
 }
 
 /* Hides the native cursor everywhere on the page, modals included, but only
-   while the playground cursor is mounted. !important so it also beats the
-   canvas's own state cursors (e.g. zoom-in in the map view). */
+   while the playground cursor is mounted. !important so it also beats any
+   cursor an element sets itself. */
 @media (hover: hover) and (pointer: fine) {
   :global(html[data-playground-cursor]),
   :global(html[data-playground-cursor] *) {

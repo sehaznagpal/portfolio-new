@@ -7,12 +7,8 @@
   -webkit-user-select: none;
 }
 
-.surface[data-mode='overview'] {
-  cursor: zoom-in;
-}
-
-/* Both layers are the world and get the same transform from
-   useWorldViewport (translate, plus scale only in the overview). */
+/* Both layers are the world and get the same translate from
+   useWorldViewport. */
 .layer {
   position: absolute;
   top: 0;
@@ -21,8 +17,8 @@
   will-change: transform;
 }
 
-.surface[data-zooming] .layer {
-  transition: transform var(--pg-zoom-duration) var(--pg-ease-standard);
+.surface[data-gliding] .layer {
+  transition: transform var(--pg-glide-duration) var(--pg-ease-standard);
 }
 
 /* The dots run well past the world, so a screen bigger than it (where the

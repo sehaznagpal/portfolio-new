@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
+import { useCallback, useEffect, useRef, type RefObject } from 'react';
 import { WORLD_HEIGHT, WORLD_WIDTH } from './canvasLayout';
 
-export type ViewMode = 'normal' | 'overview';
 export type PanListener = (dx: number, dy: number) => void;
 /* Visible part of the world, in world px. */
 export interface WorldView {
@@ -12,8 +11,8 @@ export interface WorldView {
 }
 export type ViewListener = (view: WorldView) => void;
 
-// Matches --pg-zoom-duration.
-const ZOOM_MS = 400;
+// Matches --pg-glide-duration.
+const GLIDE_MS = 400;
 // Movement before a press becomes a drag, so clicks on items still work.
 const DRAG_THRESHOLD_PX = 4;
 const WHEEL_LINE_PX = 16;
@@ -35,17 +34,16 @@ function isEditableTarget(target: EventTarget | null) {
   );
 }
 
-/* Pan and zoom over a fixed-size world (WORLD_WIDTH x WORLD_HEIGHT CSS px).
-   Inputs update a target view; one rAF writes it as a single transform to
-   both layers, so nothing re-renders React per frame, and nothing runs at
-   rest. `mode` is the only React state.
+/* Pan over a fixed-size world (WORLD_WIDTH x WORLD_HEIGHT CSS px), always
+   at 1:1. Inputs update a target view; one rAF writes it as a single
+   transform to both layers, so nothing re-renders React per frame, and
+   nothing runs at rest.
 
    - Pan: drag (with gentle momentum on release), wheel / trackpad, and the
      arrow / page keys; always clamped to the world's edges.
-   - Zoom: pinch or ctrl/cmd + scroll out shows an overview, the smallest
-     zoom that still covers the screen; scrolling back in or clicking returns
-     to 1:1 at that point.
-   - moveTo centres a world point (used by the minimap). */
+   - No zoom: pinch and ctrl/cmd + scroll are swallowed on the canvas so the
+     browser doesn't zoom it either. Keyboard page zoom still works.
+   - moveTo centres a world point, gliding there (used by the minimap). */
 export function useWorldViewport({
   rootRef,
   groundRef,
@@ -57,7 +55,6 @@ export function useWorldViewport({
   contentRef: RefObject<HTMLDivElement | null>;
   initialFocus: { x: number; y: number };
 }) {
-  const [mode, setMode] = useState<ViewMode>('normal');
   const panListenersRef = useRef(new Set<PanListener>());
   const viewListenersRef = useRef(new Set<ViewListener>());
   const moveToRef = useRef<(x: number, y: number, animate: boolean) => void>(() => {});
@@ -88,20 +85,16 @@ export function useWorldViewport({
 
     let viewportW = 0;
     let viewportH = 0;
-    let currentMode: ViewMode = 'normal';
-    const view = { x: 0, y: 0, zoom: 1 };
+    const view = { x: 0, y: 0 };
     let frame = 0;
     let momentumFrame = 0;
-    let zoomTimer: ReturnType<typeof setTimeout> | undefined;
-
-    // Never zooms in past 1:1, and never out so far that the world stops covering the screen.
-    const coverZoom = () => Math.min(1, Math.max(viewportW / WORLD_WIDTH, viewportH / WORLD_HEIGHT));
+    let glideTimer: ReturnType<typeof setTimeout> | undefined;
 
     /* Clamped to the world's edges. On an axis where the screen is bigger
        than the world, the world is centred instead (the dotted ground runs
        on past it, so there's no empty edge). */
     function clampAxis(value: number, viewportSize: number, worldSize: number) {
-      const overflow = viewportSize - worldSize * view.zoom;
+      const overflow = viewportSize - worldSize;
       return overflow >= 0 ? overflow / 2 : clamp(value, overflow, 0);
     }
 
@@ -111,17 +104,12 @@ export function useWorldViewport({
     }
 
     function visibleWorld(): WorldView {
-      return {
-        x: -view.x / view.zoom,
-        y: -view.y / view.zoom,
-        width: viewportW / view.zoom,
-        height: viewportH / view.zoom,
-      };
+      return { x: -view.x, y: -view.y, width: viewportW, height: viewportH };
     }
 
     function write() {
       frame = 0;
-      const transform = `translate3d(${view.x}px, ${view.y}px, 0) scale(${view.zoom})`;
+      const transform = `translate3d(${view.x}px, ${view.y}px, 0)`;
       if (groundRef.current) groundRef.current.style.transform = transform;
       if (contentRef.current) contentRef.current.style.transform = transform;
       const visible = visibleWorld();
@@ -134,19 +122,14 @@ export function useWorldViewport({
 
     function animateNextWrite() {
       if (reducedMotion.matches) return;
-      root!.dataset.zooming = '';
-      clearTimeout(zoomTimer);
-      zoomTimer = setTimeout(() => delete root!.dataset.zooming, ZOOM_MS);
-    }
-
-    function changeMode(next: ViewMode) {
-      currentMode = next;
-      setMode(next);
+      root!.dataset.gliding = '';
+      clearTimeout(glideTimer);
+      glideTimer = setTimeout(() => delete root!.dataset.gliding, GLIDE_MS);
     }
 
     function centreOn(worldX: number, worldY: number) {
-      view.x = viewportW / 2 - worldX * view.zoom;
-      view.y = viewportH / 2 - worldY * view.zoom;
+      view.x = viewportW / 2 - worldX;
+      view.y = viewportH / 2 - worldY;
       clampView();
     }
 
@@ -164,17 +147,12 @@ export function useWorldViewport({
 
     function handleResize() {
       const focus = measure();
-      if (currentMode === 'overview') {
-        view.zoom = coverZoom();
-        centreOn(WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
-      } else {
-        centreOn(focus.x, focus.y);
-      }
+      centreOn(focus.x, focus.y);
       scheduleWrite();
     }
 
     function panBy(dx: number, dy: number) {
-      if (currentMode !== 'normal' || (dx === 0 && dy === 0)) return;
+      if (dx === 0 && dy === 0) return;
       panListenersRef.current.forEach((listener) => listener(dx, dy));
       view.x += dx;
       view.y += dy;
@@ -182,48 +160,19 @@ export function useWorldViewport({
       scheduleWrite();
     }
 
-    function enterOverview() {
-      if (currentMode === 'overview') return;
-      stopMomentum();
-      changeMode('overview');
-      view.zoom = coverZoom();
-      centreOn(WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
-      animateNextWrite();
-      scheduleWrite();
-    }
-
-    function returnToNormal(clientX: number, clientY: number) {
-      if (currentMode === 'normal') return;
-      const worldX = (clientX - view.x) / view.zoom;
-      const worldY = (clientY - view.y) / view.zoom;
-      changeMode('normal');
-      view.zoom = 1;
-      centreOn(worldX, worldY);
-      animateNextWrite();
-      scheduleWrite();
-    }
-
     moveToRef.current = (x, y, animate) => {
       stopMomentum();
-      if (currentMode === 'overview') {
-        changeMode('normal');
-        view.zoom = 1;
-        animate = true;
-      }
       centreOn(x, y);
       if (animate) animateNextWrite();
       scheduleWrite();
     };
 
     // Native and non-passive so the page never scrolls or browser-zooms.
+    // A trackpad pinch arrives as ctrl + wheel, and is ignored.
     function handleWheel(event: WheelEvent) {
       event.preventDefault();
+      if (event.ctrlKey || event.metaKey) return;
       stopMomentum();
-      if (event.ctrlKey || event.metaKey) {
-        if (event.deltaY > 0) enterOverview();
-        else if (event.deltaY < 0) returnToNormal(event.clientX, event.clientY);
-        return;
-      }
       const lineFactor = event.deltaMode === 1 ? WHEEL_LINE_PX : 1;
       panBy(-event.deltaX * lineFactor, -event.deltaY * lineFactor);
     }
@@ -241,7 +190,7 @@ export function useWorldViewport({
     let samples: { x: number; y: number; t: number }[] = [];
 
     function handlePointerDown(event: PointerEvent) {
-      if (pointerId !== null || !event.isPrimary || event.button !== 0 || currentMode !== 'normal') return;
+      if (pointerId !== null || !event.isPrimary || event.button !== 0) return;
       if (isEditableTarget(event.target)) return;
       stopMomentum();
       pointerId = event.pointerId;
@@ -312,19 +261,17 @@ export function useWorldViewport({
       delete root!.dataset.dragging;
     }
 
-    // Capture phase: neither a drag's trailing click nor an overview click reaches an item.
+    // Capture phase: a drag's trailing click never reaches an item.
     function handleClickCapture(event: MouseEvent) {
-      if (suppressClick) {
-        suppressClick = false;
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-      }
-      if (currentMode === 'overview') {
-        event.preventDefault();
-        event.stopPropagation();
-        returnToNormal(event.clientX, event.clientY);
-      }
+      if (!suppressClick) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    // Safari's pinch (trackpad and touch) zooms through its own gesture events.
+    function preventGesture(event: Event) {
+      event.preventDefault();
     }
 
     function handleKeyDown(event: KeyboardEvent) {
@@ -353,7 +300,7 @@ export function useWorldViewport({
     function handleFocusIn(event: FocusEvent) {
       root!.scrollTo(0, 0);
       const target = event.target;
-      if (!(target instanceof HTMLElement) || currentMode !== 'normal') return;
+      if (!(target instanceof HTMLElement)) return;
       const rect = target.getBoundingClientRect();
       if (rect.left >= 0 && rect.top >= 0 && rect.right <= viewportW && rect.bottom <= viewportH) return;
       moveToRef.current(rect.left + rect.width / 2 - view.x, rect.top + rect.height / 2 - view.y, true);
@@ -377,11 +324,13 @@ export function useWorldViewport({
     root.addEventListener('click', handleClickCapture, true);
     root.addEventListener('focusin', handleFocusIn);
     root.addEventListener('scroll', handleScroll);
+    root.addEventListener('gesturestart', preventGesture);
+    root.addEventListener('gesturechange', preventGesture);
 
     return () => {
       cancelAnimationFrame(frame);
       stopMomentum();
-      clearTimeout(zoomTimer);
+      clearTimeout(glideTimer);
       moveToRef.current = () => {};
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('keydown', handleKeyDown);
@@ -393,8 +342,10 @@ export function useWorldViewport({
       root.removeEventListener('click', handleClickCapture, true);
       root.removeEventListener('focusin', handleFocusIn);
       root.removeEventListener('scroll', handleScroll);
+      root.removeEventListener('gesturestart', preventGesture);
+      root.removeEventListener('gesturechange', preventGesture);
     };
   }, [rootRef, groundRef, contentRef]);
 
-  return { mode, subscribePan, subscribeView, moveTo };
+  return { subscribePan, subscribeView, moveTo };
 }

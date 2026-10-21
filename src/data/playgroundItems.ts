@@ -67,7 +67,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'photobooth' },
     note:
       'I made this so you can take a few pictures and keep them. It also helped me learn how to use a camera inside a browser.',
-    pinned: { x: -840, y: -150 },
+    pinned: { x: -840, y: -260 },
     order: 3,
   },
   {
@@ -78,7 +78,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'worktape' },
     note:
       'I kept opening the same files and apps every time I sat down to work. So I made Worktape. One click opens everything I need for a task, and one click closes it all. I wanted it to be easy and fun to use, so I made it look like cassettes.',
-    pinned: { x: -880, y: 120 },
+    pinned: { x: -880, y: 35 },
     order: 4,
   },
   // One of a kind, top-centre
@@ -102,7 +102,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'sipStudio' },
     note:
       'SiP Studio is a café I made up. I wanted to practise branding, so I designed one for a place that doesn’t exist.',
-    pinned: { x: -1300, y: 560 },
+    pinned: { x: -1240, y: 500 },
     order: 6,
   },
   {
@@ -112,12 +112,13 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'extras' },
     note:
       'These remind me why I like designing. I can see something I like and make my own version of it on screen.',
-    pinned: { x: -1000, y: 570 },
+    pinned: { x: -900, y: 510 },
     order: 7,
   },
-  // Who I am + how to reach me, bottom-centre
-  { id: 'me', title: 'Sehaz', type: 'photo', caption: null, thumbnail: { src: me, width: 884, height: 884 }, pinned: { x: -150, y: 520 }, order: 8 },
-  { id: 'hello', title: 'Say hello', type: 'contact', caption: 'a greeting card', card: 'contact', pinned: { x: 170, y: 510 }, order: 9 },
+  // Who I am + how to reach me, bottom-centre: the card overlaps the
+  // polaroid's bottom-right corner (it renders later, so it sits on top)
+  { id: 'me', title: 'Sehaz', type: 'photo', caption: null, thumbnail: { src: me, width: 884, height: 884 }, pinned: { x: -110, y: 460 }, order: 8 },
+  { id: 'hello', title: 'Say hello', type: 'contact', caption: 'a greeting card', card: 'contact', pinned: { x: 95, y: 594 }, order: 9 },
   // On its own, right
   { id: 'letter', title: 'Letter', type: 'note', caption: 'a letter', card: 'letter', pinned: { x: 880, y: 70 }, order: 10 },
 ];

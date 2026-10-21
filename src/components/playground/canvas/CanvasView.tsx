@@ -30,7 +30,7 @@ export default function CanvasView({ onOpenModal }: { onOpenModal: (item: Playgr
   const rootRef = useRef<HTMLDivElement>(null);
   const groundRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const { mode, subscribePan, subscribeView, moveTo } = useWorldViewport({
+  const { subscribePan, subscribeView, moveTo } = useWorldViewport({
     rootRef,
     groundRef,
     contentRef,
@@ -77,7 +77,7 @@ export default function CanvasView({ onOpenModal }: { onOpenModal: (item: Playgr
 
   return (
     <>
-      <div ref={rootRef} className={styles.surface} data-mode={mode}>
+      <div ref={rootRef} className={styles.surface}>
         <div ref={groundRef} className={`${styles.layer} ${styles.ground}`} style={WORLD_SIZE} />
         <div ref={contentRef} className={styles.layer} style={WORLD_SIZE}>
           <PanContext.Provider value={subscribePan}>
