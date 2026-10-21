@@ -9,4 +9,4 @@ I want to be a product designer who actually gets user experience right. I'm sti
 I don't have a design or technical degree behind me. What I do have is curiosity, dedication and ideas, which help me make up the difference through my work.
 
 Yours,
-Sehaz (pronounced Suh-HAHJ)`;
+Sehaz (pronounced SEH-hajj)`;
