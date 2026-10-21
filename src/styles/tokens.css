@@ -257,14 +257,16 @@
   --pg-chip-shadow: 1px 2px 1px rgba(0, 0, 0, 0.25);
   --pg-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --pg-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  /* One frame for every item card (PlaygroundCard) */
+  /* One frame for every white card (the grid's work cards, the canvas's Drafts card) */
   --pg-frame-radius: 14px;
   --pg-frame-border: rgba(18, 18, 18, 0.08);
-  --pg-frame-inset: rgba(18, 18, 18, 0.03);
   --pg-frame-shadow: 0 1px 2px rgba(18, 18, 18, 0.05), 0 8px 24px rgba(18, 18, 18, 0.06);
   --pg-frame-shadow-lifted: 0 2px 4px rgba(18, 18, 18, 0.06), 0 18px 40px rgba(18, 18, 18, 0.12);
-  --pg-caption-height: 30px;
   --pg-lift-duration: 260ms;
+  /* Grid view: packed work cards and room for the fixed toolbar */
+  --pg-grid-row: 8px;
+  --pg-grid-gap: 20px;
+  --pg-toolbar-clearance: 160px;
   --pg-dot-spacing: 24px;
   /* Fixed corner chips render at 83% of the old repo's size */
   --pg-chrome-scale: 0.83;

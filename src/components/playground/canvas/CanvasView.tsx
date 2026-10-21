@@ -2,16 +2,10 @@ import { useMemo, useRef, type CSSProperties, type ReactNode } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { PLAYGROUND_ITEMS, type PlaygroundItem } from '../../../data/playgroundItems';
 import { useHasFinePointer } from '../../../lib/useHasFinePointer';
-import { useAutoHoverCycle, type AutoHoverKey } from '../useAutoHoverCycle';
+import { useAutoHoverCycle } from '../useAutoHoverCycle';
 import { PanContext } from '../canvasContext';
 import IntroNote from '../cards/IntroNote';
-import PhotoboothItem from '../items/PhotoboothItem';
-import MotionDemoItem from '../items/MotionDemoItem';
-import WebsiteItem from '../items/WebsiteItem';
-import ExtrasItem from '../items/ExtrasItem';
-import SipStudioItem from '../items/SipStudioItem';
-import AmoraItem from '../items/AmoraItem';
-import WorktapeItem from '../items/WorktapeItem';
+import WorkArtwork, { WORK_HOVER_KEYS } from '../items/WorkArtwork';
 import LetterItem from '../items/LetterItem';
 import MePhoto from '../items/MePhoto';
 import SayHelloItem from '../items/SayHelloItem';
@@ -41,8 +35,10 @@ export default function CanvasView({ onOpenModal }: { onOpenModal: (item: Playgr
   const isAutoHover = useAutoHoverCycle(!hasFinePointer && !reducedMotion);
 
   function artwork(item: PlaygroundItem): ReactNode {
-    const open = () => onOpenModal(item);
-    const auto = (key: AutoHoverKey) => isAutoHover(key);
+    const hoverKey = WORK_HOVER_KEYS[item.id];
+    if (hoverKey) {
+      return <WorkArtwork id={item.id} autoHover={isAutoHover(hoverKey)} onOpen={() => onOpenModal(item)} />;
+    }
     switch (item.id) {
       case 'intro':
         return (
@@ -50,26 +46,12 @@ export default function CanvasView({ onOpenModal }: { onOpenModal: (item: Playgr
             <IntroNote />
           </span>
         );
-      case 'photobooth':
-        return <PhotoboothItem autoHover={auto('photobooth')} onOpen={open} />;
-      case 'motion':
-        return <MotionDemoItem autoHover={auto('motionDemo')} onOpen={open} />;
-      case 'rewired':
-        return <WebsiteItem autoHover={auto('website')} />;
-      case 'extras':
-        return <ExtrasItem autoHover={auto('extras')} onOpen={open} />;
-      case 'sip':
-        return <SipStudioItem autoHover={auto('sipStudio')} onOpen={open} />;
-      case 'amora':
-        return <AmoraItem autoHover={auto('amora')} />;
-      case 'worktape':
-        return <WorktapeItem autoHover={auto('worktape')} onOpen={open} />;
       case 'letter':
         return <LetterItem />;
       case 'me':
         return <MePhoto />;
       case 'hello':
-        return <SayHelloItem autoHover={auto('sayHello')} />;
+        return <SayHelloItem autoHover={isAutoHover('sayHello')} />;
       default:
         return null;
     }

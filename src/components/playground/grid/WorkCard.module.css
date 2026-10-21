@@ -1,0 +1,60 @@
+/* A white card, as tall as its rows less one gap (see GridView.module.css),
+   the artwork centred in it */
+.card {
+  position: relative;
+  align-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - var(--pg-grid-gap));
+  padding: var(--pg-grid-pad);
+  background: var(--pg-paper);
+  border-radius: var(--pg-frame-radius);
+  box-shadow: var(--pg-frame-shadow);
+  transition: transform var(--pg-lift-duration) var(--ease-out-expo);
+}
+
+.wide {
+  grid-column-end: span 2;
+}
+
+/* A deeper shadow faded in on hover (opacity only, never box-shadow) */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--pg-frame-shadow-lifted);
+  opacity: 0;
+  transition: opacity var(--pg-lift-duration) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.art {
+  display: flex;
+  justify-content: center;
+}
+
+/* The click target: the whole card */
+.hit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.hit:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+  }
+
+  .card:hover::after {
+    opacity: 1;
+  }
+}

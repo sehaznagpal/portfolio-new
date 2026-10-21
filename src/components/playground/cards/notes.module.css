@@ -1,4 +1,4 @@
-/* Text cards that sit in the same paper frame as the artwork cards. */
+/* Text notes: the canvas's Drafts card and the grid's letter. */
 .note {
   display: flex;
   flex-direction: column;
@@ -63,82 +63,4 @@
 
 .letterText {
   white-space: pre-wrap;
-}
-
-/* Say hello */
-.contact {
-  justify-content: space-between;
-  gap: 18px;
-  padding: 22px 22px 18px;
-  background: var(--color-brand);
-}
-
-
-.contactHeading {
-  font-family: 'Gambetta Variable', serif;
-  font-weight: var(--gambetta-medium);
-  font-style: italic;
-  font-size: 64px;
-  line-height: 0.9;
-  letter-spacing: -0.06em;
-  font-feature-settings: 'salt' 1;
-}
-
-.contactRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.contactName {
-  font-family: 'Bricolage Grotesque Variable', sans-serif;
-  font-weight: var(--bricolage-light);
-  font-variation-settings: 'opsz' 14, 'wdth' 100;
-  font-size: 17px;
-  letter-spacing: -0.04em;
-}
-
-.contactLinks {
-  display: flex;
-  gap: 6px;
-}
-
-.contactLink {
-  display: block;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-}
-
-.contactLink img {
-  width: 100%;
-  height: 100%;
-}
-
-.contactLink:focus-visible {
-  outline: 2px solid var(--pg-ink);
-  outline-offset: 2px;
-}
-
-/* Say hello as a grid tile: type scaled to the tile (after the base rules so it wins) */
-@container (max-width: 480px) {
-  .contact {
-    gap: 6cqw;
-    padding: 7cqw 7cqw 6cqw;
-  }
-
-  .contactHeading {
-    font-size: 19cqw;
-    white-space: nowrap;
-  }
-
-  .contactName {
-    font-size: 6cqw;
-  }
-
-  .contactLink {
-    width: 10cqw;
-    height: 10cqw;
-  }
 }
