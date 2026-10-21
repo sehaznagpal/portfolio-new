@@ -48,7 +48,7 @@
 .share {
   flex-shrink: 0;
   padding: calc(4px * var(--scale)) calc(6px * var(--scale));
-  background: var(--pg-paper);
+  background: var(--color-brand);
   border-radius: calc(8px * var(--scale));
   font-family: 'Bricolage Grotesque Variable', sans-serif;
   font-weight: var(--bricolage-regular);
@@ -63,7 +63,7 @@
 }
 
 .share:hover {
-  background: #e8e8e8;
+  background: color-mix(in srgb, var(--color-brand) 88%, var(--pg-ink));
 }
 
 .themeToggle {

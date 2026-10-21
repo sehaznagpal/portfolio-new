@@ -1,8 +1,7 @@
 export const DRAFTS_BODY =
-  "Product feels like an interesting place to be right now. Technology keeps getting easier to build with, and somehow that makes it harder to build well, because the people using it are changing just as fast as the tools are. I don't think you can fully understand any of that from the outside. So I like to keep making small things just to see how they hold up when someone actually uses them.";
-export const DRAFTS_HIGHLIGHT = 'This page is where a few of those attempts live.';
-// The grid's heading ends on a sign-off; the canvas card keeps the line above.
-export const DRAFTS_HIGHLIGHT_GRID = 'This page is where a few of those attempts live. Happy exploring! <3';
+  'Product and design feels like an interesting place to be right now. Technology keeps getting easier to build with, and somehow that makes it harder to build well, because the people using it are changing just as fast as the tools are. So I like to keep making small things just to see how they hold up when someone actually uses them.';
+export const DRAFTS_HIGHLIGHT =
+  'This page is where a few of those attempts live, each one made while I was learning something new. Happy exploring! <3';
 
 export const LETTER_TEXT = `Hey,
 I want to be a product designer who actually gets user experience right. I'm still early in this, and every project I take on is partly about the work and partly about learning something new.

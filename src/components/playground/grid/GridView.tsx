@@ -1,112 +1,54 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import { AnimatePresence, LayoutGroup, MotionConfig, motion } from 'framer-motion';
 import { PLAYGROUND_ITEMS, type PlaygroundItem } from '../../../data/playgroundItems';
-import { DRAFTS_BODY, DRAFTS_HIGHLIGHT_GRID } from '../../../data/playground';
-import { ARTWORK_BOXES } from '../canvas/canvasLayout';
+import { DRAFTS_BODY, DRAFTS_HIGHLIGHT } from '../../../data/playground';
+import { useMediaQuery } from '../../../lib/useMediaQuery';
 import notes from '../cards/notes.module.css';
 import WorkCard from './WorkCard';
+import ColumnSwitcher, { type Columns } from './ColumnSwitcher';
 import AboutCluster from './AboutCluster';
 import styles from './GridView.module.css';
+import cardStyles from './WorkCard.module.css';
 
 // The work: everything that opens a modal or a site.
 const WORK = PLAYGROUND_ITEMS.filter((item) => item.action);
+const COLUMNS_KEY = 'portfolio:playground-columns';
+const MOBILE_QUERY = '(max-width: 640px)';
+// Tiles glide to their new places and sizes when the column count changes.
+const LAYOUT_TRANSITION = { duration: 0.5, ease: [0.65, 0, 0.35, 1] } as const;
 
-interface GridMetrics {
-  columns: number;
-  column: number;
-  gap: number;
-  row: number;
-  pad: number;
+function readColumns(): Columns | null {
+  try {
+    const stored = Number(localStorage.getItem(COLUMNS_KEY));
+    return stored === 1 || stored === 2 || stored === 3 ? stored : null;
+  } catch {
+    return null;
+  }
 }
 
-/* Reads the grid's live column count and sizes from its CSS, so every
-   number lives in the stylesheet and breakpoints. */
-function readMetrics(grid: HTMLElement): GridMetrics {
-  const style = getComputedStyle(grid);
-  const columns = style.gridTemplateColumns.split(' ');
-  return {
-    columns: columns.length,
-    column: parseFloat(columns[0]),
-    gap: parseFloat(style.columnGap),
-    row: parseFloat(style.gridAutoRows),
-    pad: parseFloat(style.getPropertyValue('--pg-grid-pad')),
-  };
+function storeColumns(columns: Columns) {
+  try {
+    localStorage.setItem(COLUMNS_KEY, String(columns));
+  } catch {
+    // Storage unavailable: the choice lasts for this visit only.
+  }
 }
 
-const sameMetrics = (a: GridMetrics | null, b: GridMetrics) =>
-  !!a && a.columns === b.columns && a.column === b.column && a.gap === b.gap && a.row === b.row && a.pad === b.pad;
-
-/* A card's width follows its column span; its height follows its artwork's
-   shape, rounded up to whole row units (the rows have no gap, so the card
-   leaves one gap's worth of its span empty below it). */
-function cardLayout(item: PlaygroundItem, metrics: GridMetrics, filledRows?: number) {
-  const box = ARTWORK_BOXES[item.id];
-  const columns = item.gridSize === 'wide' ? Math.min(2, metrics.columns) : 1;
-  const width = metrics.column * columns + metrics.gap * (columns - 1);
-  const artWidth = width - metrics.pad * 2;
-  const height = (artWidth * box.h) / box.w + metrics.pad * 2;
-  return { rows: filledRows ?? Math.ceil((height + metrics.gap) / metrics.row), cu: artWidth / box.w };
-}
-
-/* Dense packing can leave a hole too small for any later card (above a
-   wide card that needs two free columns at once). Each card with empty
-   rows below it grows down to the next card under it instead, its artwork
-   staying centred. The cells it takes were empty after packing, so no other
-   card moves. Returns each card's row count, by id. */
-function fillHoles(grid: HTMLElement, row: number) {
-  const cards = [...grid.children] as HTMLElement[];
-  const rects = cards.map((card) => card.getBoundingClientRect());
-  const rows: Record<string, number> = {};
-  cards.forEach((card, i) => {
-    const rect = rects[i];
-    const below = rects.filter(
-      (other) => other.top >= rect.bottom && other.left < rect.right - 1 && other.right > rect.left + 1,
-    );
-    if (below.length === 0) return;
-    const nextTop = Math.min(...below.map((other) => other.top));
-    const id = card.dataset.id;
-    if (id) rows[id] = Math.round((nextTop - rect.top) / row);
-  });
-  return rows;
-}
-
-/* The page heading, then the work packed into a dense grid of mixed sizes,
-   then who made it: the polaroid, Say hello and the letter. Calm by
-   design: the cards only lift on hover. */
+/* The page heading, the work as equal tiles in 1, 2 or 3 columns (blank
+   tiles complete the last row), then who made it: the polaroid, Say hello
+   and the letter. Calm by design: the tiles only lift on hover. */
 export default function GridView({ onOpenModal }: { onOpenModal: (item: PlaygroundItem) => void }) {
-  const gridRef = useRef<HTMLDivElement>(null);
-  const metricsRef = useRef<GridMetrics | null>(null);
-  const [metrics, setMetrics] = useState<GridMetrics | null>(null);
-  const [filled, setFilled] = useState<Record<string, number>>({});
+  const isMobile = useMediaQuery(MOBILE_QUERY);
+  const [stored, setStored] = useState<Columns | null>(readColumns);
+  // Phones offer 1 or 2 columns (a stored 3 shows as 2) and start at 1.
+  const options: Columns[] = isMobile ? [1, 2] : [1, 2, 3];
+  const columns: Columns = stored === null ? (isMobile ? 1 : 2) : isMobile && stored === 3 ? 2 : stored;
+  const blanks = (columns - (WORK.length % columns)) % columns;
 
-  useLayoutEffect(() => {
-    const grid = gridRef.current;
-    if (!grid) return;
-    const measure = () => {
-      const next = readMetrics(grid);
-      if (sameMetrics(metricsRef.current, next)) return;
-      // New column sizes: pack afresh, then fill again.
-      metricsRef.current = next;
-      setFilled({});
-      setMetrics(next);
-    };
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(grid);
-    return () => observer.disconnect();
-  }, []);
-
-  // After each packing, before paint: grow cards into any holes.
-  useLayoutEffect(() => {
-    const grid = gridRef.current;
-    if (!grid || !metrics) return;
-    const next = fillHoles(grid, metrics.row);
-    setFilled((previous) =>
-      Object.keys(next).every((id) => previous[id] === next[id]) &&
-      Object.keys(previous).length === Object.keys(next).length
-        ? previous
-        : next,
-    );
-  }, [metrics, filled]);
+  function changeColumns(next: Columns) {
+    setStored(next);
+    storeColumns(next);
+  }
 
   return (
     <div className={styles.page}>
@@ -115,19 +57,32 @@ export default function GridView({ onOpenModal }: { onOpenModal: (item: Playgrou
           <span className={notes.italic}>More from my</span> <span className={notes.bold}>Drafts</span>
         </h1>
         <p className={styles.body}>{DRAFTS_BODY}</p>
-        <p className={styles.highlight}>{DRAFTS_HIGHLIGHT_GRID}</p>
+        <p className={styles.highlight}>{DRAFTS_HIGHLIGHT}</p>
       </header>
-      <div ref={gridRef} className={styles.grid}>
-        {WORK.map((item) => (
-          <WorkCard
-            key={item.id}
-            item={item}
-            layout={metrics && cardLayout(item, metrics, filled[item.id])}
-            onOpenModal={onOpenModal}
-          />
-        ))}
-      </div>
+      <MotionConfig reducedMotion="user" transition={LAYOUT_TRANSITION}>
+        <LayoutGroup>
+          <div className={styles.grid} data-columns={columns}>
+            {WORK.map((item) => (
+              <WorkCard key={item.id} item={item} onOpenModal={onOpenModal} />
+            ))}
+            <AnimatePresence mode="popLayout" initial={false}>
+              {Array.from({ length: blanks }, (_, i) => (
+                <motion.div
+                  key={`blank-${i}`}
+                  layout
+                  className={cardStyles.tile}
+                  aria-hidden="true"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+        </LayoutGroup>
+      </MotionConfig>
       <AboutCluster />
+      <ColumnSwitcher value={columns} options={options} onChange={changeColumns} />
     </div>
   );
 }

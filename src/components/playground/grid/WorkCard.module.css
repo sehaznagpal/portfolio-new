@@ -1,25 +1,33 @@
-/* A white card, as tall as its rows less one gap (see GridView.module.css),
-   the artwork centred in it */
-.card {
+/* A white tile. Every tile in a layout is the same size, from the grid's
+   width (cqw of .grid): 3:2 in two and three columns; in one column, full
+   width at the two-column height. Placeholder tiles reuse this class. */
+.tile {
+  --tile-h: calc((100cqw - var(--pg-grid-gap)) / 3);
+  container-type: size;
   position: relative;
-  align-self: start;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100% - var(--pg-grid-gap));
-  padding: var(--pg-grid-pad);
+  height: var(--tile-h);
   background: var(--pg-paper);
   border-radius: var(--pg-frame-radius);
   box-shadow: var(--pg-frame-shadow);
-  transition: transform var(--pg-lift-duration) var(--ease-out-expo);
 }
 
-.wide {
-  grid-column-end: span 2;
+:global([data-columns='3']) > .tile {
+  --tile-h: calc((100cqw - 2 * var(--pg-grid-gap)) / 4.5);
+}
+
+/* On a phone one column is the main layout, so its tiles are 3:2 at full
+   width (the two-column height would leave the artwork tiny) */
+@media (max-width: 640px) {
+  :global([data-columns='1']) > .tile {
+    --tile-h: calc(100cqw * 2 / 3);
+  }
 }
 
 /* A deeper shadow faded in on hover (opacity only, never box-shadow) */
-.card::after {
+.tile::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -30,12 +38,53 @@
   pointer-events: none;
 }
 
+/* The artwork's scale (--cu) is the largest that fits the tile, less its
+   padding and the tag's room (cq units of the tile). In one column the
+   height decides, so the artwork stays its two-column size. Lifted a little
+   off centre so it sits clear of the tag. */
 .art {
+  --cu: min(
+    calc((100cqw - 2 * var(--pg-grid-pad)) / var(--art-w)),
+    calc((100cqh - 2 * var(--pg-grid-pad) - var(--pg-grid-tag-room)) / var(--art-h))
+  );
   display: flex;
+  justify-content: center;
+  margin-bottom: var(--pg-grid-tag-room);
+}
+
+/* "title · type": bottom-left, or bottom-centre and smaller in 3 columns */
+.tagRow {
+  position: absolute;
+  left: var(--pg-grid-pad);
+  right: var(--pg-grid-pad);
+  bottom: calc(var(--pg-grid-pad) / 2);
+  display: flex;
+  justify-content: flex-start;
+  pointer-events: none;
+}
+
+:global([data-columns='3']) > .tile .tagRow {
   justify-content: center;
 }
 
-/* The click target: the whole card */
+.tag {
+  min-width: 0;
+  font-family: 'Source Code Pro', ui-monospace, monospace;
+  font-size: var(--type-label);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--pg-ink);
+  opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:global([data-columns='3']) > .tile .tag {
+  font-size: calc(var(--type-label) - 1px);
+}
+
+/* The click target: the whole tile */
 .hit {
   position: absolute;
   inset: 0;
@@ -50,11 +99,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .card:hover {
-    transform: translateY(-4px);
-  }
-
-  .card:hover::after {
+  .tile:hover::after {
     opacity: 1;
   }
 }

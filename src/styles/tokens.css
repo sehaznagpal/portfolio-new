@@ -263,10 +263,10 @@
   --pg-frame-shadow: 0 1px 2px rgba(18, 18, 18, 0.05), 0 8px 24px rgba(18, 18, 18, 0.06);
   --pg-frame-shadow-lifted: 0 2px 4px rgba(18, 18, 18, 0.06), 0 18px 40px rgba(18, 18, 18, 0.12);
   --pg-lift-duration: 260ms;
-  /* Grid view: packed work cards and room for the fixed toolbar */
-  --pg-grid-row: 8px;
+  /* Grid view: uniform tiles and the column switch */
   --pg-grid-gap: 20px;
-  --pg-toolbar-clearance: 160px;
+  --pg-grid-pad: 32px;
+  --pg-grid-tag-room: 28px;
   --pg-dot-spacing: 24px;
   /* Fixed corner chips render at 83% of the old repo's size */
   --pg-chrome-scale: 0.83;

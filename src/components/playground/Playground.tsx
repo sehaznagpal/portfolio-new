@@ -99,7 +99,8 @@ export default function Playground() {
       <ViewToggle view={view} onChange={changeView} />
       <PortfolioButton />
       <ShareMenu />
-      <Toolbar />
+      {/* The canvas's drawing tools; the grid has none */}
+      {view === 'canvas' && <Toolbar />}
 
       <PhotoboothModal {...modalProps('photobooth')} />
       <MotionDemoModal {...modalProps('motionDemo')} />

@@ -20,8 +20,6 @@ export interface PlaygroundItem {
   pinned: { x: number; y: number };
   /* Grid order: by group, so pairs stay side by side. */
   order: number;
-  /* Grid width: "wide" spans two columns, "normal" (the default) one. */
-  gridSize?: 'normal' | 'wide';
 }
 
 /* The one list both the canvas and the grid render. Groups on the canvas:
@@ -56,7 +54,6 @@ const ITEMS: PlaygroundItem[] = [
       'I made this so you can take a few pictures and keep them. It also helped me learn how to use a camera inside a browser.',
     pinned: { x: -840, y: -260 },
     order: 3,
-    gridSize: 'wide',
   },
   {
     id: 'worktape',
@@ -67,7 +64,6 @@ const ITEMS: PlaygroundItem[] = [
       'I kept opening the same files and apps every time I sat down to work. So I made Worktape. One click opens everything I need for a task, and one click closes it all. I wanted it to be easy and fun to use, so I made it look like cassettes.',
     pinned: { x: -880, y: 35 },
     order: 4,
-    gridSize: 'wide',
   },
   // One of a kind, top-centre
   {

@@ -1,0 +1,163 @@
+/* The open pill's full size; at rest the dark pill shrinks to the handle
+   (transform only) and the numbers are hidden. Heights are unitless px so
+   the rest scale can be a plain ratio: 28 per number plus 12 of padding. */
+.root {
+  --rest-h: 44;
+  --open-h: 96;
+  --option-h: 28px;
+  position: fixed;
+  top: 50%;
+  /* Centred in the page's side margin, clear of the tiles */
+  right: max(8px, calc(var(--page-pad-x) / 2 - 15px));
+  z-index: 10;
+  width: 30px;
+  height: calc(var(--open-h) * 1px);
+  margin-top: calc(var(--open-h) * -0.5px);
+}
+
+.root[data-count='2'] {
+  --open-h: 68;
+}
+
+/* The dark pill: two round caps that slide in and out, and a middle that
+   stretches between them, so the corners never squash. */
+.pill {
+  --cap: 15;
+  --shift: calc((var(--open-h) - var(--rest-h)) * 0.5px);
+  position: absolute;
+  inset: 0;
+}
+
+.capTop,
+.capBottom,
+.middle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--pg-ink);
+  transition: transform 260ms var(--ease-out-expo);
+}
+
+.capTop,
+.capBottom {
+  height: calc(var(--cap) * 1px + 1px);
+}
+
+.capTop {
+  top: 0;
+  border-radius: 15px 15px 0 0;
+  transform: translateY(var(--shift));
+}
+
+.capBottom {
+  bottom: 0;
+  border-radius: 0 0 15px 15px;
+  transform: translateY(calc(var(--shift) * -1));
+}
+
+.middle {
+  top: calc(var(--cap) * 1px);
+  bottom: calc(var(--cap) * 1px);
+  transform: scaleY(calc((var(--rest-h) - 2 * var(--cap)) / (var(--open-h) - 2 * var(--cap))));
+}
+
+/* At rest: one short line per column, centred */
+.handle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: calc(var(--rest-h) * 1px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transform: translateY(-50%);
+  border-radius: 15px;
+  transition: opacity 160ms ease-out;
+}
+
+.line {
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--pg-paper);
+}
+
+.options {
+  position: absolute;
+  inset: 6px 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease-out;
+}
+
+.option {
+  height: var(--option-h);
+  font-family: 'Bricolage Grotesque Variable', sans-serif;
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--pg-paper);
+  opacity: 0.4;
+  border-radius: 8px;
+  transition: opacity 150ms ease-out;
+}
+
+.option[aria-pressed='true'] {
+  opacity: 1;
+}
+
+.option:hover {
+  opacity: 1;
+}
+
+.handle:focus-visible,
+.option:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* Open: on hover (mouse), keyboard focus inside, or a tap */
+@media (hover: hover) and (pointer: fine) {
+  .root:hover :is(.capTop, .capBottom, .middle) {
+    transform: none;
+  }
+
+  .root:hover .handle {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .root:hover .options {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.root:is(:has(:focus-visible), [data-open]) :is(.capTop, .capBottom, .middle) {
+  transform: none;
+}
+
+.root:is(:has(:focus-visible), [data-open]) .handle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.root:is(:has(:focus-visible), [data-open]) .options {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capTop,
+  .capBottom,
+  .middle,
+  .handle,
+  .options {
+    transition: none;
+  }
+}

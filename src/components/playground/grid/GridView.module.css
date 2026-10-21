@@ -1,4 +1,4 @@
-/* Clears the fixed UI: top chips and toggle above, toolbar below */
+/* Clears the fixed UI: top chips and toggle above */
 .page {
   position: relative;
   display: flex;
@@ -6,7 +6,7 @@
   gap: var(--space-section);
   max-width: 1280px;
   margin: 0 auto;
-  padding: 130px var(--page-pad-x) var(--pg-toolbar-clearance);
+  padding: 130px var(--page-pad-x) var(--space-section);
 }
 
 /* The heading sits straight on the ground, so it takes the caption colour,
@@ -48,23 +48,21 @@
   font-weight: var(--author-medium);
 }
 
-/* Equal columns, small row units and dense packing: each card spans the
-   rows its artwork needs (set in GridView.tsx), and later cards fill any
-   hole that fits them. Rows have no gap of their own; each card leaves one
-   gap empty below itself instead, so every gap matches exactly. */
+/* Equal tiles. The grid is a size container so the tiles size themselves
+   from its width (WorkCard.module.css). */
 .grid {
-  --pg-grid-pad: 20px;
+  container-type: inline-size;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: var(--pg-grid-row);
-  grid-auto-flow: row dense;
-  column-gap: var(--pg-grid-gap);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pg-grid-gap);
 }
 
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+.grid[data-columns='1'] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.grid[data-columns='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 @media (max-width: 640px) {
@@ -73,7 +71,8 @@
   }
 
   .grid {
-    --pg-grid-pad: 14px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --pg-grid-gap: 14px;
+    --pg-grid-pad: 16px;
+    --pg-grid-tag-room: 22px;
   }
 }
