@@ -10,7 +10,6 @@ import GridView from './grid/GridView';
 import ViewToggle, { type PlaygroundView } from './chrome/ViewToggle';
 import PortfolioButton from './chrome/PortfolioButton';
 import ShareMenu from './chrome/ShareMenu';
-import Toolbar from './chrome/Toolbar';
 import PhotoboothModal from './modals/PhotoboothModal';
 import SipStudioModal from './modals/SipStudioModal';
 import ExtrasModal from './modals/ExtrasModal';
@@ -99,8 +98,6 @@ export default function Playground() {
       <ViewToggle view={view} onChange={changeView} />
       <PortfolioButton />
       <ShareMenu />
-      {/* The canvas's drawing tools; the grid has none */}
-      {view === 'canvas' && <Toolbar />}
 
       <PhotoboothModal {...modalProps('photobooth')} />
       <MotionDemoModal {...modalProps('motionDemo')} />

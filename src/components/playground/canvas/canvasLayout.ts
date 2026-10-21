@@ -1,11 +1,12 @@
 import type { PlaygroundItem } from '../../../data/playgroundItems';
 
-/* The canvas world, in CSS px: wide, not tall (3x the width and 1.7x the
-   height of a 1440x900 screen), so panning is mostly sideways.
+/* The canvas world, in CSS px: wide, not tall (2.2x the width and 1.7x
+   the height of a 1440x900 screen), so the first screen is full and
+   panning is mostly sideways. Its edges keep spare room for new items.
    Items keep their real size; a bigger screen shows more of the world, and
    one taller than the world shows all of it, centred. */
-export const WORLD_WIDTH = 4320;
-export const WORLD_HEIGHT = 1530;
+export const WORLD_WIDTH = 3200;
+export const WORLD_HEIGHT = 1500;
 export const CAPTION_HEIGHT = 30;
 
 /* Each item's original artwork box (Figma units) and the scale it's drawn at
@@ -19,7 +20,7 @@ export const ARTWORK_BOXES: Record<string, { w: number; h: number; scale: number
   motion: { w: 264.96, h: 248.19, scale: 0.98 },
   sip: { w: 329.15, h: 299.96, scale: 0.79 },
   extras: { w: 290.19, h: 345.56, scale: 0.9 },
-  me: { w: 308, h: 352, scale: 0.79 },
+  me: { w: 308, h: 352, scale: 0.95 },
   hello: { w: 344.6, h: 238.73, scale: 0.87 },
   letter: { w: 517.61, h: 562.13, scale: 0.72 },
 };
