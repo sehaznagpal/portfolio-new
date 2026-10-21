@@ -1,0 +1,105 @@
+/* Sized in container units of the card (cqw = 1% of its width), so it
+   draws identically at any size. Container units never resolve against the
+   container itself, so the outer span is the container and the face inside
+   it carries the border and corners. Proportions from Figma 1387:2972. */
+.card {
+  container-type: inline-size;
+  display: block;
+  width: 100%;
+  aspect-ratio: 290.19 / 345.56;
+}
+
+/* Fills the card; .grain gives it position: relative */
+.face {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: var(--pg-ink);
+  border: 0.89cqw solid var(--pg-paper);
+  border-radius: 4.8cqw;
+  overflow: hidden;
+}
+
+.face img {
+  position: absolute;
+  max-width: none;
+}
+
+/* Corner index: the A above its heart, inset equally from both edges */
+.corner {
+  position: absolute;
+  left: 6cqw;
+  top: 6cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.6cqw;
+}
+
+.corner img {
+  position: static;
+  display: block;
+}
+
+.cornerEnd {
+  left: auto;
+  top: auto;
+  right: 6cqw;
+  bottom: 6cqw;
+  transform: rotate(180deg);
+}
+
+.cornerLetter {
+  width: 7.4cqw;
+  height: auto;
+}
+
+.cornerHeart {
+  width: 9.6cqw;
+  height: auto;
+  aspect-ratio: 27.8 / 26.46;
+}
+
+.heart {
+  left: 13.55%;
+  top: 21.26%;
+  width: 72.15%;
+  height: 61.26%;
+}
+
+/* EXTRAS lettering: each corner-lean variant keeps its own Figma inset */
+.lettersNone {
+  left: 17.13%;
+  top: 23.05%;
+  width: 61.94%;
+  height: 51.27%;
+}
+
+.lettersTl {
+  left: 16.19%;
+  top: 23.05%;
+  width: 62.88%;
+  height: 51.27%;
+}
+
+.lettersTr {
+  left: 17.13%;
+  top: 24.23%;
+  width: 62.86%;
+  height: 50.09%;
+}
+
+.lettersBl {
+  left: 18.27%;
+  top: 23.05%;
+  width: 60.8%;
+  height: 51.3%;
+}
+
+.lettersBr {
+  left: 17.13%;
+  top: 23.05%;
+  width: 64.05%;
+  height: 51.27%;
+}

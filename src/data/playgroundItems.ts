@@ -3,7 +3,6 @@ import photobooth from '../assets/images/playground/thumbs/photobooth.webp';
 import motion from '../assets/images/playground/thumbs/motion.webp';
 import rewired from '../assets/images/playground/thumbs/rewired.webp';
 import sip from '../assets/images/playground/thumbs/sip.webp';
-import extras from '../assets/images/playground/thumbs/extras.webp';
 import amora from '../assets/images/playground/thumbs/amora.webp';
 import worktape from '../assets/images/playground/thumbs/worktape.webp';
 import me from '../assets/images/playground/me.webp';
@@ -18,6 +17,8 @@ export interface PlaygroundItem {
   title: string;
   /* Shown in the caption: "title · type". */
   type: string;
+  /* Canvas only: replaces the "title · type" caption; null shows none. */
+  caption?: string | null;
   year?: number;
   thumbnail?: { src: string; width: number; height: number };
   action?: PlaygroundAction;
@@ -37,7 +38,7 @@ export interface PlaygroundItem {
    websites top-right, vibe-coded left, motion top-centre, graphic design
    bottom-left, me + say hello bottom-centre, the letter on its own right. */
 const ITEMS: PlaygroundItem[] = [
-  { id: 'intro', title: 'More from my Drafts', type: 'note', card: 'intro', pinned: { x: 0, y: 0 }, order: 0 },
+  { id: 'intro', title: 'More from my Drafts', type: 'note', caption: null, card: 'intro', pinned: { x: 0, y: 0 }, order: 0 },
   // Websites, top-right
   {
     id: 'rewired',
@@ -45,7 +46,7 @@ const ITEMS: PlaygroundItem[] = [
     type: 'website',
     thumbnail: { src: rewired, width: 545, height: 546 },
     action: { href: LINKS.rewired },
-    pinned: { x: 560, y: -300 },
+    pinned: { x: 1150, y: -470 },
     order: 1,
   },
   {
@@ -54,7 +55,7 @@ const ITEMS: PlaygroundItem[] = [
     type: 'website',
     thumbnail: { src: amora, width: 382, height: 497 },
     action: { href: LINKS.amora },
-    pinned: { x: 850, y: -260 },
+    pinned: { x: 1455, y: -430 },
     order: 2,
   },
   // Vibe-coded, left
@@ -66,7 +67,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'photobooth' },
     note:
       'I made this so you can take a few pictures and keep them. It also helped me learn how to use a camera inside a browser.',
-    pinned: { x: -800, y: -290 },
+    pinned: { x: -840, y: -150 },
     order: 3,
   },
   {
@@ -77,7 +78,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'worktape' },
     note:
       'I kept opening the same files and apps every time I sat down to work. So I made Worktape. One click opens everything I need for a task, and one click closes it all. I wanted it to be easy and fun to use, so I made it look like cassettes.',
-    pinned: { x: -860, y: -10 },
+    pinned: { x: -880, y: 120 },
     order: 4,
   },
   // One of a kind, top-centre
@@ -89,7 +90,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'motionDemo' },
     note:
       'This was my first time animating something, and my first time using Figma Motion. Re-Wired had launched something new and needed a short video to show it, so I learned while making this.',
-    pinned: { x: -40, y: -370 },
+    pinned: { x: 0, y: -560 },
     order: 5,
   },
   // Graphic design, bottom-left
@@ -101,25 +102,24 @@ const ITEMS: PlaygroundItem[] = [
     action: { modal: 'sipStudio' },
     note:
       'SiP Studio is a café I made up. I wanted to practise branding, so I designed one for a place that doesn’t exist.',
-    pinned: { x: -1000, y: 380 },
+    pinned: { x: -1300, y: 560 },
     order: 6,
   },
   {
     id: 'extras',
     title: 'Extras',
     type: 'illustration',
-    thumbnail: { src: extras, width: 609, height: 722 },
     action: { modal: 'extras' },
     note:
       'These remind me why I like designing. I can see something I like and make my own version of it on screen.',
-    pinned: { x: -660, y: 390 },
+    pinned: { x: -1000, y: 570 },
     order: 7,
   },
   // Who I am + how to reach me, bottom-centre
-  { id: 'me', title: 'Sehaz', type: 'photo', thumbnail: { src: me, width: 884, height: 884 }, pinned: { x: -120, y: 370 }, order: 8 },
-  { id: 'hello', title: 'Say hello', type: 'contact', card: 'contact', pinned: { x: 190, y: 400 }, order: 9 },
+  { id: 'me', title: 'Sehaz', type: 'photo', caption: null, thumbnail: { src: me, width: 884, height: 884 }, pinned: { x: -150, y: 520 }, order: 8 },
+  { id: 'hello', title: 'Say hello', type: 'contact', caption: 'a greeting card', card: 'contact', pinned: { x: 170, y: 510 }, order: 9 },
   // On its own, right
-  { id: 'letter', title: 'Letter', type: 'note', card: 'letter', pinned: { x: 870, y: 200 }, order: 10 },
+  { id: 'letter', title: 'Letter', type: 'note', caption: 'a letter', card: 'letter', pinned: { x: 880, y: 70 }, order: 10 },
 ];
 
 export const PLAYGROUND_ITEMS = [...ITEMS].sort((a, b) => a.order - b.order);

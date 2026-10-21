@@ -65,6 +65,13 @@
   max-width: none;
 }
 
+/* The Extras card itself, drawn live (same as the canvas and grid) */
+.faceSlide {
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 290.19 / 345.56;
+}
+
 @media (max-width: 640px) {
   .frame {
     width: 100%;

@@ -58,6 +58,13 @@
   background: var(--pg-frame-inset);
 }
 
+/* A live thumbnail sized like the images: as tall as the box allows
+   (scoped under .artBox so it outranks the card face's own width) */
+.artBox .liveArt {
+  width: auto;
+  height: 100%;
+}
+
 .art {
   display: block;
   max-width: 100%;

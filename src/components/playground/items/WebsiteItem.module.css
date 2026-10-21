@@ -17,7 +17,22 @@
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  filter: drop-shadow(calc(1.68 * var(--cu)) calc(3.35 * var(--cu)) calc(6.7 * var(--cu)) rgba(0, 0, 0, 0.4));
+}
+
+/* Die-cut sticker edge: the star outline, filled and stroked white. The
+   stroke is even all round because it follows the path; it sits behind
+   the artwork and carries the sticker's soft shadow. */
+.sticker {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--pg-paper);
+  stroke: var(--pg-paper);
+  stroke-width: var(--pg-sticker-edge);
+  stroke-linejoin: round;
+  filter: drop-shadow(var(--pg-sticker-shadow));
 }
 
 .back {

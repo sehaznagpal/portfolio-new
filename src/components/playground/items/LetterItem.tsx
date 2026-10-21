@@ -78,7 +78,7 @@ export default function LetterItem() {
   const typing = revealed && shown < LETTER_TEXT.length;
 
   return (
-    <div ref={ref} className={`${styles.letter} ${paper.paper}`}>
+    <div ref={ref} className={`${styles.letter} ${paper.paper} ${paper.white}`}>
       <p className={styles.visuallyHidden}>{LETTER_TEXT}</p>
       <p className={`${styles.text} ${paper.writing}`} aria-hidden="true">
         {LETTER_TEXT.slice(0, shown)}

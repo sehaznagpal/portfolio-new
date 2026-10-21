@@ -281,6 +281,9 @@
   --pg-modal-shadow: 0 2px 8px rgba(18, 18, 18, 0.05), 0 24px 64px rgba(18, 18, 18, 0.14);
   /* Notebook paper: the project notes and the letter */
   --pg-rule-opacity: 0.55;
+  /* Sticker treatments on the canvas (re-wired's die-cut edge, Amora's stamp) */
+  --pg-sticker-edge: 14px;
+  --pg-sticker-shadow: 0 3px 8px rgba(18, 18, 18, 0.18);
   --pg-note-width: 280px;
   --pg-note-tilt: 2deg;
   --pg-note-shadow: 0 1px 2px rgba(18, 18, 18, 0.08), 0 8px 18px rgba(18, 18, 18, 0.12);

@@ -1,16 +1,19 @@
-/* Figma units (1415:899). Both scallops rest in the same spot; on hover
-   they part to their hover-frame positions. */
+/* Figma units (1415:899). The item is just the badge, cut off at the
+   scallop's lowest point (299.96 of its 320.84 box) so the caption sits as
+   close as the others. The white scallop rests exactly behind it,
+   absolutely positioned so its hover room takes no layout space, and on
+   hover the two part to their hover-frame spots. */
 .root {
   position: relative;
-  width: calc(433.38 * var(--cu));
-  height: calc(429.86 * var(--cu));
+  width: calc(329.15 * var(--cu));
+  height: calc(299.96 * var(--cu));
 }
 
 .cloud,
 .badge {
   position: absolute;
-  left: calc(52.71 * var(--cu));
-  top: calc(55.11 * var(--cu));
+  left: 0;
+  top: 0;
   width: calc(329.15 * var(--cu));
   height: calc(320.84 * var(--cu));
   transition: transform 380ms var(--ease-out-expo);

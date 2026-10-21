@@ -3,15 +3,25 @@ import { LINKS } from '../../../data/links';
 import { useHasFinePointer } from '../../../lib/useHasFinePointer';
 import amoraShape from '../../../assets/images/playground/amora-shape.svg';
 import { shapeMask } from './shapeMask';
+import { stampPath } from './stampPath';
 import focus from './focus.module.css';
 import grain from './grain.module.css';
 import styles from './AmoraItem.module.css';
 
 // Matches the amoraShake keyframes.
 const SHAKE_MS = 480;
+/* The white postage stamp around the artwork, in Figma units: the art plus
+   an even margin, its edges perforated (see stampPath). Mirrored in the CSS. */
+const ART_W = 190.91;
+const ART_H = 248.19;
+const MARGIN = 16;
+const STAMP_W = ART_W + MARGIN * 2;
+const STAMP_H = ART_H + MARGIN * 2;
+const STAMP_PATH = stampPath(STAMP_W, STAMP_H, 4.5, 13);
 
-/* A gradient stamp that shakes on hover. On touch there's no hover to
-   preview it, so a tap plays the full shake first, then opens the site. */
+/* A postage stamp: the gradient artwork inside a white, perforated stamp.
+   The whole stamp shakes on hover. On touch there's no hover to preview it,
+   so a tap plays the full shake first, then opens the site. */
 export default function AmoraItem({ autoHover }: { autoHover: boolean }) {
   const hasFinePointer = useHasFinePointer();
   const [tapped, setTapped] = useState(false);
@@ -41,15 +51,20 @@ export default function AmoraItem({ autoHover }: { autoHover: boolean }) {
       aria-label="Amora, a website for virtual try-on"
       onClick={handleClick}
     >
-      <span className={`${styles.stamp} ${grain.grain} ${grain.shaped}`} style={shapeMask(amoraShape)}>
-        <span className={styles.label} aria-hidden="true">
-          Website
-          <br />
-          for
-          <br />
-          Virtual
-          <br />
-          Try-on
+      <span className={styles.postage}>
+        <svg className={styles.paper} viewBox={`0 0 ${STAMP_W} ${STAMP_H}`} aria-hidden="true">
+          <path d={STAMP_PATH} />
+        </svg>
+        <span className={`${styles.stamp} ${grain.grain} ${grain.shaped}`} style={shapeMask(amoraShape)}>
+          <span className={styles.label} aria-hidden="true">
+            Website
+            <br />
+            for
+            <br />
+            Virtual
+            <br />
+            Try-on
+          </span>
         </span>
       </span>
     </a>

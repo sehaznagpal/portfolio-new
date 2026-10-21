@@ -3,9 +3,14 @@ import type { PlaygroundItem } from '../../../data/playgroundItems';
 import IntroNote from './IntroNote';
 import LetterNote from './LetterNote';
 import ContactNote from './ContactNote';
+import ExtrasCardFace from '../items/ExtrasCardFace';
 import styles from './PlaygroundCard.module.css';
 
 const NOTES = { intro: IntroNote, letter: LetterNote, contact: ContactNote };
+// Items whose thumbnail is drawn live rather than an image.
+const LIVE_THUMBNAILS: Record<string, () => ReactNode> = {
+  extras: () => <ExtrasCardFace className={styles.liveArt} />,
+};
 
 /* A grid card: the item's thumbnail (or note) in a paper frame with a
    "title · type" caption below. A modal item is a button, a link item opens
@@ -25,15 +30,17 @@ export default function PlaygroundCard({
     <span className={`${styles.frame} ${Note ? styles.noteFrame : ''}`}>
       {Note ? (
         <Note />
+      ) : LIVE_THUMBNAILS[item.id] ? (
+        <span className={styles.artBox}>{LIVE_THUMBNAILS[item.id]()}</span>
       ) : (
         item.thumbnail && (
           <span className={styles.artBox}>
             <img
               className={styles.art}
-            src={item.thumbnail.src}
-            alt=""
-            width={item.thumbnail.width}
-            height={item.thumbnail.height}
+              src={item.thumbnail.src}
+              alt=""
+              width={item.thumbnail.width}
+              height={item.thumbnail.height}
               loading="lazy"
               decoding="async"
               draggable={false}

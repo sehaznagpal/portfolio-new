@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import PlaygroundModal from './PlaygroundModal';
-import extrasCard from '../../../assets/images/playground/extras-modal/extras-card.webp';
+import ExtrasCardFace from '../items/ExtrasCardFace';
 import illustrationsTitle from '../../../assets/images/playground/extras-modal/illustrations-title.webp';
 import mario from '../../../assets/images/playground/extras-modal/mario.webp';
 import girlMs from '../../../assets/images/playground/extras-modal/girl-ms.webp';
@@ -22,7 +22,6 @@ const SCROLL_STEP = 0.7;
 const CARD_HEIGHT = 1589;
 
 const CARDS = [
-  { src: extrasCard, width: 1258, alt: 'Extras' },
   { src: illustrationsTitle, width: 1070, alt: 'Illustrations, made from scratch with nothing but tools and time' },
   { src: mario, width: 1071, alt: 'Mario-inspired platformer illustration' },
   { src: girlMs, width: 1070, alt: 'Girl drawing on a computer illustration' },
@@ -80,6 +79,9 @@ export default function ExtrasModal({ open, onClose, note }: { open: boolean; on
         <ChevronRight size={20} strokeWidth={1.75} />
       </button>
       <div className={styles.track} ref={trackRef}>
+        <span className={styles.faceSlide} role="img" aria-label="Extras">
+          <ExtrasCardFace />
+        </span>
         {CARDS.map((card) => (
           <img
             key={card.alt}

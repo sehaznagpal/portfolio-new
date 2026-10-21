@@ -1,16 +1,36 @@
-/* Figma units (1415:902) */
+/* Figma units (1415:902): the 190.91 x 248.19 artwork plus a 16-unit stamp
+   margin each side (MARGIN in AmoraItem.tsx) */
 .root {
-  width: calc(190.91 * var(--cu));
-  height: calc(248.19 * var(--cu));
+  --stamp-margin: calc(16 * var(--cu));
+  width: calc(222.91 * var(--cu));
+  height: calc(280.19 * var(--cu));
 }
 
-/* The shake lives on the stamp so the link keeps a steady hit area and focus ring */
+/* The shake lives on the whole stamp so the link keeps a steady hit area
+   and focus ring */
+.postage {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* White perforated paper, drawn as an SVG path so it stays crisp at any zoom */
+.paper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--pg-paper);
+  filter: drop-shadow(var(--pg-sticker-shadow));
+}
+
 .stamp {
+  position: absolute;
+  inset: var(--stamp-margin);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
   background: linear-gradient(to bottom, #b61417, #f7567c);
 }
 
@@ -27,12 +47,12 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .root:hover .stamp {
+  .root:hover .postage {
     animation: amoraShake 480ms ease-in-out;
   }
 }
 
-.root:is(:focus-visible, [data-auto-hover], [data-tapped]) .stamp {
+.root:is(:focus-visible, [data-auto-hover], [data-tapped]) .postage {
   animation: amoraShake 480ms ease-in-out;
 }
 

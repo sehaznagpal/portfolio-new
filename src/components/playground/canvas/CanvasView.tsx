@@ -88,9 +88,9 @@ export default function CanvasView({ onOpenModal }: { onOpenModal: (item: Playgr
                 style={{ left: box.x, top: box.y, width: box.w, height: box.h, '--cu': `${box.scale}px` } as CSSProperties}
               >
                 {artwork(box.item)}
-                <span className={styles.caption}>
-                  {box.item.title} · {box.item.type}
-                </span>
+                {box.item.caption !== null && (
+                  <span className={styles.caption}>{box.item.caption ?? `${box.item.title} · ${box.item.type}`}</span>
+                )}
               </div>
             ))}
           </PanContext.Provider>

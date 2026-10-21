@@ -1,5 +1,5 @@
 /* Notebook paper, shared by the project notes and the letter: cream paper
-   with soft, slightly hand-drawn brand-yellow rules that the handwriting
+   (white for the letter) with soft, slightly hand-drawn brand-yellow rules that the handwriting
    sits on.
 
    The element sets three sizes and the rules follow them:
@@ -16,6 +16,10 @@
   position: relative;
   isolation: isolate;
   background: var(--text-cream);
+}
+
+.white {
+  background: var(--pg-paper);
 }
 
 .paper::before {
