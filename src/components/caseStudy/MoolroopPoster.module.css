@@ -1,37 +1,30 @@
+/* Two layers on the maroon ground (colours exactly as the original artwork):
+   - hero-vases.svg: a seamless 568 x 451.6 tile of the original vases,
+     repeated at a fixed CSS size per breakpoint, so the pattern is the same
+     scale in every frame instead of being cropped from one large poster.
+     The tile is 0.52 px per artwork unit on mobile (about half the old
+     1.04) and 0.70 on desktop (75% of the old 0.934). Its CSS size is
+     whole device pixels (even heights, so also at 1.5x), so no seam shows
+     where tiles meet.
+   - hero-grain-*.svg: the original film grain, as its own overlay at a fixed
+     size, so scaling the vases never changes the grain's visible size
+     (frequency 1 / the old render scale, with the original strength). */
 .poster {
   width: 100%;
   height: 100%;
-  background: var(--moolroop-poster-maroon);
-}
-
-/* display intentionally left unset here — .mobileImg/.desktopImg own it
-   below. An element+class selector like "`.poster img`" outranks a
-   class-only one like "`.mobileImg`" regardless of source order, so a
-   `display` declared here would permanently beat their media-query
-   toggle and show both images stacked at once, no matter the viewport —
-   the hero image frame's overflow: hidden (ArticleHero.module.css) would
-   then just clip everything below the first (mobile) image's height,
-   stretching its smaller pattern to fill the whole desktop box instead of
-   showing the real desktop artwork underneath. */
-.poster img {
-  width: 100%;
-  height: 100%;
-}
-
-.mobileImg {
-  display: block;
-}
-
-.desktopImg {
-  display: none;
+  background-color: var(--moolroop-poster-maroon);
+  background-image: url('../../assets/images/moolroop/hero-grain-mobile.svg'), url('../../assets/images/moolroop/hero-vases.svg');
+  background-repeat: repeat;
+  background-size:
+    512px 512px,
+    296px 236px;
 }
 
 @media (min-width: 768px) {
-  .mobileImg {
-    display: none;
-  }
-
-  .desktopImg {
-    display: block;
+  .poster {
+    background-image: url('../../assets/images/moolroop/hero-grain-desktop.svg'), url('../../assets/images/moolroop/hero-vases.svg');
+    background-size:
+      512px 512px,
+      398px 316px;
   }
 }
