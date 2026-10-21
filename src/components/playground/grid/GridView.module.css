@@ -29,23 +29,30 @@
 }
 
 .body,
-.highlight {
+.highlightLine {
   margin: 0;
   font-family: 'Author Variable', sans-serif;
   font-size: var(--type-body);
-  line-height: var(--type-body-leading);
   font-feature-settings: 'salt' 1;
 }
 
 .body {
   font-weight: var(--author-regular);
+  line-height: var(--pg-drafts-leading);
+}
+
+/* A true highlight: the yellow sits behind the text itself, line by line */
+.highlightLine {
+  line-height: var(--pg-highlight-leading);
 }
 
 .highlight {
-  padding: 0 6px;
+  padding: 0 var(--pg-highlight-pad);
   background: var(--color-brand);
   color: var(--pg-ink);
   font-weight: var(--author-medium);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* Equal tiles. The grid is a size container so the tiles size themselves
@@ -67,7 +74,17 @@
 
 @media (max-width: 640px) {
   .page {
-    padding-top: 160px;
+    padding-top: 120px;
+  }
+
+  /* Heading and highlight centred, the body left-aligned */
+  .header {
+    align-items: stretch;
+  }
+
+  .title,
+  .highlightLine {
+    text-align: center;
   }
 
   .grid {

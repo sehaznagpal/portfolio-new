@@ -14,10 +14,10 @@
   transform: translateX(-50%);
 }
 
-/* Below Share, which is centred on phones */
+/* Phones: centred just below the wordmark and Share row */
 @media (max-width: 640px) {
   .toggle {
-    top: 98px;
+    top: calc(var(--pg-chrome-inset-mobile) + 60px * var(--pg-chrome-scale-mobile) + 10px);
   }
 }
 

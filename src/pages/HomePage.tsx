@@ -7,8 +7,10 @@ import SiteNav, { type NavTheme } from '../components/nav/SiteNav';
 import HeroSection from '../components/home/HeroSection';
 import WorkSection from '../components/home/WorkSection';
 import Footer from '../components/footer/Footer';
+import { PageSweepOut } from '../components/chrome/PageSweep';
 import { HOME_DESCRIPTION, usePageMeta } from '../lib/usePageMeta';
 import { useSectionNav, type SectionId } from '../lib/useSectionNav';
+import { arrivedBySweep } from '../lib/usePlaygroundTransition';
 import styles from './HomePage.module.css';
 
 const LOADER_SEEN_KEY = 'portfolio:loader-seen';
@@ -51,7 +53,10 @@ export default function HomePage() {
   // The loader introduces the site on its first page load only. Arriving
   // from another page in the app (a case study's "work", the playground)
   // goes straight to the section asked for.
-  const arrivedInApp = useLocation().key !== 'default';
+  const location = useLocation();
+  const arrivedInApp = location.key !== 'default';
+  // Coming back from the playground: uncover the hero from behind its sweep.
+  const [sweepingIn] = useState(() => arrivedBySweep(location.state));
   const [loading, setLoading] = useState(() => !arrivedInApp && !hasSeenLoader());
   const [backgroundVisible, setBackgroundVisible] = useState(!loading);
   const [heroReady, setHeroReady] = useState(!loading);
@@ -142,6 +147,7 @@ export default function HomePage() {
       </AnimatePresence>
 
       <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} onSection={goTo} />
+      {sweepingIn && <PageSweepOut />}
     </>
   );
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { PLAYGROUND_ITEMS, type PlaygroundItem, type PlaygroundModalId } from '../../data/playgroundItems';
-import { useHasFinePointer } from '../../lib/useHasFinePointer';
 import { useTheme } from './theme/ThemeContext';
 import { themeGround } from './theme/themes';
 import ThemeCurtain from './theme/ThemeCurtain';
@@ -10,6 +9,7 @@ import GridView from './grid/GridView';
 import ViewToggle, { type PlaygroundView } from './chrome/ViewToggle';
 import PortfolioButton from './chrome/PortfolioButton';
 import ShareMenu from './chrome/ShareMenu';
+import { MOBILE_QUERY } from './mobileQuery';
 import PhotoboothModal from './modals/PhotoboothModal';
 import SipStudioModal from './modals/SipStudioModal';
 import ExtrasModal from './modals/ExtrasModal';
@@ -17,35 +17,18 @@ import MotionDemoModal from './modals/MotionDemoModal';
 import WorktapeModal from './modals/WorktapeModal';
 import styles from './Playground.module.css';
 
-const VIEW_KEY = 'portfolio:playground-view';
 // Half of the ~250ms crossfade each way.
 const FADE = { duration: 0.125, ease: 'easeOut' } as const;
 
-function readStoredView(): PlaygroundView | null {
-  try {
-    const stored = localStorage.getItem(VIEW_KEY);
-    return stored === 'canvas' || stored === 'grid' ? stored : null;
-  } catch {
-    return null;
-  }
-}
-
-function storeView(view: PlaygroundView) {
-  try {
-    localStorage.setItem(VIEW_KEY, view);
-  } catch {
-    // Storage unavailable (e.g. private browsing): the choice just won't persist.
-  }
-}
-
 /* The playground shell: the themed ground, the canvas or grid view (canvas
-   by default with a mouse, grid on touch, then whatever was last picked),
+   on desktop and tablet, the grid on phones; nothing is remembered),
    the fixed UI and the project modals. Theme colours apply only here. */
 export default function Playground() {
   const { theme } = useTheme();
-  const hasFinePointer = useHasFinePointer();
   const reducedMotion = useReducedMotion();
-  const [view, setView] = useState<PlaygroundView>(() => readStoredView() ?? (hasFinePointer ? 'canvas' : 'grid'));
+  const [view, setView] = useState<PlaygroundView>(() =>
+    window.matchMedia(MOBILE_QUERY).matches ? 'grid' : 'canvas',
+  );
   const [openModal, setOpenModal] = useState<PlaygroundModalId | null>(null);
 
   // The canvas pans instead of scrolling; the grid is a normal scrolling page.
@@ -60,7 +43,6 @@ export default function Playground() {
 
   function changeView(next: PlaygroundView) {
     if (next === view) return;
-    storeView(next);
     window.scrollTo(0, 0);
     setView(next);
   }

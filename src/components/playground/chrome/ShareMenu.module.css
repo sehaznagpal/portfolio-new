@@ -20,11 +20,12 @@
   width: calc(175px * var(--scale));
 }
 
+/* Phones: top-right, level with the wordmark */
 @media (max-width: 640px) {
   .pill {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    --scale: var(--pg-chrome-scale-mobile);
+    top: var(--pg-chrome-inset-mobile);
+    right: var(--pg-chrome-inset-mobile);
   }
 }
 

@@ -34,23 +34,38 @@
 }
 
 .introBody,
-.introHighlight {
+.introHighlightLine {
   font-family: 'Author Variable', sans-serif;
   font-size: 15px;
-  line-height: 1.35;
   font-feature-settings: 'salt' 1;
 }
 
 .introBody {
   max-width: 920px;
   font-weight: var(--author-regular);
+  line-height: var(--pg-drafts-leading);
   text-align: justify;
 }
 
+/* A true highlight: the yellow sits behind the text itself, line by line */
+.introHighlightLine {
+  display: block;
+  line-height: var(--pg-highlight-leading);
+}
+
 .introHighlight {
-  padding: 2px 6px;
+  padding: 0 var(--pg-highlight-pad);
   background: var(--color-brand);
   font-weight: var(--author-medium);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Phones: the body reads left-aligned (heading and highlight stay centred) */
+@media (max-width: 640px) {
+  .introBody {
+    text-align: left;
+  }
 }
 
 /* Letter: handwriting on notebook paper (notebookPaper.module.css) */

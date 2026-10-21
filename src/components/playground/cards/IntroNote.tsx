@@ -9,7 +9,9 @@ export default function IntroNote() {
         <span className={styles.italic}>More from my</span> <span className={styles.bold}>Drafts</span>
       </span>
       <span className={styles.introBody}>{DRAFTS_BODY}</span>
-      <span className={styles.introHighlight}>{DRAFTS_HIGHLIGHT}</span>
+      <span className={styles.introHighlightLine}>
+        <span className={styles.introHighlight}>{DRAFTS_HIGHLIGHT}</span>
+      </span>
     </span>
   );
 }

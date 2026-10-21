@@ -263,6 +263,11 @@
   --pg-frame-shadow: 0 1px 2px rgba(18, 18, 18, 0.05), 0 8px 24px rgba(18, 18, 18, 0.06);
   --pg-frame-shadow-lifted: 0 2px 4px rgba(18, 18, 18, 0.06), 0 18px 40px rgba(18, 18, 18, 0.12);
   --pg-lift-duration: 260ms;
+  /* The Drafts text (canvas card and grid heading): tight leading, and a
+     highlight that sits behind the text line by line */
+  --pg-drafts-leading: 1.2;
+  --pg-highlight-leading: 1.1;
+  --pg-highlight-pad: 4px;
   /* Grid view: uniform tiles and the column switch */
   --pg-grid-gap: 20px;
   --pg-grid-pad: 32px;
@@ -270,6 +275,9 @@
   --pg-dot-spacing: 24px;
   /* Fixed corner chips render at 83% of the old repo's size */
   --pg-chrome-scale: 0.83;
+  /* Phones: the wordmark and Share share one smaller row, the toggle below */
+  --pg-chrome-scale-mobile: 0.66;
+  --pg-chrome-inset-mobile: 16px;
   /* Grid-sweep page transition into the playground: the leaving page's
      curtain slides down to cover, the playground's continues off the bottom */
   --pg-sweep-in-duration: 462ms;

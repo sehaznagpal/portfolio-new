@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, type RefObject } from 'react';
-import { WORLD_HEIGHT, WORLD_WIDTH } from './canvasLayout';
+import { MOBILE_WORLD_SCALE, WORLD_HEIGHT, WORLD_WIDTH } from './canvasLayout';
+import { MOBILE_QUERY } from '../mobileQuery';
 
 export type PanListener = (dx: number, dy: number) => void;
 /* Visible part of the world, in world px. */
@@ -34,10 +35,11 @@ function isEditableTarget(target: EventTarget | null) {
   );
 }
 
-/* Pan over a fixed-size world (WORLD_WIDTH x WORLD_HEIGHT CSS px), always
-   at 1:1. Inputs update a target view; one rAF writes it as a single
-   transform to both layers, so nothing re-renders React per frame, and
-   nothing runs at rest.
+/* Pan over a fixed-size world (WORLD_WIDTH x WORLD_HEIGHT CSS px), at 1:1,
+   or at MOBILE_WORLD_SCALE on phones (one fixed scale, never zoomed).
+   Inputs update a target view; one rAF writes it as a single transform to
+   both layers, so nothing re-renders React per frame, and nothing runs at
+   rest.
 
    - Pan: drag (with gentle momentum on release), wheel / trackpad, and the
      arrow / page keys; always clamped to the world's edges.
@@ -82,10 +84,12 @@ export function useWorldViewport({
     const root = rootRef.current;
     if (!root) return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobile = window.matchMedia(MOBILE_QUERY);
+    const worldScale = () => (mobile.matches ? MOBILE_WORLD_SCALE : 1);
 
     let viewportW = 0;
     let viewportH = 0;
-    const view = { x: 0, y: 0 };
+    const view = { x: 0, y: 0, scale: worldScale() };
     let frame = 0;
     let momentumFrame = 0;
     let glideTimer: ReturnType<typeof setTimeout> | undefined;
@@ -94,7 +98,7 @@ export function useWorldViewport({
        than the world, the world is centred instead (the dotted ground runs
        on past it, so there's no empty edge). */
     function clampAxis(value: number, viewportSize: number, worldSize: number) {
-      const overflow = viewportSize - worldSize;
+      const overflow = viewportSize - worldSize * view.scale;
       return overflow >= 0 ? overflow / 2 : clamp(value, overflow, 0);
     }
 
@@ -104,12 +108,17 @@ export function useWorldViewport({
     }
 
     function visibleWorld(): WorldView {
-      return { x: -view.x, y: -view.y, width: viewportW, height: viewportH };
+      return {
+        x: -view.x / view.scale,
+        y: -view.y / view.scale,
+        width: viewportW / view.scale,
+        height: viewportH / view.scale,
+      };
     }
 
     function write() {
       frame = 0;
-      const transform = `translate3d(${view.x}px, ${view.y}px, 0)`;
+      const transform = `translate3d(${view.x}px, ${view.y}px, 0) scale(${view.scale})`;
       if (groundRef.current) groundRef.current.style.transform = transform;
       if (contentRef.current) contentRef.current.style.transform = transform;
       const visible = visibleWorld();
@@ -128,8 +137,8 @@ export function useWorldViewport({
     }
 
     function centreOn(worldX: number, worldY: number) {
-      view.x = viewportW / 2 - worldX;
-      view.y = viewportH / 2 - worldY;
+      view.x = viewportW / 2 - worldX * view.scale;
+      view.y = viewportH / 2 - worldY * view.scale;
       clampView();
     }
 
@@ -147,6 +156,7 @@ export function useWorldViewport({
 
     function handleResize() {
       const focus = measure();
+      view.scale = worldScale();
       centreOn(focus.x, focus.y);
       scheduleWrite();
     }
@@ -303,7 +313,11 @@ export function useWorldViewport({
       if (!(target instanceof HTMLElement)) return;
       const rect = target.getBoundingClientRect();
       if (rect.left >= 0 && rect.top >= 0 && rect.right <= viewportW && rect.bottom <= viewportH) return;
-      moveToRef.current(rect.left + rect.width / 2 - view.x, rect.top + rect.height / 2 - view.y, true);
+      moveToRef.current(
+        (rect.left + rect.width / 2 - view.x) / view.scale,
+        (rect.top + rect.height / 2 - view.y) / view.scale,
+        true,
+      );
     }
 
     function handleScroll() {

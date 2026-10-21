@@ -8,6 +8,9 @@ import type { PlaygroundItem } from '../../../data/playgroundItems';
 export const WORLD_WIDTH = 3200;
 export const WORLD_HEIGHT = 1500;
 export const CAPTION_HEIGHT = 30;
+/* Phones draw the whole world at this one smaller scale, so the first
+   screen shows Drafts and parts of the items around it. There is no zoom. */
+export const MOBILE_WORLD_SCALE = 0.7;
 
 /* Each item's original artwork box (Figma units) and the scale it's drawn at
    on the canvas, which sets its --cu. */

@@ -7,8 +7,8 @@
   -webkit-user-select: none;
 }
 
-/* Both layers are the world and get the same translate from
-   useWorldViewport. */
+/* Both layers are the world and get the same transform from
+   useWorldViewport (a translate, plus the fixed scale on phones). */
 .layer {
   position: absolute;
   top: 0;
