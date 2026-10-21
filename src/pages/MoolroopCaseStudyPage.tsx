@@ -35,7 +35,7 @@ export default function MoolroopCaseStudyPage() {
       index={storyIndex(MOOLROOP_STORY)}
       lampColor={MOOLROOP_STORY.lampColor}
       tagColor={MOOLROOP_STORY.tagColor}
-      footerPhoto={FOOTER_PHOTOS.moolroop}
+      footerPhoto={FOOTER_PHOTOS.caseStudy}
       after={<CaseStudyEnd current="moolroop" link={MOOLROOP_STORY.closingLink} />}
     >
       <article

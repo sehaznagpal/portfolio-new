@@ -35,7 +35,7 @@ export default function FraudCaseStudyPage() {
       index={storyIndex(FRAUD_STORY)}
       lampColor={FRAUD_STORY.lampColor}
       tagColor={FRAUD_STORY.tagColor}
-      footerPhoto={FOOTER_PHOTOS.fraud}
+      footerPhoto={FOOTER_PHOTOS.caseStudy}
       after={<CaseStudyEnd current="fraud" link={FRAUD_STORY.closingLink} />}
     >
       <article

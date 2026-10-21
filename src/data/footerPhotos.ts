@@ -1,8 +1,6 @@
 import me from '../assets/images/footer/me.webp';
 import meTight from '../assets/images/footer/me-tight.webp';
-import park from '../assets/images/footer/park.webp';
-import christmasCafe from '../assets/images/footer/christmas-cafe.webp';
-import lawn from '../assets/images/footer/lawn.webp';
+import readingNook from '../assets/images/footer/reading-nook.webp';
 
 export interface FooterPhoto {
   src: string;
@@ -19,7 +17,7 @@ export interface FooterPhoto {
   tight?: { src: string; width: number; height: number; position: string };
 }
 
-/* Every footer photo: Home's, and one per case study. */
+/* Every footer photo: Home's, and one shared by all the case studies. */
 export const FOOTER_PHOTOS = {
   home: {
     src: me,
@@ -29,25 +27,11 @@ export const FOOTER_PHOTOS = {
     position: '65% 10%',
     tight: { src: meTight, width: 843, height: 562, position: '55% 30%' },
   },
-  drCuterus: {
-    src: christmasCafe,
-    width: 960,
-    height: 1280,
-    alt: 'Sehaz Nagpal smiling in a café decorated for Christmas',
-    position: 'center 60%',
-  },
-  fraud: {
-    src: park,
-    width: 960,
-    height: 1280,
-    alt: 'Sehaz Nagpal smiling in a sunlit park',
-    position: 'center 22%',
-  },
-  moolroop: {
-    src: lawn,
-    width: 960,
-    height: 1280,
-    alt: 'Sehaz Nagpal on a campus lawn under a large tree',
-    position: 'center bottom',
+  caseStudy: {
+    src: readingNook,
+    width: 1200,
+    height: 1600,
+    alt: 'Sehaz Nagpal smiling on a bench in a reading nook',
+    position: 'center 45%',
   },
 } satisfies Record<string, FooterPhoto>;

@@ -33,7 +33,7 @@ export default function DrCuterusCaseStudyPage() {
       index={storyIndex(DR_CUTERUS_STORY)}
       lampColor={DR_CUTERUS_STORY.lampColor}
       tagColor={DR_CUTERUS_STORY.tagColor}
-      footerPhoto={FOOTER_PHOTOS.drCuterus}
+      footerPhoto={FOOTER_PHOTOS.caseStudy}
       after={<CaseStudyEnd current="dr-cuterus" link={DR_CUTERUS_STORY.closingLink} />}
     >
       <article
