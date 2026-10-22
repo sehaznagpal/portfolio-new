@@ -6,6 +6,7 @@ import { shapeMask } from './shapeMask';
 import { stampPath } from './stampPath';
 import focus from './focus.module.css';
 import grain from './grain.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './AmoraItem.module.css';
 
 // Matches the amoraShake keyframes.
@@ -50,6 +51,9 @@ export default function AmoraItem({ autoHover }: { autoHover: boolean }) {
       data-tapped={tapped || undefined}
       aria-label="Amora, a website for virtual try-on"
       onClick={handleClick}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') play('wiggle');
+      }}
     >
       <span className={styles.postage}>
         <svg className={styles.paper} viewBox={`0 0 ${STAMP_W} ${STAMP_H}`} aria-hidden="true">

@@ -115,8 +115,8 @@ export function useSectionNav({ enabled }: { enabled: boolean }) {
     (next: SectionId) => {
       const current = sectionRef.current;
       if (next === current) return;
-      // A soft whoosh as the page moves between the hero and the work.
-      if (next !== 'footer' && current !== 'footer') play('whoosh');
+      // A soft whoosh as the page moves between sections.
+      play('whoosh');
       if (!gestureMode) {
         // Section + hash follow from the IntersectionObserver once it lands.
         layerRefs[next].current?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });

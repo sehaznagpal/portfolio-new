@@ -91,8 +91,6 @@ function ChipView({ chip, reducedMotion }: { chip: Chip; reducedMotion: boolean 
             easing: FALL_EASE,
           },
         );
-    // A tiny tap as it lands.
-    animation.onfinish = () => play('paperTap');
     return () => animation.cancel();
     // Runs once per chip: it falls on mount and then stays put.
     // eslint-disable-next-line react-hooks/exhaustive-deps

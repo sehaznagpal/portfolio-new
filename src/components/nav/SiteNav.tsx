@@ -4,6 +4,7 @@ import SweepButton from '../chrome/SweepButton';
 import { PageSweepIn } from '../chrome/PageSweep';
 import { usePlaygroundTransition } from '../../lib/usePlaygroundTransition';
 import mePhoto from '../../assets/images/nav/me-polaroid.webp';
+import { play } from '../../lib/sound/sound';
 import styles from './SiteNav.module.css';
 
 /* light: dark text on the cream hero. dark: light text on the index.
@@ -32,7 +33,16 @@ export default function SiteNav({
   return (
     <nav className={styles.nav} data-nav-theme={theme} aria-label="Main" inert={theme === 'hidden'}>
       <CursorTooltip image={ME_PHOTO}>
-        <button type="button" className={styles.brand} onClick={onHome}>
+        <button
+          type="button"
+          className={styles.brand}
+          onClick={onHome}
+          // Its tick plays on hover, not on click
+          data-sound-own
+          onPointerEnter={(event) => {
+            if (event.pointerType === 'mouse') play('tick');
+          }}
+        >
           <span className={styles.brandItalic}>sehaz</span> nagpal
         </button>
       </CursorTooltip>

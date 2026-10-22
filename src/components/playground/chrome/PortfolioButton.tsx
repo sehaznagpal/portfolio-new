@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LINKS } from '../../../data/links';
 import { useHomeTransition } from '../../../lib/usePlaygroundTransition';
 import { PageSweepIn } from '../../chrome/PageSweep';
+import { play } from '../../../lib/sound/sound';
 import styles from './PortfolioButton.module.css';
 
 /* Fixed top-left wordmark: back to Home's hero behind the same grid sweep
@@ -19,7 +20,13 @@ export default function PortfolioButton() {
 
   return (
     <>
-      <Link to={LINKS.home} className={styles.pill} aria-label="Sehaz Nagpal, back to home" onClick={handleClick}>
+      <Link to={LINKS.home} className={styles.pill} aria-label="Sehaz Nagpal, back to home"
+        onClick={handleClick}
+        // A soft tick on hover, as on the site's own wordmark
+        onPointerEnter={(event) => {
+          if (event.pointerType === 'mouse') play('tick');
+        }}
+      >
         Sehaz Nagpal
       </Link>
       {transitioning && <PageSweepIn />}

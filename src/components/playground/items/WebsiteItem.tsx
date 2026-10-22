@@ -5,6 +5,7 @@ import websiteShapeSource from '../../../assets/images/playground/website-shape.
 import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
 import grain from './grain.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './WebsiteItem.module.css';
 
 // The star's own outline, reused for its die-cut sticker edge.
@@ -35,6 +36,9 @@ export default function WebsiteItem({ autoHover }: { autoHover: boolean }) {
       rel="noopener noreferrer"
       data-auto-hover={autoHover || undefined}
       aria-label="re-wired, web design project for an agency"
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') play('paperFlip');
+      }}
     >
       <span className={styles.flip} aria-hidden="true">
         {face(

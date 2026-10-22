@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { play } from '../../lib/sound/sound';
 import styles from './Loader.module.css';
 
 interface Phase {
@@ -44,7 +45,11 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         await wait(phase.holdAfter);
         if (cancelled) return;
       }
-      if (!cancelled) doneRef.current();
+      if (cancelled) return;
+      // A soft chime as the curtain lifts, only if sound is already unlocked
+      // (it never waits to play late).
+      play('chime');
+      doneRef.current();
     }
 
     run();

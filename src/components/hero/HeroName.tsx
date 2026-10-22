@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import heroStyles from './Hero.module.css';
+import { play } from '../../lib/sound/sound';
 import styles from './HeroName.module.css';
 
 /* Per-letter hover font-swap for the hero title ("Sehaz Nagpal"). Every
@@ -133,6 +134,7 @@ function Letter({ char, word, canAnimate }: { char: string; word: WordKey; canAn
   function startCycle() {
     if (cycleTimerRef.current) clearInterval(cycleTimerRef.current);
     cycleTimerRef.current = setInterval(() => {
+      play('type');
       setActive((prev) => CYCLE_ORDER[(CYCLE_ORDER.indexOf(prev) + 1) % CYCLE_ORDER.length]);
     }, CONFIG.cycleIntervalMs);
   }
@@ -143,6 +145,8 @@ function Letter({ char, word, canAnimate }: { char: string; word: WordKey; canAn
     // again, and so on.
     const font = CONFIG.fontPool[(hoverCountRef.current - 1) % CONFIG.fontPool.length];
     setHovered(true);
+    // A tiny type tick with each swap (rate-limited in the sound set).
+    play('type');
     setActive(font.id);
     startCycle();
   }

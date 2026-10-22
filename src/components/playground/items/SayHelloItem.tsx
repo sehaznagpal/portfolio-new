@@ -20,7 +20,7 @@ export default function SayHelloItem({ autoHover }: { autoHover: boolean }) {
       className={styles.root}
       data-auto-hover={autoHover || undefined}
       onPointerEnter={(event) => {
-        if (event.pointerType === 'mouse') play('flick');
+        if (event.pointerType === 'mouse') play('cardFlip');
       }}
     >
       <p className={styles.tag}>

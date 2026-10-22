@@ -64,7 +64,7 @@ export default function ShareMenu() {
      with no theme yet picks the one already shown there. */
   function cycleTheme() {
     const index = THEME_CYCLE.indexOf(theme as (typeof THEME_CYCLE)[number]);
-    play('swish');
+    play('bloop');
     setTheme(index === -1 ? THEME_CYCLE[0] : THEME_CYCLE[(index + 1) % THEME_CYCLE.length]);
     setSpinSignal((signal) => signal + 1);
   }
@@ -161,7 +161,7 @@ export default function ShareMenu() {
               aria-checked={theme === option.id}
               className={styles.option}
               onClick={() => {
-                play('swish');
+                play('bloop');
                 setTheme(option.id);
                 setMenuOpen(false);
               }}

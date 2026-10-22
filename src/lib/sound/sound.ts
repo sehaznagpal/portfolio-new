@@ -1,12 +1,21 @@
 /* The site's sound: every sound is synthesised with Web Audio (no files),
    so there is nothing to download. Nothing plays until the visitor's first
    click, tap or key press (browser autoplay rules); the AudioContext is
-   created then. A master gain sets the overall level; mute silences
+   created then. A master gain sets the overall level and each sound has
+   its own trim, so they sit at a similar, quiet loudness; mute silences
    everything. Each sound is rate-limited so fast repeats never stack.
    Sounds register themselves by name (siteSounds, and the playground's own
    set, which only loads with the playground). */
 
 export type Synth = (kit: SynthKit, at: number) => void;
+
+export interface SoundDef {
+  synth: Synth;
+  // Trim for this sound before the master gain.
+  gain: number;
+  // Minimum gap between plays (hovers use a longer one).
+  minGap?: number;
+}
 
 export interface SynthKit {
   ctx: AudioContext;
@@ -14,11 +23,11 @@ export interface SynthKit {
   noise: AudioBuffer;
 }
 
-const MASTER_VOLUME = 0.3;
+const MASTER_VOLUME = 0.18;
 const MIN_REPEAT_MS = 80;
 const MUTE_KEY = 'portfolio:sound-muted';
 
-const synths = new Map<string, Synth>();
+const sounds = new Map<string, SoundDef>();
 const lastPlayed = new Map<string, number>();
 const listeners = new Set<() => void>();
 let kit: SynthKit | null = null;
@@ -32,21 +41,30 @@ function readMuted() {
   }
 }
 
-export function registerSounds(map: Record<string, Synth>) {
-  Object.entries(map).forEach(([name, synth]) => synths.set(name, synth));
+export function registerSounds(map: Record<string, SoundDef>) {
+  Object.entries(map).forEach(([name, def]) => sounds.set(name, def));
 }
 
 /* Plays `name` now, or `delay` ms from now. Silent until the first
-   interaction, while muted, or within MIN_REPEAT_MS of its last play. */
+   interaction, while muted, or within its minimum gap of its last play.
+   Never queued: a sound that can't play now is simply skipped. */
 export function play(name: string, { delay = 0 }: { delay?: number } = {}) {
   if (!kit || muted) return;
-  const synth = synths.get(name);
-  if (!synth) return;
+  const def = sounds.get(name);
+  if (!def) return;
   const now = performance.now();
-  if (now - (lastPlayed.get(name) ?? -Infinity) < MIN_REPEAT_MS) return;
+  if (now - (lastPlayed.get(name) ?? -Infinity) < (def.minGap ?? MIN_REPEAT_MS)) return;
   lastPlayed.set(name, now);
   if (kit.ctx.state === 'suspended') kit.ctx.resume();
-  synth(kit, kit.ctx.currentTime + delay / 1000);
+  const trim = kit.ctx.createGain();
+  trim.gain.value = def.gain;
+  trim.connect(kit.out);
+  def.synth({ ...kit, out: trim }, kit.ctx.currentTime + delay / 1000);
+}
+
+// True once the first interaction has created the audio context.
+export function isUnlocked() {
+  return kit !== null;
 }
 
 export function isMuted() {

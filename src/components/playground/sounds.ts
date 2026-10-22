@@ -1,66 +1,128 @@
 import { registerSounds } from '../../lib/sound/sound';
 import { noise, tone } from '../../lib/sound/synth';
 
-/* The playground's set: a little more playful than the main site's. It
-   loads with the playground chunk only. */
+/* The playground's set: a little more playful than the main site's, still
+   soft and understated. It loads with the playground chunk only. Hover
+   sounds keep a longer gap so quick hovering never stacks. */
+const HOVER_GAP = 250;
+
 registerSounds({
   // Canvas <-> grid morph
-  swoosh: (kit, at) => {
-    noise(kit, at, { freq: 500, to: 2600, q: 0.7, level: 0.24, attack: 0.18, duration: 0.55 });
+  swoosh: {
+    gain: 0.28,
+    synth: (kit, at) => noise(kit, at, { freq: 500, to: 2400, q: 0.7, attack: 0.18, duration: 0.55 }),
   },
-  // Column switch: three quick card taps
-  shuffle: (kit, at) => {
-    [0, 0.05, 0.1].forEach((offset, i) => {
-      noise(kit, at + offset, { freq: 2200 + i * 400, q: 1.4, level: 0.13, attack: 0.002, duration: 0.05 });
-    });
+  // Column switch: three quick, soft card taps
+  shuffle: {
+    gain: 0.1,
+    synth: (kit, at) => {
+      [0, 0.05, 0.1].forEach((offset, i) => {
+        noise(kit, at + offset, { freq: 1800 + i * 300, q: 1.2, attack: 0.008, duration: 0.05 });
+      });
+    },
+  },
+  // re-wired's sticker flipping
+  paperFlip: {
+    gain: 0.11,
+    minGap: HOVER_GAP,
+    synth: (kit, at) => noise(kit, at, { freq: 1400, to: 3800, q: 1.1, attack: 0.03, duration: 0.14 }),
+  },
+  // Amora's stamp wiggling: three tiny paper nudges
+  wiggle: {
+    gain: 0.09,
+    minGap: HOVER_GAP,
+    synth: (kit, at) => {
+      [0, 0.08, 0.16].forEach((offset, i) => {
+        noise(kit, at + offset, { freq: 2200 - i * 200, q: 1.4, attack: 0.012, duration: 0.05 });
+      });
+    },
   },
   // Motion's CD sliding out
-  vinyl: (kit, at) => {
-    noise(kit, at, { freq: 1800, to: 700, q: 2.5, level: 0.14, attack: 0.04, duration: 0.42 });
-    tone(kit, at, { freq: 110, to: 95, level: 0.06, attack: 0.05, duration: 0.4 });
+  vinyl: {
+    gain: 0.14,
+    minGap: HOVER_GAP,
+    synth: (kit, at) => {
+      noise(kit, at, { freq: 1500, to: 600, q: 2, attack: 0.06, duration: 0.42 });
+      tone(kit, at, { freq: 110, to: 96, level: 0.3, attack: 0.06, duration: 0.4 });
+    },
   },
-  // Worktape's cassette popping out
-  clack: (kit, at) => {
-    noise(kit, at, { filter: 'highpass', freq: 2500, level: 0.2, attack: 0.001, duration: 0.025 });
-    tone(kit, at, { freq: 320, to: 180, type: 'triangle', level: 0.14, attack: 0.001, duration: 0.08 });
-    noise(kit, at + 0.07, { filter: 'highpass', freq: 3200, level: 0.12, attack: 0.001, duration: 0.02 });
+  // Worktape's cassette popping out: a small, muffled clack
+  clack: {
+    gain: 0.14,
+    minGap: HOVER_GAP,
+    synth: (kit, at) => {
+      noise(kit, at, { filter: 'lowpass', freq: 2600, attack: 0.006, duration: 0.03 });
+      tone(kit, at, { freq: 300, to: 190, type: 'triangle', level: 0.5, attack: 0.006, duration: 0.07 });
+      noise(kit, at + 0.07, { filter: 'lowpass', freq: 3000, level: 0.6, attack: 0.006, duration: 0.025 });
+    },
   },
   // Photobooth opening, and each photo
-  shutter: (kit, at) => {
-    noise(kit, at, { filter: 'highpass', freq: 3000, level: 0.22, attack: 0.001, duration: 0.03 });
-    noise(kit, at + 0.06, { freq: 1800, q: 1.2, level: 0.18, attack: 0.001, duration: 0.05 });
+  shutter: {
+    gain: 0.14,
+    synth: (kit, at) => {
+      noise(kit, at, { filter: 'highpass', freq: 2600, duration: 0.03 });
+      noise(kit, at + 0.06, { freq: 1600, q: 1.2, level: 0.8, duration: 0.05 });
+    },
   },
-  // SiP and Extras hovers
-  pop: (kit, at) => {
-    tone(kit, at, { freq: 520, to: 980, level: 0.18, attack: 0.003, duration: 0.07 });
+  // Photobooth hover: a tiny shutter tick
+  shutterTick: {
+    gain: 0.07,
+    minGap: HOVER_GAP,
+    synth: (kit, at) => {
+      noise(kit, at, { filter: 'highpass', freq: 3500, duration: 0.018 });
+      noise(kit, at + 0.035, { filter: 'highpass', freq: 3000, level: 0.6, duration: 0.018 });
+    },
   },
-  // Greeting card flick
-  flick: (kit, at) => {
-    noise(kit, at, { freq: 2600, to: 4800, q: 1.5, level: 0.14, attack: 0.003, duration: 0.07 });
-    tone(kit, at + 0.01, { freq: 1500, type: 'triangle', level: 0.05, attack: 0.002, duration: 0.04 });
+  // SiP Studio's reveal
+  pop: {
+    gain: 0.12,
+    minGap: HOVER_GAP,
+    synth: (kit, at) => tone(kit, at, { freq: 420, to: 720, attack: 0.012, duration: 0.09 }),
+  },
+  // Extras: a card flick
+  flick: {
+    gain: 0.11,
+    minGap: HOVER_GAP,
+    synth: (kit, at) => {
+      noise(kit, at, { freq: 2400, to: 4200, q: 1.3, attack: 0.01, duration: 0.07 });
+      tone(kit, at + 0.01, { freq: 1400, type: 'triangle', level: 0.25, attack: 0.008, duration: 0.04 });
+    },
   },
   // Project windows opening / closing
-  windowOpen: (kit, at) => {
-    tone(kit, at, { freq: 440, to: 760, level: 0.16, attack: 0.004, duration: 0.09 });
+  windowOpen: {
+    gain: 0.12,
+    synth: (kit, at) => tone(kit, at, { freq: 440, to: 700, attack: 0.012, duration: 0.1 }),
   },
-  windowClose: (kit, at) => {
-    tone(kit, at, { freq: 700, to: 420, level: 0.1, attack: 0.004, duration: 0.09 });
+  windowClose: {
+    gain: 0.09,
+    synth: (kit, at) => tone(kit, at, { freq: 640, to: 400, attack: 0.012, duration: 0.1 }),
   },
   // Notes picked up / put down
-  lift: (kit, at) => {
-    noise(kit, at, { filter: 'highpass', freq: 1600, to: 3200, level: 0.12, attack: 0.02, duration: 0.16 });
+  lift: {
+    gain: 0.1,
+    synth: (kit, at) => noise(kit, at, { filter: 'highpass', freq: 1600, to: 3000, attack: 0.03, duration: 0.16 }),
   },
-  settle: (kit, at) => {
-    noise(kit, at, { filter: 'highpass', freq: 3000, to: 1400, level: 0.12, attack: 0.01, duration: 0.18 });
-    noise(kit, at + 0.12, { freq: 900, q: 1.5, level: 0.1, attack: 0.001, duration: 0.04 });
+  settle: {
+    gain: 0.1,
+    synth: (kit, at) => {
+      noise(kit, at, { filter: 'highpass', freq: 2800, to: 1300, attack: 0.02, duration: 0.18 });
+      noise(kit, at + 0.12, { freq: 900, q: 1.4, level: 0.7, duration: 0.04 });
+    },
   },
-  // Theme switch
-  swish: (kit, at) => {
-    noise(kit, at, { freq: 900, to: 3200, q: 1, level: 0.16, attack: 0.04, duration: 0.22 });
+  // Theme change: a soft, rounded bloop with a little air
+  bloop: {
+    gain: 0.12,
+    synth: (kit, at) => {
+      tone(kit, at, { freq: 300, to: 520, attack: 0.015, duration: 0.15 });
+      noise(kit, at, { freq: 900, to: 2200, q: 0.9, level: 0.35, attack: 0.04, duration: 0.2 });
+    },
   },
   // Share: link copied
-  ding: (kit, at) => {
-    tone(kit, at, { freq: 1568, level: 0.12, attack: 0.003, duration: 0.5 });
-    tone(kit, at + 0.07, { freq: 2093, level: 0.09, attack: 0.003, duration: 0.45 });
+  ding: {
+    gain: 0.08,
+    synth: (kit, at) => {
+      tone(kit, at, { freq: 1568, attack: 0.01, duration: 0.5 });
+      tone(kit, at + 0.07, { freq: 2093, level: 0.75, attack: 0.01, duration: 0.45 });
+    },
   },
 });

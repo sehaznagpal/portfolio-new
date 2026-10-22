@@ -3,6 +3,7 @@ import flashStar from '../../../assets/images/playground/flash-star.svg';
 import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
 import grain from './grain.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './PhotoboothItem.module.css';
 
 /* The camera: a gradient flash star with "photobooth" pops over it on
@@ -16,6 +17,9 @@ export default function PhotoboothItem({ autoHover, onOpen }: { autoHover: boole
       aria-haspopup="dialog"
       aria-label="Photobooth, open camera"
       onClick={onOpen}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') play('shutterTick');
+      }}
     >
       <span className={styles.camera}>
         <img src={camera} alt="" width={410} height={284} loading="lazy" decoding="async" />

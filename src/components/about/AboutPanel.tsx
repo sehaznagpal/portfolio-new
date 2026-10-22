@@ -39,14 +39,14 @@ export default function AboutPanel({
       setRendered(true);
       const raf = requestAnimationFrame(() =>
         requestAnimationFrame(() => {
-          play('paperIn');
+          play('whooshLight');
           setVisible(true);
         }),
       );
       return () => cancelAnimationFrame(raf);
     }
     if (rendered) {
-      play('paperOut');
+      play('whooshLightBack');
       setVisible(false);
       const timeout = setTimeout(() => setRendered(false), EXIT_MS);
       return () => clearTimeout(timeout);
