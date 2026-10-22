@@ -3,6 +3,7 @@ import sipShape from '../../../assets/images/playground/sip-shape.svg';
 import { shapeMask } from './shapeMask';
 import focus from './focus.module.css';
 import grain from './grain.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './SipStudioItem.module.css';
 
 /* SiP Studio badge: on hover it slides down-right while a white scallop
@@ -17,6 +18,9 @@ export default function SipStudioItem({ autoHover, onOpen }: { autoHover: boolea
       aria-haspopup="dialog"
       aria-label="SiP Studio, a branding project"
       onClick={onOpen}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') play('pop');
+      }}
     >
       <span className={`${styles.cloud} ${grain.grain} ${grain.shaped}`} style={mask} aria-hidden="true">
         <span className={styles.label}>

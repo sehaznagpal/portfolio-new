@@ -3,6 +3,7 @@ import { useMediaQuery } from '../../lib/useMediaQuery';
 import SweepButton from '../chrome/SweepButton';
 import { FOOTER_PHOTOS, type FooterPhoto } from '../../data/footerPhotos';
 import { PUNCH_SHAPES, PUNCH_SIZE, shapeCursor, shapeScale, shapeViewBox, type PunchShape } from './punchShapes';
+import { play } from '../../lib/sound/sound';
 import styles from './PunchArea.module.css';
 
 // Short or very wide desktop screens, where a photo's optional tight crop
@@ -90,6 +91,8 @@ function ChipView({ chip, reducedMotion }: { chip: Chip; reducedMotion: boolean 
             easing: FALL_EASE,
           },
         );
+    // A tiny tap as it lands.
+    animation.onfinish = () => play('paperTap');
     return () => animation.cancel();
     // Runs once per chip: it falls on mount and then stays put.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -192,6 +195,7 @@ export default function PunchArea({
     const area = rootRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !area || !ctx || clearing) return;
+    play('punch');
 
     // The hole is placed on the sheet; the chip lives in the area (the sheet
     // bleeds slightly past the area's edges, so the two differ by a pixel).
@@ -266,13 +270,14 @@ export default function PunchArea({
   }
 
   function resetSheet() {
+    play('rustle');
     punchesRef.current = [];
     paintSheet();
     if (chips.length > 0) setClearing(true);
   }
 
   return (
-    <div ref={rootRef} className={styles.area}>
+    <div ref={rootRef} className={styles.area} data-sound-own>
       <picture>
         {photo.tight && (
           <source

@@ -3,6 +3,7 @@ import { useTheme } from '../theme/ThemeContext';
 import { THEME_CYCLE, THEME_OPTIONS } from '../theme/themes';
 import avatar from '../../../assets/images/playground/avatar.webp';
 import ThemeDotCluster from './ThemeDotCluster';
+import { play } from '../../../lib/sound/sound';
 import styles from './ShareMenu.module.css';
 
 type ShareState = 'idle' | 'copied' | 'manual';
@@ -63,6 +64,7 @@ export default function ShareMenu() {
      with no theme yet picks the one already shown there. */
   function cycleTheme() {
     const index = THEME_CYCLE.indexOf(theme as (typeof THEME_CYCLE)[number]);
+    play('swish');
     setTheme(index === -1 ? THEME_CYCLE[0] : THEME_CYCLE[(index + 1) % THEME_CYCLE.length]);
     setSpinSignal((signal) => signal + 1);
   }
@@ -108,6 +110,7 @@ export default function ShareMenu() {
     }
     if (copied) {
       setShareState('copied');
+      play('ding');
       clearTimeout(copiedTimerRef.current);
       copiedTimerRef.current = setTimeout(() => setShareState('idle'), COPIED_MS);
     } else {
@@ -158,6 +161,7 @@ export default function ShareMenu() {
               aria-checked={theme === option.id}
               className={styles.option}
               onClick={() => {
+                play('swish');
                 setTheme(option.id);
                 setMenuOpen(false);
               }}

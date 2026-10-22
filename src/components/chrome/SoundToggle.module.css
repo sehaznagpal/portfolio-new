@@ -1,0 +1,72 @@
+/* A small round speaker, fixed bottom-left. Its waves fade and shrink away
+   when muted, and a cross fades in (transform and opacity only). */
+.toggle {
+  position: fixed;
+  left: var(--sound-toggle-inset);
+  bottom: var(--sound-toggle-inset);
+  z-index: 1500;
+  display: grid;
+  place-items: center;
+  width: var(--sound-toggle-size);
+  height: var(--sound-toggle-size);
+  border-radius: 50%;
+  background: var(--sound-toggle-bg);
+  border: 1px solid var(--sound-toggle-border);
+  color: var(--sound-toggle-fg);
+  box-shadow: var(--sound-toggle-shadow);
+  transition: transform 160ms var(--ease-out-expo);
+}
+
+.toggle:active {
+  transform: scale(0.92);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 55%;
+  height: 55%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.speaker {
+  fill: currentColor;
+}
+
+.waveNear,
+.waveFar,
+.cross {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transition:
+    opacity 200ms ease-out,
+    transform 260ms var(--ease-out-expo);
+}
+
+.waveFar {
+  transition-delay: 40ms;
+}
+
+.cross {
+  transform-origin: center;
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.toggle[data-muted] .waveNear,
+.toggle[data-muted] .waveFar {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+.toggle[data-muted] .cross {
+  opacity: 1;
+  transform: none;
+}

@@ -22,6 +22,15 @@
   /* Keyboard focus outline */
   --focus-ring: var(--color-brand);
 
+  /* Sound toggle (fixed bottom-left on every page) */
+  --sound-toggle-size: 36px;
+  --sound-toggle-inset: 20px;
+  --sound-toggle-bg: var(--chrome-bg);
+  --sound-toggle-fg: var(--text-cream);
+  /* A grey edge so the dark circle still reads on dark pages */
+  --sound-toggle-border: var(--card-border);
+  --sound-toggle-shadow: 0 2px 8px rgba(18, 18, 18, 0.18);
+
   /* Case Studies Index — page + card tokens (from Figma) */
   --case-study-grey: #1f1f1f;
   --case-study-white: #fefefe;

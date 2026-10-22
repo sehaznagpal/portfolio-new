@@ -18,6 +18,8 @@ import SipStudioModal from './modals/SipStudioModal';
 import ExtrasModal from './modals/ExtrasModal';
 import MotionDemoModal from './modals/MotionDemoModal';
 import WorktapeModal from './modals/WorktapeModal';
+import { play } from '../../lib/sound/sound';
+import './sounds';
 import styles from './Playground.module.css';
 
 // Half of the ~250ms crossfade each way.
@@ -53,6 +55,7 @@ export default function Playground() {
 
   function changeView(next: PlaygroundView) {
     if (next === view) return;
+    play('swoosh');
     const swap = () => {
       if (canvasRef.current) setCanvasFocus(canvasRef.current.readFocus());
       window.scrollTo(0, 0);
@@ -94,7 +97,8 @@ export default function Playground() {
     );
 
   return (
-    <div className={styles.playground} style={groundStyle} data-view={view}>
+    // The playground's own sounds replace the site's click tick in here.
+    <div className={styles.playground} style={groundStyle} data-view={view} data-sound-own>
       <div className={styles.backdrop} aria-hidden="true">
         <ThemeCurtain theme={theme} />
         {view === 'grid' && (

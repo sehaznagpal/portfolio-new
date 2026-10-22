@@ -1,6 +1,7 @@
 import { useState, type MouseEvent } from 'react';
 import ExtrasCardFace, { type ExtrasLean } from './ExtrasCardFace';
 import focus from './focus.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './ExtrasItem.module.css';
 
 /* Extras playing card: the EXTRAS lettering leans toward whichever corner
@@ -22,6 +23,7 @@ export default function ExtrasItem({ autoHover, onOpen }: { autoHover: boolean; 
       aria-haspopup="dialog"
       aria-label="Extras, a few small illustrations"
       onClick={onOpen}
+      onMouseEnter={() => play('flick')}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setLean('none')}
     >

@@ -4,6 +4,7 @@ import curtainLeftImg from '../../../assets/images/playground/photobooth-curtain
 import curtainRightImg from '../../../assets/images/playground/photobooth-curtain-right.svg';
 import sparkle1Img from '../../../assets/images/playground/photobooth-sparkle-1.svg';
 import sparkle2Img from '../../../assets/images/playground/photobooth-sparkle-2.svg';
+import { play } from '../../../lib/sound/sound';
 import styles from './PhotoboothModal.module.css';
 
 const SHOT_COUNT = 4;
@@ -146,6 +147,7 @@ function Photobooth() {
       frames.push(frame);
       setThumbs((previous) => previous.map((thumb, i) => (i === shot ? frame.toDataURL() : thumb)));
       setFlashKey((key) => key + 1);
+      play('shutter');
       setStatus(`${shot + 1} / ${SHOT_COUNT} taken!`);
       await wait(AFTER_SHOT_MS);
     }
@@ -245,6 +247,7 @@ export default function PhotoboothModal({ open, onClose, note }: { open: boolean
       note={note}
       onClose={onClose}
       label="Photobooth"
+      openSound="shutter"
       frameClassName={styles.frame}
       closeClassName={styles.close}
     >

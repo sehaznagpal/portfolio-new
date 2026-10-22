@@ -10,6 +10,7 @@ import ColumnSwitcher, { type Columns } from './ColumnSwitcher';
 import AboutCluster from './AboutCluster';
 import styles from './GridView.module.css';
 import cardStyles from './WorkCard.module.css';
+import { play } from '../../../lib/sound/sound';
 import { blankName, morphName } from '../morph';
 
 // The work: everything that opens a modal or a site, in grid order.
@@ -66,7 +67,10 @@ export default function GridView({ onOpenModal }: { onOpenModal: (item: Playgrou
         </LayoutGroup>
       </MotionConfig>
       <AboutCluster />
-      <ColumnSwitcher value={columns} options={options} onChange={setPicked} />
+      <ColumnSwitcher value={columns} options={options} onChange={(next) => {
+          play('shuffle');
+          setPicked(next);
+        }} />
     </div>
   );
 }

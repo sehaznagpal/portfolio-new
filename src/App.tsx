@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
+import SoundToggle from './components/chrome/SoundToggle';
 import HomePage from './pages/HomePage';
 import { LINKS } from './data/links';
 import { loadPlaygroundPage } from './lib/usePlaygroundTransition';
@@ -15,6 +16,7 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
+      <SoundToggle />
       <Suspense fallback={null}>
         <Routes>
           <Route path={LINKS.home} element={<HomePage />} />

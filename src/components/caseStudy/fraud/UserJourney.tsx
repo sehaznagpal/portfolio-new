@@ -7,6 +7,7 @@ import pin from '../../../assets/images/fraud/journey/pin.webp';
 import pinWarning from '../../../assets/images/fraud/journey/pin-warning.webp';
 import transferring from '../../../assets/images/fraud/journey/transferring.webp';
 import success from '../../../assets/images/fraud/journey/success.webp';
+import { play } from '../../../lib/sound/sound';
 import styles from './UserJourney.module.css';
 
 type Mode = 'control' | 'warning' | 'cta';
@@ -101,7 +102,10 @@ export default function UserJourney() {
     cancelPendingRef.current?.();
     cancelPendingRef.current = null;
 
-    const apply = () => setShown((current) => ({ mode, from: current.mode }));
+    const apply = () => {
+      play('cardFlip');
+      setShown((current) => ({ mode, from: current.mode }));
+    };
     const row = rowRef.current;
     const card = cardRefs.current[affectedIndex(mode === 'control' ? shown.mode : mode)];
     if (!row || !card || row.scrollWidth <= row.clientWidth) {

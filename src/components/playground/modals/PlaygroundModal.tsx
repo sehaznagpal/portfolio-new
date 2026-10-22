@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 import { useTheme } from '../theme/ThemeContext';
 import { themeGround } from '../theme/themes';
 import ProjectNote from '../note/ProjectNote';
+import { play } from '../../../lib/sound/sound';
 import styles from './PlaygroundModal.module.css';
 
 // Matches --pg-modal-duration: the exit fade before unmounting.
@@ -24,6 +25,7 @@ export default function PlaygroundModal({
   note,
   frameClassName,
   closeClassName,
+  openSound = 'windowOpen',
   children,
 }: {
   open: boolean;
@@ -32,6 +34,8 @@ export default function PlaygroundModal({
   note?: string;
   frameClassName: string;
   closeClassName: string;
+  // Played as the window opens (Photobooth opens with its shutter).
+  openSound?: string;
   children: ReactNode;
 }) {
   const { theme } = useTheme();
@@ -41,6 +45,7 @@ export default function PlaygroundModal({
   const frameRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const onCloseRef = useRef(onClose);
+  const wasOpenRef = useRef(open);
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -50,11 +55,17 @@ export default function PlaygroundModal({
     if (open) {
       setRendered(true);
       // Two frames so the hidden state paints before the transition starts.
+      wasOpenRef.current = true;
       let frame = requestAnimationFrame(() => {
-        frame = requestAnimationFrame(() => setVisible(true));
+        frame = requestAnimationFrame(() => {
+          play(openSound);
+          setVisible(true);
+        });
       });
       return () => cancelAnimationFrame(frame);
     }
+    if (wasOpenRef.current) play('windowClose');
+    wasOpenRef.current = false;
     setVisible(false);
     const timer = setTimeout(() => setRendered(false), EXIT_MS);
     return () => clearTimeout(timer);
@@ -100,6 +111,8 @@ export default function PlaygroundModal({
         style={{ '--pg-veil': themeGround(theme).veil } as CSSProperties}
         onClick={onClose}
         role="presentation"
+        // Portaled outside the playground, so it opts out of the site's tick here.
+        data-sound-own
       >
         <div
           ref={frameRef}

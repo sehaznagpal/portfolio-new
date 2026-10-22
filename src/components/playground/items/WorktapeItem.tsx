@@ -5,6 +5,7 @@ import title from '../../../assets/images/playground/worktape/title.webp';
 import accessTag from '../../../assets/images/playground/worktape/access-tag.webp';
 import vibeCoded from '../../../assets/images/playground/worktape/vibe-coded.webp';
 import focus from './focus.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './WorktapeItem.module.css';
 
 const POP_MS = 560;
@@ -28,7 +29,8 @@ export default function WorktapeItem({ autoHover, onOpen }: { autoHover: boolean
   const frostedRef = useRef<HTMLSpanElement>(null);
   const runningRef = useRef<Animation[]>([]);
 
-  function pop() {
+  // `withSound` for a visitor's hover or focus, not the touch auto-cycle.
+  function pop(withSound = false) {
     if (runningRef.current.some((animation) => animation.playState === 'running')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const sharp = cassetteRef.current;
@@ -41,6 +43,7 @@ export default function WorktapeItem({ autoHover, onOpen }: { autoHover: boolean
       ...(easing && { easing }),
     }));
     runningRef.current = [sharp, frosted].map((el) => el.animate(frames, { duration: POP_MS }));
+    if (withSound) play('clack');
   }
 
   useEffect(() => {
@@ -57,9 +60,9 @@ export default function WorktapeItem({ autoHover, onOpen }: { autoHover: boolean
       aria-label="Worktape, a widget for Mac"
       onClick={onOpen}
       onPointerEnter={(event) => {
-        if (event.pointerType === 'mouse') pop();
+        if (event.pointerType === 'mouse') pop(true);
       }}
-      onFocus={pop}
+      onFocus={() => pop(true)}
     >
       <span className={styles.panel} />
       <span ref={cassetteRef} className={styles.cassette}>

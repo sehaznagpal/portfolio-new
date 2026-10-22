@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import CursorTooltip from '../../chrome/CursorTooltip';
 import { useMediaQuery } from '../../../lib/useMediaQuery';
 import paper from '../paper/notebookPaper.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './ProjectNote.module.css';
 
 // Gap from the viewport edges, and from the modal's close button.
@@ -100,6 +101,7 @@ export default function ProjectNote({
       dy: event.clientY - position.current.y,
     };
     event.currentTarget.setPointerCapture(event.pointerId);
+    play('lift');
     setDragging(true);
   }
 
@@ -113,6 +115,7 @@ export default function ProjectNote({
   function handlePointerEnd(event: PointerEvent<HTMLDivElement>) {
     if (!drag.current || event.pointerId !== drag.current.pointerId) return;
     drag.current = null;
+    play('settle');
     setDragging(false);
   }
 
@@ -120,6 +123,7 @@ export default function ProjectNote({
     <div
       ref={rootRef}
       className={`${styles.root} ${visible ? styles.visible : ''}`}
+      data-sound-own
       data-dragging={dragging || undefined}
       data-draggable=""
       onPointerDown={handlePointerDown}

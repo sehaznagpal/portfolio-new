@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 import CursorTooltip from '../chrome/CursorTooltip';
 import { useMediaQuery } from '../../lib/useMediaQuery';
+import { play } from '../../lib/sound/sound';
 import type { CaseTheme } from '../../lib/caseTheme';
 import styles from './LampSwitch.module.css';
 
@@ -33,6 +34,7 @@ const SWITCH_STRETCH = 12;
 const CLICK_SLOP = 3;
 const CLICK_PULL = 14;
 const CLICK_PULL_MS = 110;
+const LIGHT_TINK_DELAY_MS = 70;
 
 // Hover sway: the pendulum's rest angle drifts on smooth noise (three
 // slow, unrelated waves with fresh phases each hover), up to SWAY_ANGLE.
@@ -247,6 +249,9 @@ export default function LampSwitch({
     const rect = bulbRef.current?.getBoundingClientRect();
     if (!rect) return;
     setFlicker(!on);
+    // The chain clicks as it's let go; the bulb tinks a beat later as it lights.
+    play('chain');
+    if (!on) play('tink', { delay: LIGHT_TINK_DELAY_MS });
     onSwitch({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
   }
 
@@ -382,6 +387,7 @@ export default function LampSwitch({
       <button
         type="button"
         className={styles.lamp}
+        data-sound-own
         data-on={on}
         data-flicker={flicker && on}
         data-dragging={dragging}

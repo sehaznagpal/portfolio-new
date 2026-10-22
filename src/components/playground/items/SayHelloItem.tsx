@@ -3,6 +3,7 @@ import linkedinIcon from '../../../assets/images/playground/linkedin-icon.svg';
 import mailIcon from '../../../assets/images/playground/mail-icon.svg';
 import phoneIcon from '../../../assets/images/playground/phone-icon.svg';
 import grain from './grain.module.css';
+import { play } from '../../../lib/sound/sound';
 import styles from './SayHelloItem.module.css';
 
 // `newTab` for web pages; mail opens the mail client in place.
@@ -15,7 +16,13 @@ const CONTACT_LINKS = [
 /* Contact card: a "looking forward" tag rises from behind it on hover. */
 export default function SayHelloItem({ autoHover }: { autoHover: boolean }) {
   return (
-    <div className={styles.root} data-auto-hover={autoHover || undefined}>
+    <div
+      className={styles.root}
+      data-auto-hover={autoHover || undefined}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') play('flick');
+      }}
+    >
       <p className={styles.tag}>
         Looking forward to
         <br />

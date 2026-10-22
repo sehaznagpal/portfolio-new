@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { NavigationType, useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import { useMediaQuery } from './useMediaQuery';
+import { play } from './sound/sound';
 import { LINKS } from '../data/links';
 
 export const SECTIONS = ['hero', 'work', 'footer'] as const;
@@ -114,6 +115,8 @@ export function useSectionNav({ enabled }: { enabled: boolean }) {
     (next: SectionId) => {
       const current = sectionRef.current;
       if (next === current) return;
+      // A soft whoosh as the page moves between the hero and the work.
+      if (next !== 'footer' && current !== 'footer') play('whoosh');
       if (!gestureMode) {
         // Section + hash follow from the IntersectionObserver once it lands.
         layerRefs[next].current?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
