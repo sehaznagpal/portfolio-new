@@ -18,7 +18,6 @@ import SipStudioModal from './modals/SipStudioModal';
 import ExtrasModal from './modals/ExtrasModal';
 import MotionDemoModal from './modals/MotionDemoModal';
 import WorktapeModal from './modals/WorktapeModal';
-import { play } from '../../lib/sound/sound';
 import './sounds';
 import styles from './Playground.module.css';
 
@@ -55,7 +54,6 @@ export default function Playground() {
 
   function changeView(next: PlaygroundView) {
     if (next === view) return;
-    play('swoosh');
     const swap = () => {
       if (canvasRef.current) setCanvasFocus(canvasRef.current.readFocus());
       window.scrollTo(0, 0);

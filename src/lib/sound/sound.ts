@@ -1,7 +1,8 @@
 /* The site's sound: every sound is synthesised with Web Audio (no files),
-   so there is nothing to download. Nothing plays until the visitor's first
-   click, tap or key press (browser autoplay rules); the AudioContext is
-   created then. A master gain sets the overall level and each sound has
+   so there is nothing to download. The AudioContext is created on load and
+   started straight away where the browser allows it (e.g. a site it already
+   trusts); otherwise browsers hold all web audio until the visitor's first
+   click, tap or key press, which starts it. A master gain sets the overall level and each sound has
    its own trim, so they sit at a similar, quiet loudness; mute silences
    everything. Each sound is rate-limited so fast repeats never stack.
    Sounds register themselves by name (siteSounds, and the playground's own
@@ -25,12 +26,18 @@ export interface SynthKit {
 
 const MASTER_VOLUME = 0.18;
 const MIN_REPEAT_MS = 80;
+// A sound asked for this soon after a gesture plays even while the context
+// is still starting up (resume() takes a few ms), so that click's own tick
+// isn't lost. Any other sound while audio is blocked is skipped.
+const GESTURE_GRACE_MS = 500;
+const UNLOCK_EVENTS = ['pointerdown', 'pointerup', 'touchend', 'keydown'];
 const MUTE_KEY = 'portfolio:sound-muted';
 
 const sounds = new Map<string, SoundDef>();
 const lastPlayed = new Map<string, number>();
 const listeners = new Set<() => void>();
 let kit: SynthKit | null = null;
+let lastGesture = -Infinity;
 let muted = readMuted();
 
 function readMuted() {
@@ -53,18 +60,15 @@ export function play(name: string, { delay = 0 }: { delay?: number } = {}) {
   const def = sounds.get(name);
   if (!def) return;
   const now = performance.now();
+  const running = kit.ctx.state === 'running';
+  if (!running && now - lastGesture > GESTURE_GRACE_MS) return;
   if (now - (lastPlayed.get(name) ?? -Infinity) < (def.minGap ?? MIN_REPEAT_MS)) return;
   lastPlayed.set(name, now);
-  if (kit.ctx.state === 'suspended') kit.ctx.resume();
+  if (!running) kit.ctx.resume();
   const trim = kit.ctx.createGain();
   trim.gain.value = def.gain;
   trim.connect(kit.out);
   def.synth({ ...kit, out: trim }, kit.ctx.currentTime + delay / 1000);
-}
-
-// True once the first interaction has created the audio context.
-export function isUnlocked() {
-  return kit !== null;
 }
 
 export function isMuted() {
@@ -88,12 +92,9 @@ export function subscribeMuted(listener: () => void) {
   };
 }
 
-/* Created inside the first gesture so every browser (iOS Safari included)
-   lets it play. Capture phase, so that same click's own sound still plays. */
-function unlock() {
-  if (kit) return;
+function createKit() {
   const AudioCtx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-  if (!AudioCtx) return;
+  if (!AudioCtx) return null;
   const ctx = new AudioCtx();
   const master = ctx.createGain();
   master.gain.value = MASTER_VOLUME;
@@ -101,11 +102,21 @@ function unlock() {
   const noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
   const data = noise.getChannelData(0);
   for (let i = 0; i < data.length; i += 1) data[i] = Math.random() * 2 - 1;
-  kit = { ctx, out: master, noise };
-  ctx.resume();
-  ['pointerdown', 'keydown'].forEach((type) => window.removeEventListener(type, unlock, true));
+  return { ctx, out: master, noise };
+}
+
+/* Any click, tap or key press (capture phase, so that same click's own
+   sound still plays) starts the context if the browser is holding it: on
+   the first visit, and again if it was suspended later (e.g. Safari after
+   the tab was in the background). */
+function handleGesture() {
+  lastGesture = performance.now();
+  if (kit && kit.ctx.state !== 'running') kit.ctx.resume();
 }
 
 if (typeof window !== 'undefined') {
-  ['pointerdown', 'keydown'].forEach((type) => window.addEventListener(type, unlock, true));
+  kit = createKit();
+  // Starts at once where the browser allows it; a blocked start is fine.
+  kit?.ctx.resume().catch(() => {});
+  UNLOCK_EVENTS.forEach((type) => window.addEventListener(type, handleGesture, true));
 }

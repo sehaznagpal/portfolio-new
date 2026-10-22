@@ -3,7 +3,6 @@ import { useMediaQuery } from '../../lib/useMediaQuery';
 import SweepButton from '../chrome/SweepButton';
 import { FOOTER_PHOTOS, type FooterPhoto } from '../../data/footerPhotos';
 import { PUNCH_SHAPES, PUNCH_SIZE, shapeCursor, shapeScale, shapeViewBox, type PunchShape } from './punchShapes';
-import { play } from '../../lib/sound/sound';
 import styles from './PunchArea.module.css';
 
 // Short or very wide desktop screens, where a photo's optional tight crop
@@ -193,7 +192,6 @@ export default function PunchArea({
     const area = rootRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !area || !ctx || clearing) return;
-    play('punch');
 
     // The hole is placed on the sheet; the chip lives in the area (the sheet
     // bleeds slightly past the area's edges, so the two differ by a pixel).
@@ -268,13 +266,13 @@ export default function PunchArea({
   }
 
   function resetSheet() {
-    play('rustle');
     punchesRef.current = [];
     paintSheet();
     if (chips.length > 0) setClearing(true);
   }
 
   return (
+    // The punch area stays silent (no click tick on its button either)
     <div ref={rootRef} className={styles.area} data-sound-own>
       <picture>
         {photo.tight && (

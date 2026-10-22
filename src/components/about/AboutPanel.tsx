@@ -5,7 +5,6 @@ import { SITE_LINK_GROUPS, type LinkSection } from '../../data/siteLinks';
 import SiteLink from '../chrome/SiteLink';
 import AboutPolaroid from './AboutPolaroid';
 import AboutTicker from './AboutTicker';
-import { play } from '../../lib/sound/sound';
 import styles from './AboutPanel.module.css';
 
 /* Matches .panel's transform transition duration in AboutPanel.module.css,
@@ -37,16 +36,10 @@ export default function AboutPanel({
   useEffect(() => {
     if (open) {
       setRendered(true);
-      const raf = requestAnimationFrame(() =>
-        requestAnimationFrame(() => {
-          play('whooshLight');
-          setVisible(true);
-        }),
-      );
+      const raf = requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
       return () => cancelAnimationFrame(raf);
     }
     if (rendered) {
-      play('whooshLightBack');
       setVisible(false);
       const timeout = setTimeout(() => setRendered(false), EXIT_MS);
       return () => clearTimeout(timeout);

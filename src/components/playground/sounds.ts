@@ -7,11 +7,6 @@ import { noise, tone } from '../../lib/sound/synth';
 const HOVER_GAP = 250;
 
 registerSounds({
-  // Canvas <-> grid morph
-  swoosh: {
-    gain: 0.28,
-    synth: (kit, at) => noise(kit, at, { freq: 500, to: 2400, q: 0.7, attack: 0.18, duration: 0.55 }),
-  },
   // Column switch: three quick, soft card taps
   shuffle: {
     gain: 0.1,
