@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { COLUMNS_NAME } from '../morph';
 import styles from './ColumnSwitcher.module.css';
 
 export type Columns = 1 | 2 | 3;
@@ -32,6 +33,7 @@ export default function ColumnSwitcher({
     <div
       ref={rootRef}
       className={styles.root}
+      style={{ viewTransitionName: COLUMNS_NAME }}
       data-open={open || undefined}
       data-count={options.length}
       role="group"

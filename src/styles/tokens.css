@@ -268,6 +268,12 @@
   --pg-drafts-leading: 1.2;
   --pg-highlight-leading: 1.1;
   --pg-highlight-pad: 4px;
+  /* Canvas <-> grid morph (View Transitions): the artwork moves, then the
+     grid tile frames fade in around it */
+  --pg-morph-duration: 600ms;
+  --pg-morph-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --pg-morph-stagger: 20ms;
+  --pg-morph-frame-delay: 100ms;
   /* Grid view: uniform tiles and the column switch */
   --pg-grid-gap: 20px;
   --pg-grid-pad: 32px;

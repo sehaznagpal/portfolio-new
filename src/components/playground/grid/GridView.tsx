@@ -10,9 +10,12 @@ import ColumnSwitcher, { type Columns } from './ColumnSwitcher';
 import AboutCluster from './AboutCluster';
 import styles from './GridView.module.css';
 import cardStyles from './WorkCard.module.css';
+import { blankName, morphName } from '../morph';
 
-// The work: everything that opens a modal or a site.
-const WORK = PLAYGROUND_ITEMS.filter((item) => item.action);
+// The work: everything that opens a modal or a site, in grid order.
+const WORK = PLAYGROUND_ITEMS.filter((item) => item.action).sort(
+  (a, b) => (a.gridOrder ?? Infinity) - (b.gridOrder ?? Infinity),
+);
 // Tiles glide to their new places and sizes when the column count changes.
 const LAYOUT_TRANSITION = { duration: 0.5, ease: [0.65, 0, 0.35, 1] } as const;
 
@@ -30,7 +33,7 @@ export default function GridView({ onOpenModal }: { onOpenModal: (item: Playgrou
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
+      <header className={styles.header} style={{ viewTransitionName: morphName('intro') }}>
         <h1 className={styles.title}>
           <span className={notes.italic}>More from my</span> <span className={notes.bold}>Drafts</span>
         </h1>
@@ -51,6 +54,7 @@ export default function GridView({ onOpenModal }: { onOpenModal: (item: Playgrou
                   key={`blank-${i}`}
                   layout
                   className={cardStyles.tile}
+                  style={{ viewTransitionName: blankName(i) }}
                   aria-hidden="true"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

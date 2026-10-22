@@ -1,6 +1,7 @@
 import { useEffect, useRef, type PointerEvent } from 'react';
 import { CAPTION_HEIGHT, WORLD_HEIGHT, WORLD_WIDTH, type PlacedItem } from './canvasLayout';
 import type { ViewListener } from './useWorldViewport';
+import { MINIMAP_NAME } from '../morph';
 import styles from './Minimap.module.css';
 
 const MAP_WIDTH = 220;
@@ -47,7 +48,7 @@ export default function Minimap({
   return (
     <div
       className={styles.map}
-      style={{ width: MAP_WIDTH, height: MAP_HEIGHT }}
+      style={{ width: MAP_WIDTH, height: MAP_HEIGHT, viewTransitionName: MINIMAP_NAME }}
       role="img"
       aria-label="Map of the playground. Click to move there."
       onPointerDown={(event) => {

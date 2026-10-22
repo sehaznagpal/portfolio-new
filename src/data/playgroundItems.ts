@@ -18,8 +18,11 @@ export interface PlaygroundItem {
      "More from my Drafts" card (which sits at the centre of the world).
      Move a group by editing its numbers. */
   pinned: { x: number; y: number };
-  /* Grid order: by group, so pairs stay side by side. */
+  /* Data order: the canvas paints in this order (later items sit on top)
+     and the morph staggers in it. */
   order: number;
+  /* Grid order of the work tiles, separate from the canvas. */
+  gridOrder?: number;
 }
 
 /* The one list both the canvas and the grid render. Groups on the canvas:
@@ -35,6 +38,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { href: LINKS.rewired },
     pinned: { x: 470, y: -100 },
     order: 1,
+    gridOrder: 3,
   },
   {
     id: 'amora',
@@ -43,6 +47,7 @@ const ITEMS: PlaygroundItem[] = [
     action: { href: LINKS.amora },
     pinned: { x: 780, y: -190 },
     order: 2,
+    gridOrder: 7,
   },
   // Vibe-coded, left
   {
@@ -54,6 +59,7 @@ const ITEMS: PlaygroundItem[] = [
       'Smile! I made this so you can take a souvenir home from this website. It also helped me figure out how to add a camera to an app that runs in the browser.',
     pinned: { x: -600, y: -130 },
     order: 3,
+    gridOrder: 2,
   },
   {
     id: 'worktape',
@@ -64,6 +70,7 @@ const ITEMS: PlaygroundItem[] = [
       'I kept opening the same files and apps every time I sat down to work on a task. So I wondered, what if starting work was as easy as putting in a cassette? Pop it in and everything opens. Eject it and work mode ends.',
     pinned: { x: -600, y: 150 },
     order: 4,
+    gridOrder: 1,
   },
   // One of a kind, top-centre
   {
@@ -75,6 +82,7 @@ const ITEMS: PlaygroundItem[] = [
       'My first attempt at Figma Motion. More to come!',
     pinned: { x: -230, y: -410 },
     order: 5,
+    gridOrder: 4,
   },
   // Graphic design, bottom-left
   {
@@ -86,6 +94,7 @@ const ITEMS: PlaygroundItem[] = [
       'A made-up brand I created to imagine what a pottery studio and a café could look like as one place.',
     pinned: { x: -645, y: 515 },
     order: 6,
+    gridOrder: 5,
   },
   {
     id: 'extras',
@@ -96,6 +105,7 @@ const ITEMS: PlaygroundItem[] = [
       'These remind me why I like designing. I can see something I like and make my own version of it on screen.',
     pinned: { x: -330, y: 520 },
     order: 7,
+    gridOrder: 6,
   },
   // Who I am + how to reach me, bottom-centre: the card overlaps the
   // polaroid's bottom-right corner (it renders later, so it sits on top)

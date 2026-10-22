@@ -8,6 +8,19 @@ import type { PlaygroundItem } from '../../../data/playgroundItems';
 export const WORLD_WIDTH = 3200;
 export const WORLD_HEIGHT = 1500;
 export const CAPTION_HEIGHT = 30;
+// How far the canvas's dotted ground runs past the world on every side.
+export const GROUND_BLEED = 2400;
+export const WORLD_CENTRE = { x: WORLD_WIDTH / 2, y: WORLD_HEIGHT / 2 };
+
+/* Where the canvas's dots sit on screen when it is centred on `focus` at
+   1:1, so the grid's fixed dots can match them and the ground stays still
+   through the morph. */
+export function groundDotOffset(focus: { x: number; y: number }) {
+  return {
+    x: window.innerWidth / 2 - focus.x - GROUND_BLEED,
+    y: window.innerHeight / 2 - focus.y - GROUND_BLEED,
+  };
+}
 /* Phones draw the whole world at this one smaller scale, so the first
    screen shows Drafts and parts of the items around it. There is no zoom. */
 export const MOBILE_WORLD_SCALE = 0.7;

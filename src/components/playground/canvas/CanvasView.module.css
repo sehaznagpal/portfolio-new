@@ -26,7 +26,7 @@
 .ground::before {
   content: '';
   position: absolute;
-  inset: -2400px;
+  inset: calc(var(--ground-bleed) * -1);
   background-image: radial-gradient(circle, var(--pg-ground-dot) 0.75px, transparent 1.25px);
   background-size: var(--pg-dot-spacing) var(--pg-dot-spacing);
 }
@@ -54,6 +54,14 @@
   white-space: nowrap;
   transform: translateX(-50%);
   pointer-events: none;
+}
+
+/* The artwork alone, so it can morph to the grid (morph.ts) while the
+   caption stays behind and fades */
+.art {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 /* Drafts keeps its paper card: it's the note that explains the rest */

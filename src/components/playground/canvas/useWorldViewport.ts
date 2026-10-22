@@ -61,6 +61,7 @@ export function useWorldViewport({
   const viewListenersRef = useRef(new Set<ViewListener>());
   const moveToRef = useRef<(x: number, y: number, animate: boolean) => void>(() => {});
   const initialFocusRef = useRef(initialFocus);
+  const readFocusRef = useRef<() => { x: number; y: number }>(() => initialFocusRef.current);
 
   const subscribePan = useCallback((listener: PanListener) => {
     const listeners = panListenersRef.current;
@@ -79,6 +80,8 @@ export function useWorldViewport({
   }, []);
 
   const moveTo = useCallback((x: number, y: number, animate = false) => moveToRef.current(x, y, animate), []);
+  // The world point at the centre of the screen, to come back to later.
+  const readFocus = useCallback(() => readFocusRef.current(), []);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -324,6 +327,11 @@ export function useWorldViewport({
       root!.scrollTo(0, 0);
     }
 
+    readFocusRef.current = () => {
+      const visible = visibleWorld();
+      return { x: visible.x + visible.width / 2, y: visible.y + visible.height / 2 };
+    };
+
     measure();
     centreOn(initialFocusRef.current.x, initialFocusRef.current.y);
     write();
@@ -361,5 +369,5 @@ export function useWorldViewport({
     };
   }, [rootRef, groundRef, contentRef]);
 
-  return { subscribePan, subscribeView, moveTo };
+  return { subscribePan, subscribeView, moveTo, readFocus };
 }

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import type { PlaygroundItem } from '../../../data/playgroundItems';
 import { ARTWORK_BOXES } from '../canvas/canvasLayout';
 import WorkArtwork from '../items/WorkArtwork';
+import { morphName, tileName } from '../morph';
 import styles from './WorkCard.module.css';
 
 const noop = () => {};
@@ -24,11 +25,11 @@ export default function WorkCard({
   const { action } = item;
 
   return (
-    <motion.div layout className={styles.tile} whileHover={LIFT}>
+    <motion.div layout className={styles.tile} style={{ viewTransitionName: tileName(item.id) }} whileHover={LIFT}>
       <motion.div
         layout
         className={styles.art}
-        style={{ '--art-w': box.w, '--art-h': box.h } as CSSProperties}
+        style={{ '--art-w': box.w, '--art-h': box.h, viewTransitionName: morphName(item.id) } as CSSProperties}
         inert
       >
         <WorkArtwork id={item.id} autoHover={false} onOpen={noop} />
